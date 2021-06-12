@@ -16,12 +16,12 @@ class CreateCategoryDetailsTable extends Migration
         Schema::create('category_details', function (Blueprint $table) {
             $table->increments('id');
             $table->string('category_id', 50);
-            $table->string('year', 4);
-            $table->integer('target');
-            $table->string('created_by', 100);
-            $table->dateTime('created_datetime');
-            $table->string('last_modified_by', 100);
-            $table->dateTime('last_modified_datetime');
+            $table->string('year', 4)->nullable();
+            $table->integer('target')->nullable();
+            $table->string('created_by', 100)->nullable();
+            $table->dateTime('created_datetime')->nullable();
+            $table->string('last_modified_by', 100)->nullable();
+            $table->dateTime('last_modified_datetime')->nullable();
             $table->timestamps();
         });
     }

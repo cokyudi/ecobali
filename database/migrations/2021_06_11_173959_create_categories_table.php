@@ -16,11 +16,11 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('category_name', 50);
-            $table->string('description', 200);
-            $table->string('created_by', 100);
-            $table->dateTime('created_datetime');
-            $table->string('last_modified_by', 100);
-            $table->dateTime('last_modified_datetime');
+            $table->string('description', 200)->nullable();
+            $table->string('created_by', 100)->nullable();
+            $table->dateTime('created_datetime')->nullable();
+            $table->string('last_modified_by', 100)->nullable();
+            $table->dateTime('last_modified_datetime')->nullable();
             $table->timestamps();
         });
     }
