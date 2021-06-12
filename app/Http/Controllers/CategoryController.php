@@ -10,34 +10,31 @@ class CategoryController extends Controller
     
     public function index(Request $request)
     {
-        $districts = District::latest()->get();
+        $categories = Category::latest()->get();
         
         if ($request->ajax()) {
-            $data = District::latest()->get();
+            $data = Category::latest()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-   
-                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editDistrict">Edit</a>';
-   
-                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteDistrict">Delete</a>';
-    
-                            return $btn;
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editCategory">Edit</a>';
+                        $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteCategory">Delete</a>';
+                        return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('district/index',compact('districts'));
+        return view('category/index',compact('categories'));
     }
      
    
     public function store(Request $request)
     {
-        District::updateOrCreate(
-            ['id' => $request->district_id],
+        Category::updateOrCreate(
+            ['id' => $request->category_id],
             [
-                'district_name' => $request->district_name, 
-                'province_name' => $request->province_name,
+                'category_name' => $request->category_name, 
+                'description' => $request->description,
                 'created_by' => $request->created_by,
                 'created_datetime' => $request->created_datetime,
                 'last_modified_by' => $request->last_modified_by,
@@ -45,19 +42,19 @@ class CategoryController extends Controller
             ]
         );        
    
-        return response()->json(['success'=>'District saved successfully.']);
+        return response()->json(['success'=>'Category saved successfully.']);
     }
     
     public function edit($id)
     {
-        $district = District::find($id);
-        return response()->json($district);
+        $category = Category::find($id);
+        return response()->json($category);
     }
   
     public function destroy($id)
     {
-        District::find($id)->delete();
+        Category::find($id)->delete();
      
-        return response()->json(['success'=>'District deleted successfully.']);
+        return response()->json(['success'=>'Category deleted successfully.']);
     }
 }
