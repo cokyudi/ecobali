@@ -4,17 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use DataTables;
+use DateTime;
 
 class CategoryController extends Controller
 {
     
     public function index(Request $request)
     {
-        $categories = Category::latest()->get();
-        
+        $categories = DB::table('categories')
+            ->join('category_details', function ($join) {
+                $join->on('categories.id', '=', 'category_details.category_id')
+                    ->where('category_details.year', '=', (new DateTime)->format("Y"));
+            })
+            ->select('categories.*','category_details.target')
+            ->get();
+
         if ($request->ajax()) {
-            $data = Category::latest()->get();
-            return Datatables::of($data)
+            return Datatables::of($categories)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
                         $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editCategory">Edit</a>';
@@ -24,7 +32,8 @@ class CategoryController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('category/index',compact('categories'));
+
+        return view('category/index', compact('categories'));
     }
      
    

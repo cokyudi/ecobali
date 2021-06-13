@@ -32,6 +32,7 @@
 		<link rel="stylesheet" type="text/css" href="{{asset('vendors/css/charts/morris.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('fonts/simple-line-icons/style.min.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('css/core/colors/palette-gradient.min.css')}}">
+		@stack('css_extend')
 		<!-- END: Page CSS-->
 	</head>
 	<!-- END: Head-->
@@ -126,14 +127,9 @@
 		<script src="{{asset('vendors/js/charts/jvector/jquery-jvectormap-world-mill.js')}}"></script>
 		<script src="{{asset('data/jvector/visitor-data.js')}}"></script>  
 		<!-- chart pie -->
-		<script src="https://www.google.com/jsapi"></script>
-		<script src="{{asset('js/scripts/charts/google/pie/pie.min.js')}}"></script>
-		<script src="{{asset('js/scripts/charts/google/pie/3d-pie.min.js')}}"></script>
-		<script src="{{asset('js/scripts/charts/google/pie/3d-pie-exploded.min.js')}}"></script>
+		
 		<!-- chart line -->
-		<script src="{{asset('js/scripts/charts/google/line/line.min.js')}}"></script>
-		<!-- bar chart -->
-		<script src="{{asset('js/scripts/charts/google/bar/bar.min.js')}}"></script>
+		
 		<!-- datatable -->
 		<script src="{{asset('vendors/js/tables/datatable/datatables.min.js')}}"></script>
 		
@@ -144,11 +140,7 @@
 		<script src="{{asset('js/scripts/customizer.min.js')}}"></script>
 		<script src="{{asset('js/scripts/footer.min.js')}}"></script>
 		<!-- END: Theme JS-->
-		<!-- BEGIN: Page JS-->
-		<script src="{{asset('js/scripts/pages/dashboard-sales.min.js')}}"></script>
-		<script src="{{asset('js/scripts/charts/jqvmap/jqvmap.min.js')}}"></script>
-		<script src="{{asset('data/jqvmaps/jquery.vmap.sampledata.js')}}"></script>
-		
+		<!-- BEGIN: Page JS-->	
         @stack('ajax_crud')
 		<!-- BEGIN Vendor JS-->
 		<!-- BEGIN: Page Vendor JS-->

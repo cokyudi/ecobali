@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['category_name','description','created_by','created_datetime','last_modified_by','last_modified_datetime'];
 }
