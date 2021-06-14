@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\CategoryDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
@@ -35,11 +36,10 @@ class CategoryController extends Controller
 
         return view('category/index', compact('categories'));
     }
-     
-   
+ 
     public function store(Request $request)
     {
-        Category::updateOrCreate(
+        $data = Category::updateOrCreate(
             ['id' => $request->category_id],
             [
                 'category_name' => $request->category_name, 
@@ -49,15 +49,29 @@ class CategoryController extends Controller
                 'last_modified_by' => $request->last_modified_by,
                 'last_modified_datetime' => $request->last_modified_datetime,
             ]
-        );        
-   
+        );
+        
+        if($data->wasRecentlyCreated) {
+            CategoryDetail::updateOrCreate(
+                [
+                    'category_id' => $data->id,
+                    'target' => $request->this_year_target, 
+                    'year' => (new DateTime)->format("Y"),
+                    'created_by' => $request->created_by,
+                    'created_datetime' => $request->created_datetime,
+                    'last_modified_by' => $request->last_modified_by,
+                    'last_modified_datetime' => $request->last_modified_datetime,
+                ]
+            );
+        }
+         
         return response()->json(['success'=>'Category saved successfully.']);
     }
     
     public function edit($id)
     {
         $category = Category::find($id);
-        return response()->json($category);
+        return view('category/edit')->with('category', $category);
     }
   
     public function destroy($id)

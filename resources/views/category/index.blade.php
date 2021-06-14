@@ -42,9 +42,9 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
                                     <!-- <a class="btn btn-success" href="javascript:void(0)" id="createNewDistrict"> Create New Book</a> -->
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewDistrict">Add New Category</button>
+                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewCategory">Add New Category</button>
 										
-                                        @include('district.modal')
+                                        @include('category.modal')
                                         <div class="table-responsive">
                                             <table id="test" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
@@ -85,7 +85,7 @@
 
 @push('ajax_crud')
 <script type="text/javascript">
-  $(function () {
+$(function () {
       
     $.ajaxSetup({
             headers: {
@@ -93,102 +93,91 @@
             }
       });
   
-      var table = $('#test').DataTable({
-          processing: true,
-          serverSide: true,
-          ajax: "{{ route('categories.index') }}",
-          columns: [
-              {data: null},
-              {data: 'category_name', name: 'category_name'},
-              {data: 'description', name: 'description'},
-              {data: 'target', name: 'target'},
-              {data: 'action', name: 'action', orderable: false, searchable: false},
-          ]
-      });
+    var table = $('#test').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('categories.index') }}",
+        columns: [
+            {data: null},
+            {data: 'category_name', name: 'category_name'},
+            {data: 'description', name: 'description'},
+            {data: 'target', name: 'target'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+        ]
+    });
   
-      table.on('draw.dt', function () {
-            var info = table.page.info();
-            table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
-                cell.innerHTML = i + 1 + info.start;
-            });
+    table.on('draw.dt', function () {
+        var info = table.page.info();
+        table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
+            cell.innerHTML = i + 1 + info.start;
         });
+    });
+
+    $('body').on('click', '.editCategory', function () {
+        var category_id = $(this).data('id');
+        window.location.href = "{{ route('categories.index') }}" +'/' + category_id +'/edit';
+    });
   
-      $('#createNewDistrict').click(function () {
-          $('#saveBtn').val("create");
-          $('#district_id').val('');
-          $('#districtForm').trigger("reset");
-          $('#modalHeading').html("Create New District");
-          $('#districtModal').modal('show');
-      });
-  
-      $('body').on('click', '.editDistrict', function () {
-        var district_id = $(this).data('id');
-        $.get("{{ route('districts.index') }}" +'/' + district_id +'/edit', function (data) {
-            $('#modalHeading').html("Edit District");
-            $('#saveBtn').val("edit");
-            $('#districtModal').modal('show');
-            $('#district_id').val(data.id);
-            $('#district_name').val(data.district_name);
-            $('#province_name').val(data.province_name);
-            $('#created_by').val(data.created_by);
-            $('#created_datetime').val(data.created_datetime);
-            $('#last_modified_by').val(data.last_modified_by);
-            $('#last_modified_datetime').val(data.last_modified_datetime);
-        })
-     });
-  
-      $('#saveBtn').click(function (e) {
-          e.preventDefault();
-          if ($('#saveBtn').val() == "create")  {
-              $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val(null);
-              $('#last_modified_datetime').val(null);
-          } else {
-             $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val("Deva Dwi A Edit");
-              $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-          }
-          $(this).html('Save');
-      
-          $.ajax({
-            data: $('#districtForm').serialize(),
-            url: "{{ route('districts.store') }}",
+    $('#createNewCategory').click(function () {
+        $('#saveBtn').val("create");
+        $('#category_id').val('');
+        $('#categoryForm').trigger("reset");
+        $('#modalHeading').html("Create New Category");
+        $('#categoryModal').modal('show');
+    });
+   
+    $('body').on('click', '.deleteCategory', function () {
+        var category_id = $(this).data("id");
+        confirm("Are You sure want to delete !");
+    
+        $.ajax({
+            type: "DELETE",
+            url: "{{ route('categories.store') }}"+'/'+category_id,
+            success: function (data) {
+                table.draw();
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
+    });
+
+    $('#saveBtn').click(function (e) {
+        e.preventDefault();
+        if ($('#saveBtn').val() == "create")  {
+            $('#created_by').val("Deva Dwi A");
+            $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+            $('#last_modified_by').val(null);
+            $('#last_modified_datetime').val(null);
+        } else {
+            $('#created_by').val("Deva Dwi A");
+            $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+            $('#last_modified_by').val("Deva Dwi A Edit");
+            $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+        }
+        
+        $(this).html('Save');
+    
+        $.ajax({
+            data: $('#categoryForm').serialize(),
+            url: "{{ route('categories.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
-       
-                $('#districtForm').trigger("reset");
-                $('#districtModal').modal('hide');
+        
+                $('#categoryForm').trigger("reset");
+                $('#categoryModal').modal('hide');
                 table.draw();
-           
+            
             },
             error: function (data) {
                 console.log('Error:', data);
                 $('#saveBtn').html('Save Changes');
             }
         });
-      });
-      
-      $('body').on('click', '.deleteDistrict', function () {
-       
-          var district_id = $(this).data("id");
-          confirm("Are You sure want to delete !");
-        
-          $.ajax({
-              type: "DELETE",
-              url: "{{ route('districts.store') }}"+'/'+district_id,
-              success: function (data) {
-                  table.draw();
-              },
-              error: function (data) {
-                  console.log('Error:', data);
-              }
-          });
-      });
-       
     });
+       
+});
 </script>
 
 @endpush 

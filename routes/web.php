@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Dashboard1Controller;
+use App\Http\Controllers\CategoryDetailController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,5 +27,6 @@ Route::get('/a', function () {
 
 Route::resource('districts', DistrictController::class);
 Route::resource('categories', CategoryController::class);
+Route::resource('categoryDetails', CategoryDetailController::class);
 Route::resource('dashboard1', Dashboard1Controller::class);
 
