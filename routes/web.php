@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Dashboard1Controller;
+use App\Http\Controllers\DashboardComparisonController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,4 +27,5 @@ Route::get('/a', function () {
 Route::resource('districts', DistrictController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('dashboard1', Dashboard1Controller::class);
+Route::resource('dashboard-comparison', DashboardComparisonController::class);
 
