@@ -15,11 +15,13 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $categories = DB::table('categories')
-            ->join('category_details', function ($join) {
+            ->leftJoin('category_details', function ($join) {
                 $join->on('categories.id', '=', 'category_details.category_id')
                     ->where('category_details.year', '=', (new DateTime)->format("Y"));
             })
-            ->select('categories.*','category_details.target')
+            ->select(
+                'categories.*',
+                DB::raw('(CASE WHEN category_details.target IS NULL THEN "not set" ELSE category_details.target END) AS target'))
             ->get();
 
         if ($request->ajax()) {
