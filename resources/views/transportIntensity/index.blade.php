@@ -1,5 +1,5 @@
 @extends('template')
-@section('districts','active')
+@section('transportIntensities','active')
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
@@ -28,7 +28,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h4 class="card-title">District Location Data Master</h4>
+                                    <h4 class="card-title">Transport Intensity Data Master</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -41,15 +41,15 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewDistrict">Add New District</button>
+                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewTransportIntensity">Add New Transport Intensity</button>
 										
-                                        @include('district.modal')
+                                        @include('transportIntensity.modal')
                                         <div class="table-responsive">
-                                            <table id="districtTable" class="table table-striped table-bordered zero-configuration">
+                                            <table id="transportIntensityTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
+                                                        <th>Transport Intensity</th>
                                                         <th>Description</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
@@ -60,7 +60,7 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
+                                                        <th>Transport Intensity</th>
                                                         <th>Description</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
@@ -81,6 +81,9 @@
         @endsection
 
 @push('ajax_crud')
+
+<script src="{{asset('vendors/js/forms/validation/jqBootstrapValidation.js')}}"></script>
+
 <script type="text/javascript">
   $(function () {
       
@@ -90,13 +93,13 @@
             }
       });
   
-      var table = $('#districtTable').DataTable({
+      var table = $('#transportIntensityTable').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('districts.index') }}",
+          ajax: "{{ route('transportIntensities.index') }}",
           columns: [
               {data: null},
-              {data: 'district_name', name: 'district_name'},
+              {data: 'intensity', name: 'intensity'},
               {data: 'description', name: 'description'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
@@ -109,22 +112,22 @@
             });
         });
   
-      $('#createNewDistrict').click(function () {
+      $('#createNewTransportIntensity').click(function () {
           $('#saveBtn').val("create");
-          $('#district_id').val('');
-          $('#districtForm').trigger("reset");
-          $('#modalHeading').html("Create New Sub-District");
-          $('#districtModal').modal('show');
+          $('#transportIntensity_id').val('');
+          $('#transportIntensityForm').trigger("reset");
+          $('#modalHeading').html("Create New Transport Intensity");
+          $('#transportIntensityModal').modal('show');
       });
   
-      $('body').on('click', '.editDistrict', function () {
-        var district_id = $(this).data('id');
-        $.get("{{ route('districts.index') }}" +'/' + district_id +'/edit', function (data) {
-            $('#modalHeading').html("Edit Sub-District");
+      $('body').on('click', '.editTransportIntensity', function () {
+        var transportIntensity_id = $(this).data('id');
+        $.get("{{ route('transportIntensities.index') }}" +'/' + transportIntensity_id +'/edit', function (data) {
+            $('#modalHeading').html("Edit Transport Intensity");
             $('#saveBtn').val("edit");
-            $('#districtModal').modal('show');
-            $('#district_id').val(data.id);
-            $('#district_name').val(data.district_name);
+            $('#transportIntensityModal').modal('show');
+            $('#transportIntensity_id').val(data.id);
+            $('#intensity').val(data.intensity);
             $('#description').val(data.description);
             $('#created_by').val(data.created_by);
             $('#created_datetime').val(data.created_datetime);
@@ -149,14 +152,14 @@
           $(this).html('Save');
       
           $.ajax({
-            data: $('#districtForm').serialize(),
-            url: "{{ route('districts.store') }}",
+            data: $('#transportIntensityForm').serialize(),
+            url: "{{ route('transportIntensities.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
        
-                $('#districtForm').trigger("reset");
-                $('#districtModal').modal('hide');
+                $('#transportIntensityForm').trigger("reset");
+                $('#transportIntensityModal').modal('hide');
                 table.draw();
            
             },
@@ -167,14 +170,14 @@
         });
       });
       
-      $('body').on('click', '.deleteDistrict', function () {
+      $('body').on('click', '.deleteTransportIntensity', function () {
        
-          var district_id = $(this).data("id");
+          var transportIntensity_id = $(this).data("id");
           confirm("Are You sure want to delete !");
         
           $.ajax({
               type: "DELETE",
-              url: "{{ route('districts.store') }}"+'/'+district_id,
+              url: "{{ route('transportIntensities.store') }}"+'/'+transportIntensity_id,
               success: function (data) {
                   table.draw();
               },

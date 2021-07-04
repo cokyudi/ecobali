@@ -77,7 +77,7 @@
 				<ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
 					<li class=" navigation-header"><span>Main Menu</span><i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Main Menu"></i></li>
 					<li class=" nav-item">
-						<a href="index.html"><i class="la la-home"></i><span class="menu-title">Dashboard</span></a>
+						<a><i class="la la-home"></i><span class="menu-title">Dashboard</span></a>
 						<ul class="menu-content">
 							<li class="active"><a class="menu-item" href="index1.html"><i class="la la-database mr-1"></i><span>Collection</span></a>
 							</li>
@@ -98,6 +98,23 @@
 					<li class=" nav-item"><a href="#"><i class="la la-users"></i><span class="menu-title" >Participant</span></a></li>
 					<li class=" nav-item"><a href="#"><i class="la la-archive"></i><span class="menu-title" >Category</span></a></li>
 					<li class=" nav-item"><a href="#"><i class="la la-map-pin"></i><span class="menu-title" >Region</span></a></li>
+
+					<li class="nav-item">
+						<a><i class="la la-home"></i><span class="menu-title">Master Data</span></a>
+						<ul class="menu-content">
+							<li class="@yield('participants')"><a class="menu-item" href="{{url('participants')}}"><i class="la la-database mr-1"></i><span>Participant</span></a></li>
+							<li class="@yield('categories')"><a class="menu-item" href="{{url('categories')}}"><i class="la la-database mr-1"></i><span>Category</span></a></li>
+							<li class="@yield('areas')"><a class="menu-item" href="{{url('areas')}}"><i class="la la-database mr-1"></i><span>Area</span></a></li>
+							<li class="@yield('subdistricts')"><a class="menu-item" href="{{url('subdistricts')}}"><i class="la la-database mr-1"></i><span>Sub - District</span></a></li>
+							<li class="@yield('districts')"><a class="menu-item" href="{{url('districts')}}"><i class="la la-database mr-1"></i><span>District</span></a></li>
+							<li class="@yield('boxResources')"><a class="menu-item" href="{{url('boxResources')}}"><i class="la la-database mr-1"></i><span>Box Resource</span></a></li>
+							<li class="@yield('purchasePrices')"><a class="menu-item" href="{{url('purchasePrices')}}"><i class="la la-database mr-1"></i><span>Purchase Price</span></a></li>
+							<li class="@yield('transportIntensities')"><a class="menu-item" href="{{url('transportIntensities')}}"><i class="la la-database mr-1"></i><span>Transport Intensity</span></a></li>
+							<li class="@yield('paymentMethods')"><a class="menu-item" href="{{url('paymentMethods')}}"><i class="la la-database mr-1"></i><span>Payment Method</span></a></li>
+							<li class="@yield('banks')"><a class="menu-item" href="{{url('banks')}}"><i class="la la-database mr-1"></i><span>Bank</span></a></li>
+						</ul>
+					</li>
+
 					<li class=" navigation-header"><span>Application</span><i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Application"></i></li>
 					<li class=" nav-item"><a href="#"><i class="la la-user"></i><span class="menu-title" >User List</span></a></li>
 				</ul>

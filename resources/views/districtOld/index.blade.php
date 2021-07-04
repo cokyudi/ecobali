@@ -1,5 +1,5 @@
 @extends('template')
-@section('districts','active')
+
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
@@ -28,7 +28,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h4 class="card-title">District Location Data Master</h4>
+                                    <h4 class="card-title">District Data Master</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -41,16 +41,17 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
+                                    <!-- <a class="btn btn-success" href="javascript:void(0)" id="createNewDistrict"> Create New Book</a> -->
                                     <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewDistrict">Add New District</button>
 										
                                         @include('district.modal')
                                         <div class="table-responsive">
-                                            <table id="districtTable" class="table table-striped table-bordered zero-configuration">
+                                            <table id="test" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
-                                                        <th>Description</th>
+                                                        <th>District</th>
+                                                        <th>Province</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </thead>
@@ -60,8 +61,8 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
-                                                        <th>Description</th>
+                                                        <th>District</th>
+                                                        <th>Province</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </tfoot>
@@ -90,14 +91,14 @@
             }
       });
   
-      var table = $('#districtTable').DataTable({
+      var table = $('#test').DataTable({
           processing: true,
           serverSide: true,
           ajax: "{{ route('districts.index') }}",
           columns: [
               {data: null},
               {data: 'district_name', name: 'district_name'},
-              {data: 'description', name: 'description'},
+              {data: 'province_name', name: 'province_name'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
@@ -113,19 +114,19 @@
           $('#saveBtn').val("create");
           $('#district_id').val('');
           $('#districtForm').trigger("reset");
-          $('#modalHeading').html("Create New Sub-District");
+          $('#modalHeading').html("Create New District");
           $('#districtModal').modal('show');
       });
   
       $('body').on('click', '.editDistrict', function () {
         var district_id = $(this).data('id');
         $.get("{{ route('districts.index') }}" +'/' + district_id +'/edit', function (data) {
-            $('#modalHeading').html("Edit Sub-District");
+            $('#modalHeading').html("Edit District");
             $('#saveBtn').val("edit");
             $('#districtModal').modal('show');
             $('#district_id').val(data.id);
             $('#district_name').val(data.district_name);
-            $('#description').val(data.description);
+            $('#province_name').val(data.province_name);
             $('#created_by').val(data.created_by);
             $('#created_datetime').val(data.created_datetime);
             $('#last_modified_by').val(data.last_modified_by);

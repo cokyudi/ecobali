@@ -15,22 +15,41 @@ class CreateParticipantsTable extends Migration
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('participant_name', 150);
-            $table->string('person_in_charge', 150)->nullable();
-            $table->string('phone_number', 20)->nullable();
-            $table->string('email_address', 100)->nullable();
-            $table->string('category_id', 10)->nullable();
-            $table->string('status_id', 100)->nullable();
-            $table->string('intensity', 100)->nullable();
-            $table->date('joined_at')->nullable();
-            $table->string('notes', 200)->nullable();
-            $table->string('address', 200)->nullable();
-            $table->string('area', 200)->nullable();
-            $table->string('sub_district', 200)->nullable();
-            $table->string('district_id', 200)->nullable();
-            $table->string('latitude', 200)->nullable();
-            $table->string('longitude', 200)->nullable();
-            $table->string('source_description', 200)->nullable();
+            $table->string('participant_name', 250);
+            $table->string('id_category', 50)->nullable();
+            $table->string('contact_name_1', 250)->nullable();
+            $table->string('contact_position_1', 200)->nullable();
+            $table->string('contact_phone_1', 50)->nullable();
+            $table->string('contact_email_1', 200)->nullable();
+            $table->string('contact_name_2', 250)->nullable();
+            $table->string('contact_position_2', 200)->nullable();
+            $table->string('contact_phone_2', 50)->nullable();
+            $table->string('contact_email_2', 200)->nullable();
+            $table->date('joined_date')->nullable();
+            $table->string('id_transport_intensity', 50)->nullable();
+
+            $table->string('address', 400)->nullable();
+            $table->string('latitude', 100)->nullable();
+            $table->string('langitude', 100)->nullable();
+            $table->string('service_area', 400)->nullable();
+            $table->string('id_area', 50)->nullable();
+            $table->string('id_subdistrict', 50)->nullable();
+            $table->string('id_district', 50)->nullable();
+
+            $table->string('id_box_resource', 50)->nullable();
+            $table->string('resource_description', 400)->nullable();
+            $table->string('id_purchase_price', 50)->nullable();
+            
+            $table->string('id_payment_method', 50)->nullable();
+            $table->string('id_bank', 50)->nullable();
+            $table->string('bank_branch', 200)->nullable();
+            $table->string('bank_account_number', 200)->nullable();
+            $table->string('bank_account_holder_name', 200)->nullable();
+
+            $table->string('notes', 400)->nullable();
+            $table->string('url_photo_1', 400)->nullable();
+            $table->string('url_photo_2', 400)->nullable();
+
             $table->string('created_by', 100)->nullable();
             $table->dateTime('created_datetime')->nullable();
             $table->string('last_modified_by', 100)->nullable();

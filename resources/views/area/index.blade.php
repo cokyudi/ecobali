@@ -1,5 +1,7 @@
 @extends('template')
-@section('districts','active')
+
+@section('areas','active')
+
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
@@ -28,7 +30,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h4 class="card-title">District Location Data Master</h4>
+                                    <h4 class="card-title">Area Location Data Master</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -41,15 +43,15 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewDistrict">Add New District</button>
+                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewArea">Add New Area</button>
 										
-                                        @include('district.modal')
+                                        @include('area.modal')
                                         <div class="table-responsive">
-                                            <table id="districtTable" class="table table-striped table-bordered zero-configuration">
+                                            <table id="areaTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
+                                                        <th>Area</th>
                                                         <th>Description</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
@@ -60,7 +62,7 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
+                                                        <th>Area</th>
                                                         <th>Description</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
@@ -90,13 +92,13 @@
             }
       });
   
-      var table = $('#districtTable').DataTable({
+      var table = $('#areaTable').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('districts.index') }}",
+          ajax: "{{ route('areas.index') }}",
           columns: [
               {data: null},
-              {data: 'district_name', name: 'district_name'},
+              {data: 'area_name', name: 'area_name'},
               {data: 'description', name: 'description'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
@@ -109,22 +111,22 @@
             });
         });
   
-      $('#createNewDistrict').click(function () {
+      $('#createNewArea').click(function () {
           $('#saveBtn').val("create");
-          $('#district_id').val('');
-          $('#districtForm').trigger("reset");
-          $('#modalHeading').html("Create New Sub-District");
-          $('#districtModal').modal('show');
+          $('#area_id').val('');
+          $('#areaForm').trigger("reset");
+          $('#modalHeading').html("Create New Area");
+          $('#areaModal').modal('show');
       });
   
-      $('body').on('click', '.editDistrict', function () {
-        var district_id = $(this).data('id');
-        $.get("{{ route('districts.index') }}" +'/' + district_id +'/edit', function (data) {
-            $('#modalHeading').html("Edit Sub-District");
+      $('body').on('click', '.editArea', function () {
+        var area_id = $(this).data('id');
+        $.get("{{ route('areas.index') }}" +'/' + area_id +'/edit', function (data) {
+            $('#modalHeading').html("Edit Area");
             $('#saveBtn').val("edit");
-            $('#districtModal').modal('show');
-            $('#district_id').val(data.id);
-            $('#district_name').val(data.district_name);
+            $('#areaModal').modal('show');
+            $('#area_id').val(data.id);
+            $('#area_name').val(data.area_name);
             $('#description').val(data.description);
             $('#created_by').val(data.created_by);
             $('#created_datetime').val(data.created_datetime);
@@ -149,14 +151,14 @@
           $(this).html('Save');
       
           $.ajax({
-            data: $('#districtForm').serialize(),
-            url: "{{ route('districts.store') }}",
+            data: $('#areaForm').serialize(),
+            url: "{{ route('areas.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
        
-                $('#districtForm').trigger("reset");
-                $('#districtModal').modal('hide');
+                $('#areaForm').trigger("reset");
+                $('#areaModal').modal('hide');
                 table.draw();
            
             },
@@ -167,14 +169,14 @@
         });
       });
       
-      $('body').on('click', '.deleteDistrict', function () {
+      $('body').on('click', '.deleteArea', function () {
        
-          var district_id = $(this).data("id");
+          var area_id = $(this).data("id");
           confirm("Are You sure want to delete !");
         
           $.ajax({
               type: "DELETE",
-              url: "{{ route('districts.store') }}"+'/'+district_id,
+              url: "{{ route('areas.store') }}"+'/'+area_id,
               success: function (data) {
                   table.draw();
               },

@@ -18,9 +18,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Description</label>
+                        <label class="control-label">Province</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="description" name="description" placeholder="Enter Description" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="province_name" name="province_name" placeholder="Enter Province Name" value="" maxlength="50" required="">
                         </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">

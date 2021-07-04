@@ -1,5 +1,5 @@
 @extends('template')
-@section('districts','active')
+@section('boxResources','active')
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
@@ -28,7 +28,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h4 class="card-title">District Location Data Master</h4>
+                                    <h4 class="card-title">Box Resource Data Master</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -41,15 +41,15 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewDistrict">Add New District</button>
+                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewBoxResource">Add Box Resource</button>
 										
-                                        @include('district.modal')
+                                        @include('boxResource.modal')
                                         <div class="table-responsive">
-                                            <table id="districtTable" class="table table-striped table-bordered zero-configuration">
+                                            <table id="boxResourceTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
+                                                        <th>Box Resource</th>
                                                         <th>Description</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
@@ -60,7 +60,7 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
+                                                        <th>Box Resource</th>
                                                         <th>Description</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
@@ -90,13 +90,13 @@
             }
       });
   
-      var table = $('#districtTable').DataTable({
+      var table = $('#boxResourceTable').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('districts.index') }}",
+          ajax: "{{ route('boxResources.index') }}",
           columns: [
               {data: null},
-              {data: 'district_name', name: 'district_name'},
+              {data: 'resource_name', name: 'resource_name'},
               {data: 'description', name: 'description'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
@@ -109,22 +109,22 @@
             });
         });
   
-      $('#createNewDistrict').click(function () {
+      $('#createNewBoxResource').click(function () {
           $('#saveBtn').val("create");
-          $('#district_id').val('');
-          $('#districtForm').trigger("reset");
-          $('#modalHeading').html("Create New Sub-District");
-          $('#districtModal').modal('show');
+          $('#boxResource_id').val('');
+          $('#boxResourceForm').trigger("reset");
+          $('#modalHeading').html("Create New Box Resource");
+          $('#boxResourceModal').modal('show');
       });
   
-      $('body').on('click', '.editDistrict', function () {
-        var district_id = $(this).data('id');
-        $.get("{{ route('districts.index') }}" +'/' + district_id +'/edit', function (data) {
-            $('#modalHeading').html("Edit Sub-District");
+      $('body').on('click', '.editBoxResource', function () {
+        var boxResource_id = $(this).data('id');
+        $.get("{{ route('boxResources.index') }}" +'/' + boxResource_id +'/edit', function (data) {
+            $('#modalHeading').html("Edit Box Resource");
             $('#saveBtn').val("edit");
-            $('#districtModal').modal('show');
-            $('#district_id').val(data.id);
-            $('#district_name').val(data.district_name);
+            $('#boxResourceModal').modal('show');
+            $('#boxResource_id').val(data.id);
+            $('#resource_name').val(data.resource_name);
             $('#description').val(data.description);
             $('#created_by').val(data.created_by);
             $('#created_datetime').val(data.created_datetime);
@@ -149,14 +149,14 @@
           $(this).html('Save');
       
           $.ajax({
-            data: $('#districtForm').serialize(),
-            url: "{{ route('districts.store') }}",
+            data: $('#boxResourceForm').serialize(),
+            url: "{{ route('boxResources.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
        
-                $('#districtForm').trigger("reset");
-                $('#districtModal').modal('hide');
+                $('#boxResourceForm').trigger("reset");
+                $('#boxResourceModal').modal('hide');
                 table.draw();
            
             },
@@ -167,14 +167,14 @@
         });
       });
       
-      $('body').on('click', '.deleteDistrict', function () {
+      $('body').on('click', '.deleteBoxResource', function () {
        
-          var district_id = $(this).data("id");
+          var boxResource_id = $(this).data("id");
           confirm("Are You sure want to delete !");
         
           $.ajax({
               type: "DELETE",
-              url: "{{ route('districts.store') }}"+'/'+district_id,
+              url: "{{ route('boxResources.store') }}"+'/'+boxResource_id,
               success: function (data) {
                   table.draw();
               },

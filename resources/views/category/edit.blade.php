@@ -1,5 +1,5 @@
 @extends('template')
-
+@section('categories','active')
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">

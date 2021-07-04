@@ -14,18 +14,7 @@
 	// Input, Select, Textarea validations except submit button
 	$("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
 
-	// Square Checkbox & Radio
-    $('.skin-square input').iCheck({
-        checkboxClass: 'icheckbox_square-green',
-        radioClass: 'iradio_square-green',
-    });
-
-	// Touch Spin
-	$(".touchspin").TouchSpin();
-
-	// Bootstrap Switch
-	$(".switchBootstrap").bootstrapSwitch();
-
+	
 	var i = 0;
 	if (Array.prototype.forEach) {
 		var elems = Array.prototype.slice.call(document.querySelectorAll('.switchery'));

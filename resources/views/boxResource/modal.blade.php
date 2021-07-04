@@ -1,20 +1,20 @@
-<div class="modal fade text-left" id="districtModal" aria-hidden="true">
+<div class="modal fade text-left" id="boxResourceModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modalHeading"></h4>
             </div>
             <div class="modal-body">
-                <form id="districtForm" name="districtForm" class="form-horizontal">
-                    <input type="hidden" id="district_id" name="district_id" value="">
+                <form id="boxResourceForm" name="boxResourceForm" class="form-horizontal">
+                    <input type="hidden" id="boxResource_id" name="boxResource_id" value="">
                     <input type="hidden" id="created_by" name="created_by" value="">
                     <input type="hidden" id="created_datetime" name="created_datetime" value="">
                     <input type="hidden" id="last_modified_by" name="last_modified_by" value="">
                     <input type="hidden" id="last_modified_datetime" name="last_modified_datetime" value="">
                     <div class="form-group">
-                        <label for="name" class="control-label">District</label>
+                        <label for="name" class="control-label">Box Resource</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="district_name" name="district_name" placeholder="Enter District Name" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="resource_name" name="resource_name" placeholder="Enter Resource Name" value="" maxlength="50" required="">
                         </div>
                     </div>
                     <div class="form-group">

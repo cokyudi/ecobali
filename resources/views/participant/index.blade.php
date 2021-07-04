@@ -1,20 +1,22 @@
 @extends('template')
-@section('districts','active')
+
+@section('participants','active')
+
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
         <div class="content-wrapper">
             <div class="content-header row mb-1">
-                <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                    <h3 class="content-header-title mb-0 d-inline-block">Basic DataTables</h3>
+            <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
+                    <h3 class="content-header-title mb-0 d-inline-block">Participant</h3>
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html">Home</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">DataTables</a>
+                                <li class="breadcrumb-item"><a href="#">Master Data</a>
                                 </li>
-                                <li class="breadcrumb-item active">Basic DataTables
+                                <li class="breadcrumb-item active">Participant
                                 </li>
                             </ol>
                         </div>
@@ -28,7 +30,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h4 class="card-title">District Location Data Master</h4>
+                                    <h4 class="card-title">Participant Data Master</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -41,16 +43,18 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewDistrict">Add New District</button>
+                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewParticipant">Add New Participant</button>
 										
-                                        @include('district.modal')
+                                        @include('participant.modal')
                                         <div class="table-responsive">
-                                            <table id="districtTable" class="table table-striped table-bordered zero-configuration">
+                                            <table id="participantTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
-                                                        <th>Description</th>
+                                                        <th>Participant</th>
+                                                        <th>Category</th>
+                                                        <th>Joined Date</th>
+                                                        <th>District</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </thead>
@@ -60,8 +64,10 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
-                                                        <th>Description</th>
+                                                        <th>Participant</th>
+                                                        <th>Category</th>
+                                                        <th>Joined Date</th>
+                                                        <th>District</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </tfoot>
@@ -90,14 +96,16 @@
             }
       });
   
-      var table = $('#districtTable').DataTable({
+      var table = $('#participantTable').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('districts.index') }}",
+          ajax: "{{ route('participants.index') }}",
           columns: [
               {data: null},
-              {data: 'district_name', name: 'district_name'},
-              {data: 'description', name: 'description'},
+              {data: 'participant_name', name: 'participant_name'},
+              {data: 'id_category', name: 'id_category'},
+              {data: 'joined_date', name: 'joined_date'},
+              {data: 'id_district', name: 'id_district'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
@@ -109,22 +117,22 @@
             });
         });
   
-      $('#createNewDistrict').click(function () {
+      $('#createNewParticipant').click(function () {
           $('#saveBtn').val("create");
-          $('#district_id').val('');
-          $('#districtForm').trigger("reset");
-          $('#modalHeading').html("Create New Sub-District");
-          $('#districtModal').modal('show');
+          $('#participant_id').val('');
+          $('#participantForm').trigger("reset");
+          $('#modalHeading').html("Create New Participant");
+          $('#participantModal').modal('show');
       });
   
-      $('body').on('click', '.editDistrict', function () {
-        var district_id = $(this).data('id');
-        $.get("{{ route('districts.index') }}" +'/' + district_id +'/edit', function (data) {
-            $('#modalHeading').html("Edit Sub-District");
+      $('body').on('click', '.editParticipant', function () {
+        var participant_id = $(this).data('id');
+        $.get("{{ route('participants.index') }}" +'/' + participant_id +'/edit', function (data) {
+            $('#modalHeading').html("Edit Participant");
             $('#saveBtn').val("edit");
-            $('#districtModal').modal('show');
-            $('#district_id').val(data.id);
-            $('#district_name').val(data.district_name);
+            $('#participantModal').modal('show');
+            $('#participant_id').val(data.id);
+            $('#participant_name').val(data.participant_name);
             $('#description').val(data.description);
             $('#created_by').val(data.created_by);
             $('#created_datetime').val(data.created_datetime);
@@ -149,14 +157,14 @@
           $(this).html('Save');
       
           $.ajax({
-            data: $('#districtForm').serialize(),
-            url: "{{ route('districts.store') }}",
+            data: $('#participantForm').serialize(),
+            url: "{{ route('participants.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
        
-                $('#districtForm').trigger("reset");
-                $('#districtModal').modal('hide');
+                $('#participantForm').trigger("reset");
+                $('#participantModal').modal('hide');
                 table.draw();
            
             },
@@ -167,14 +175,14 @@
         });
       });
       
-      $('body').on('click', '.deleteDistrict', function () {
+      $('body').on('click', '.deleteParticipant', function () {
        
-          var district_id = $(this).data("id");
+          var participant_id = $(this).data("id");
           confirm("Are You sure want to delete !");
         
           $.ajax({
               type: "DELETE",
-              url: "{{ route('districts.store') }}"+'/'+district_id,
+              url: "{{ route('participants.store') }}"+'/'+participant_id,
               success: function (data) {
                   table.draw();
               },
