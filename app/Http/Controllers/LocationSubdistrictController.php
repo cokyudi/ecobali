@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\DistrictsImport;
+use App\Imports\SubDistrictsImport;
 use App\Models\LocationSubdistrict;
 use Illuminate\Http\Request;
 use DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LocationSubdistrictController extends Controller
 {
@@ -16,17 +19,17 @@ class LocationSubdistrictController extends Controller
     public function index(Request $request)
     {
         $subdistricts = LocationSubdistrict::latest()->get();
-        
+
         if ($request->ajax()) {
             $data = LocationSubdistrict::latest()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-   
+
                            $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editSubdistrict">Edit</a>';
-   
+
                            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteSubdistrict">Delete</a>';
-    
+
                             return $btn;
                     })
                     ->rawColumns(['action'])
@@ -56,15 +59,15 @@ class LocationSubdistrictController extends Controller
         LocationSubdistrict::updateOrCreate(
             ['id' => $request->subdistrict_id],
             [
-                'subdistrict_name' => $request->subdistrict_name, 
+                'subdistrict_name' => $request->subdistrict_name,
                 'description' => $request->description,
                 'created_by' => $request->created_by,
                 'created_datetime' => $request->created_datetime,
                 'last_modified_by' => $request->last_modified_by,
                 'last_modified_datetime' => $request->last_modified_datetime,
             ]
-        );        
-   
+        );
+
         return response()->json(['success'=>'Sub-District saved successfully.']);
     }
 
@@ -80,7 +83,7 @@ class LocationSubdistrictController extends Controller
         return response()->json($subdistrict);
     }
 
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -90,7 +93,18 @@ class LocationSubdistrictController extends Controller
     public function destroy($id)
     {
         LocationSubdistrict::find($id)->delete();
-     
+
         return response()->json(['success'=>'Sub-District deleted successfully.']);
+    }
+
+    public static function importSubDistrict(Request $request)
+    {
+        if($request->fileImportSubDistrict) {
+            $path = ($request->fileImportSubDistrict)->getRealPath();
+            Excel::import(new SubDistrictsImport, $path);
+        }
+
+        return response()->json(['success'=>'Import successfully.']);
+
     }
 }

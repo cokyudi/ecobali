@@ -41,9 +41,10 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewSubdistrict">Add New Subdistrict</button>
-										
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewSubdistrict">Add New Subdistrict</button>
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importSubdistrict">Import Subdistrict</button>
                                         @include('subdistrict.modal')
+                                        @include('subdistrict.modalImport')
                                         <div class="table-responsive">
                                             <table id="subdistrictTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
@@ -55,7 +56,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -83,13 +84,13 @@
 @push('ajax_crud')
 <script type="text/javascript">
   $(function () {
-      
+
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
       });
-  
+
       var table = $('#subdistrictTable').DataTable({
           processing: true,
           serverSide: true,
@@ -101,14 +102,40 @@
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
-  
+
       table.on('draw.dt', function () {
             var info = table.page.info();
             table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1 + info.start;
             });
         });
-  
+
+      $('#importSubdistrict').click(function () {
+          $('#subDistrictImportModal').modal('show');
+      });
+
+      $('#saveBtnFormImport').click(function (e) {
+          e.preventDefault();
+
+          $.ajax({
+              data: new FormData($("#subDistrictFormImport")[0]),
+              url: "{{ route('subdistricts.importSubdistricts') }}",
+              type: "POST",
+              dataType: 'json',
+              processData: false,
+              contentType: false,
+              success: function (data) {
+                  $('#subDistrictFormImport').trigger("reset");
+                  $('#subDistrictImportModal').modal('hide');
+                  table.draw();
+              },
+              error: function(xhr, status, error) {
+                  console.log('Error:', data);
+              }
+          });
+
+      });
+
       $('#createNewSubdistrict').click(function () {
           $('#saveBtn').val("create");
           $('#subdistrict_id').val('');
@@ -116,7 +143,7 @@
           $('#modalHeading').html("Create New Sub-District");
           $('#subdistrictModal').modal('show');
       });
-  
+
       $('body').on('click', '.editSubdistrict', function () {
         var subdistrict_id = $(this).data('id');
         $.get("{{ route('subdistricts.index') }}" +'/' + subdistrict_id +'/edit', function (data) {
@@ -132,7 +159,7 @@
             $('#last_modified_datetime').val(data.last_modified_datetime);
         })
      });
-  
+
       $('#saveBtn').click(function (e) {
           e.preventDefault();
           if ($('#saveBtn').val() == "create")  {
@@ -147,18 +174,18 @@
               $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
           }
           $(this).html('Save');
-      
+
           $.ajax({
             data: $('#subdistrictForm').serialize(),
             url: "{{ route('subdistricts.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
-       
+
                 $('#subdistrictForm').trigger("reset");
                 $('#subdistrictModal').modal('hide');
                 table.draw();
-           
+
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -166,12 +193,12 @@
             }
         });
       });
-      
+
       $('body').on('click', '.deleteSubdistrict', function () {
-       
+
           var subdistrict_id = $(this).data("id");
           confirm("Are You sure want to delete !");
-        
+
           $.ajax({
               type: "DELETE",
               url: "{{ route('subdistricts.store') }}"+'/'+subdistrict_id,
@@ -183,8 +210,8 @@
               }
           });
       });
-       
+
     });
 </script>
 
-@endpush 
+@endpush

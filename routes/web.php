@@ -39,6 +39,7 @@ Route::resource('categoryDetails', CategoryDetailController::class);
 Route::resource('areas', LocationAreaController::class);
 Route::post('importArea',[LocationAreaController::class, 'importArea'])->name('areas.importArea');
 Route::resource('subdistricts', LocationSubdistrictController::class);
+Route::post('importSubdistricts',[LocationSubdistrictController::class, 'importSubDistrict'])->name('subdistricts.importSubdistricts');
 Route::resource('districts', LocationDistrictController::class);
 Route::post('importDistrict',[LocationDistrictController::class, 'importDistrict'])->name('districts.importDistrict');
 Route::resource('boxResources', BoxResourceController::class);
