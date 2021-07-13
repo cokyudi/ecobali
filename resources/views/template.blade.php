@@ -32,6 +32,7 @@
 		<link rel="stylesheet" type="text/css" href="{{asset('vendors/css/charts/morris.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('fonts/simple-line-icons/style.min.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('css/core/colors/palette-gradient.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
 		@stack('css_extend')
 		<!-- END: Page CSS-->
 	</head>
@@ -79,7 +80,7 @@
 					<li class=" nav-item">
 						<a><i class="la la-home"></i><span class="menu-title">Dashboard</span></a>
 						<ul class="menu-content">
-							<li class="active"><a class="menu-item" href="index1.html"><i class="la la-database mr-1"></i><span>Collection</span></a>
+							<li class=""><a class="menu-item" href="index1.html"><i class="la la-database mr-1"></i><span>Collection</span></a>
 							</li>
 							<li><a class="menu-item" href="invoice-template.html"><i class="la la-bar-chart mr-1"></i><span>Comparison</span></a>
 							</li>
@@ -94,19 +95,16 @@
 					<li class=" nav-item"><a href="#"><i class="la la-map"></i><span class="menu-title" >Maps</span></a></li>
 					<li class=" nav-item"><a href="#"><i class="la la-database"></i><span class="menu-title" >Collection</span></a></li>
 					<li class=" nav-item"><a href="#"><i class="la la-ship"></i><span class="menu-title" >Shipment</span></a></li>
-					<li class=" navigation-header"><span>Master Data</span><i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Master Data"></i></li>
-					<li class=" nav-item"><a href="#"><i class="la la-users"></i><span class="menu-title" >Participant</span></a></li>
-					<li class=" nav-item"><a href="#"><i class="la la-archive"></i><span class="menu-title" >Category</span></a></li>
-					<li class=" nav-item"><a href="#"><i class="la la-map-pin"></i><span class="menu-title" >Region</span></a></li>
+
 
 					<li class="nav-item">
 						<a><i class="la la-home"></i><span class="menu-title">Master Data</span></a>
 						<ul class="menu-content">
 							<li class="@yield('participants')"><a class="menu-item" href="{{url('participants')}}"><i class="la la-database mr-1"></i><span>Participant</span></a></li>
 							<li class="@yield('categories')"><a class="menu-item" href="{{url('categories')}}"><i class="la la-database mr-1"></i><span>Category</span></a></li>
-							<li class="@yield('areas')"><a class="menu-item" href="{{url('areas')}}"><i class="la la-database mr-1"></i><span>Area</span></a></li>
-							<li class="@yield('subdistricts')"><a class="menu-item" href="{{url('subdistricts')}}"><i class="la la-database mr-1"></i><span>Sub - District</span></a></li>
-							<li class="@yield('districts')"><a class="menu-item" href="{{url('districts')}}"><i class="la la-database mr-1"></i><span>District</span></a></li>
+							<li class="@yield('areas')"><a class="menu-item" href="{{url('areas')}}"><i class="la la-database mr-1"></i><span>Village</span></a></li>
+							<li class="@yield('subdistricts')"><a class="menu-item" href="{{url('subdistricts')}}"><i class="la la-database mr-1"></i><span>District</span></a></li>
+							<li class="@yield('districts')"><a class="menu-item" href="{{url('districts')}}"><i class="la la-database mr-1"></i><span>Regency</span></a></li>
 							<li class="@yield('boxResources')"><a class="menu-item" href="{{url('boxResources')}}"><i class="la la-database mr-1"></i><span>Box Resource</span></a></li>
 							<li class="@yield('purchasePrices')"><a class="menu-item" href="{{url('purchasePrices')}}"><i class="la la-database mr-1"></i><span>Purchase Price</span></a></li>
 							<li class="@yield('transportIntensities')"><a class="menu-item" href="{{url('transportIntensities')}}"><i class="la la-database mr-1"></i><span>Transport Intensity</span></a></li>
@@ -133,23 +131,23 @@
 		<!-- END: Footer-->
 		<!-- BEGIN: Vendor JS-->
         <script src="{{asset('vendors/js/vendors.min.js')}}"></script>
-        
+
 		<!-- BEGIN Vendor JS-->
 		<!-- BEGIN: Page Vendor JS-->
-        
+
 		<script src="{{asset('vendors/js/charts/chart.min.js')}}"></script>
 		<script src="{{asset('vendors/js/charts/raphael-min.js')}}"></script>
 		<script src="{{asset('vendors/js/charts/morris.min.js')}}"></script>
 		<script src="{{asset('vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js')}}"></script>
 		<script src="{{asset('vendors/js/charts/jvector/jquery-jvectormap-world-mill.js')}}"></script>
-		<script src="{{asset('data/jvector/visitor-data.js')}}"></script>  
+		<script src="{{asset('data/jvector/visitor-data.js')}}"></script>
 		<!-- chart pie -->
-		
+
 		<!-- chart line -->
-		
+
 		<!-- datatable -->
 		<script src="{{asset('vendors/js/tables/datatable/datatables.min.js')}}"></script>
-		
+
 		<!-- END: Page Vendor JS-->
 		<!-- BEGIN: Theme JS-->
 		<script src="{{asset('js/core/app-menu.min.js')}}"></script>
@@ -157,12 +155,12 @@
 		<script src="{{asset('js/scripts/customizer.min.js')}}"></script>
 		<script src="{{asset('js/scripts/footer.min.js')}}"></script>
 		<!-- END: Theme JS-->
-		<!-- BEGIN: Page JS-->	
+		<!-- BEGIN: Page JS-->
         @stack('ajax_crud')
 		<!-- BEGIN Vendor JS-->
 		<!-- BEGIN: Page Vendor JS-->
-        
-		
+
+
 	</body>
 	<!-- END: Body-->
 </html>

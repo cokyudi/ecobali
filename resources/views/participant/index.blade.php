@@ -3,6 +3,7 @@
 @section('participants','active')
 
 @section('content')
+<?php use App\Http\Controllers\ParticipantController;?>
         <!-- BEGIN: Content-->
         <div class="app-content content">
         <div class="content-wrapper">
@@ -44,30 +45,32 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
                                     <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewParticipant">Add New Participant</button>
-										
+
                                         @include('participant.modal')
                                         <div class="table-responsive">
                                             <table id="participantTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Participant</th>
+                                                        <th>Participant Name</th>
                                                         <th>Category</th>
-                                                        <th>Joined Date</th>
                                                         <th>District</th>
+                                                        <th>Transport Intensity</th>
+                                                        <th>Joined Date</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Participant</th>
+                                                        <th>Participant Name</th>
                                                         <th>Category</th>
-                                                        <th>Joined Date</th>
                                                         <th>District</th>
+                                                        <th>Transport Intensity</th>
+                                                        <th>Joined Date</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </tfoot>
@@ -89,13 +92,13 @@
 @push('ajax_crud')
 <script type="text/javascript">
   $(function () {
-      
+
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
       });
-  
+
       var table = $('#participantTable').DataTable({
           processing: true,
           serverSide: true,
@@ -103,44 +106,42 @@
           columns: [
               {data: null},
               {data: 'participant_name', name: 'participant_name'},
-              {data: 'id_category', name: 'id_category'},
+              {data: 'category_name', name: 'category_name'},
+              {data: 'district_name', name: 'district_name'},
+              {data: 'intensity', name: 'intensity'},
               {data: 'joined_date', name: 'joined_date'},
-              {data: 'id_district', name: 'id_district'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
-  
+
       table.on('draw.dt', function () {
             var info = table.page.info();
             table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1 + info.start;
             });
         });
-  
+
       $('#createNewParticipant').click(function () {
-          $('#saveBtn').val("create");
-          $('#participant_id').val('');
-          $('#participantForm').trigger("reset");
-          $('#modalHeading').html("Create New Participant");
-          $('#participantModal').modal('show');
+
+        var category_id = $(this).data('id');
+        window.location.href = "{{ route('participants.createParticipant') }}";
       });
-  
+
+    //   $('#createNewParticipant').click(function () {
+    //       $('#saveBtn').val("create");
+    //       $('#participant_id').val('');
+    //       $('#participantForm').trigger("reset");
+    //       $('#modalHeading').html("Create New Participant");
+    //       $('#participantModal').modal('show');
+    //   });
+
       $('body').on('click', '.editParticipant', function () {
         var participant_id = $(this).data('id');
-        $.get("{{ route('participants.index') }}" +'/' + participant_id +'/edit', function (data) {
-            $('#modalHeading').html("Edit Participant");
-            $('#saveBtn').val("edit");
-            $('#participantModal').modal('show');
-            $('#participant_id').val(data.id);
-            $('#participant_name').val(data.participant_name);
-            $('#description').val(data.description);
-            $('#created_by').val(data.created_by);
-            $('#created_datetime').val(data.created_datetime);
-            $('#last_modified_by').val(data.last_modified_by);
-            $('#last_modified_datetime').val(data.last_modified_datetime);
-        })
+        window.location.href = "{{ route('participants.index') }}" +'/' + participant_id +'/edit';
+        {{--$.get("{{ route('participants.index') }}" +'/' + participant_id +'/edit', function (data) {--}}
+
      });
-  
+
       $('#saveBtn').click(function (e) {
           e.preventDefault();
           if ($('#saveBtn').val() == "create")  {
@@ -155,18 +156,18 @@
               $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
           }
           $(this).html('Save');
-      
+
           $.ajax({
             data: $('#participantForm').serialize(),
             url: "{{ route('participants.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
-       
+
                 $('#participantForm').trigger("reset");
                 $('#participantModal').modal('hide');
                 table.draw();
-           
+
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -174,12 +175,12 @@
             }
         });
       });
-      
+
       $('body').on('click', '.deleteParticipant', function () {
-       
+
           var participant_id = $(this).data("id");
           confirm("Are You sure want to delete !");
-        
+
           $.ajax({
               type: "DELETE",
               url: "{{ route('participants.store') }}"+'/'+participant_id,
@@ -191,8 +192,8 @@
               }
           });
       });
-       
+
     });
 </script>
 
-@endpush 
+@endpush

@@ -43,9 +43,10 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewArea">Add New Area</button>
-										
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewArea">Add New Area</button>
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importArea">Import Area</button>
                                         @include('area.modal')
+                                        @include('area.modalImport')
                                         <div class="table-responsive">
                                             <table id="areaTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
@@ -57,7 +58,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -85,13 +86,13 @@
 @push('ajax_crud')
 <script type="text/javascript">
   $(function () {
-      
+
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
       });
-  
+
       var table = $('#areaTable').DataTable({
           processing: true,
           serverSide: true,
@@ -103,14 +104,14 @@
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
-  
+
       table.on('draw.dt', function () {
             var info = table.page.info();
             table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1 + info.start;
             });
         });
-  
+
       $('#createNewArea').click(function () {
           $('#saveBtn').val("create");
           $('#area_id').val('');
@@ -118,7 +119,34 @@
           $('#modalHeading').html("Create New Area");
           $('#areaModal').modal('show');
       });
-  
+
+      $('#importArea').click(function () {
+          $('#areaImportModal').modal('show');
+      });
+
+      $('#saveBtnFormImport').click(function (e) {
+          e.preventDefault();
+
+          $.ajax({
+              data: new FormData($("#areaFormImport")[0]),
+              url: "{{ route('areas.importArea') }}",
+              type: "POST",
+              dataType: 'json',
+              processData: false,
+              contentType: false,
+              success: function (data) {
+                  $('#areaFormImport').trigger("reset");
+                  $('#areaImportModal').modal('hide');
+                  table.draw();
+              },
+              error: function (data) {
+                  console.log('Error:', data);
+              }
+          });
+
+      });
+
+
       $('body').on('click', '.editArea', function () {
         var area_id = $(this).data('id');
         $.get("{{ route('areas.index') }}" +'/' + area_id +'/edit', function (data) {
@@ -134,7 +162,7 @@
             $('#last_modified_datetime').val(data.last_modified_datetime);
         })
      });
-  
+
       $('#saveBtn').click(function (e) {
           e.preventDefault();
           if ($('#saveBtn').val() == "create")  {
@@ -149,18 +177,18 @@
               $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
           }
           $(this).html('Save');
-      
+
           $.ajax({
             data: $('#areaForm').serialize(),
             url: "{{ route('areas.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
-       
+
                 $('#areaForm').trigger("reset");
                 $('#areaModal').modal('hide');
                 table.draw();
-           
+
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -168,12 +196,12 @@
             }
         });
       });
-      
+
       $('body').on('click', '.deleteArea', function () {
-       
+
           var area_id = $(this).data("id");
           confirm("Are You sure want to delete !");
-        
+
           $.ajax({
               type: "DELETE",
               url: "{{ route('areas.store') }}"+'/'+area_id,
@@ -185,8 +213,8 @@
               }
           });
       });
-       
+
     });
 </script>
 
-@endpush 
+@endpush

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\DistrictsImport;
 use App\Models\LocationDistrict;
 use Illuminate\Http\Request;
 use DataTables;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LocationDistrictController extends Controller
 {
@@ -16,17 +18,17 @@ class LocationDistrictController extends Controller
     public function index(Request $request)
     {
         $districts = LocationDistrict::latest()->get();
-        
+
         if ($request->ajax()) {
             $data = LocationDistrict::latest()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-   
+
                            $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editDistrict">Edit</a>';
-   
+
                            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteDistrict">Delete</a>';
-    
+
                             return $btn;
                     })
                     ->rawColumns(['action'])
@@ -56,15 +58,15 @@ class LocationDistrictController extends Controller
         LocationDistrict::updateOrCreate(
             ['id' => $request->district_id],
             [
-                'district_name' => $request->district_name, 
+                'district_name' => $request->district_name,
                 'description' => $request->description,
                 'created_by' => $request->created_by,
                 'created_datetime' => $request->created_datetime,
                 'last_modified_by' => $request->last_modified_by,
                 'last_modified_datetime' => $request->last_modified_datetime,
             ]
-        );        
-   
+        );
+
         return response()->json(['success'=>'District saved successfully.']);
     }
 
@@ -102,7 +104,18 @@ class LocationDistrictController extends Controller
     public function destroy($id)
     {
         LocationDistrict::find($id)->delete();
-     
+
         return response()->json(['success'=>'District deleted successfully.']);
+    }
+
+    public static function importDistrict(Request $request)
+    {
+        if($request->fileImportDistrict) {
+            $path = ($request->fileImportDistrict)->getRealPath();
+            Excel::import(new DistrictsImport, $path);
+        }
+
+        return response()->json(['success'=>'Import successfully.']);
+
     }
 }

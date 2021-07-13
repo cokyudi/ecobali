@@ -37,15 +37,17 @@ Route::get('/a', function () {
 Route::resource('categories', CategoryController::class);
 Route::resource('categoryDetails', CategoryDetailController::class);
 Route::resource('areas', LocationAreaController::class);
+Route::post('importArea',[LocationAreaController::class, 'importArea'])->name('areas.importArea');
 Route::resource('subdistricts', LocationSubdistrictController::class);
 Route::resource('districts', LocationDistrictController::class);
+Route::post('importDistrict',[LocationDistrictController::class, 'importDistrict'])->name('districts.importDistrict');
 Route::resource('boxResources', BoxResourceController::class);
 Route::resource('purchasePrices', PurchasePriceController::class);
 Route::resource('transportIntensities', TransportIntensityController::class);
 Route::resource('paymentMethods', PaymentMethodController::class);
 Route::resource('banks', BankController::class);
 Route::resource('participants', ParticipantController::class);
-
+Route::get('createParticipant',[ParticipantController::class, 'createParticipant'])->name('participants.createParticipant');
 
 
 

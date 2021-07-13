@@ -41,26 +41,27 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewDistrict">Add New District</button>
-										
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewDistrict">Add New District</button>
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importDistrict">Import District</button>
                                         @include('district.modal')
+                                        @include('district.modalImport')
                                         <div class="table-responsive">
                                             <table id="districtTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
+                                                        <th>District</th>
                                                         <th>Description</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
+                                                        <th>District</th>
                                                         <th>Description</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
@@ -83,13 +84,13 @@
 @push('ajax_crud')
 <script type="text/javascript">
   $(function () {
-      
+
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
       });
-  
+
       var table = $('#districtTable').DataTable({
           processing: true,
           serverSide: true,
@@ -101,26 +102,53 @@
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
-  
+
       table.on('draw.dt', function () {
             var info = table.page.info();
             table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1 + info.start;
             });
         });
-  
+
       $('#createNewDistrict').click(function () {
           $('#saveBtn').val("create");
           $('#district_id').val('');
           $('#districtForm').trigger("reset");
-          $('#modalHeading').html("Create New Sub-District");
+          $('#modalHeading').html("Create New District");
           $('#districtModal').modal('show');
       });
-  
+
+      $('#importDistrict').click(function () {
+          $('#districtImportModal').modal('show');
+      });
+
+      $('#saveBtnFormImport').click(function (e) {
+          e.preventDefault();
+
+          $.ajax({
+              data: new FormData($("#districtFormImport")[0]),
+              url: "{{ route('districts.importDistrict') }}",
+              type: "POST",
+              dataType: 'json',
+              processData: false,
+              contentType: false,
+              success: function (data) {
+                  $('#districtFormImport').trigger("reset");
+                  $('#districtImportModal').modal('hide');
+                  table.draw();
+              },
+              error: function(xhr, status, error) {
+                  var err = eval("(" + xhr.responseText + ")");
+                  alert(err.Message);
+              }
+          });
+
+      });
+
       $('body').on('click', '.editDistrict', function () {
         var district_id = $(this).data('id');
         $.get("{{ route('districts.index') }}" +'/' + district_id +'/edit', function (data) {
-            $('#modalHeading').html("Edit Sub-District");
+            $('#modalHeading').html("Edit District");
             $('#saveBtn').val("edit");
             $('#districtModal').modal('show');
             $('#district_id').val(data.id);
@@ -132,7 +160,7 @@
             $('#last_modified_datetime').val(data.last_modified_datetime);
         })
      });
-  
+
       $('#saveBtn').click(function (e) {
           e.preventDefault();
           if ($('#saveBtn').val() == "create")  {
@@ -147,18 +175,18 @@
               $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
           }
           $(this).html('Save');
-      
+
           $.ajax({
             data: $('#districtForm').serialize(),
             url: "{{ route('districts.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
-       
+
                 $('#districtForm').trigger("reset");
                 $('#districtModal').modal('hide');
                 table.draw();
-           
+
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -166,12 +194,12 @@
             }
         });
       });
-      
+
       $('body').on('click', '.deleteDistrict', function () {
-       
+
           var district_id = $(this).data("id");
           confirm("Are You sure want to delete !");
-        
+
           $.ajax({
               type: "DELETE",
               url: "{{ route('districts.store') }}"+'/'+district_id,
@@ -183,8 +211,8 @@
               }
           });
       });
-       
+
     });
 </script>
 
-@endpush 
+@endpush
