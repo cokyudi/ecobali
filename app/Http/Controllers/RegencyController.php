@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Imports\RegenciesImport;
-use App\Imports\DistrictsImport;
-use App\Models\District;
+use App\Models\Regency;
 use Illuminate\Http\Request;
 use DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 
-class DistrictController extends Controller
+class RegencyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,24 +17,24 @@ class DistrictController extends Controller
      */
     public function index(Request $request)
     {
-        $districts = District::latest()->get();
+        $regencies = Regency::latest()->get();
 
         if ($request->ajax()) {
-            $data = District::latest()->get();
+            $data = $regencies;
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
 
-                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editDistrict">Edit</a>';
+                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editRegency">Edit</a>';
 
-                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteDistrict">Delete</a>';
+                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteRegency">Delete</a>';
 
                             return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('district/index',compact('districts'));
+        return view('regency/index',compact('regencies'));
     }
 
     /**
@@ -48,12 +47,18 @@ class DistrictController extends Controller
         //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        District::updateOrCreate(
-            ['id' => $request->district_id],
+        Regency::updateOrCreate(
+            ['id' => $request->regency_id],
             [
-                'district_name' => $request->district_name,
+                'regency_name' => $request->regency_name,
                 'description' => $request->description,
                 'created_by' => $request->created_by,
                 'created_datetime' => $request->created_datetime,
@@ -62,29 +67,30 @@ class DistrictController extends Controller
             ]
         );
 
-        return response()->json(['success'=>'District saved successfully.']);
+        return response()->json(['success'=>'Regency saved successfully.']);
     }
 
     public function edit($id)
     {
-        $district = District::find($id);
-        return response()->json($district);
+        $regency = Regency::find($id);
+        return response()->json($regency);
     }
 
     public function destroy($id)
     {
-        District::find($id)->delete();
+        Regency::find($id)->delete();
 
-        return response()->json(['success'=>'District deleted successfully.']);
+        return response()->json(['success'=>'Regency deleted successfully.']);
     }
 
-    public static function importDistrict(Request $request)
+    public static function importRegency(Request $request)
     {
-        if($request->fileImportDistrict) {
-            $path = ($request->fileImportDistrict)->getRealPath();
-            Excel::import(new DistrictsImport, $path);
+        if($request->fileImportRegency) {
+            $path = ($request->fileImportRegency)->getRealPath();
+            Excel::import(new RegenciesImport, $path);
         }
 
         return response()->json(['success'=>'Import successfully.']);
+
     }
 }

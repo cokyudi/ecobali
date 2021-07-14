@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ParticipantsImport;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ParticipantController extends Controller
 {
@@ -24,14 +26,14 @@ class ParticipantController extends Controller
             ->leftJoin('transport_intensities', function ($join) {
                 $join->on('participants.id_transport_intensity', '=', 'transport_intensities.id');
             })
-            ->leftJoin('location_areas', function ($join) {
-                $join->on('participants.id_area', '=', 'location_areas.id');
+            ->leftJoin('areas', function ($join) {
+                $join->on('participants.id_area', '=', 'areas.id');
             })
-            ->leftJoin('location_subdistricts', function ($join) {
-                $join->on('participants.id_subdistrict', '=', 'location_subdistricts.id');
+            ->leftJoin('districts', function ($join) {
+                $join->on('participants.id_district', '=', 'districts.id');
             })
-            ->leftJoin('location_districts', function ($join) {
-                $join->on('participants.id_district', '=', 'location_districts.id');
+            ->leftJoin('regencies', function ($join) {
+                $join->on('participants.id_regency', '=', 'regencies.id');
             })
             ->leftJoin('box_resources', function ($join) {
                 $join->on('participants.id_box_resource', '=', 'box_resources.id');
@@ -50,9 +52,9 @@ class ParticipantController extends Controller
                 'participants.participant_name',
                 'participants.joined_date',
                 'categories.category_name',
-                'location_areas.area_name',
-                'location_subdistricts.subdistrict_name',
-                'location_districts.district_name',
+                'areas.area_name',
+                'districts.district_name',
+                'regencies.regency_name',
                 'box_resources.resource_name',
                 'purchase_prices.price',
                 'payment_methods.payment_method',
@@ -142,8 +144,8 @@ class ParticipantController extends Controller
                 'langitude' => $request->langitude,
                 'service_area' => $request->service_area,
                 'id_area' => $request->id_area,
-                'id_subdistrict' => $request->id_subdistrict,
                 'id_district' => $request->id_district,
+                'id_regency' => $request->id_regency,
 
                 'id_box_resource' => $idBoxResources,
                 'resource_description' => $request->resource_description,
@@ -191,16 +193,16 @@ class ParticipantController extends Controller
         $participant = Participant::find($id);
         $categories = DB::table('categories')->get();
         $transport_intensities = DB::table('transport_intensities')->get();
-        $areas = DB::table('location_areas')->get();
-        $subdistricts = DB::table('location_subdistricts')->get();
-        $districts = DB::table('location_districts')->get();
+        $areas = DB::table('areas')->get();
+        $districts = DB::table('districts')->get();
+        $regencies = DB::table('regencies')->get();
         $boxresources = DB::table('box_resources')->get();
         $purchase_prices = DB::table('purchase_prices')->get();
         $payment_methods = DB::table('payment_methods')->get();
         $banks = DB::table('banks')->get();
 
         return view('participant/edit',
-            compact('participant','categories','transport_intensities','areas','subdistricts','districts','purchase_prices','payment_methods','banks','boxresources'));
+            compact('participant','categories','transport_intensities','areas','districts','regencies','purchase_prices','payment_methods','banks','boxresources'));
     }
 
     /**
@@ -232,15 +234,27 @@ class ParticipantController extends Controller
     {
         $categories = DB::table('categories')->get();
         $transport_intensities = DB::table('transport_intensities')->get();
-        $areas = DB::table('location_areas')->get();
-        $subdistricts = DB::table('location_subdistricts')->get();
-        $districts = DB::table('location_districts')->get();
+        $areas = DB::table('areas')->get();
+        $districts = DB::table('districts')->get();
+        $regencies = DB::table('regencies')->get();
         $boxresources = DB::table('box_resources')->get();
         $purchase_prices = DB::table('purchase_prices')->get();
         $payment_methods = DB::table('payment_methods')->get();
         $banks = DB::table('banks')->get();
 
         return view('participant/create',
-            compact('categories','transport_intensities','areas','subdistricts','districts','purchase_prices','payment_methods','banks','boxresources'));
+            compact('categories','transport_intensities','areas','districts','regencies','purchase_prices','payment_methods','banks','boxresources'));
     }
+
+    public static function importParticipant(Request $request)
+    {
+        if($request->fileImportParticipant) {
+            $path = ($request->fileImportParticipant)->getRealPath();
+            Excel::import(new ParticipantsImport, $path);
+        }
+
+        return response()->json(['success'=>'Import successfully.']);
+
+    }
+
 }

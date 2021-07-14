@@ -2,16 +2,16 @@
 $(document).ready(function () {
 
     get_district_data()
-    
+
     $.ajaxSetup({
         headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
     });
-    
-    //Get all district
+
+    //Get all regency
     function get_district_data() {
-        
+
         $.ajax({
             url: root_url,
             type:'GET',
@@ -20,14 +20,14 @@ $(document).ready(function () {
             table_data_row(data.data)
         });
     }
-    
-    //district table row
+
+    //regency table row
     function table_data_row(data) {
-    
+
         var	rows = '';
-        
+
         $.each( data, function( key, value ) {
-            
+
             rows = rows + '<tr>';
                 rows = rows + '<td>'+value.district_name+'</td>';
                 rows = rows + '<td>'+value.province_name+'</td>';
@@ -37,11 +37,11 @@ $(document).ready(function () {
                 rows = rows + '</td>';
             rows = rows + '</tr>';
         });
-    
+
         $("tbody").html(rows);
     }
-    
-    //Insert district data
+
+    //Insert regency data
     $("body").on("click","#createNewDistrict",function(e){
         e.preventDefault;
         $('#userCrudModal').html("Create District");
@@ -50,11 +50,11 @@ $(document).ready(function () {
         $('#district_id').val('');
         $('#districtData').trigger("reset");
     });
-    
+
     //Save data into database
     $('body').on('click', '#submit', function (event) {
         event.preventDefault()
-        
+
         var id = $("#district_id").val();
         var district_name = $("#district_name").val();
         var province_name = $("#province_name").val();
@@ -70,8 +70,8 @@ $(document).ready(function () {
             var last_modified_by = null;
             var last_modified_datetime = null;
         }
-        
-       
+
+
         $.ajax({
           url: store,
           type: "POST",
@@ -86,7 +86,7 @@ $(document).ready(function () {
           },
           dataType: 'json',
           success: function (data) {
-              
+
               $('#districtData').trigger("reset");
               $('#modal-id').modal('hide');
               Swal.fire({
@@ -103,13 +103,13 @@ $(document).ready(function () {
           }
       });
     });
-    
+
     //Edit modal window
     $('body').on('click', '#editDistrict', function (event) {
-    
+
         event.preventDefault();
         var id = $(this).data('id');
-       
+
         $.get(store+'/'+ id+'/edit', function (data) {
             $('#submit').val("edit");
             $('#userCrudModal').html("Edit District");
@@ -124,16 +124,16 @@ $(document).ready(function () {
             $('#last_modified_datetime').val(data.data.last_modified_datetime);
          })
     });
-    
+
      //deleteDistrict
      $('body').on('click', '#deleteDistrict', function (event) {
         if(!confirm("Do you really want to do this?")) {
            return false;
          }
-    
+
          event.preventDefault();
         var id = $(this).attr('data-id');
-     
+
         $.ajax(
             {
               url: store+'/'+id,
@@ -142,7 +142,7 @@ $(document).ready(function () {
                     id: id
             },
             success: function (response){
-              
+
                 Swal.fire(
                   'Remind!',
                   'District deleted successfully!',
@@ -153,5 +153,5 @@ $(document).ready(function () {
          });
           return false;
        });
-    
-    }); 
+
+    });

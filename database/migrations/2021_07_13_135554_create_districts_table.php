@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLocationAreasTable extends Migration
+class CreateDistrictsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateLocationAreasTable extends Migration
      */
     public function up()
     {
-        Schema::create('location_areas', function (Blueprint $table) {
+        Schema::create('districts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('area_name', 50)->unique();
+            $table->string('district_name', 50)->unique();
             $table->string('description', 200)->nullable();
             $table->string('created_by', 100)->nullable();
             $table->dateTime('created_datetime')->nullable();
@@ -32,6 +32,6 @@ class CreateLocationAreasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('location_areas');
+        Schema::dropIfExists('districts');
     }
 }

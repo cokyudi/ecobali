@@ -43,8 +43,8 @@
                                     <div class="card-body card-dashboard">
                                     <!-- <a class="btn btn-success" href="javascript:void(0)" id="createNewDistrict"> Create New Book</a> -->
                                     <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewDistrict">Add New District</button>
-										
-                                        @include('district.modal')
+
+                                        @include('regency.modal')
                                         <div class="table-responsive">
                                             <table id="test" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
@@ -56,7 +56,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -84,13 +84,13 @@
 @push('ajax_crud')
 <script type="text/javascript">
   $(function () {
-      
+
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
       });
-  
+
       var table = $('#test').DataTable({
           processing: true,
           serverSide: true,
@@ -102,14 +102,14 @@
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
-  
+
       table.on('draw.dt', function () {
             var info = table.page.info();
             table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1 + info.start;
             });
         });
-  
+
       $('#createNewDistrict').click(function () {
           $('#saveBtn').val("create");
           $('#district_id').val('');
@@ -117,7 +117,7 @@
           $('#modalHeading').html("Create New District");
           $('#districtModal').modal('show');
       });
-  
+
       $('body').on('click', '.editDistrict', function () {
         var district_id = $(this).data('id');
         $.get("{{ route('districts.index') }}" +'/' + district_id +'/edit', function (data) {
@@ -133,7 +133,7 @@
             $('#last_modified_datetime').val(data.last_modified_datetime);
         })
      });
-  
+
       $('#saveBtn').click(function (e) {
           e.preventDefault();
           if ($('#saveBtn').val() == "create")  {
@@ -148,18 +148,18 @@
               $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
           }
           $(this).html('Save');
-      
+
           $.ajax({
             data: $('#districtForm').serialize(),
             url: "{{ route('districts.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
-       
+
                 $('#districtForm').trigger("reset");
                 $('#districtModal').modal('hide');
                 table.draw();
-           
+
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -167,12 +167,12 @@
             }
         });
       });
-      
+
       $('body').on('click', '.deleteDistrict', function () {
-       
+
           var district_id = $(this).data("id");
           confirm("Are You sure want to delete !");
-        
+
           $.ajax({
               type: "DELETE",
               url: "{{ route('districts.store') }}"+'/'+district_id,
@@ -184,8 +184,8 @@
               }
           });
       });
-       
+
     });
 </script>
 
-@endpush 
+@endpush

@@ -34,7 +34,7 @@
                             <form class="form" id="participantForm" name="participantForm" enctype="multipart/form-data" >
                                 {{ csrf_field() }}
                                 <div class="form-body">
-                                    <input type="hidden" id="participant_id" name="participant_id" value="">
+                                    <input type="hidden" id="participant_id" name="participant_id" value="{{$participant->id}}">
                                     <input type="hidden" id="created_by" name="created_by" value="">
                                     <input type="hidden" id="created_datetime" name="created_datetime" value="">
                                     <input type="hidden" id="last_modified_by" name="last_modified_by" value="">
@@ -65,7 +65,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
                                                             <label for="participant_name">Participant Name</label>
-                                                            <input type="text" id="participant_name" class="form-control" placeholder="Participant Name" name="participant_name"  maxlength="200" >
+                                                            <input type="text" id="participant_name" class="form-control" placeholder="Participant Name" name="participant_name"  maxlength="200" value="{{$participant->participant_name}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
@@ -85,25 +85,25 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_name_1">Contact Name 1</label>
-                                                            <input type="text" id="contact_name_1" class="form-control" placeholder="Contact Name 1" name="contact_name_1"  maxlength="250" >
+                                                            <input type="text" id="contact_name_1" class="form-control" placeholder="Contact Name 1" name="contact_name_1"  maxlength="250" value="{{$participant->contact_name_1}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_position_1">Contact Position 1</label>
-                                                            <input type="text" id="contact_position_1" class="form-control" placeholder="Contact Position 1" name="contact_position_1"  maxlength="200" >
+                                                            <input type="text" id="contact_position_1" class="form-control" placeholder="Contact Position 1" name="contact_position_1"  maxlength="200" value="{{$participant->contact_position_1}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_phone_1">Contact Phone 1</label>
-                                                            <input type="number" id="contact_phone_1" class="form-control" placeholder="Contact Phone 1" name="contact_phone_1"  maxlength="50" >
+                                                            <input type="number" id="contact_phone_1" class="form-control" placeholder="Contact Phone 1" name="contact_phone_1"  maxlength="50" value="{{$participant->contact_phone_1}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_email_1">Contact Email 1</label>
-                                                            <input type="email" id="contact_email_1" class="form-control" placeholder="Contact Email 1" name="contact_email_1"  maxlength="200" >
+                                                            <input type="email" id="contact_email_1" class="form-control" placeholder="Contact Email 1" name="contact_email_1"  maxlength="200" value="{{$participant->contact_email_1}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -112,30 +112,29 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_name_2">Contact Name 2</label>
-                                                            <input type="text" id="contact_name_2" class="form-control" placeholder="Contact Name 2" name="contact_name_2"  maxlength="250" >
+                                                            <input type="text" id="contact_name_2" class="form-control" placeholder="Contact Name 2" name="contact_name_2"  maxlength="250" value="{{$participant->contact_name_2}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_position_2">Contact Position 2</label>
-                                                            <input type="text" id="contact_position_2" class="form-control" placeholder="Contact Position 2" name="contact_position_2"  maxlength="200" >
+                                                            <input type="text" id="contact_position_2" class="form-control" placeholder="Contact Position 2" name="contact_position_2"  maxlength="200" value="{{$participant->contact_position_2}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_phone_2">Contact Phone 2</label>
-                                                            <input type="number" id="contact_phone_2" class="form-control" placeholder="Contact Phone 2" name="contact_phone_2"  maxlength="50" >
+                                                            <input type="number" id="contact_phone_2" class="form-control" placeholder="Contact Phone 2" name="contact_phone_2"  maxlength="50" value="{{$participant->contact_phone_2}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_email_2">Contact Email 2</label>
-                                                            <input type="email" id="contact_email_2" class="form-control" placeholder="Contact Email 2" name="contact_email_2"  maxlength="200" >
+                                                            <input type="email" id="contact_email_2" class="form-control" placeholder="Contact Email 2" name="contact_email_2"  maxlength="200" value="{{$participant->contact_email_2}}">
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <!-- <h4 class="form-section "><i class="la la-bus"></i>Transport Intensity & <i class="la la-calendar"></i>Joined Date</h4> -->
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
@@ -167,7 +166,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group form-group-style">
                                                             <label for="address">Address</label>
-                                                            <input type="text" id="address" class="form-control" placeholder="Address" name="address"  maxlength="400" >
+                                                            <input type="text" id="address" class="form-control" placeholder="Address" name="address"  maxlength="400" value="{{$participant->address}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -176,13 +175,13 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="latitude">Latitude</label>
-                                                            <input type="number" id="latitude" class="form-control" placeholder="Latitude" name="latitude"  maxlength="100" >
+                                                            <input type="number" id="latitude" class="form-control" placeholder="Latitude" name="latitude"  maxlength="100" value="{{$participant->latitude}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="langitude">Langitude</label>
-                                                            <input type="number" id="langitude" class="form-control" placeholder="Langitude" name="langitude"  maxlength="100" >
+                                                            <input type="number" id="langitude" class="form-control" placeholder="Langitude" name="langitude"  maxlength="100" value="{{$participant->langitude}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -191,7 +190,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="service_area">Service Area</label>
-                                                            <input type="text" id="service_area" class="form-control" placeholder="Service Area" name="service_area"  maxlength="400" >
+                                                            <input type="text" id="service_area" class="form-control" placeholder="Service Area" name="service_area"  maxlength="400" value="{{$participant->service_area}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -199,9 +198,9 @@
                                                 <!-- <h4 class="form-section "><i class="la la-bus"></i>Transport Intensity & <i class="la la-calendar"></i>Joined Date</h4> -->
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                        <div class="form-group form-group-style">
+                                                        <div class="form-group ">
                                                             <label for="id_area">Area</label>
-                                                            <select id="id_area" name="id_area" class="form-control">
+                                                            <select id="id_area" name="id_area" class="select2 form-control">
                                                                 <option value="0" selected="" disabled="">Area</option>
                                                                 @foreach($areas as $area)
                                                                     <option value="{{$area->id}}">{{$area->area_name}}</option>
@@ -211,24 +210,24 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <div class="form-group form-group-style">
-                                                            <label for="id_subdistrict">Sub - District</label>
-                                                            <select id="id_subdistrict" name="id_subdistrict" class="form-control">
-                                                                <option value="0" selected="" disabled="">Sub - District</option>
-                                                                @foreach($subdistricts as $subdistrict)
-                                                                    <option value="{{$subdistrict->id}}">{{$subdistrict->subdistrict_name}}</option>
+                                                        <div class="form-group ">
+                                                            <label for="id_district">District</label>
+                                                            <select id="id_district" name="id_district" class="form-control">
+                                                                <option value="0" selected="" disabled="">District</option>
+                                                                @foreach($districts as $district)
+                                                                    <option value="{{$district->id}}">{{$district->district_name}}</option>
                                                                 @endforeach
 
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <div class="form-group form-group-style">
-                                                            <label for="id_district">District</label>
-                                                            <select id="id_district" name="id_district" class="form-control">
-                                                                <option value="0" selected="" disabled="">District</option>
-                                                                @foreach($districts as $district)
-                                                                    <option value="{{$district->id}}">{{$district->district_name}}</option>
+                                                        <div class="form-group ">
+                                                            <label for="id_regency">Regency</label>
+                                                            <select id="id_regency" name="id_regency" class="form-control">
+                                                                <option value="0" selected="" disabled="">Regency</option>
+                                                                @foreach($regencies as $regency)
+                                                                    <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
                                                                 @endforeach
 
                                                             </select>
@@ -259,7 +258,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
                                                             <label for="resource_description">Resource Description</label>
-                                                            <input type="text" id="resource_description" class="form-control" placeholder="Resource Description" name="resource_description"  maxlength="400" >
+                                                            <input type="text" id="resource_description" class="form-control" placeholder="Resource Description" name="resource_description"  maxlength="400" value="{{$participant->resource_description}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -317,19 +316,19 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="bank_branch">Bank Branch</label>
-                                                            <input type="text" id="bank_branch" class="form-control" placeholder="Bank Branch" name="bank_branch"  maxlength="200" >
+                                                            <input type="text" id="bank_branch" class="form-control" placeholder="Bank Branch" name="bank_branch"  maxlength="200" value="{{$participant->bank_branch}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="bank_account_number">Bank Account Number</label>
-                                                            <input type="number" id="bank_account_number" class="form-control" name="bank_account_number"  maxlength="200" >
+                                                            <input type="number" id="bank_account_number" class="form-control" name="bank_account_number"  maxlength="200" value="{{$participant->bank_account_number}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="bank_account_holder_name">Bank Account Holder Name</label>
-                                                            <input type="text" id="bank_account_holder_name" class="form-control" placeholder="Bank Account Holder Name" name="bank_account_holder_name"  maxlength="200" >
+                                                            <input type="text" id="bank_account_holder_name" class="form-control" placeholder="Bank Account Holder Name" name="bank_account_holder_name"  maxlength="200" value="{{$participant->bank_account_holder_name}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -394,7 +393,7 @@
                                                     <div class="modal fade text-left" id="modalImage1" tabindex="-1" role="dialog" >
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-body">
-                                                                <img id="imageModal1" src="https://dummyimage.com/2000x1000/000/fff&text=D" alt="" style="display: block; max-height: 700px">
+                                                                <img id="imageModal1" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif" alt="" style="display: block; max-height: 700px">
                                                             </div>
 
                                                         </div>
@@ -402,7 +401,7 @@
                                                     <div class="modal fade text-left" id="modalImage2" tabindex="-1" role="dialog" >
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-body">
-                                                                <img id="imageModal2" src="https://dummyimage.com/2000x1000/000/fff&text=D" alt="" style="display: block; max-height: 700px">
+                                                                <img id="imageModal2" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif" alt="" style="display: block; max-height: 700px">
                                                             </div>
 
                                                         </div>
@@ -466,41 +465,17 @@
 </script>
 <script type="text/javascript">
     $(function() {
-        // $('#id_box_resource').val(['AK', 'AB']).change(); //select multiple select
-        //alert("Selected value is: "+$("#id_box_resource").val());
 
-        $('#participant_id').val("{{$participant->id}}");
-        $('#participant_name').val("{{$participant->participant_name}}");
         $('#id_category').val("{{$participant->id_category}}");
-        $('#contact_name_1').val("{{$participant->contact_name_1}}");
-        $('#contact_position_1').val("{{$participant->contact_position_1}}");
-        $('#contact_phone_1').val("{{$participant->contact_phone_1}}");
-        $('#contact_email_1').val("{{$participant->contact_email_1}}");
-        $('#contact_name_2').val("{{$participant->contact_name_2}}");
-        $('#contact_position_2').val("{{$participant->contact_position_2}}");
-        $('#contact_phone_2').val("{{$participant->contact_phone_2}}");
-        $('#contact_email_2').val("{{$participant->contact_email_2}}");
         $('#joined_date').val("{{$participant->joined_date}}");
         $('#id_transport_intensity').val("{{$participant->id_transport_intensity}}");
-
-        $('#address').val("{{$participant->address}}");
-        $('#latitude').val("{{$participant->latitude}}");
-        $('#langitude').val("{{$participant->langitude}}");
-        $('#service_area').val("{{$participant->service_area}}");
-        $('#id_area').val("{{$participant->id_area}}");
-        $('#id_subdistrict').val("{{$participant->id_subdistrict}}");
+        $("#id_area").val("{{$participant->id_area}}").trigger("change");
         $('#id_district').val("{{$participant->id_district}}");
-
+        $('#id_regency').val("{{$participant->id_regency}}");
         $('#id_box_resource').val([{{$participant->id_box_resource}}]).change();
-        $('#resource_description').val("{{$participant->resource_description}}");
         $('#id_purchase_price').val("{{$participant->id_purchase_price}}");
-
         $('#id_payment_method').val("{{$participant->id_payment_method}}");
         $('#id_bank').val("{{$participant->id_bank}}");
-        $('#bank_branch').val("{{$participant->bank_branch}}");
-        $('#bank_account_number').val("{{$participant->bank_account_number}}");
-        $('#bank_account_holder_name').val("{{$participant->bank_account_holder_name}}");
-
         $('#notes').val("{{$participant->notes}}");
 
         if ('{{$participant->url_photo_1}}' !== '' ) {

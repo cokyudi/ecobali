@@ -9,5 +9,5 @@ class District extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['district_name','province_name','created_by','created_datetime','last_modified_by','last_modified_datetime'];
+    protected $fillable = ['district_name','description','created_by','created_datetime','last_modified_by','last_modified_datetime'];
 }

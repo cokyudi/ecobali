@@ -24,7 +24,7 @@
                         </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" value="" class="btn btn-primary" id="saveBtn" value="create">Save Changes</button>
+                        <button type="mit" value="" class="btn btn-primary" id="saveBtn" value="create">Save Changes</button>
                     </div>
                 </form>
             </div>

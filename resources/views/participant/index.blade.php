@@ -44,9 +44,10 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewParticipant">Add New Participant</button>
-
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewParticipant">Add New Participant</button>
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importParticipant">Import Participant</button>
                                         @include('participant.modal')
+                                        @include('participant.modalImport')
                                         <div class="table-responsive">
                                             <table id="participantTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
@@ -121,19 +122,36 @@
             });
         });
 
+      $('#importParticipant').click(function () {
+          $('#participantImportModal').modal('show');
+      });
+
+      $('#saveBtnFormImport').click(function (e) {
+          e.preventDefault();
+
+          $.ajax({
+              data: new FormData($("#participantFormImport")[0]),
+              url: "{{ route('participants.importParticipant') }}",
+              type: "POST",
+              dataType: 'json',
+              processData: false,
+              contentType: false,
+              success: function (data) {
+                  $('#participantFormImport').trigger("reset");
+                  $('#participantImportModal').modal('hide');
+                  table.draw();
+              },
+              error: function(req, err){ console.log('my message' + err); }
+          });
+
+      });
+
       $('#createNewParticipant').click(function () {
 
         var category_id = $(this).data('id');
         window.location.href = "{{ route('participants.createParticipant') }}";
       });
 
-    //   $('#createNewParticipant').click(function () {
-    //       $('#saveBtn').val("create");
-    //       $('#participant_id').val('');
-    //       $('#participantForm').trigger("reset");
-    //       $('#modalHeading').html("Create New Participant");
-    //       $('#participantModal').modal('show');
-    //   });
 
       $('body').on('click', '.editParticipant', function () {
         var participant_id = $(this).data('id');

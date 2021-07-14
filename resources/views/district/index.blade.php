@@ -110,14 +110,6 @@
             });
         });
 
-      $('#createNewDistrict').click(function () {
-          $('#saveBtn').val("create");
-          $('#district_id').val('');
-          $('#districtForm').trigger("reset");
-          $('#modalHeading').html("Create New District");
-          $('#districtModal').modal('show');
-      });
-
       $('#importDistrict').click(function () {
           $('#districtImportModal').modal('show');
       });
@@ -138,11 +130,18 @@
                   table.draw();
               },
               error: function(xhr, status, error) {
-                  var err = eval("(" + xhr.responseText + ")");
-                  alert(err.Message);
+                  console.log('Error:', data);
               }
           });
 
+      });
+
+      $('#createNewDistrict').click(function () {
+          $('#saveBtn').val("create");
+          $('#district_id').val('');
+          $('#districtForm').trigger("reset");
+          $('#modalHeading').html("Create New District");
+          $('#districtModal').modal('show');
       });
 
       $('body').on('click', '.editDistrict', function () {

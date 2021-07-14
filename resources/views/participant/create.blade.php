@@ -211,24 +211,24 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <div class="form-group form-group-style">
-                                                            <label for="id_subdistrict">Sub - District</label>
-                                                            <select id="id_subdistrict" name="id_subdistrict" class="form-control">
-                                                                <option value="0" selected="" disabled="">Sub - District</option>
-                                                                @foreach($subdistricts as $subdistrict)
-                                                                    <option value="{{$subdistrict->id}}">{{$subdistrict->subdistrict_name}}</option>
+                                                        <div class="form-group ">
+                                                            <label for="id_district">District</label>
+                                                            <select id="id_district" name="id_district" class="form-control">
+                                                                <option value="0" selected="" disabled="">District</option>
+                                                                @foreach($districts as $district)
+                                                                    <option value="{{$district->id}}">{{$district->district_name}}</option>
                                                                 @endforeach
 
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <div class="form-group form-group-style">
-                                                            <label for="id_district">District</label>
-                                                            <select id="id_district" name="id_district" class="form-control">
-                                                                <option value="0" selected="" disabled="">District</option>
-                                                                @foreach($districts as $district)
-                                                                    <option value="{{$district->id}}">{{$district->district_name}}</option>
+                                                        <div class="form-group ">
+                                                            <label for="id_regency">Regency</label>
+                                                            <select id="id_regency" name="id_regency" class="form-control">
+                                                                <option value="0" selected="" disabled="">Regency</option>
+                                                                @foreach($regencies as $regency)
+                                                                    <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
                                                                 @endforeach
 
                                                             </select>
@@ -392,7 +392,7 @@
                                                     <div class="modal fade text-left" id="modalImage1" tabindex="-1" role="dialog" >
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-body">
-                                                                <img id="imageModal1" src="https://dummyimage.com/2000x1000/000/fff&text=D" alt="" style="display: block; max-height: 700px">
+                                                                <img id="imageModal1" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif" alt="" style="display: block; max-height: 700px">
                                                             </div>
 
                                                         </div>
@@ -400,7 +400,7 @@
                                                     <div class="modal fade text-left" id="modalImage2" tabindex="-1" role="dialog" >
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-body">
-                                                                <img id="imageModal2" src="https://dummyimage.com/2000x1000/000/fff&text=D" alt="" style="display: block; max-height: 700px">
+                                                                <img id="imageModal2" src="https://www.riobeauty.co.uk/images/product_image_not_found.gif" alt="" style="display: block; max-height: 700px">
                                                             </div>
 
                                                         </div>

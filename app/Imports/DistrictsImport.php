@@ -3,7 +3,7 @@
 
 namespace App\Imports;
 
-use App\Models\LocationDistrict;
+use App\Models\District;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -15,7 +15,7 @@ class DistrictsImport implements ToCollection, WithHeadingRow
 {
     public function collection(Collection $rows)
     {
-        $district_name =  DB::table('location_districts')->pluck('district_name')->toArray();
+        $district_name =  DB::table('districts')->pluck('district_name')->toArray();
 
         foreach ($rows as $row)
         {
@@ -24,7 +24,7 @@ class DistrictsImport implements ToCollection, WithHeadingRow
                     continue;
                 }
 
-                LocationDistrict::create([
+                District::create([
                     'district_name' => $row['district_name'],
                     'created_by' => 'System',
                     'created_datetime' => new DateTime(),

@@ -102,9 +102,9 @@
 						<ul class="menu-content">
 							<li class="@yield('participants')"><a class="menu-item" href="{{url('participants')}}"><i class="la la-database mr-1"></i><span>Participant</span></a></li>
 							<li class="@yield('categories')"><a class="menu-item" href="{{url('categories')}}"><i class="la la-database mr-1"></i><span>Category</span></a></li>
-							<li class="@yield('areas')"><a class="menu-item" href="{{url('areas')}}"><i class="la la-database mr-1"></i><span>Village</span></a></li>
-							<li class="@yield('subdistricts')"><a class="menu-item" href="{{url('subdistricts')}}"><i class="la la-database mr-1"></i><span>District</span></a></li>
-							<li class="@yield('districts')"><a class="menu-item" href="{{url('districts')}}"><i class="la la-database mr-1"></i><span>Regency</span></a></li>
+							<li class="@yield('areas')"><a class="menu-item" href="{{url('areas')}}"><i class="la la-database mr-1"></i><span>Area</span></a></li>
+							<li class="@yield('districts')"><a class="menu-item" href="{{url('districts')}}"><i class="la la-database mr-1"></i><span>District</span></a></li>
+							<li class="@yield('regencies')"><a class="menu-item" href="{{url('regencies')}}"><i class="la la-database mr-1"></i><span>Regency</span></a></li>
 							<li class="@yield('boxResources')"><a class="menu-item" href="{{url('boxResources')}}"><i class="la la-database mr-1"></i><span>Box Resource</span></a></li>
 							<li class="@yield('purchasePrices')"><a class="menu-item" href="{{url('purchasePrices')}}"><i class="la la-database mr-1"></i><span>Purchase Price</span></a></li>
 							<li class="@yield('transportIntensities')"><a class="menu-item" href="{{url('transportIntensities')}}"><i class="la la-database mr-1"></i><span>Transport Intensity</span></a></li>

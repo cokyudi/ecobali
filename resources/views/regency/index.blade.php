@@ -1,5 +1,5 @@
 @extends('template')
-@section('subdistricts','active')
+@section('regencies','active')
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
@@ -28,7 +28,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h4 class="card-title">Sub-District Location Data Master</h4>
+                                    <h4 class="card-title">Regency Data Master</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -41,16 +41,16 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewSubdistrict">Add New Subdistrict</button>
-                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importSubdistrict">Import Subdistrict</button>
-                                        @include('subdistrict.modal')
-                                        @include('subdistrict.modalImport')
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewRegency">Add New Regency</button>
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importRegency">Import Regency</button>
+                                        @include('regency.modal')
+                                        @include('regency.modalImport')
                                         <div class="table-responsive">
-                                            <table id="subdistrictTable" class="table table-striped table-bordered zero-configuration">
+                                            <table id="regencyTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
+                                                        <th>Regency</th>
                                                         <th>Description</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
@@ -61,7 +61,7 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Sub-District</th>
+                                                        <th>Regency</th>
                                                         <th>Description</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
@@ -91,13 +91,13 @@
             }
       });
 
-      var table = $('#subdistrictTable').DataTable({
+      var table = $('#regencyTable').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('subdistricts.index') }}",
+          ajax: "{{ route('regencies.index') }}",
           columns: [
               {data: null},
-              {data: 'subdistrict_name', name: 'subdistrict_name'},
+              {data: 'regency_name', name: 'regency_name'},
               {data: 'description', name: 'description'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
@@ -110,48 +110,49 @@
             });
         });
 
-      $('#importSubdistrict').click(function () {
-          $('#subDistrictImportModal').modal('show');
+      $('#createNewRegency').click(function () {
+          $('#saveBtn').val("create");
+          $('#regency_id').val('');
+          $('#regencyForm').trigger("reset");
+          $('#modalHeading').html("Create New Regency");
+          $('#regencyModal').modal('show');
+      });
+
+      $('#importRegency').click(function () {
+          $('#regencyImportModal').modal('show');
       });
 
       $('#saveBtnFormImport').click(function (e) {
           e.preventDefault();
 
           $.ajax({
-              data: new FormData($("#subDistrictFormImport")[0]),
-              url: "{{ route('subdistricts.importSubdistricts') }}",
+              data: new FormData($("#regencyFormImport")[0]),
+              url: "{{ route('regencies.importRegency') }}",
               type: "POST",
               dataType: 'json',
               processData: false,
               contentType: false,
               success: function (data) {
-                  $('#subDistrictFormImport').trigger("reset");
-                  $('#subDistrictImportModal').modal('hide');
+                  $('#regencyFormImport').trigger("reset");
+                  $('#regencyImportModal').modal('hide');
                   table.draw();
               },
               error: function(xhr, status, error) {
-                  console.log('Error:', data);
+                  var err = eval("(" + xhr.responseText + ")");
+                  alert(err.Message);
               }
           });
 
       });
 
-      $('#createNewSubdistrict').click(function () {
-          $('#saveBtn').val("create");
-          $('#subdistrict_id').val('');
-          $('#subdistrictForm').trigger("reset");
-          $('#modalHeading').html("Create New Sub-District");
-          $('#subdistrictModal').modal('show');
-      });
-
-      $('body').on('click', '.editSubdistrict', function () {
-        var subdistrict_id = $(this).data('id');
-        $.get("{{ route('subdistricts.index') }}" +'/' + subdistrict_id +'/edit', function (data) {
-            $('#modalHeading').html("Edit Sub-District");
+      $('body').on('click', '.editRegency', function () {
+        var regency_id = $(this).data('id');
+        $.get("{{ route('regencies.index') }}" +'/' + regency_id +'/edit', function (data) {
+            $('#modalHeading').html("Edit Regency");
             $('#saveBtn').val("edit");
-            $('#subdistrictModal').modal('show');
-            $('#subdistrict_id').val(data.id);
-            $('#subdistrict_name').val(data.subdistrict_name);
+            $('#regencyModal').modal('show');
+            $('#regency_id').val(data.id);
+            $('#regency_name').val(data.regency_name);
             $('#description').val(data.description);
             $('#created_by').val(data.created_by);
             $('#created_datetime').val(data.created_datetime);
@@ -176,14 +177,14 @@
           $(this).html('Save');
 
           $.ajax({
-            data: $('#subdistrictForm').serialize(),
-            url: "{{ route('subdistricts.store') }}",
+            data: $('#regencyForm').serialize(),
+            url: "{{ route('regencies.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
 
-                $('#subdistrictForm').trigger("reset");
-                $('#subdistrictModal').modal('hide');
+                $('#regencyForm').trigger("reset");
+                $('#regencyModal').modal('hide');
                 table.draw();
 
             },
@@ -194,14 +195,14 @@
         });
       });
 
-      $('body').on('click', '.deleteSubdistrict', function () {
+      $('body').on('click', '.deleteRegency', function () {
 
-          var subdistrict_id = $(this).data("id");
+          var regency_id = $(this).data("id");
           confirm("Are You sure want to delete !");
 
           $.ajax({
               type: "DELETE",
-              url: "{{ route('subdistricts.store') }}"+'/'+subdistrict_id,
+              url: "{{ route('regencies.store') }}"+'/'+regency_id,
               success: function (data) {
                   table.draw();
               },

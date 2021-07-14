@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LocationArea;
+use App\Models\Area;
 use App\Imports\AreasImport;
 use Illuminate\Http\Request;
 use DataTables;
@@ -10,19 +10,14 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use DateTime;
 
-class LocationAreaController extends Controller
+class AreaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
-        $areas = LocationArea::latest()->get();
+        $areas = Area::latest()->get();
 
         if ($request->ajax()) {
-            $data = LocationArea::latest()->get();
+            $data = Area::latest()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
@@ -39,15 +34,9 @@ class LocationAreaController extends Controller
         return view('area/index',compact('areas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        LocationArea::updateOrCreate(
+        Area::updateOrCreate(
             ['id' => $request->area_id],
             [
                 'area_name' => $request->area_name,
@@ -62,28 +51,15 @@ class LocationAreaController extends Controller
         return response()->json(['success'=>'Area saved successfully.']);
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\LocationArea  $locationArea
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $area = LocationArea::find($id);
+        $area = Area::find($id);
         return response()->json($area);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\LocationArea  $locationArea
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        LocationArea::find($id)->delete();
+        Area::find($id)->delete();
 
         return response()->json(['success'=>'Area deleted successfully.']);
     }
@@ -94,6 +70,8 @@ class LocationAreaController extends Controller
             $path = ($request->fileImportArea)->getRealPath();
             Excel::import(new AreasImport, $path);
         }
+
+        return response()->json(['success'=>'Import successfully.']);
 
     }
 }

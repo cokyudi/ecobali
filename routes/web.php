@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Dashboard1Controller;
 use App\Http\Controllers\CategoryDetailController;
-use App\Http\Controllers\LocationAreaController;
-use App\Http\Controllers\LocationSubdistrictController;
-use App\Http\Controllers\LocationDistrictController;
+use App\Http\Controllers\AreaController;
+use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\RegencyController;
 use App\Http\Controllers\BoxResourceController;
 use App\Http\Controllers\PurchasePriceController;
 use App\Http\Controllers\TransportIntensityController;
@@ -36,12 +36,12 @@ Route::get('/a', function () {
 
 Route::resource('categories', CategoryController::class);
 Route::resource('categoryDetails', CategoryDetailController::class);
-Route::resource('areas', LocationAreaController::class);
-Route::post('importArea',[LocationAreaController::class, 'importArea'])->name('areas.importArea');
-Route::resource('subdistricts', LocationSubdistrictController::class);
-Route::post('importSubdistricts',[LocationSubdistrictController::class, 'importSubDistrict'])->name('subdistricts.importSubdistricts');
-Route::resource('districts', LocationDistrictController::class);
-Route::post('importDistrict',[LocationDistrictController::class, 'importDistrict'])->name('districts.importDistrict');
+Route::resource('areas', AreaController::class);
+Route::post('importArea',[AreaController::class, 'importArea'])->name('areas.importArea');
+Route::resource('districts', DistrictController::class);
+Route::post('importDistrict',[DistrictController::class, 'importDistrict'])->name('districts.importDistrict');
+Route::resource('regencies', RegencyController::class);
+Route::post('importRegency',[RegencyController::class, 'importRegency'])->name('regencies.importRegency');
 Route::resource('boxResources', BoxResourceController::class);
 Route::resource('purchasePrices', PurchasePriceController::class);
 Route::resource('transportIntensities', TransportIntensityController::class);
@@ -49,6 +49,7 @@ Route::resource('paymentMethods', PaymentMethodController::class);
 Route::resource('banks', BankController::class);
 Route::resource('participants', ParticipantController::class);
 Route::get('createParticipant',[ParticipantController::class, 'createParticipant'])->name('participants.createParticipant');
+Route::post('importParticipant',[ParticipantController::class, 'importParticipant'])->name('participants.importParticipant');
 
 
 

@@ -3,7 +3,7 @@
 
 namespace App\Imports;
 
-use App\Models\LocationArea;
+use App\Models\Area;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -15,7 +15,7 @@ class AreasImport implements ToCollection, WithHeadingRow
 {
     public function collection(Collection $rows)
     {
-        $area_names =  DB::table('location_areas')->pluck('area_name')->toArray();
+        $area_names =  DB::table('areas')->pluck('area_name')->toArray();
 
         foreach ($rows as $row)
         {
@@ -25,7 +25,7 @@ class AreasImport implements ToCollection, WithHeadingRow
                 }
 //                var_dump($row['area_name']);
 
-                LocationArea::create([
+                Area::create([
                     'area_name' => $row['area_name'],
                     'created_by' => 'System',
                     'created_datetime' => new DateTime(),

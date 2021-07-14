@@ -33,13 +33,13 @@ class CreateParticipantsTable extends Migration
             $table->string('langitude', 100)->nullable();
             $table->string('service_area', 400)->nullable();
             $table->string('id_area', 50)->nullable();
-            $table->string('id_subdistrict', 50)->nullable();
             $table->string('id_district', 50)->nullable();
+            $table->string('id_regency', 50)->nullable();
 
             $table->string('id_box_resource', 50)->nullable();
             $table->string('resource_description', 400)->nullable();
             $table->string('id_purchase_price', 50)->nullable();
-            
+
             $table->string('id_payment_method', 50)->nullable();
             $table->string('id_bank', 50)->nullable();
             $table->string('bank_branch', 200)->nullable();
