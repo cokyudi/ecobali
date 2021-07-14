@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Auth;
+
 
 class PaymentMethodController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +20,8 @@ class PaymentMethodController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         $paymentMethods = PaymentMethod::latest()->get();
         
         if ($request->ajax()) {
@@ -32,7 +39,7 @@ class PaymentMethodController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('paymentMethod/index',compact('paymentMethods'));
+        return view('paymentMethod/index',compact('paymentMethods','user'));
     }
 
     /**

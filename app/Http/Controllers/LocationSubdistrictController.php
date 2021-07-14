@@ -8,9 +8,13 @@ use App\Models\LocationSubdistrict;
 use Illuminate\Http\Request;
 use DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 class LocationSubdistrictController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +22,8 @@ class LocationSubdistrictController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         $subdistricts = LocationSubdistrict::latest()->get();
 
         if ($request->ajax()) {
@@ -35,7 +41,7 @@ class LocationSubdistrictController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('subdistrict/index',compact('subdistricts'));
+        return view('subdistrict/index',compact('subdistricts','user'));
     }
 
     /**

@@ -7,11 +7,15 @@ use App\Imports\AreasImport;
 use Illuminate\Http\Request;
 use DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 use DateTime;
 
 class LocationAreaController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +23,8 @@ class LocationAreaController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         $areas = LocationArea::latest()->get();
 
         if ($request->ajax()) {
@@ -36,7 +42,7 @@ class LocationAreaController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('area/index',compact('areas'));
+        return view('area/index',compact('areas','user'));
     }
 
     /**

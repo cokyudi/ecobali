@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Dashboard1;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Dashboard1Controller extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,8 @@ class Dashboard1Controller extends Controller
      */
     public function index()
     {
-        return view('dashboard1/index');
+        $user = Auth::user();
+        return view('dashboard1/index', array('user' => $user));
     }
 
     /**

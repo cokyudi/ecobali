@@ -33,6 +33,7 @@
 		<link rel="stylesheet" type="text/css" href="{{asset('fonts/simple-line-icons/style.min.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('css/core/colors/palette-gradient.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 		@stack('css_extend')
 		<!-- END: Page CSS-->
 	</head>
@@ -59,11 +60,11 @@
 						</ul>
 						<ul class="nav navbar-nav float-right">
 							<li class="dropdown dropdown-user nav-item">
-								<a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span class="mr-1 user-name text-bold-700">Deva Dwi / Administrator</span><span class="avatar avatar-online"><img src="images/portrait/small/avatar-s-19.png" alt="avatar"><i></i></span></a>
+								<a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown"><span id="user-identity" class="mr-1 user-name text-bold-700">{{$user['name']}} / {{$user['role']}}</span><span class="avatar avatar-online"><img src="images/portrait/small/avatar-s-19.png" alt="avatar"><i></i></span></a>
 								<div class="dropdown-menu dropdown-menu-right">
 									<a class="dropdown-item" href="user-profile.html"><i class="ft-user"></i> Edit Profile</a><a class="dropdown-item" href="app-email.html"><i class="ft-mail"></i> My Inbox</a><a class="dropdown-item" href="user-cards.html"><i class="ft-check-square"></i> Task</a><a class="dropdown-item" href="app-chat.html"><i class="ft-message-square"></i> Chats</a>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="login-with-bg-image.html"><i class="ft-power"></i> Logout</a>
+									<a class="dropdown-item" href="{{url('logout')}}"><i class="ft-power"></i> Logout</a>
 								</div>
 							</li>
 						</ul>
@@ -114,7 +115,9 @@
 					</li>
 
 					<li class=" navigation-header"><span>Application</span><i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Application"></i></li>
-					<li class=" nav-item"><a href="#"><i class="la la-user"></i><span class="menu-title" >User List</span></a></li>
+					@if ($user['role'] == 'Admin')
+						<li class="@yield('users') nav-item"><a href="{{url('user-management')}}"><i class="la la-user"></i><span class="menu-title" >User List</span></a></li>
+					@endif
 				</ul>
 			</div>
 		</div>
@@ -141,6 +144,7 @@
 		<script src="{{asset('vendors/js/charts/jvector/jquery-jvectormap-2.0.3.min.js')}}"></script>
 		<script src="{{asset('vendors/js/charts/jvector/jquery-jvectormap-world-mill.js')}}"></script>
 		<script src="{{asset('data/jvector/visitor-data.js')}}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 		<!-- chart pie -->
 
 		<!-- chart line -->

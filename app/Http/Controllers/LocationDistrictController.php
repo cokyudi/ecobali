@@ -7,9 +7,14 @@ use App\Models\LocationDistrict;
 use Illuminate\Http\Request;
 use DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
+
 
 class LocationDistrictController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,6 +22,8 @@ class LocationDistrictController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         $districts = LocationDistrict::latest()->get();
 
         if ($request->ajax()) {
@@ -34,7 +41,7 @@ class LocationDistrictController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('district/index',compact('districts'));
+        return view('district/index',compact('districts','user'));
     }
 
     /**
