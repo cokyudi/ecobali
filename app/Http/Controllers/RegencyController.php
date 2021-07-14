@@ -7,9 +7,13 @@ use App\Models\Regency;
 use Illuminate\Http\Request;
 use DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 class RegencyController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +22,7 @@ class RegencyController extends Controller
     public function index(Request $request)
     {
         $regencies = Regency::latest()->get();
+        $user = Auth::user();
 
         if ($request->ajax()) {
             $data = $regencies;
@@ -34,7 +39,7 @@ class RegencyController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('regency/index',compact('regencies'));
+        return view('regency/index',compact('regencies','user'));
     }
 
     /**
