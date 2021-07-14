@@ -8,12 +8,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 use DateTime;
+use Illuminate\Support\Facades\Auth;
+
 
 class CategoryController extends Controller
 {
-    
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         $categories = DB::table('categories')
             ->leftJoin('category_details', function ($join) {
                 $join->on('categories.id', '=', 'category_details.category_id')
@@ -36,7 +43,7 @@ class CategoryController extends Controller
                     ->make(true);
         }
 
-        return view('category/index', compact('categories'));
+        return view('category/index', compact('categories','user'));
     }
  
     public function store(Request $request)
@@ -72,8 +79,9 @@ class CategoryController extends Controller
     
     public function edit($id)
     {
+        $user = Auth::user();
         $category = Category::find($id);
-        return view('category/edit')->with('category', $category);
+        return view('category/edit', compact('category','user'));
     }
   
     public function destroy($id)

@@ -1,4 +1,4 @@
-@extends('template')
+@extends('template', ['user'=>$user])
 @section('paymentMethods','active')
 @section('content')
         <!-- BEGIN: Content-->

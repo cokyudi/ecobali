@@ -15,6 +15,9 @@ use App\Http\Controllers\BankController;
 use App\Http\Controllers\ParticipantController;
 
 use App\Http\Controllers\DashboardComparisonController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserManagementController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,8 +29,15 @@ use App\Http\Controllers\DashboardComparisonController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [AuthController::class, 'showFormLogin']);
+Route::get('login', [AuthController::class, 'showFormLogin'])->name('login');
+Route::post('login', [AuthController::class, 'login']);
+ 
+Route::group(['middleware' => 'auth'], function () {
+ 
+    Route::get('/dashboard1', [Dashboard1Controller::class, 'index']);
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+ 
 });
 
 Route::get('/a', function () {
@@ -50,8 +60,7 @@ Route::resource('banks', BankController::class);
 Route::resource('participants', ParticipantController::class);
 Route::get('createParticipant',[ParticipantController::class, 'createParticipant'])->name('participants.createParticipant');
 Route::post('importParticipant',[ParticipantController::class, 'importParticipant'])->name('participants.importParticipant');
-
-
+Route::resource('user-management', UserManagementController::class);
 
 
 Route::resource('dashboard1', Dashboard1Controller::class);

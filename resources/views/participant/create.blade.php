@@ -1,4 +1,4 @@
-@extends('template')
+@extends('template', ['user'=>$user])
 @section('participants','active')
 
 @push('css_extend')

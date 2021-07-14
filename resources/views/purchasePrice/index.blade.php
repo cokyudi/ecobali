@@ -1,4 +1,4 @@
-@extends('template')
+@extends('template', ['user'=>$user])
 @section('purchasePrices','active')
 @push('ajax_crud')
 <!-- <link rel="stylesheet" type="text/css" href="{{asset('css/plugins/forms/validation/form-validation.css')}}"> -->

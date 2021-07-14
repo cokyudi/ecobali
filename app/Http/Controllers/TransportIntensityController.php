@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\TransportIntensity;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Auth;
+
 
 class TransportIntensityController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +20,8 @@ class TransportIntensityController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         $transportIntensities = TransportIntensity::latest()->get();
         
         if ($request->ajax()) {
@@ -32,7 +39,7 @@ class TransportIntensityController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('transportIntensity/index',compact('transportIntensities'));
+        return view('transportIntensity/index',compact('transportIntensities','user'));
     }
 
     /**

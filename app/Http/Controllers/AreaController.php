@@ -7,14 +7,25 @@ use App\Imports\AreasImport;
 use Illuminate\Http\Request;
 use DataTables;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 use DateTime;
 
 class AreaController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
-        $areas = Area::latest()->get();
+        $user = Auth::user();
+
+        $areas = LocationArea::latest()->get();
 
         if ($request->ajax()) {
             $data = Area::latest()->get();
@@ -31,7 +42,7 @@ class AreaController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('area/index',compact('areas'));
+        return view('area/index',compact('areas','user'));
     }
 
     public function store(Request $request)

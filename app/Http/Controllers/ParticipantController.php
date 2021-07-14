@@ -9,9 +9,14 @@ use Illuminate\Support\Facades\DB;
 use DataTables;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
+
 
 class ParticipantController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,6 +24,8 @@ class ParticipantController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         $participants = DB::table('participants')
             ->leftJoin('categories', function ($join) {
                 $join->on('participants.id_category', '=', 'categories.id');
@@ -77,7 +84,7 @@ class ParticipantController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('participant/index',compact('participants'));
+        return view('participant/index',compact('participants', 'user'));
     }
 
     /**
@@ -190,6 +197,8 @@ class ParticipantController extends Controller
      */
     public function edit($id)
     {
+        $user = Auth::user();
+
         $participant = Participant::find($id);
         $categories = DB::table('categories')->get();
         $transport_intensities = DB::table('transport_intensities')->get();
@@ -202,7 +211,7 @@ class ParticipantController extends Controller
         $banks = DB::table('banks')->get();
 
         return view('participant/edit',
-            compact('participant','categories','transport_intensities','areas','districts','regencies','purchase_prices','payment_methods','banks','boxresources'));
+            compact('user','participant','categories','transport_intensities','areas','districts','regencies','purchase_prices','payment_methods','banks','boxresources'));
     }
 
     /**
@@ -232,6 +241,8 @@ class ParticipantController extends Controller
 
     public static function createParticipant()
     {
+        $user = Auth::user();
+
         $categories = DB::table('categories')->get();
         $transport_intensities = DB::table('transport_intensities')->get();
         $areas = DB::table('areas')->get();
@@ -243,7 +254,7 @@ class ParticipantController extends Controller
         $banks = DB::table('banks')->get();
 
         return view('participant/create',
-            compact('categories','transport_intensities','areas','districts','regencies','purchase_prices','payment_methods','banks','boxresources'));
+            compact('user','categories','transport_intensities','areas','districts','regencies','purchase_prices','payment_methods','banks','boxresources'));
     }
 
     public static function importParticipant(Request $request)

@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\BoxResource;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Auth;
+
 
 class BoxResourceController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +20,7 @@ class BoxResourceController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
         $boxResources = BoxResource::latest()->get();
         
         if ($request->ajax()) {
@@ -32,7 +38,7 @@ class BoxResourceController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('boxResource/index',compact('boxResources'));
+        return view('boxResource/index',compact('boxResources','user'));
     }
 
     /**

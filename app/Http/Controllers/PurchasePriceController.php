@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\PurchasePrice;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Auth;
+
 
 class PurchasePriceController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +20,8 @@ class PurchasePriceController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         $purchasePrices = PurchasePrice::latest()->get();
         
         if ($request->ajax()) {
@@ -32,7 +39,7 @@ class PurchasePriceController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('purchasePrice/index',compact('purchasePrices'));
+        return view('purchasePrice/index',compact('purchasePrices','user'));
     }
 
     /**

@@ -7,10 +7,14 @@ use App\Imports\DistrictsImport;
 use App\Models\District;
 use Illuminate\Http\Request;
 use DataTables;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
+
 
 class DistrictController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +22,8 @@ class DistrictController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         $districts = District::latest()->get();
 
         if ($request->ajax()) {
@@ -35,7 +41,7 @@ class DistrictController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('district/index',compact('districts'));
+        return view('district/index',compact('districts','user'));
     }
 
     /**

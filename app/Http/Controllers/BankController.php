@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Bank;
 use Illuminate\Http\Request;
 use DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class BankController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +19,7 @@ class BankController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
         $banks = Bank::latest()->get();
         
         if ($request->ajax()) {
@@ -32,7 +37,7 @@ class BankController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('bank/index',compact('banks'));
+        return view('bank/index',compact('banks','user'));
     }
 
     /**
