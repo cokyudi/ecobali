@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Dashboard1;
 use App\Models\District;
 use App\Models\Collection;
 use App\Models\Participant;
-use App\Models\Category;
+use App\Models\Regency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Dashboard1Controller extends Controller
 {
@@ -23,6 +25,8 @@ class Dashboard1Controller extends Controller
     public function index()
     {
         $user = Auth::user();
+        $categories = Category::latest()->get();
+        $regencies = Regency::latest()->get();
         $districts = District::latest()->get();
         $collections = Collection::latest()->get();
         $participants = Participant::latest()->get();
@@ -37,6 +41,8 @@ class Dashboard1Controller extends Controller
             'districts'=>$districts, 
             'collections'=> $collections, 
             'participants'=> $participants,
+            'categories' => $categories,
+            'regencies' => $regencies,
             'totalCollection' => $totalCollection
         ));
     }
