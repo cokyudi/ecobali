@@ -14,7 +14,7 @@ class AuthController extends Controller
 {
     public function showFormLogin()
     {
-        if (Auth::check()) { 
+        if (Auth::check()) {
             return redirect('/dashboard1');
         }
         return view('login');
@@ -26,35 +26,35 @@ class AuthController extends Controller
             'email'                 => 'required|email',
             'password'              => 'required|string'
         ];
- 
+
         $messages = [
-            'email.required'        => 'Email wajib diisi',
-            'email.email'           => 'Email tidak valid',
-            'password.required'     => 'Password wajib diisi',
-            'password.string'       => 'Password harus berupa string'
+            'email.required'        => 'Please enter your email.',
+            'email.email'           => 'Not a valid email',
+            'password.required'     => 'Please enter your password.',
+            'password.string'       => 'Not a valid password'
         ];
- 
+
         $validator = Validator::make($request->all(), $rules, $messages);
- 
+
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInput($request->all);
         }
- 
+
         $data = [
             'email'     => $request->input('email'),
             'password'  => $request->input('password'),
         ];
- 
+
         Auth::attempt($data);
- 
+
         if (Auth::check()) {
             return redirect('/dashboard1');
- 
+
         } else {
             Session::flash('error', 'Email atau password salah');
             return redirect()->route('login');
         }
- 
+
     }
 
     public function logout()

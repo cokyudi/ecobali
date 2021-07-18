@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use DataTables;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 
 class CategoryController extends Controller
@@ -24,11 +25,12 @@ class CategoryController extends Controller
         $categories = DB::table('categories')
             ->leftJoin('category_details', function ($join) {
                 $join->on('categories.id', '=', 'category_details.category_id')
-                    ->where('category_details.year', '=', (new DateTime)->format("Y"));
+                    ->where('category_details.year', '=', (new DateTime)->format("Y"))
+                    ->where('category_details.semester', '=', $this->getSemester());
             })
             ->select(
                 'categories.*',
-                DB::raw('(CASE WHEN category_details.target IS NULL THEN "not set" ELSE category_details.target END) AS target'))
+                DB::raw('(CASE WHEN category_details.target IS NULL THEN "Not Set" ELSE category_details.target END) AS target'))
             ->get();
 
         if ($request->ajax()) {
@@ -45,13 +47,21 @@ class CategoryController extends Controller
 
         return view('category/index', compact('categories','user'));
     }
- 
+
+    function getSemester() {
+        if (((new DateTime)->format("m")) > 6) {
+            return "S2";
+        } else {
+            return "S1";
+        }
+    }
+
     public function store(Request $request)
     {
         $data = Category::updateOrCreate(
             ['id' => $request->category_id],
             [
-                'category_name' => $request->category_name, 
+                'category_name' => $request->category_name,
                 'description' => $request->description,
                 'created_by' => $request->created_by,
                 'created_datetime' => $request->created_datetime,
@@ -59,13 +69,20 @@ class CategoryController extends Controller
                 'last_modified_datetime' => $request->last_modified_datetime,
             ]
         );
-        
+
         if($data->wasRecentlyCreated) {
+            if (((new DateTime)->format("m")) > 6) {
+                $semester = "S2";
+            } else {
+                $semester = "S1";
+            }
+
             CategoryDetail::updateOrCreate(
                 [
                     'category_id' => $data->id,
-                    'target' => $request->this_year_target, 
+                    'target' => $request->this_year_target,
                     'year' => (new DateTime)->format("Y"),
+                    'semester' => $semester,
                     'created_by' => $request->created_by,
                     'created_datetime' => $request->created_datetime,
                     'last_modified_by' => $request->last_modified_by,
@@ -73,21 +90,21 @@ class CategoryController extends Controller
                 ]
             );
         }
-         
+
         return response()->json(['success'=>'Category saved successfully.']);
     }
-    
+
     public function edit($id)
     {
         $user = Auth::user();
         $category = Category::find($id);
         return view('category/edit', compact('category','user'));
     }
-  
+
     public function destroy($id)
     {
         Category::find($id)->delete();
-     
+
         return response()->json(['success'=>'Category deleted successfully.']);
     }
 }

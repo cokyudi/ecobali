@@ -19,9 +19,19 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="semester">Semester</label>
+                        <div class="col-sm-12">
+                            <select id="semester" name="semester" class="form-control">
+                                <option value="0" selected="" disabled="">Select Semester</option>
+                                <option value="S1">Semester 1 (Jan - Jun)</option>
+                                <option value="S2">Semester 2 (Jul - Des)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="control-label">Target</label>
                         <div class="col-sm-12">
-                            <input type="number" class="form-control" id="target" name="target" placeholder="Enter Province Name" value="" maxlength="50" required="">
+                            <input type="number" class="form-control" id="target" name="target" placeholder="Enter Target" value="" maxlength="50" required="">
                         </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">

@@ -8,68 +8,90 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CQuicksand:300,400,500,700" rel="stylesheet">
 
     <!-- BEGIN: Theme CSS-->
+    <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/vendors.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/icheck/icheck.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/icheck/custom.css')}}">
+
     <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-extended.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/colors.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/components.min.css')}}">
-    <!-- END: Theme CSS-->
-    <!-- BEGIN: Page CSS-->
+
     <link rel="stylesheet" type="text/css" href="{{asset('css/core/menu/menu-types/vertical-menu-modern.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/core/colors/palette-gradient.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/charts/jquery-jvectormap-2.0.3.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/charts/morris.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('fonts/simple-line-icons/style.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/core/colors/palette-gradient.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/pages/login-register.min.css')}}">
+
 </head>
-<body>
-    <div class="container">
-        <div class="col-md-4 offset-md-4 mt-5">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center">Login</h3>
-                </div>
-                <form action="{{ route('login') }}" method="post">
-                @csrf
-                <div class="card-body">
-                    @if(session('errors'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            Something it's wrong:
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                            </ul>
+<body class="vertical-layout vertical-menu-modern 1-column   blank-page" data-open="click" data-menu="vertical-menu-modern" data-col="1-column">
+    <div class="app-content content">
+        <div class="content-wrapper">
+            <div class="content-header row mb-1">
+            </div>
+            <div class="content-body">
+                <section class="flexbox-container">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="col-lg-4 col-md-8 col-10 box-shadow-2 p-0">
+                            <div class="card border-grey border-lighten-3 m-0">
+                                <div class="card-header border-0">
+                                    <div class="card-title text-center">
+                                        <img src="{{asset('images/logo/logo-dark.png')}}" alt="branding logo">
+                                    </div>
+                                    <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Login to ECOTP Bali</span></h6>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <form class="form-horizontal" action="{{ route('login') }}" method="post" novalidate>
+                                            @csrf
+                                            @if(session('errors'))
+                                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                    Something is wrong:
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+                                            @if (Session::has('success'))
+                                                <div class="alert alert-success">
+                                                    {{ Session::get('success') }}
+                                                </div>
+                                            @endif
+                                            @if (Session::has('error'))
+                                                <div class="alert alert-danger">
+                                                    {{ Session::get('error') }}
+                                                </div>
+                                            @endif
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                <input type="email" class="form-control input-lg" name="email" id="email" placeholder="Email" tabindex="1" required data-validation-required-message= "Please enter your email.">
+                                                <div class="form-control-position">
+                                                    <i class="ft-user"></i>
+                                                </div>
+                                                <div class="help-block font-small-3"></div>
+                                            </fieldset>
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Password" tabindex="2" required data-validation-required-message= "Please enter valid passwords.">
+                                                <div class="form-control-position">
+                                                    <i class="la la-key"></i>
+                                                </div>
+                                                <div class="help-block font-small-3"></div>
+                                            </fieldset>
+
+                                            <button type="submit" class="btn btn-info btn-block btn-lg"><i class="ft-unlock"></i> Login</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
-                    @endif
-                    @if (Session::has('success'))
-                        <div class="alert alert-success">
-                            {{ Session::get('success') }}
-                        </div>
-                    @endif
-                    @if (Session::has('error'))
-                        <div class="alert alert-danger">
-                            {{ Session::get('error') }}
-                        </div>
-                    @endif
-                    <div class="form-group">
-                        <label for=""><strong>Email</strong></label>
-                        <input type="text" name="email" class="form-control" placeholder="Email">
                     </div>
-                    <div class="form-group">
-                        <label for=""><strong>Password</strong></label>
-                        <input type="password" name="password" class="form-control" placeholder="Password">
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <button type="submit" class="btn btn-primary btn-block">Log In</button>
-                </div>
-                </form>
+                </section>
             </div>
         </div>
     </div>
+{{--    <script src="{{asset('js/scripts/forms/form-login-register.min.js')}}"></script>--}}
 </body>
 </html>

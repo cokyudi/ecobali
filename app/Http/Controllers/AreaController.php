@@ -25,7 +25,7 @@ class AreaController extends Controller
     {
         $user = Auth::user();
 
-        $areas = LocationArea::latest()->get();
+        $areas = Area::latest()->get();
 
         if ($request->ajax()) {
             $data = Area::latest()->get();

@@ -33,7 +33,9 @@
 		<link rel="stylesheet" type="text/css" href="{{asset('fonts/simple-line-icons/style.min.css')}}">
 		<link rel="stylesheet" type="text/css" href="{{asset('css/core/colors/palette-gradient.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
+
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 		@stack('css_extend')
 		<!-- END: Page CSS-->
 	</head>
@@ -94,7 +96,7 @@
 						</ul>
 					</li>
 					<li class=" nav-item"><a href="#"><i class="la la-map"></i><span class="menu-title" >Maps</span></a></li>
-					<li class=" nav-item"><a href="#"><i class="la la-database"></i><span class="menu-title" >Collection</span></a></li>
+					<li class="@yield('collections') nav-item"><a href="{{url('collections')}}"><i class="la la-database"></i><span class="menu-title" >Collection</span></a></li>
 					<li class=" nav-item"><a href="#"><i class="la la-ship"></i><span class="menu-title" >Shipment</span></a></li>
 
 
@@ -160,6 +162,7 @@
 		<script src="{{asset('js/scripts/footer.min.js')}}"></script>
 		<!-- END: Theme JS-->
 		<!-- BEGIN: Page JS-->
+
         @stack('ajax_crud')
 		<!-- BEGIN Vendor JS-->
 		<!-- BEGIN: Page Vendor JS-->

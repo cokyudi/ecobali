@@ -1,5 +1,8 @@
 @extends('template', ['user'=>$user])
 @section('categories','active')
+@push('css_extend')
+    <link rel="stylesheet" type="text/css" href="{{asset('css/plugins/extensions/toastr.min.css')}}">
+@endpush
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
@@ -22,10 +25,8 @@
                 </div>
             </div>
             <div class="content-body">
-                <!-- Zero configuration table -->
                 <section id="configuration">
                     <div class="row">
-                    
                         <div class="col-5">
                             <div class="card h-100">
                                 <div class="card-header">
@@ -36,7 +37,7 @@
                                         <div class="card-text">
                                             <p>This is the detail about the Category.</p>
                                         </div>
-                                        
+
                                         <form class="form" id="categoryEditForm">
                                             <div class="form-body">
                                                 <div class="row mt-3">
@@ -96,17 +97,19 @@
                                                     <tr>
                                                         <th width="30px">No</th>
                                                         <th>Year</th>
+                                                        <th>Semester</th>
                                                         <th>Target</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
                                                     <th width="30px">No</th>
                                                         <th>Year</th>
+                                                        <th>Semester</th>
                                                         <th>Target</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
@@ -128,14 +131,14 @@
 
 @push('ajax_crud')
 <script type="text/javascript">
+
   $(function () {
-      
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
       });
-  
+
     var links = "{{ route('categoryDetails.index') }}"+'/'+$('#category_id').val();
     var table = $('#targetYear').DataTable({
           processing: true,
@@ -144,40 +147,40 @@
           columns: [
               {data: null},
               {data: 'year', name: 'year'},
+              {data: 'semester', name: 'semester'},
               {data: 'target', name: 'target'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
-  
+
       table.on('draw.dt', function () {
             var info = table.page.info();
             table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1 + info.start;
             });
         });
-  
+
 
       $('#backButton').click(function () {
             window.location.href = "{{ route('categories.index') }}";
       });
-  
+
      $('#saveBtn').click(function (e) {
         e.preventDefault();
-       
+
         $('#last_modified_by').val("Deva Dwi A Edit");
         $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-    
+
         $.ajax({
             data: $('#categoryEditForm').serialize(),
             url: "{{ route('categories.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
-        
-                // $('#categoryForm').trigger("reset");
-                // $('#categoryModal').modal('hide');
+                $('#categoryForm').trigger("reset");
+                $('#categoryModal').modal('hide');
                 table.draw();
-            
+
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -206,33 +209,35 @@
               $('#last_modified_datetime_target').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
           }
           $(this).html('Save');
-      
+
           $.ajax({
             data: $('#categoryTargetForm').serialize(),
             url: "{{ route('categoryDetails.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
-                $('#categoryTargetForm').trigger("reset");
-                $('#categoryTargetModal').modal('hide');
-                table.draw();
-           
+                if (data.errors) {
+                    for(var errorMsg in data.errors) {
+                        toastr.error(data.errors[errorMsg], "Failed to submit new target !");
+                    }
+                } else {
+                    toastr.success(data.success, "Success to submit new target !");
+                    $('#categoryTargetForm').trigger("reset");
+                    $('#categoryTargetModal').modal('hide');
+                    table.draw();
+                }
             },
-            // error: function (data) {
-            //     console.log('Error:', data.responseJSON.errors.category_id);
-            //     $('#saveBtn').html('Save Changes');
-            // }
             error: function ( jqXhr, json, errorThrown ) {
                 var errors = jqXhr.responseJSON;
                 var errorsHtml= '';
                 $.each( errors, function( key, value ) {
-                    errorsHtml += '<li>' + value[0] + '</li>'; 
+                    errorsHtml += '<li>' + value[0] + '</li>';
                 });
                 console.log('Error:', errors.message);
             }
-            
+
         });
-       
+
       });
 
       $('body').on('click', '.editCategoryDetail', function () {
@@ -250,12 +255,12 @@
             $('#last_modified_datetime_target').val(data.last_modified_datetime);
         })
      });
-      
+
       $('body').on('click', '.deleteCategoryDetail', function () {
-       
+
           var categoryDetail_id = $(this).data("id");
           confirm("Are You sure want to delete !");
-        
+
           $.ajax({
               type: "DELETE",
               url: "{{ route('categoryDetails.store') }}"+'/'+categoryDetail_id,
@@ -267,8 +272,8 @@
               }
           });
       });
-       
+
     });
 </script>
 
-@endpush 
+@endpush

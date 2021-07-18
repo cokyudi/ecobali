@@ -9,5 +9,5 @@ class CategoryDetail extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['category_id','year','target','created_by','created_datetime','last_modified_by','last_modified_datetime'];
+    protected $fillable = ['category_id','year','target','semester','created_by','created_datetime','last_modified_by','last_modified_datetime'];
 }

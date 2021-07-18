@@ -27,9 +27,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">This Year Target</label>
+                        <label class="control-label">This Semester Target</label>
                         <div class="col-sm-12">
-                            <input type="number" class="form-control" id="this_year_target" name="this_year_target" placeholder="Enter Province Name" value="" maxlength="50" required="">
+                            <input type="number" class="form-control" id="this_year_target" name="this_year_target" placeholder="Enter Target" value="" maxlength="50" required="">
                         </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">

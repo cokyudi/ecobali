@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoryDetailsTable extends Migration
+class CreateCollectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreateCategoryDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_details', function (Blueprint $table) {
+        Schema::create('collections', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('category_id', 50);
-            $table->string('year', 4)->nullable();
-            $table->string('semester', 4)->nullable();
-            $table->float('target', 8, 2)->nullable();
+            $table->string('id_participant', 50);
+            $table->float('quantity', 8, 2);
+            $table->date('collect_date');
             $table->string('created_by', 100)->nullable();
             $table->dateTime('created_datetime')->nullable();
             $table->string('last_modified_by', 100)->nullable();
             $table->dateTime('last_modified_datetime')->nullable();
             $table->timestamps();
-            $table->unique(array('category_id', 'year','semester'));
         });
     }
 
@@ -35,6 +33,6 @@ class CreateCategoryDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_details');
+        Schema::dropIfExists('collections');
     }
 }
