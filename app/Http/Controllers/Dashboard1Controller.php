@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Dashboard1;
+use App\Models\District;
+use App\Models\Regency;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Dashboard1Controller extends Controller
 {
@@ -19,7 +23,11 @@ class Dashboard1Controller extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('dashboard1/index', array('user' => $user));
+        $categories = Category::latest()->get();
+        $regencies = Regency::latest()->get();
+        $districts = District::latest()->get();
+
+        return view('dashboard1/index', array('user' => $user), compact('categories','regencies','districts'));
     }
 
     /**
