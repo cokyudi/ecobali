@@ -1,6 +1,5 @@
 @extends('template', ['user'=>$user])
 
-
 @push('css_extend')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -13,6 +12,7 @@
    </style>
 @endpush 
 
+@section('dashboard1','active')
 @section('content')
           <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -29,7 +29,7 @@
                     <div class="media d-flex">
                       <div class="media-body text-left">
                         <h6 class="text-muted font-medium-3">District Coverage</h6>
-                        <h3 class="font-large-2">6</h3>
+                        <h3 class="font-large-2">{{count($districts)}}</h3>
                       </div>
                       <div class="align-self-center">
                         <i class="la la-map success font-large-5 float-right"></i>
@@ -46,7 +46,14 @@
                     <div class="media d-flex">
                       <div class="media-body text-left">
                         <h6 class="text-muted font-medium-3">Total Collection</h6>
-                        <h3 class="font-large-2">40.6 TON</h3>
+						<div class="row">
+							<div class="col-6">
+								<h4 class="font-large-1">{{$totalCollection/1000}} TON</h4>
+							</div>
+							<div class="col-6">
+								<h4 class="font-large-1">/ {{$totalCollection}} Kg</h4>
+							</div>
+						</div>
                       </div>
                       <div class="align-self-center">
                         <i class="la la-database success font-large-5 float-right"></i>
@@ -63,7 +70,7 @@
                     <div class="media d-flex">
                       <div class="media-body text-left">
                         <h6 class="text-muted font-medium-3">Total Participant</h6>
-                        <h3 class="font-large-2">68</h3>
+                        <h3 class="font-large-2">{{ count($participants) }}</h3>
                       </div>
                       <div class="align-self-center">
                         <i class="la la-users success font-large-5 float-right"></i>
@@ -104,7 +111,7 @@
   <div class="col-lg-6 col-12">
     <div class="card">
       <div class="card-header">
-          <h4 class="card-title">Pie Chart</h4>
+          <h4 class="card-title">Number of Participants</h4>
           <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
           <div class="heading-elements">
               <ul class="list-inline mb-0">
@@ -127,7 +134,7 @@
   <div class="col-lg-6 col-12">
     <div class="card">
       <div class="card-header">
-          <h4 class="card-title">Pie Chart</h4>
+          <h4 class="card-title">Contribution</h4>
           <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
           <div class="heading-elements">
               <ul class="list-inline mb-0">

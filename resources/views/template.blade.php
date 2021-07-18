@@ -83,7 +83,7 @@
 					<li class=" nav-item">
 						<a><i class="la la-home"></i><span class="menu-title">Dashboard</span></a>
 						<ul class="menu-content">
-							<li class=""><a class="menu-item" href="index1.html"><i class="la la-database mr-1"></i><span>Collection</span></a>
+							<li class="@yield('dashboard1')"><a class="menu-item" href="{{url('dashboard1')}}"><i class="la la-database mr-1"></i><span>Collection</span></a>
 							</li>
 							<li><a class="menu-item" href="invoice-template.html"><i class="la la-bar-chart mr-1"></i><span>Comparison</span></a>
 							</li>

@@ -67,5 +67,7 @@ Route::post('importCollection',[CollectionController::class, 'importCollection']
 
 
 Route::resource('dashboard1', Dashboard1Controller::class);
+Route::get('getNumberOfParticipants', [Dashboard1Controller::class, 'getNumberOfParticipants']);
+Route::get('getContribution', [Dashboard1Controller::class, 'getContribution']);
 Route::resource('dashboard-comparison', DashboardComparisonController::class);
 
