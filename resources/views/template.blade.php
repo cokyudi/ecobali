@@ -83,21 +83,21 @@
 					<li class=" nav-item">
 						<a><i class="la la-home"></i><span class="menu-title">Dashboard</span></a>
 						<ul class="menu-content">
-							<li class=""><a class="menu-item" href="index1.html"><i class="la la-database mr-1"></i><span>Collection</span></a>
+							<li class="@yield('dashboard-collection')"><a class="menu-item" href="{{url('dashboard1')}}"><i class="la la-database mr-1"></i><span>Collection</span></a>
 							</li>
-							<li><a class="menu-item" href="invoice-template.html"><i class="la la-bar-chart mr-1"></i><span>Comparison</span></a>
+							<li class="@yield('dashboard-comparison')"><a class="menu-item" href="{{url('dashboard-comparison')}}"><i class="la la-bar-chart mr-1"></i><span>Comparison</span></a>
 							</li>
-							<li><a class="menu-item" href="invoice-template.html"><i class="la la-flag-checkered mr-1"></i><span>Target</span></a>
+							<li class="@yield('dashboard-target')"><a class="menu-item" href="{{url('dashboard-target')}}"><i class="la la-flag-checkered mr-1"></i><span>Target</span></a>
 							</li>
-							<li><a class="menu-item" href="invoice-template.html"><i class="la la-ship mr-1"></i><span>Shipment</span></a>
+							<li class="@yield('dashboard-shipment')"><a class="menu-item" href="{{url('dashboard-shipment')}}"><i class="la la-ship mr-1"></i><span>Shipment</span></a>
 							</li>
-							<li><a class="menu-item" href="invoice-template.html"><i class="la la-bitbucket mr-1"></i><span>Activities</span></a>
+							<li class="@yield('dashboard-activities')"><a class="menu-item" href="{{url('dashboard-activities')}}"><i class="la la-bitbucket mr-1"></i><span>Activities</span></a>
 							</li>
 						</ul>
 					</li>
 					<li class=" nav-item"><a href="#"><i class="la la-map"></i><span class="menu-title" >Maps</span></a></li>
 					<li class="@yield('collections') nav-item"><a href="{{url('collections')}}"><i class="la la-database"></i><span class="menu-title" >Collection</span></a></li>
-					<li class=" nav-item"><a href="#"><i class="la la-ship"></i><span class="menu-title" >Shipment</span></a></li>
+					<li class=" nav-item"><a href="#"><i class="la la-ship"></i><span class="menu-title" >Sales</span></a></li>
 
 
 					<li class="nav-item">

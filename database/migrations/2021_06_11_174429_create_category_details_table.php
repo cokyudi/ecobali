@@ -17,14 +17,13 @@ class CreateCategoryDetailsTable extends Migration
             $table->increments('id');
             $table->string('category_id', 50);
             $table->string('year', 4)->nullable();
-            $table->string('semester', 4)->nullable();
-            $table->float('target', 8, 2)->nullable();
+            $table->float('semester_1_target', 8,2)->nullable();
+            $table->float('semester_2_target',8, 2)->nullable();
             $table->string('created_by', 100)->nullable();
             $table->dateTime('created_datetime')->nullable();
             $table->string('last_modified_by', 100)->nullable();
             $table->dateTime('last_modified_datetime')->nullable();
             $table->timestamps();
-            $table->unique(array('category_id', 'year','semester'));
         });
     }
 

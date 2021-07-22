@@ -1,7 +1,16 @@
 @extends('template', ['user'=>$user])
-@section('dashboard-comparison','active')
+@section('dashboard-activities','active')
 
 @push('css_extend')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+   <style type="text/css">
+   	#mapid { height: 100%; width:100%;}
+   </style>
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/selects/select2.min.css')}}">
 @endpush
 
@@ -28,16 +37,16 @@
                     </ul>
                 </div>
             </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card-content collapse show">
-                            <div class="card-body chartjs">
-                                <canvas id="line-chart" height="700"></canvas>
-                            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-content collapse show">
+                        <div class="card-body chartjs">
+                            <canvas id="line-chart" height="500"></canvas>
                         </div>
                     </div>
                 </div>
 
+            </div>
 
             </div>
         </div>
@@ -54,17 +63,6 @@
         <hr>
 
         <form id="filterForm" name="filterForm">
-            <h5 class="mt-1 mb-1 text-bold-500">Participant</h5>
-            <div class="form-group ">
-                <select id="id_participant" name="id_participant[]" multiple="multiple" class="select2 form-control">
-                    @foreach($participants as $participant)
-                        <option value="{{$participant->id}}">{{$participant->participant_name}}</option>
-                    @endforeach
-
-                </select>
-            </div>
-            <hr>
-
             <h5 class="mt-1 mb-1 text-bold-500">Category</h5>
             <div class="form-group ">
                 <select id="id_category" name="id_category[]" multiple="multiple" class="select2 form-control">

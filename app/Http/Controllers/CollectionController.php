@@ -28,6 +28,7 @@ class CollectionController extends Controller
             )
             ->get();
 
+
         $categories = DB::table('categories')
             ->leftJoin('category_details', function ($join) {
                 $join->on('categories.id', '=', 'category_details.category_id')

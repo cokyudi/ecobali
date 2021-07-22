@@ -25,12 +25,11 @@ class CategoryController extends Controller
         $categories = DB::table('categories')
             ->leftJoin('category_details', function ($join) {
                 $join->on('categories.id', '=', 'category_details.category_id')
-                    ->where('category_details.year', '=', (new DateTime)->format("Y"))
-                    ->where('category_details.semester', '=', $this->getSemester());
+                    ->where('category_details.year', '=', (new DateTime)->format("Y"));
             })
             ->select(
                 'categories.*',
-                DB::raw('(CASE WHEN category_details.target IS NULL THEN "Not Set" ELSE category_details.target END) AS target'))
+                DB::raw('NVL((CASE WHEN MONTH(NOW()) < 7 THEN category_details.semester_1_target ELSE  category_details.semester_1_target END), "Not Set") AS target'))
             ->get();
 
         if ($request->ajax()) {
@@ -72,17 +71,19 @@ class CategoryController extends Controller
 
         if($data->wasRecentlyCreated) {
             if (((new DateTime)->format("m")) > 6) {
-                $semester = "S2";
+                $semester1Target = null;
+                $semester2Target = $request->this_year_target;
             } else {
-                $semester = "S1";
+                $semester1Target = $request->this_year_target;
+                $semester2Target = null;
             }
 
             CategoryDetail::updateOrCreate(
                 [
                     'category_id' => $data->id,
-                    'target' => $request->this_year_target,
                     'year' => (new DateTime)->format("Y"),
-                    'semester' => $semester,
+                    'semester_1_target' => $semester1Target,
+                    'semester_2_target' => $semester2Target,
                     'created_by' => $request->created_by,
                     'created_datetime' => $request->created_datetime,
                     'last_modified_by' => $request->last_modified_by,

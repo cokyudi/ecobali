@@ -1,3 +1,7 @@
 #imageModal{
     max-width: 800px;
 }
+
+.border-bottom-black-ship{
+    border-bottom:3px solid !important;
+}

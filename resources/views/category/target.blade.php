@@ -19,19 +19,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="semester">Semester</label>
+                        <label class="control-label">Semester 1 Target</label>
                         <div class="col-sm-12">
-                            <select id="semester" name="semester" class="form-control">
-                                <option value="0" selected="" disabled="">Select Semester</option>
-                                <option value="S1">Semester 1 (Jan - Jun)</option>
-                                <option value="S2">Semester 2 (Jul - Des)</option>
-                            </select>
+                            <input type="number" class="form-control" id="semester_1_target" name="semester_1_target" placeholder="Enter Semester 1 Target" value="" maxlength="50" required="">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Target</label>
+                        <label class="control-label">Semester 2 Target</label>
                         <div class="col-sm-12">
-                            <input type="number" class="form-control" id="target" name="target" placeholder="Enter Target" value="" maxlength="50" required="">
+                            <input type="number" class="form-control" id="semester_2_target" name="semester_2_target" placeholder="Enter Semester 2 Target" value="" maxlength="50" required="">
                         </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">

@@ -97,8 +97,8 @@
                                                     <tr>
                                                         <th width="30px">No</th>
                                                         <th>Year</th>
-                                                        <th>Semester</th>
-                                                        <th>Target</th>
+                                                        <th>Semester 1 Target</th>
+                                                        <th>Semester 2 Target </th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </thead>
@@ -109,8 +109,8 @@
                                                     <tr>
                                                     <th width="30px">No</th>
                                                         <th>Year</th>
-                                                        <th>Semester</th>
-                                                        <th>Target</th>
+                                                        <th>Semester 1 Target</th>
+                                                        <th>Semester 2 Target </th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </tfoot>
@@ -147,8 +147,8 @@
           columns: [
               {data: null},
               {data: 'year', name: 'year'},
-              {data: 'semester', name: 'semester'},
-              {data: 'target', name: 'target'},
+              {data: 'semester_1_target', name: 'semester_1_target'},
+              {data: 'semester_2_target', name: 'semester_2_target'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
@@ -202,8 +202,6 @@
           if ($('#saveTargetBtn').val() == "create")  {
               $('#created_by_target').val("Deva Dwi A");
               $('#created_datetime_target').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by_target').val(null);
-              $('#last_modified_datetime_target').val(null);
           } else {
               $('#last_modified_by_target').val("Deva Dwi A Edit");
               $('#last_modified_datetime_target').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
@@ -248,7 +246,8 @@
             $('#categoryTargetModal').modal('show');
             $('#category_detail_id').val(data.id);
             $('#year').val(data.year);
-            $('#target').val(data.target);
+            $('#semester_1_target').val(data.semester_1_target);
+            $('#semester_2_target').val(data.semester_2_target);
             $('#created_by_target').val(data.created_by);
             $('#created_datetime_target').val(data.created_datetime);
             $('#last_modified_by_target').val(data.last_modified_by);

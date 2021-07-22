@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\Dashboard1Controller;
 use App\Http\Controllers\CategoryDetailController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\DistrictController;
@@ -15,7 +14,12 @@ use App\Http\Controllers\BankController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\CollectionController;
 
+use App\Http\Controllers\Dashboard1Controller;
 use App\Http\Controllers\DashboardComparisonController;
+use App\Http\Controllers\DashboardTargetController;
+use App\Http\Controllers\DashboardShipmentController;
+use App\Http\Controllers\DashboardActivitiesController;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserManagementController;
 
@@ -41,10 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-Route::get('/a', function () {
-    return view('template');
-});
-
 Route::resource('categories', CategoryController::class);
 Route::resource('categoryDetails', CategoryDetailController::class);
 Route::resource('areas', AreaController::class);
@@ -65,7 +65,9 @@ Route::resource('user-management', UserManagementController::class);
 Route::resource('collections', CollectionController::class);
 Route::post('importCollection',[CollectionController::class, 'importCollection'])->name('collections.importCollection');
 
-
 Route::resource('dashboard1', Dashboard1Controller::class);
 Route::resource('dashboard-comparison', DashboardComparisonController::class);
+Route::resource('dashboard-target', DashboardTargetController::class);
+Route::resource('dashboard-shipment', DashboardShipmentController::class);
+Route::resource('dashboard-activities', DashboardActivitiesController::class);
 

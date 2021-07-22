@@ -36,21 +36,11 @@ class CategoryDetailController extends Controller
         $semester = $request->semester;
 
         $rules = [
-            'year'         => [
-                'required',
-                Rule::unique('category_details', 'year')->where(function ($query) use ($semester) {
-                    return $query->where('semester', $semester);
-                })
-            ],
-            'semester'              => 'required',
-            'target'                => 'required'
+            'year'                  => 'required',
         ];
 
         $messages = [
             'year.required'             => 'Year is required',
-            'year.unique'               => 'Combination between Year and Semester already exist',
-            'semester.required'         => 'Semester is required',
-            'target.required'           => 'Target is required',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 
@@ -58,13 +48,20 @@ class CategoryDetailController extends Controller
             return response()->json(['error'=>'Failed to add target.', 'errors'=>$validator->errors()]);
         }
 
+        $categoryDetails = CategoryDetail::where('year', '=', $request->year)->where('category_id', '=', $request->category_id_target)->first();
+        if ($categoryDetails != null) {
+            $userId = $categoryDetails->id;
+        } else {
+            $userId = $request->category_detail_id;
+        }
+
         CategoryDetail::updateOrCreate(
-            ['id' => $request->category_detail_id],
+            ['id' => $userId],
             [
                 'category_id' => $request->category_id_target,
-                'target' => $request->target,
                 'year' => $request->year,
-                'semester' => $request->semester,
+                'semester_1_target' => $request->semester_1_target,
+                'semester_2_target' => $request->semester_2_target,
                 'created_by' => $request->created_by_target,
                 'created_datetime' => $request->created_datetime_target,
                 'last_modified_by' => $request->last_modified_by_target,
