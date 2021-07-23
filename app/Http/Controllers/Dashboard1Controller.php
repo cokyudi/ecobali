@@ -70,7 +70,31 @@ class Dashboard1Controller extends Controller
                 $totalCollectionByRegency = $totalCollectionByRegency + $countCollectionByRegency[$j]->quantity;
             }
 
-            $collectionByRegency[$regencyName] = $totalCollectionByRegency;
+            if ($totalCollectionByRegency <= 10) {
+                $opacity = 0.1;
+            }
+
+            if ($totalCollectionByRegency > 10 && $totalCollectionByRegency <= 50) {
+                $opacity = 0.2;
+            }
+
+            if ($totalCollectionByRegency > 50 && $totalCollectionByRegency <= 100) {
+                $opacity = 0.3;
+            }
+
+            if ($totalCollectionByRegency > 100 && $totalCollectionByRegency <= 500) {
+                $opacity = 0.4;
+            }
+
+            if ($totalCollectionByRegency > 500 && $totalCollectionByRegency < 1000) {
+                $opacity = 0.5;
+            }
+
+            if ($totalCollectionByRegency >= 1000) {
+                $opacity = 0.6;
+            }
+
+            $collectionByRegency[$regencyName] = [$totalCollectionByRegency, $opacity];
         }
 
         $totalCollection = 0;
@@ -102,16 +126,16 @@ class Dashboard1Controller extends Controller
                                             ->where('id_category', $participantCategory[$i]->id)
                                             ->whereBetween('collect_date', [$request->startDates,$request->endDates]);
 
-            if ($request->idCategory != null && $request->idCategory != '' && $request->idCategory != 'all') {
-                $countParticipant = $countParticipant->where('id_category','=',$request->idCategory);
+            if (isset($request->idCategory) && count($request->idCategory) != 0) {
+                $countParticipant = $countParticipant->whereIn('id_category', $request->idCategory);
             }
         
-            if ($request->idDistrict != null && $request->idDistrict != '' && $request->idDistrict != 'all') {
-                $countParticipant = $countParticipant->where('id_district','=',$request->idDistrict);
+            if (isset($request->idDistrict) && count($request->idDistrict) != 0) {
+                $countParticipant = $countParticipant->whereIn('id_district', $request->idDistrict);
             }
         
-            if ($request->idRegency != null && $request->idRegency != '' && $request->idRegency != 'all') {
-                $countParticipant = $countParticipant->where('id_regency','=',$request->idRegency);
+            if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
+                $countParticipant = $countParticipant->whereIn('id_participant', $request->idParticipant);
             }
 
             $countParticipant = $countParticipant->count();
@@ -137,16 +161,16 @@ class Dashboard1Controller extends Controller
                                                  ->where('categories.id', $participantCategory[$i]->id)
                                                  ->whereBetween('collect_date', [$request->startDates,$request->endDates]);
 
-            if ($request->idCategory != null && $request->idCategory != '' && $request->idCategory != 'all') {
-                $participantsCollections = $participantsCollections->where('id_category','=',$request->idCategory);
+            if (isset($request->idCategory) && count($request->idCategory) != 0) {
+                $participantsCollections = $participantsCollections->whereIn('id_category', $request->idCategory);
             }
         
-            if ($request->idDistrict != null && $request->idDistrict != '' && $request->idDistrict != 'all') {
-                $participantsCollections = $participantsCollections->where('id_district','=',$request->idDistrict);
+            if (isset($request->idDistrict) && count($request->idDistrict) != 0) {
+                $participantsCollections = $participantsCollections->whereIn('id_district', $request->idDistrict);
             }
         
-            if ($request->idRegency != null && $request->idRegency != '' && $request->idRegency != 'all') {
-                $participantsCollections = $participantsCollections->where('id_regency','=',$request->idRegency);
+            if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
+                $participantsCollections = $participantsCollections->whereIn('id_participant', $request->idParticipant);
             }
 
             $participantsCollections = $participantsCollections->get();
@@ -157,6 +181,48 @@ class Dashboard1Controller extends Controller
 
             if ($categoryContribution != 0) {
                 array_push($contribution, [$categoryName, $categoryContribution]);
+            }
+            
+        }
+
+        return response()->json(['data'=>$contribution]);
+    }
+
+    public function getBarContribution(Request $request) {
+        $participantCategory = Category::latest()->get();
+        $contribution = [
+            ["Category", "Contribution", ["role"=>"style"]]
+        ];
+
+        for ($i = 0; $i < count($participantCategory); $i++) {
+            $rand = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
+            $color = '#'.$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)].$rand[rand(0,15)];
+            $categoryName = $participantCategory[$i]->category_name;
+            $participantsCollections = Collection::join('participants','collections.id_participant','=','participants.id')
+                                                 ->join('categories','participants.id_category','=','categories.id')
+                                                 ->where('categories.id', $participantCategory[$i]->id)
+                                                 ->whereBetween('collect_date', [$request->startDates,$request->endDates]);
+
+            if (isset($request->idCategory) && count($request->idCategory) != 0) {
+                $participantsCollections = $participantsCollections->whereIn('id_category', $request->idCategory);
+            }
+        
+            if (isset($request->idDistrict) && count($request->idDistrict) != 0) {
+                $participantsCollections = $participantsCollections->whereIn('id_district', $request->idDistrict);
+            }
+        
+            if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
+                $participantsCollections = $participantsCollections->whereIn('id_participant', $request->idParticipant);
+            }
+
+            $participantsCollections = $participantsCollections->get();
+            $categoryContribution = 0;
+            for ($j = 0; $j < count($participantsCollections); $j++) {
+                $categoryContribution = $categoryContribution + $participantsCollections[$j]->quantity;
+            }
+
+            if ($categoryContribution != 0) {
+                array_push($contribution, [$categoryName, $categoryContribution, $color]);
             }
             
         }
@@ -176,22 +242,22 @@ class Dashboard1Controller extends Controller
         $totalParticipants = Collection::distinct('id_participant')
                                         ->join('participants','collections.id_participant','=','participants.id');
         
-        if ($request->idCategory != null && $request->idCategory != '' && $request->idCategory != 'all') {
-            $queryCollections = $queryCollections->where('id_category','=',$request->idCategory);
-            $districtsCoverage = $districtsCoverage->where('id_category','=',$request->idCategory);
-            $totalParticipants = $totalParticipants->where('id_category','=',$request->idCategory);
+        if (isset($request->idCategory) && count($request->idCategory) != 0) {
+            $queryCollections = $queryCollections->whereIn('id_category', $request->idCategory);
+            $districtsCoverage = $districtsCoverage->whereIn('id_category', $request->idCategory);
+            $totalParticipants = $totalParticipants->whereIn('id_category', $request->idCategory);
         }
     
-        if ($request->idDistrict != null && $request->idDistrict != '' && $request->idDistrict != 'all') {
-            $queryCollections = $queryCollections->where('id_district','=',$request->idDistrict);
-            $districtsCoverage = $districtsCoverage->where('id_district','=',$request->idDistrict);
-            $totalParticipants = $totalParticipants->where('id_district','=',$request->idDistrict);
+        if (isset($request->idDistrict) && count($request->idDistrict) != 0) {
+            $queryCollections = $queryCollections->whereIn('id_district', $request->idDistrict);
+            $districtsCoverage = $districtsCoverage->whereIn('id_district', $request->idDistrict);
+            $totalParticipants = $totalParticipants->whereIn('id_district', $request->idDistrict);
         }
     
-        if ($request->idRegency != null && $request->idRegency != '' && $request->idRegency != 'all') {
-            $queryCollections = $queryCollections->where('id_regency','=',$request->idRegency);
-            $districtsCoverage = $districtsCoverage->where('id_regency','=',$request->idRegency);
-            $totalParticipants = $totalParticipants->where('id_regency','=',$request->idRegency);
+        if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
+            $queryCollections = $queryCollections->whereIn('id_participant', $request->idParticipant);
+            $districtsCoverage = $districtsCoverage->whereIn('id_participant', $request->idParticipant);
+            $totalParticipants = $totalParticipants->whereIn('id_participant', $request->idParticipant);
         }
 
         $queryCollections = $queryCollections->whereBetween('collect_date', [$request->startDates,$request->endDates]);
@@ -234,76 +300,107 @@ class Dashboard1Controller extends Controller
     public function getLineChartData (Request $request) {
         $start = new DateTime($request->startDates);
         $end = new DateTime($request->endDates.' 23:59');
-        $diff = date_diff($start, $end);
-
-        $interval = new DateInterval('P1D');
-        $dateRange = new DatePeriod($start, $interval, $end);
-
-        $weekNumber = 1;
-        $weeks = array();
-
-        if ($diff->days >= 29) {
-            foreach ($dateRange as $date) {
-                $weeks[$weekNumber][] = $date->format('Y-m-d');
-                if ($date->format('w') == 6) {
+        
+        if ($request->type == 'week') {
+            $diff = date_diff($start, $end);
+            $interval = new DateInterval('P1D');
+            $dateRange = new DatePeriod($start, $interval, $end);
+    
+            $weekNumber = 1;
+            $weeks = array();
+    
+            if ($diff->days >= 29) {
+                foreach ($dateRange as $date) {
+                    $weeks[$weekNumber][] = $date->format('Y-m-d');
+                    if ($date->format('w') == 6) {
+                        $weekNumber++;
+                    }
+                }
+                
+                $weekRanges = [];
+                $weekCollections = [];
+                foreach ($weeks as $week) {
+                    array_push($weekRanges, date('d/m/Y', strtotime($week[0])).' - '.date('d/m/Y', strtotime($week[count($week)-1])));
+        
+                    $collections = Collection::join('participants','collections.id_participant','=','participants.id')
+                                                ->where('collect_date', '>=', $week[0])
+                                                ->where('collect_date', '<=', $week[count($week)-1]);
+                                                
+                    if (isset($request->idCategory) && count($request->idCategory) != 0) {
+                        $collections = $collections->whereIn('id_category', $request->idCategory);
+                    }
+                
+                    if (isset($request->idDistrict) && count($request->idDistrict) != 0) {
+                        $collections = $collections->whereIn('id_district', $request->idDistrict);
+                    }
+                
+                    if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
+                        $collections = $collections->whereIn('id_participant', $request->idParticipant);
+                    }
+                    $collections = $collections->sum('quantity');
+                    array_push($weekCollections, $collections);
+                }
+                return response()->json(['weekRanges'=>$weekRanges, 'weekCollections'=>$weekCollections]);
+            } else {
+                foreach ($dateRange as $date) {
+                    $weeks[$weekNumber] = $date->format('Y-m-d');
                     $weekNumber++;
                 }
-            }
-            
-            $weekRanges = [];
-            $weekCollections = [];
-            foreach ($weeks as $week) {
-                array_push($weekRanges, date('d/m/Y', strtotime($week[0])).' - '.date('d/m/Y', strtotime($week[count($week)-1])));
+                
+                $weekRanges = [];
+                $weekCollections = [];
+                foreach ($weeks as $week) {
+                    array_push($weekRanges, date('d/m/Y', strtotime($week)));
+        
+                    $collections = Collection::join('participants','collections.id_participant','=','participants.id')
+                                                ->where('collect_date', '=', $week);
     
-                $collections = Collection::join('participants','collections.id_participant','=','participants.id')
-                                            ->where('collect_date', '>=', $week[0])
-                                            ->where('collect_date', '<=', $week[count($week)-1]);
-                                            
-                if ($request->idCategory != null && $request->idCategory != '' && $request->idCategory != 'all') {
-                    $collections = $collections->where('id_category','=',$request->idCategory);
+                    if (isset($request->idCategory) && count($request->idCategory) != 0) {
+                        $collections = $collections->whereIn('id_category', $request->idCategory);
+                    }
+                
+                    if (isset($request->idDistrict) && count($request->idDistrict) != 0) {
+                        $collections = $collections->whereIn('id_district', $request->idDistrict);
+                    }
+                
+                    if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
+                        $collections = $collections->whereIn('id_participant','=',$request->idParticipant);
+                    }
+                    $collections = $collections->sum('quantity');
+    
+                    array_push($weekCollections, $collections);
                 }
-            
-                if ($request->idDistrict != null && $request->idDistrict != '' && $request->idDistrict != 'all') {
-                    $collections = $collections->where('id_district','=',$request->idDistrict);
-                }
-            
-                if ($request->idRegency != null && $request->idRegency != '' && $request->idRegency != 'all') {
-                    $collections = $collections->where('id_regency','=',$request->idRegency);
-                }
-                $collections = $collections->sum('quantity');
-                array_push($weekCollections, $collections);
-            }
-            return response()->json(['weekRanges'=>$weekRanges, 'weekCollections'=>$weekCollections]);
+                return response()->json(['weekRanges'=>$weekRanges, 'weekCollections'=>$weekCollections, 'diff'=>$diff->days]);
+            }   
         } else {
-            foreach ($dateRange as $date) {
-                $weeks[$weekNumber] = $date->format('Y-m-d');
-                $weekNumber++;
-            }
-            
             $weekRanges = [];
             $weekCollections = [];
-            foreach ($weeks as $week) {
-                array_push($weekRanges, date('d/m/Y', strtotime($week)));
-    
-                $collections = Collection::join('participants','collections.id_participant','=','participants.id')
-                                            ->where('collect_date', '=', $week);
-
-                if ($request->idCategory != null && $request->idCategory != '' && $request->idCategory != 'all') {
-                    $collections = $collections->where('id_category','=',$request->idCategory);
-                }
-            
-                if ($request->idDistrict != null && $request->idDistrict != '' && $request->idDistrict != 'all') {
-                    $collections = $collections->where('id_district','=',$request->idDistrict);
-                }
-            
-                if ($request->idRegency != null && $request->idRegency != '' && $request->idRegency != 'all') {
-                    $collections = $collections->where('id_regency','=',$request->idRegency);
-                }
-                $collections = $collections->sum('quantity');
-
-                array_push($weekCollections, $collections);
+            $collections = Collection::selectRaw('SUM(quantity) AS sum_quantity, MONTH(collect_date) AS month')
+                                        ->join('participants','collections.id_participant','=','participants.id')
+                                        ->where('collect_date', '>=', $start)
+                                        ->where('collect_date', '<=', $end);
+                                        
+            if (isset($request->idCategory) && count($request->idCategory) != 0) {
+                $collections = $collections->whereIn('id_category', $request->idCategory);
             }
-            return response()->json(['weekRanges'=>$weekRanges, 'weekCollections'=>$weekCollections, 'diff'=>$diff->days]);
+        
+            if (isset($request->idDistrict) && count($request->idDistrict) != 0) {
+                $collections = $collections->whereIn('id_district', $request->idDistrict);
+            }
+        
+            if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
+                $collections = $collections->whereIn('id_participant', $request->idParticipant);
+            }
+            $collections = $collections->groupBy('month')->get();
+            foreach ($collections as $collection) {
+                $monthNum = $collection->month;
+                $dateObj  = DateTime::createFromFormat('!m', $monthNum);
+                $monthName = $dateObj->format('F');
+                array_push($weekRanges, $monthName);
+                array_push($weekCollections, $collection->sum_quantity);
+            }
+            
+            return response()->json(['weekRanges'=>$weekRanges, 'weekCollections'=>$weekCollections]);
         }
         
     }
