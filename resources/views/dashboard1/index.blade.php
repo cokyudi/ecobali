@@ -265,6 +265,17 @@
             </div>
             <hr>
 
+            <h5 class="mt-1 mb-1 text-bold-500">Regency</h5>
+            <div class="form-group ">
+                <select class="select2 form-control" id="id_regency" name="id_regency[]" multiple="multiple">
+                    @foreach($regencies as $regency)
+                        <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
+                    @endforeach
+                </select>
+
+            </div>
+            <hr>
+
             <h5 class="mt-1 mb-1 text-bold-500">Date Range Options</h5>
             <div class="form-group">
                 <div class="form-group">
@@ -374,6 +385,8 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
             $('#id_category').val(null).trigger('change');
             $('#id_district').val(null).trigger('change');
             $('#id_participant').val(null).trigger('change');
+            $('#id_regency').val(null).trigger('change');
+
             getDefaultCollection();
       });
 
@@ -383,12 +396,15 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 			var idCategory = $('#id_category').val();
 			var idDistrict = $('#id_district').val();
 			var idParticipant = $('#id_participant').val();
+      var idRegency = $('#id_regency').val();
+
 			var params = {
 				startDates: startDates,
 				endDates: endDates,
 				idCategory: idCategory,
 				idDistrict: idDistrict,
-				idParticipant: idParticipant
+				idParticipant: idParticipant,
+        idRegency: idRegency
 			}
 
 			$.ajaxSetup({

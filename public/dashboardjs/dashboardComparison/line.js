@@ -1,11 +1,10 @@
-function getLineChartData (type) {
+function getComparisonLineChartData (type) {
     var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
     var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
     var idCategory = $('#id_category').val();
 	var idDistrict = $('#id_district').val();
 	var idParticipant =	$('#id_participant').val();
     var idRegency = $('#id_regency').val();
-
     var data = {
             startDates: startDates,
             endDates: endDates,
@@ -24,7 +23,7 @@ function getLineChartData (type) {
 
     $.ajax({
         type: "GET",
-        url: "getLineChartData",
+        url: "getComparisonLineChartData",
         data: data,
         success: function (data) {
             var o = $("#line-chart");
@@ -45,20 +44,7 @@ function getLineChartData (type) {
                 },
                 data: {
                     labels: data.weekRanges,
-                    datasets: [
-                        {
-                            label: "Collection",
-                            data: data.weekCollections,
-                            lineTension: 0,
-                            fill: !1,
-                            borderColor: "#FF7D4D",
-                            pointBorderColor: "#FF7D4D",
-                            pointBackgroundColor: "#FFF",
-                            pointBorderWidth: 2,
-                            pointHoverBorderWidth: 2,
-                            pointRadius: 4,
-                        },
-                    ],
+                    datasets: data.participantsCollections
                 },
             });
         },

@@ -138,6 +138,10 @@ class Dashboard1Controller extends Controller
                 $countParticipant = $countParticipant->whereIn('id_participant', $request->idParticipant);
             }
 
+            if (isset($request->idRegency) && count($request->idRegency) != 0) {
+                $countParticipant = $countParticipant->whereIn('id_regency', $request->idRegency);
+            }
+
             $countParticipant = $countParticipant->count();
             
             if ($countParticipant !== 0) {
@@ -171,6 +175,10 @@ class Dashboard1Controller extends Controller
         
             if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
                 $participantsCollections = $participantsCollections->whereIn('id_participant', $request->idParticipant);
+            }
+
+            if (isset($request->idRegency) && count($request->idRegency) != 0) {
+                $participantsCollections = $participantsCollections->whereIn('id_regency', $request->idRegency);
             }
 
             $participantsCollections = $participantsCollections->get();
@@ -213,6 +221,10 @@ class Dashboard1Controller extends Controller
         
             if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
                 $participantsCollections = $participantsCollections->whereIn('id_participant', $request->idParticipant);
+            }
+
+            if (isset($request->idRegency) && count($request->idRegency) != 0) {
+                $participantsCollections = $participantsCollections->whereIn('id_regency', $request->idRegency);
             }
 
             $participantsCollections = $participantsCollections->get();
@@ -260,6 +272,12 @@ class Dashboard1Controller extends Controller
             $totalParticipants = $totalParticipants->whereIn('id_participant', $request->idParticipant);
         }
 
+        if (isset($request->idRegency) && count($request->idRegency) != 0) {
+            $queryCollections = $queryCollections->whereIn('id_regency', $request->idRegency);
+            $districtsCoverage = $districtsCoverage->whereIn('id_regency', $request->idRegency);
+            $totalParticipants = $totalParticipants->whereIn('id_regency', $request->idRegency);
+        }
+
         $queryCollections = $queryCollections->whereBetween('collect_date', [$request->startDates,$request->endDates]);
         $districtsCoverage = $districtsCoverage->whereBetween('collect_date', [$request->startDates,$request->endDates]);
         $totalParticipants = $totalParticipants->whereBetween('collect_date', [$request->startDates,$request->endDates]);
@@ -284,7 +302,31 @@ class Dashboard1Controller extends Controller
                 $totalCollectionByRegency = $totalCollectionByRegency + $countCollectionByRegency[$j]->quantity;
             }
 
-            $collectionByRegency[$regencyName] = $totalCollectionByRegency;
+            if ($totalCollectionByRegency <= 10) {
+                $opacity = 0.1;
+            }
+
+            if ($totalCollectionByRegency > 10 && $totalCollectionByRegency <= 50) {
+                $opacity = 0.2;
+            }
+
+            if ($totalCollectionByRegency > 50 && $totalCollectionByRegency <= 100) {
+                $opacity = 0.3;
+            }
+
+            if ($totalCollectionByRegency > 100 && $totalCollectionByRegency <= 500) {
+                $opacity = 0.4;
+            }
+
+            if ($totalCollectionByRegency > 500 && $totalCollectionByRegency < 1000) {
+                $opacity = 0.5;
+            }
+
+            if ($totalCollectionByRegency >= 1000) {
+                $opacity = 0.6;
+            }
+
+            $collectionByRegency[$regencyName] = [$totalCollectionByRegency, $opacity];
         }
 
         $data = [
@@ -337,6 +379,10 @@ class Dashboard1Controller extends Controller
                     if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
                         $collections = $collections->whereIn('id_participant', $request->idParticipant);
                     }
+
+                    if (isset($request->idRegency) && count($request->idRegency) != 0) {
+                        $collections = $collections->whereIn('id_regency', $request->idRegency);
+                    }
                     $collections = $collections->sum('quantity');
                     array_push($weekCollections, $collections);
                 }
@@ -366,6 +412,10 @@ class Dashboard1Controller extends Controller
                     if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
                         $collections = $collections->whereIn('id_participant','=',$request->idParticipant);
                     }
+
+                    if (isset($request->idRegency) && count($request->idRegency) != 0) {
+                        $collections = $collections->whereIn('id_regency', $request->idRegency);
+                    }
                     $collections = $collections->sum('quantity');
     
                     array_push($weekCollections, $collections);
@@ -390,6 +440,10 @@ class Dashboard1Controller extends Controller
         
             if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
                 $collections = $collections->whereIn('id_participant', $request->idParticipant);
+            }
+
+            if (isset($request->idRegency) && count($request->idRegency) != 0) {
+                $collections = $collections->whereIn('id_regency', $request->idRegency);
             }
             $collections = $collections->groupBy('month')->get();
             foreach ($collections as $collection) {
