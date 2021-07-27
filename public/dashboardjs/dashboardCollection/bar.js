@@ -4,12 +4,15 @@ function drawBar() {
     var idCategory = $('#id_category').val();
 	var idDistrict = $('#id_district').val();
 	var idParticipant =	$('#id_participant').val();
+    var idRegency = $('#id_regency').val();
+
     var data = {
             startDates: startDates,
             endDates: endDates,
             idCategory: idCategory,
             idDistrict: idDistrict,
-            idParticipant: idParticipant
+            idParticipant: idParticipant,
+            idRegency: idRegency
         }
     
     $.ajaxSetup({

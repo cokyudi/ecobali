@@ -31,6 +31,10 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card-content collapse show">
+                            <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
+                                <button onclick="getComparisonLineChartData('week');" type="button" class="btn btn-sm btn-secondary"><i class="ft-plus"></i></button>
+                                <button onclick="getComparisonLineChartData('month');" type="button" class="btn btn-sm btn-secondary"><i class="ft-minus"></i></button>
+                              </div>
                             <div class="card-body chartjs">
                                 <canvas id="line-chart" height="700"></canvas>
                             </div>
@@ -115,7 +119,7 @@
                 <button id='backBtn' type="button" class="btn btn-warning mr-1">
                     <i class="ft-x"></i> Reset
                 </button>
-                <button id="saveBtn"  value="create" type="submit" class="btn btn-success">
+                <button id="saveBtn"  value="create" type="button" class="btn btn-success">
                     <i class="la la-check-square-o"></i> Filter
                 </button>
             </div>
@@ -129,7 +133,6 @@
 @endsection
 
 @push('ajax_crud')
-<script src="{{asset('js/scripts/charts/chartjs/line/line.min.js')}}"></script>
 <script src="{{asset('vendors/js/forms/select/select2.full.min.js')}}"></script>
 <script src="{{asset('js/scripts/forms/select/form-select2.min.js')}}"></script>
 
@@ -176,11 +179,27 @@
             }
         );
 
+        getComparisonLineChartData('week');
+
         $('#backBtn').click(function() {
-            var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
-            console.log(endDates);
+            var startDates=  $("#daterange").data('daterangepicker').ranges['Last 30 Days'][0];
+            var endDates=  $("#daterange").data('daterangepicker').ranges['Last 30 Days'][1];
+            $('#daterange').data('daterangepicker').setStartDate(startDates.format('DD/MM/YYYY'));
+            $('#daterange').data('daterangepicker').setEndDate(endDates.format('DD/MM/YYYY'));
+
+            $('#id_category').val(null).trigger('change');
+            $('#id_district').val(null).trigger('change');
+            $('#id_participant').val(null).trigger('change');
+            $('#id_regency').val(null).trigger('change');
+            getComparisonLineChartData('week');
         });
+
+        $('#saveBtn').click(function() {
+            getComparisonLineChartData('week');
+        });
+
 
     });
 </script>
+<script src="{{asset('dashboardjs/dashboardComparison/line.js')}}"></script>
 @endpush
