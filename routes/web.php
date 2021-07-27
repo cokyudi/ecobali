@@ -75,6 +75,11 @@ Route::get('getLineChartData', [Dashboard1Controller::class, 'getLineChartData']
 
 Route::resource('dashboard-comparison', DashboardComparisonController::class);
 Route::resource('dashboard-target', DashboardTargetController::class);
+Route::get('getActualTargetBar', [DashboardTargetController::class, 'getActualTargetBar']);
+Route::get('getActualTargetBarByMonth', [DashboardTargetController::class, 'getActualTargetBarByMonth']);
+
+
+
 Route::resource('dashboard-shipment', DashboardShipmentController::class);
 Route::resource('dashboard-activities', DashboardActivitiesController::class);
 

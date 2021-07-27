@@ -39,7 +39,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
-                            <canvas id="actual-target" height="600"></canvas>
+                            <canvas id="actual-target" height="500"></canvas>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,12 @@
                         </div>
                     </div>
                     <div class="card-content collapse show">
-                        <div class="card-body">
+                        <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
+                            <button onclick="drawActualTargetBarByMonth('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
+                            <button onclick="drawActualTargetBarByMonth('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
+                        </div>
+                        <div class="card-body mt-2">
+
                             <div id="combo-chart"></div>
                         </div>
                     </div>
@@ -74,7 +79,7 @@
             <div class="col-lg-6 col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Pie Chart</h4>
+                        <h4 class="card-title">Monthly Target Achievement</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -87,7 +92,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
-                            <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>
+{{--                            <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>--}}
                             <div id="pie-3d"></div>
                         </div>
                     </div>
@@ -97,7 +102,7 @@
             <div class="col-lg-6 col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Pie Chart</h4>
+                        <h4 class="card-title">Annual Target Achievement (ecoBali)</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -110,7 +115,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
-                            <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>
+{{--                            <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>--}}
                             <div id="pie-3d-exploded"></div>
                         </div>
                     </div>
@@ -192,10 +197,10 @@
                 </div>
             </div>
             <div class="form-actions text-right">
-                <button id='backBtn' type="button" class="btn btn-warning mr-1">
+                <button id='resetFilterCollection' type="button" class="btn btn-warning mr-1">
                     <i class="ft-x"></i> Reset
                 </button>
-                <button id="saveBtn"  value="create" type="submit" class="btn btn-success">
+                <button id="filterCollection"  type="button" class="btn btn-success">
                     <i class="la la-check-square-o"></i> Filter
                 </button>
             </div>
@@ -223,7 +228,7 @@
                 <button id='backBtn' type="button" class="btn btn-warning mr-1">
                     <i class="ft-x"></i> Reset
                 </button>
-                <button id="saveBtn"  value="create" type="submit" class="btn btn-success">
+                <button id="filterSales"  value="create" type="submit" class="btn btn-success">
                     <i class="la la-check-square-o"></i> Filter
                 </button>
             </div>
@@ -242,13 +247,17 @@
 <script src="{{asset('vendors/js/forms/select/select2.full.min.js')}}"></script>
 <script src="{{asset('js/scripts/forms/select/form-select2.min.js')}}"></script>
 
-<script src="{{asset('js/scripts/charts/chartjs/bar/column-stacked.min.js')}}"></script>
-<script src="{{asset('js/scripts/charts/google/bar/combo.min.js')}}"></script>
+<script src="{{asset('dashboardjs/dashboardTarget/actualTargetBar.js')}}"></script>
+<script src="{{asset('dashboardjs/dashboardTarget/combo.js')}}"></script>
+{{--<script src="{{asset('js/scripts/charts/chartjs/bar/column-stacked.min.js')}}"></script>--}}
+{{--<script src="{{asset('js/scripts/charts/google/bar/combo.min.js')}}"></script>--}}
 
-<script src="{{asset('js/scripts/charts/google/pie/3d-pie.min.js')}}"></script>
-<script src="{{asset('js/scripts/charts/google/pie/3d-pie-exploded.min.js')}}"></script>
+{{--<script src="{{asset('js/scripts/charts/google/pie/3d-pie.min.js')}}"></script>--}}
+{{--<script src="{{asset('js/scripts/charts/google/pie/3d-pie-exploded.min.js')}}"></script>--}}
 
 <script src="{{asset('js/scripts/charts/google/pie/donut.min.js')}}"></script>
+
+
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -259,7 +268,7 @@
     $(document).ready(function() {
         $('#dateRangeCollection').daterangepicker(
             {
-                startDate: moment().subtract('days', 29),
+                startDate: moment("01/01/2021","DD/MM/YYYY"),
                 endDate: moment(),
                 showDropdowns: true,
                 showWeekNumbers: true,
@@ -295,7 +304,7 @@
 
         $('#dateRangeSales').daterangepicker(
             {
-                startDate: moment().subtract('days', 29),
+                startDate: moment("01/01/2021","DD/MM/YYYY"),
                 endDate: moment(),
                 showDropdowns: true,
                 showWeekNumbers: true,
@@ -329,74 +338,23 @@
             }
         );
 
-        $('#backBtn').click(function() {
-            var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
-            console.log(endDates);
+        drawActualTargetBar();
+        drawActualTargetBarByMonth('month');
+
+
+        $('#resetFilterCollection').click(function() {
+            $('#dateRangeCollection').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
+            $('#dateRangeCollection').data('daterangepicker').setEndDate(moment());
+
+            drawActualTargetBar();
         });
 
-        var cData = JSON.parse(`<?php echo $chart_data; ?>`);
-        var data = {
-            // labels: ["Bank Sampah Induk", "Bank Sampah Unit", "Bisnis", "EB Resedential Service", "Hotel","Jasa Sampah", "Pengepul","Sekolah","TPA", "TPS3R", "TPST3R"],
-            labels: cData.label,
-            datasets: [{
-                label: "Actual",
-                backgroundColor: 'rgba(22,211,154,.8)',
-                borderWidth: 1,
-                data: cData.actual,
-                xAxisID: "bar-x-axis1",
-            }, {
-                label: "Target",
-                backgroundColor: 'rgba(81,117,224,.8)',
-                borderWidth: 1,
-                data: cData.target,
-                xAxisID: "bar-x-axis2",
-            }]
-        };
+        $('#filterCollection').click(function() {
 
-        var options = {
-            title: { display: !1, text: "Actual vs Target" },
-            tooltips: { mode: "label" },
-            responsive: !0,
-            maintainAspectRatio: !1,
-            responsiveAnimationDuration: 500,
-            scales: {
-                xAxes: [{
-                    stacked: true,
-                    id: "bar-x-axis1",
-                    barThickness: 70,
-                }, {
-                    display: false,
-                    stacked: true,
-                    id: "bar-x-axis2",
-                    barThickness: 70,
-                    // these are needed because the bar controller defaults set only the first x axis properties
-                    type: 'category',
-                    categoryPercentage: 0.8,
-                    barPercentage: 0.9,
-                    gridLines: {
-                        offsetGridLines: true
-                    },
-                    offset: true
-                }],
-                yAxes: [{
-                    stacked: false,
-                    ticks: {
-                        beginAtZero: true
-                    },
-                }]
-
-            }
-        };
-
-        var a = $("#actual-target");
-        var myBarChart = new Chart(a , {
-            type: 'bar',
-            data: data,
-            options: options
+            drawActualTargetBar();
+            drawActualTargetBarByMonth('month');
         });
-
-
-
+        
     });
 </script>
 @endpush
