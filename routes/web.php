@@ -19,6 +19,7 @@ use App\Http\Controllers\DashboardComparisonController;
 use App\Http\Controllers\DashboardTargetController;
 use App\Http\Controllers\DashboardShipmentController;
 use App\Http\Controllers\DashboardActivitiesController;
+use App\Http\Controllers\MapController;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserManagementController;
@@ -80,7 +81,8 @@ Route::resource('dashboard-target', DashboardTargetController::class);
 Route::get('getActualTargetBar', [DashboardTargetController::class, 'getActualTargetBar']);
 Route::get('getActualTargetBarByMonth', [DashboardTargetController::class, 'getActualTargetBarByMonth']);
 
-
+Route::resource('map', MapController::class);
+Route::get('getMapParticipantsInformation', [MapController::class, 'getMapParticipantsInformation']);
 
 Route::resource('dashboard-shipment', DashboardShipmentController::class);
 Route::resource('dashboard-activities', DashboardActivitiesController::class);

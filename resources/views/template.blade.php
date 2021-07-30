@@ -95,7 +95,7 @@
 							</li>
 						</ul>
 					</li>
-					<li class=" nav-item"><a href="#"><i class="la la-map"></i><span class="menu-title" >Maps</span></a></li>
+					<li class="@yield('map') nav-item"><a href="{{url('map')}}"><i class="la la-map"></i><span class="menu-title" >Map</span></a></li>
 					<li class="@yield('collections') nav-item"><a href="{{url('collections')}}"><i class="la la-database"></i><span class="menu-title" >Collection</span></a></li>
 					<li class=" nav-item"><a href="#"><i class="la la-ship"></i><span class="menu-title" >Sales</span></a></li>
 
