@@ -108,8 +108,8 @@
 							<li class="@yield('areas')"><a class="menu-item" href="{{url('areas')}}"><i class="la la-database mr-1"></i><span>Area</span></a></li>
 							<li class="@yield('districts')"><a class="menu-item" href="{{url('districts')}}"><i class="la la-database mr-1"></i><span>District</span></a></li>
 							<li class="@yield('regencies')"><a class="menu-item" href="{{url('regencies')}}"><i class="la la-database mr-1"></i><span>Regency</span></a></li>
-							<li class="@yield('boxResources')"><a class="menu-item" href="{{url('boxResources')}}"><i class="la la-database mr-1"></i><span>Box Resource</span></a></li>
-							<li class="@yield('purchasePrices')"><a class="menu-item" href="{{url('purchasePrices')}}"><i class="la la-database mr-1"></i><span>Purchase Price</span></a></li>
+							<li class="@yield('boxResources')"><a class="menu-item" href="{{url('boxResources')}}"><i class="la la-database mr-1"></i><span>UBC Source</span></a></li>
+							<li class="@yield('purchasePrices')"><a class="menu-item" href="{{url('purchasePrices')}}"><i class="la la-database mr-1"></i><span>Price</span></a></li>
 							<li class="@yield('transportIntensities')"><a class="menu-item" href="{{url('transportIntensities')}}"><i class="la la-database mr-1"></i><span>Transport Intensity</span></a></li>
 							<li class="@yield('paymentMethods')"><a class="menu-item" href="{{url('paymentMethods')}}"><i class="la la-database mr-1"></i><span>Payment Method</span></a></li>
 							<li class="@yield('banks')"><a class="menu-item" href="{{url('banks')}}"><i class="la la-database mr-1"></i><span>Bank</span></a></li>

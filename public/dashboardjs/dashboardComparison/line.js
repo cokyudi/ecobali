@@ -1,3 +1,4 @@
+var myLineChart;
 function getComparisonLineChartData (type) {
     var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
     var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
@@ -26,8 +27,11 @@ function getComparisonLineChartData (type) {
         url: "getComparisonLineChartData",
         data: data,
         success: function (data) {
+            if (myLineChart) {
+                myLineChart.destroy();
+            }
             var o = $("#line-chart");
-            new Chart(o, {
+            myLineChart = new Chart(o, {
                 type: "line",
                 options: {
                     responsive: !0,
@@ -40,10 +44,10 @@ function getComparisonLineChartData (type) {
                         } }],
                         yAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Value", padding: 10 },ticks: { padding: 10}}],
                     },
-                    title: { display: !0, text: "Chart.js Line Chart - Legend" },
+                    title: { display: !0, text: "" },
                 },
                 data: {
-                    labels: data.weekRanges,
+                    labels: data.intervalss,
                     datasets: data.participantsCollections
                 },
             });
@@ -52,5 +56,5 @@ function getComparisonLineChartData (type) {
             console.log('Error:', data);
         }
     });
-    
+
 };

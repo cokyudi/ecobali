@@ -32,8 +32,8 @@
                     <div class="col-12">
                         <div class="card-content collapse show">
                             <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
-                                <button onclick="getComparisonLineChartData('week');" type="button" class="btn btn-sm btn-secondary"><i class="ft-plus"></i></button>
-                                <button onclick="getComparisonLineChartData('month');" type="button" class="btn btn-sm btn-secondary"><i class="ft-minus"></i></button>
+                                <button onclick="getComparisonLineChartData('week');" type="button" class="btn btn-sm btn-secondary">Weekly</button>
+                                <button onclick="getComparisonLineChartData('month');" type="button" class="btn btn-sm btn-secondary">Monthly</button>
                               </div>
                             <div class="card-body chartjs">
                                 <canvas id="line-chart" height="700"></canvas>
@@ -145,7 +145,7 @@
     $(document).ready(function() {
         $('#daterange').daterangepicker(
             {
-                startDate: moment().subtract('days', 29),
+                startDate: moment("01/01/2021","DD/MM/YYYY"),
                 endDate: moment(),
                 showDropdowns: true,
                 showWeekNumbers: true,
@@ -182,10 +182,8 @@
         getComparisonLineChartData('week');
 
         $('#backBtn').click(function() {
-            var startDates=  $("#daterange").data('daterangepicker').ranges['Last 30 Days'][0];
-            var endDates=  $("#daterange").data('daterangepicker').ranges['Last 30 Days'][1];
-            $('#daterange').data('daterangepicker').setStartDate(startDates.format('DD/MM/YYYY'));
-            $('#daterange').data('daterangepicker').setEndDate(endDates.format('DD/MM/YYYY'));
+            $('#daterange').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
+            $('#daterange').data('daterangepicker').setEndDate(moment());
 
             $('#id_category').val(null).trigger('change');
             $('#id_district').val(null).trigger('change');

@@ -2,7 +2,7 @@
 @section('purchasePrices','active')
 @push('ajax_crud')
 <!-- <link rel="stylesheet" type="text/css" href="{{asset('css/plugins/forms/validation/form-validation.css')}}"> -->
-@endpush 
+@endpush
 
 @section('content')
         <!-- BEGIN: Content-->
@@ -32,7 +32,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h4 class="card-title">Purchase Price Data Master</h4>
+                                    <h4 class="card-title">Price Data Master</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -45,8 +45,8 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewPurchasePrice">Add New Purchase Price</button>
-										
+                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewPurchasePrice">Add New Price</button>
+
                                         @include('purchasePrice.modal')
                                         <div class="table-responsive">
                                             <table id="purchasePriceTable" class="table table-striped table-bordered zero-configuration">
@@ -59,7 +59,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -89,13 +89,13 @@
 <script src="{{asset('js/scripts/forms/validation/form-validation.js')}}"></script>
 <script type="text/javascript">
   $(function () {
-      
+
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
       });
-  
+
       var table = $('#purchasePriceTable').DataTable({
           processing: true,
           serverSide: true,
@@ -107,22 +107,22 @@
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
-  
+
       table.on('draw.dt', function () {
             var info = table.page.info();
             table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1 + info.start;
             });
         });
-  
+
       $('#createNewPurchasePrice').click(function () {
           $('#saveBtn').val("create");
           $('#purchasePrice_id').val('');
           $('#purchasePriceForm').trigger("reset");
-          $('#modalHeading').html("Create New Purchase Price");
+          $('#modalHeading').html("Create New Price");
           $('#purchasePriceModal').modal('show');
       });
-  
+
       $('body').on('click', '.editPurchasePrice', function () {
         var purchasePrice_id = $(this).data('id');
         $.get("{{ route('purchasePrices.index') }}" +'/' + purchasePrice_id +'/edit', function (data) {
@@ -138,7 +138,7 @@
             $('#last_modified_datetime').val(data.last_modified_datetime);
         })
      });
-  
+
       $('#saveBtn').click(function (e) {
           e.preventDefault();
           if ($('#saveBtn').val() == "create")  {
@@ -153,18 +153,18 @@
               $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
           }
           $(this).html('Save');
-      
+
           $.ajax({
             data: $('#purchasePriceForm').serialize(),
             url: "{{ route('purchasePrices.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
-       
+
                 $('#purchasePriceForm').trigger("reset");
                 $('#purchasePriceModal').modal('hide');
                 table.draw();
-           
+
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -172,12 +172,12 @@
             }
         });
       });
-      
+
       $('body').on('click', '.deletePurchasePrice', function () {
-       
+
           var purchasePrice_id = $(this).data("id");
           confirm("Are You sure want to delete !");
-        
+
           $.ajax({
               type: "DELETE",
               url: "{{ route('purchasePrices.store') }}"+'/'+purchasePrice_id,
@@ -189,8 +189,8 @@
               }
           });
       });
-       
+
     });
 </script>
 
-@endpush 
+@endpush

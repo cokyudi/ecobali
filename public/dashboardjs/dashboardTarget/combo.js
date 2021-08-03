@@ -30,7 +30,7 @@ function drawActualTargetBarByMonth(type) {
             var e = google.visualization.arrayToDataTable(data.dataByMonth);
 
             myBarChartByMonth = new google.visualization.ComboChart(document.getElementById("combo-chart")).draw(e, {
-                title: "Monthly Coffee Production by Country",
+                title: "",
                 seriesType: "bars",
                 series: { 1: { type: "line" } },
                 colors: ["#99B898", "#FECEA8", "#FF847C", "#E84A5F", "#474747"],

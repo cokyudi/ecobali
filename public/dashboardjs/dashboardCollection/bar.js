@@ -14,7 +14,7 @@ function drawBar() {
             idParticipant: idParticipant,
             idRegency: idRegency
         }
-    
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -28,9 +28,9 @@ function drawBar() {
         success: function (data) {
             var e = google.visualization.arrayToDataTable(data.data);
             new google.visualization.BarChart(document.getElementById("bar-chart")).draw(e, {
-                height: 400,
+                height: 500,
                 fontSize: 12,
-                chartArea: { left: "5%", width: "80%", height: "80%" },
+                chartArea: { left: "20%", width: "70%", height: "90%" },
                 hAxis: { gridlines: { color: "#e9e9e9" } },
                 vAxis: { gridlines: { count: 10 }, minValue: 0 },
                 legend: { position: "none" },

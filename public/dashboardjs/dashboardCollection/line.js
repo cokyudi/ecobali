@@ -1,3 +1,4 @@
+var myLineChart;
 function getLineChartData (type) {
     var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
     var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
@@ -7,14 +8,14 @@ function getLineChartData (type) {
     var idRegency = $('#id_regency').val();
 
     var data = {
-            startDates: startDates,
-            endDates: endDates,
-            idCategory: idCategory,
-            idDistrict: idDistrict,
-            idParticipant: idParticipant,
-            idRegency: idRegency,
-            type: type
-        }
+        startDates: startDates,
+        endDates: endDates,
+        idCategory: idCategory,
+        idDistrict: idDistrict,
+        idParticipant: idParticipant,
+        idRegency: idRegency,
+        type: type
+    }
 
     $.ajaxSetup({
         headers: {
@@ -27,28 +28,31 @@ function getLineChartData (type) {
         url: "getLineChartData",
         data: data,
         success: function (data) {
+            if (myLineChart) {
+                myLineChart.destroy();
+            }
             var o = $("#line-chart");
-            new Chart(o, {
+            myLineChart = new Chart(o, {
                 type: "line",
                 options: {
                     responsive: !0,
                     maintainAspectRatio: !1,
-                    legend: { position: "bottom" },
+                    legend: { position: "none" },
                     hover: { mode: "label" },
                     scales: {
-                        xAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Month", padding: 10, },ticks: {
+                        xAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Week / Month", padding: 10, },ticks: {
                             padding: 10
                         } }],
-                        yAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Value", padding: 10 },ticks: { padding: 10}}],
+                        yAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Collections", padding: 10 },ticks: { padding: 10}}],
                     },
-                    title: { display: !0, text: "Chart.js Line Chart - Legend" },
+                    title: { display: !0, text: "" },
                 },
                 data: {
-                    labels: data.weekRanges,
+                    labels: data.data.label,
                     datasets: [
                         {
                             label: "Collection",
-                            data: data.weekCollections,
+                            data: data.data.qty,
                             lineTension: 0,
                             fill: !1,
                             borderColor: "#FF7D4D",
@@ -66,5 +70,5 @@ function getLineChartData (type) {
             console.log('Error:', data);
         }
     });
-    
+
 };

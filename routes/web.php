@@ -72,6 +72,7 @@ Route::get('getBarContribution', [Dashboard1Controller::class, 'getBarContributi
 Route::get('getCollectionByFilters', [Dashboard1Controller::class, 'getCollectionByFilters']);
 Route::get('getCollection', [Dashboard1Controller::class, 'getCollection']);
 Route::get('getLineChartData', [Dashboard1Controller::class, 'getLineChartData']);
+Route::get('getMapByFilters', [Dashboard1Controller::class, 'getMapByFilters']);
 
 Route::resource('dashboard-comparison', DashboardComparisonController::class);
 Route::get('getComparisonLineChartData', [DashboardComparisonController::class, 'getComparisonLineChartData']);
