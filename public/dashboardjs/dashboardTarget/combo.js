@@ -1,4 +1,3 @@
-
 var myBarChartByMonth;
 var pieChart;
 var pieChartExplode;
@@ -27,8 +26,8 @@ function drawActualTargetBarByMonth(type) {
                 pieChart.destroy();
                 pieChartExplode.destroy();
             }
-            var e = google.visualization.arrayToDataTable(data.dataByMonth);
 
+            var e = google.visualization.arrayToDataTable(data.dataByMonth);
             myBarChartByMonth = new google.visualization.ComboChart(document.getElementById("combo-chart")).draw(e, {
                 title: "",
                 seriesType: "bars",
@@ -61,11 +60,6 @@ function drawActualTargetBarByMonth(type) {
                 chartArea: { left: "5%", width: "90%", height: 350 },
                 slices: { 1: { offset: 0.2 }, 2: { offset: 0.15 }, 3: { offset: 0.16 }, 4: { offset: 0.12 } },
             });
-
-
-
-
-
         },
         error: function (data) {
             console.log('Error:', data);

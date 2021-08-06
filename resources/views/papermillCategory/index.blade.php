@@ -43,15 +43,15 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewBank">Add New Bank</button>
+                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewPapermillCategory">Add New Papermill Category</button>
 
-                                        @include('bank.modal')
+                                        @include('papermillCategory.modal')
                                         <div class="table-responsive">
-                                            <table id="bankTable" class="table table-striped table-bordered zero-configuration">
+                                            <table id="papermillCategoryTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Bank</th>
+                                                        <th>Papermill Category</th>
                                                         <th>Description</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
@@ -62,7 +62,7 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Bank</th>
+                                                        <th>Papermill Category</th>
                                                         <th>Description</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
@@ -92,13 +92,13 @@
             }
       });
 
-      var table = $('#bankTable').DataTable({
+      var table = $('#papermillCategoryTable').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('banks.index') }}",
+          ajax: "{{ route('papermillCategories.index') }}",
           columns: [
               {data: null},
-              {data: 'bank_name', name: 'bank_name'},
+              {data: 'papermill_category_name', name: 'papermill_category_name'},
               {data: 'description', name: 'description'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
@@ -111,22 +111,22 @@
             });
         });
 
-      $('#createNewBank').click(function () {
+      $('#createNewPapermillCategory').click(function () {
           $('#saveBtn').val("create");
-          $('#bank_id').val('');
-          $('#bankForm').trigger("reset");
-          $('#modalHeading').html("Create New Bank");
-          $('#bankModal').modal('show');
+          $('#papermill_category_id').val('');
+          $('#papermillCategoryForm').trigger("reset");
+          $('#modalHeading').html("Create New Papermill Category");
+          $('#papermillCategoryModal').modal('show');
       });
 
-      $('body').on('click', '.editBank', function () {
-        var bank_id = $(this).data('id');
-        $.get("{{ route('banks.index') }}" +'/' + bank_id +'/edit', function (data) {
-            $('#modalHeading').html("Edit Bank");
+      $('body').on('click', '.editPapermillCategory', function () {
+        var papermill_category_id = $(this).data('id');
+        $.get("{{ route('papermillCategories.index') }}" +'/' + papermill_category_id +'/edit', function (data) {
+            $('#modalHeading').html("Edit Papermill Category");
             $('#saveBtn').val("edit");
-            $('#bankModal').modal('show');
-            $('#bank_id').val(data.id);
-            $('#bank_name').val(data.bank_name);
+            $('#papermillCategoryModal').modal('show');
+            $('#papermill_category_id').val(data.id);
+            $('#papermill_category_name').val(data.papermill_category_name);
             $('#description').val(data.description);
             $('#created_by').val(data.created_by);
             $('#created_datetime').val(data.created_datetime);
@@ -143,22 +143,20 @@
               $('#last_modified_by').val(null);
               $('#last_modified_datetime').val(null);
           } else {
-             $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
               $('#last_modified_by').val("Deva Dwi A Edit");
               $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
           }
           $(this).html('Save');
 
           $.ajax({
-            data: $('#bankForm').serialize(),
-            url: "{{ route('banks.store') }}",
+            data: $('#papermillCategoryForm').serialize(),
+            url: "{{ route('papermillCategories.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
 
-                $('#bankForm').trigger("reset");
-                $('#bankModal').modal('hide');
+                $('#papermillCategoryForm').trigger("reset");
+                $('#papermillCategoryModal').modal('hide');
                 table.draw();
 
             },
@@ -169,14 +167,14 @@
         });
       });
 
-      $('body').on('click', '.deleteBank', function () {
+      $('body').on('click', '.deletePapermillCategory', function () {
 
-          var bank_id = $(this).data("id");
+          var papermill_category_id = $(this).data("id");
           confirm("Are You sure want to delete !");
 
           $.ajax({
               type: "DELETE",
-              url: "{{ route('banks.store') }}"+'/'+bank_id,
+              url: "{{ route('papermillCategories.store') }}"+'/'+papermill_category_id,
               success: function (data) {
                   table.draw();
               },

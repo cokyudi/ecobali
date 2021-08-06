@@ -1,15 +1,15 @@
 @extends('template', ['user'=>$user])
 
-@section('participants','active')
+@section('papermills','active')
 
 @section('content')
-<?php use App\Http\Controllers\ParticipantController;?>
+<?php use App\Http\Controllers\PapermillController;?>
         <!-- BEGIN: Content-->
         <div class="app-content content">
         <div class="content-wrapper">
             <div class="content-header row mb-1">
             <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                    <h3 class="content-header-title mb-0 d-inline-block">Participant</h3>
+                    <h3 class="content-header-title mb-0 d-inline-block">Papermill</h3>
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
@@ -17,7 +17,7 @@
                                 </li>
                                 <li class="breadcrumb-item"><a href="#">Master Data</a>
                                 </li>
-                                <li class="breadcrumb-item active">Participant
+                                <li class="breadcrumb-item active">Papermill
                                 </li>
                             </ol>
                         </div>
@@ -31,7 +31,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h4 class="card-title">Participant Data Master</h4>
+                                    <h4 class="card-title">Papermill Data Master</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -44,20 +44,16 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewParticipant">Add New Participant</button>
-                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importParticipant">Import Participant</button>
-                                        @include('participant.modal')
-                                        @include('participant.modalImport')
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewPapermill">Add New Papermill</button>
                                         <div class="table-responsive">
-                                            <table id="participantTable" class="table table-striped table-bordered zero-configuration">
+                                            <table id="papermillTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Participant Name</th>
+                                                        <th>Papermill Name</th>
                                                         <th>Category</th>
                                                         <th>District</th>
-                                                        <th>Transport Intensity</th>
-                                                        <th>Joined Date</th>
+                                                        <th>Regency</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </thead>
@@ -67,11 +63,10 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Participant Name</th>
+                                                        <th>Papermill Name</th>
                                                         <th>Category</th>
                                                         <th>District</th>
-                                                        <th>Transport Intensity</th>
-                                                        <th>Joined Date</th>
+                                                        <th>Regency</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </tfoot>
@@ -100,17 +95,16 @@
             }
       });
 
-      var table = $('#participantTable').DataTable({
+      var table = $('#papermillTable').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('participants.index') }}",
+          ajax: "{{ route('papermills.index') }}",
           columns: [
               {data: null},
-              {data: 'participant_name', name: 'participant_name'},
-              {data: 'category_name', name: 'category_name'},
+              {data: 'papermill_name', name: 'papermill_name'},
+              {data: 'papermill_category_name', name: 'papermill_category_name'},
               {data: 'district_name', name: 'district_name'},
-              {data: 'intensity', name: 'intensity'},
-              {data: 'joined_date', name: 'joined_date'},
+              {data: 'regency_name', name: 'regency_name'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
@@ -122,86 +116,24 @@
             });
         });
 
-      $('#importParticipant').click(function () {
-          $('#participantImportModal').modal('show');
-      });
-
-      $('#saveBtnFormImport').click(function (e) {
-          e.preventDefault();
-
-          $.ajax({
-              data: new FormData($("#participantFormImport")[0]),
-              url: "{{ route('participants.importParticipant') }}",
-              type: "POST",
-              dataType: 'json',
-              processData: false,
-              contentType: false,
-              success: function (data) {
-                  $('#participantFormImport').trigger("reset");
-                  $('#participantImportModal').modal('hide');
-                  table.draw();
-              },
-              error: function(req, err){ console.log('my message' + err); }
-          });
-
-      });
-
-      $('#createNewParticipant').click(function () {
-
-        var category_id = $(this).data('id');
-        window.location.href = "{{ route('participants.createParticipant') }}";
+      $('#createNewPapermill').click(function () {
+        window.location.href = "{{ route('papermills.createPapermill') }}";
       });
 
 
-      $('body').on('click', '.editParticipant', function () {
-        var participant_id = $(this).data('id');
-        window.location.href = "{{ route('participants.index') }}" +'/' + participant_id +'/edit';
-        {{--$.get("{{ route('participants.index') }}" +'/' + participant_id +'/edit', function (data) {--}}
-
-     });
-
-      $('#saveBtn').click(function (e) {
-          e.preventDefault();
-          if ($('#saveBtn').val() == "create")  {
-              $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val(null);
-              $('#last_modified_datetime').val(null);
-          } else {
-             $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val("Deva Dwi A Edit");
-              $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-          }
-          $(this).html('Save');
-
-          $.ajax({
-            data: $('#participantForm').serialize(),
-            url: "{{ route('participants.store') }}",
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-
-                $('#participantForm').trigger("reset");
-                $('#participantModal').modal('hide');
-                table.draw();
-
-            },
-            error: function (data) {
-                console.log('Error:', data);
-                $('#saveBtn').html('Save Changes');
-            }
-        });
+      $('body').on('click', '.editPapermill', function () {
+        var papermill_id = $(this).data('id');
+        window.location.href = "{{ route('papermills.index') }}" +'/' + papermill_id +'/edit';
       });
 
-      $('body').on('click', '.deleteParticipant', function () {
+      $('body').on('click', '.deletePapermill', function () {
 
-          var participant_id = $(this).data("id");
+          var papermill_id = $(this).data("id");
           confirm("Are You sure want to delete !");
 
           $.ajax({
               type: "DELETE",
-              url: "{{ route('participants.store') }}"+'/'+participant_id,
+              url: "{{ route('papermills.store') }}"+'/'+papermill_id,
               success: function (data) {
                   table.draw();
               },

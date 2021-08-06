@@ -97,6 +97,7 @@
 					</li>
 					<li class="@yield('map') nav-item"><a href="{{url('map')}}"><i class="la la-map"></i><span class="menu-title" >Map</span></a></li>
 					<li class="@yield('collections') nav-item"><a href="{{url('collections')}}"><i class="la la-database"></i><span class="menu-title" >Collection</span></a></li>
+                    <li class="@yield('sales') nav-item"><a href="{{url('sales')}}"><i class="la la-database"></i><span class="menu-title" >Sales</span></a></li>
 					<li class=" nav-item"><a href="#"><i class="la la-ship"></i><span class="menu-title" >Sales</span></a></li>
 
 
@@ -113,6 +114,8 @@
 							<li class="@yield('transportIntensities')"><a class="menu-item" href="{{url('transportIntensities')}}"><i class="la la-database mr-1"></i><span>Transport Intensity</span></a></li>
 							<li class="@yield('paymentMethods')"><a class="menu-item" href="{{url('paymentMethods')}}"><i class="la la-database mr-1"></i><span>Payment Method</span></a></li>
 							<li class="@yield('banks')"><a class="menu-item" href="{{url('banks')}}"><i class="la la-database mr-1"></i><span>Bank</span></a></li>
+                            <li class="@yield('papermills')"><a class="menu-item" href="{{url('papermills')}}"><i class="la la-database mr-1"></i><span>Papermill</span></a></li>
+                            <li class="@yield('papermillCategories')"><a class="menu-item" href="{{url('papermillCategories')}}"><i class="la la-database mr-1"></i><span>Papermill Categories</span></a></li>
 						</ul>
 					</li>
 

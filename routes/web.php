@@ -13,6 +13,8 @@ use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\PapermillCategoryController;
+use App\Http\Controllers\PapermillController;
 
 use App\Http\Controllers\Dashboard1Controller;
 use App\Http\Controllers\DashboardComparisonController;
@@ -20,6 +22,7 @@ use App\Http\Controllers\DashboardTargetController;
 use App\Http\Controllers\DashboardShipmentController;
 use App\Http\Controllers\DashboardActivitiesController;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\SaleController;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserManagementController;
@@ -59,12 +62,16 @@ Route::resource('purchasePrices', PurchasePriceController::class);
 Route::resource('transportIntensities', TransportIntensityController::class);
 Route::resource('paymentMethods', PaymentMethodController::class);
 Route::resource('banks', BankController::class);
+Route::resource('papermillCategories', PapermillCategoryController::class);
+Route::resource('papermills', PapermillController::class);
+Route::get('createPapermill',[PapermillController::class, 'createPapermill'])->name('papermills.createPapermill');
 Route::resource('participants', ParticipantController::class);
 Route::get('createParticipant',[ParticipantController::class, 'createParticipant'])->name('participants.createParticipant');
 Route::post('importParticipant',[ParticipantController::class, 'importParticipant'])->name('participants.importParticipant');
 Route::resource('user-management', UserManagementController::class);
 Route::resource('collections', CollectionController::class);
 Route::post('importCollection',[CollectionController::class, 'importCollection'])->name('collections.importCollection');
+Route::resource('sales', SaleController::class);
 
 Route::resource('dashboard1', Dashboard1Controller::class);
 Route::get('getNumberOfParticipants', [Dashboard1Controller::class, 'getNumberOfParticipants']);
@@ -81,6 +88,7 @@ Route::get('getComparisonLineChartData', [DashboardComparisonController::class, 
 Route::resource('dashboard-target', DashboardTargetController::class);
 Route::get('getActualTargetBar', [DashboardTargetController::class, 'getActualTargetBar']);
 Route::get('getActualTargetBarByMonth', [DashboardTargetController::class, 'getActualTargetBarByMonth']);
+Route::get('getTargetPapermillDonut', [DashboardTargetController::class, 'getTargetPapermillDonut']);
 
 Route::resource('map', MapController::class);
 Route::get('getMapParticipantsInformation', [MapController::class, 'getMapParticipantsInformation']);

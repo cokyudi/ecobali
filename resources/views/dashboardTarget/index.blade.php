@@ -79,7 +79,7 @@
             <div class="col-lg-6 col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Monthly Target Achievement</h4>
+                        <h4 class="card-title">Monthly Target Achievement (ecoBali)</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -127,7 +127,7 @@
             <div class="col-xl-6 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Donut Chart</h4>
+                        <h4 class="card-title">Monthly Target Achievement (Sent to Papermill)</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -140,9 +140,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
-                            <p class="card-text">A donut chart is a pie chart with a hole in the center. You can create donut charts with the pieHole option.</p>
-                            <p class="card-text">The pieHole option should be set to a number between 0 and 1, corresponding to the ratio of radii between the hole and the chart. Numbers between 0.4 and 0.6 will look best on most charts. Values equal to or greater than 1 will be ignored, and a value of 0 will completely shut your piehole.</p>
-                            <div id="donut-chart"></div>
+                           <div id="donut_monthly_papermill"></div>
                         </div>
                     </div>
                 </div>
@@ -150,7 +148,7 @@
             <div class="col-xl-6 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Donut Chart</h4>
+                        <h4 class="card-title">Annual Target Achievement (Sent to Papermill)</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -163,9 +161,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
-                            <p class="card-text">A donut chart is a pie chart with a hole in the center. You can create donut charts with the pieHole option.</p>
-                            <p class="card-text">The pieHole option should be set to a number between 0 and 1, corresponding to the ratio of radii between the hole and the chart. Numbers between 0.4 and 0.6 will look best on most charts. Values equal to or greater than 1 will be ignored, and a value of 0 will completely shut your piehole.</p>
-                            <div id="donut-chart1"></div>
+                           <div id="donut_annual_papermill"></div>
                         </div>
                     </div>
                 </div>
@@ -225,10 +221,10 @@
                 </div>
             </div>
             <div class="form-actions text-right">
-                <button id='backBtn' type="button" class="btn btn-warning mr-1">
+                <button id='resetFilterSales' type="button" class="btn btn-warning mr-1">
                     <i class="ft-x"></i> Reset
                 </button>
-                <button id="filterSales"  value="create" type="submit" class="btn btn-success">
+                <button id="filterSales" type="button" class="btn btn-success">
                     <i class="la la-check-square-o"></i> Filter
                 </button>
             </div>
@@ -255,7 +251,7 @@
 {{--<script src="{{asset('js/scripts/charts/google/pie/3d-pie.min.js')}}"></script>--}}
 {{--<script src="{{asset('js/scripts/charts/google/pie/3d-pie-exploded.min.js')}}"></script>--}}
 
-<script src="{{asset('js/scripts/charts/google/pie/donut.min.js')}}"></script>
+<script src="{{asset('dashboardjs/dashboardTarget/donut.js')}}"></script>
 
 
 
@@ -340,6 +336,7 @@
 
         drawActualTargetBar();
         drawActualTargetBarByMonth('month');
+        drawTargetPapermillDonut();
 
 
         $('#resetFilterCollection').click(function() {
@@ -354,7 +351,20 @@
             drawActualTargetBar();
             drawActualTargetBarByMonth('month');
         });
-        
+
+        $('#resetFilterSales').click(function() {
+            $('#dateRangeSales').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
+            $('#dateRangeSales').data('daterangepicker').setEndDate(moment());
+
+            drawTargetPapermillDonut();
+        });
+
+        $('#filterSales').click(function() {
+            drawTargetPapermillDonut();
+        });
+
+
+
     });
 </script>
 @endpush

@@ -36,7 +36,7 @@ class CollectionController extends Controller
             })
             ->select(
                 'categories.*',
-                DB::raw('(CASE WHEN category_details.target IS NULL THEN "Not Set" ELSE category_details.target END) AS target'));
+                );
 
         $subParticipants = DB::table('participants')
             ->joinSub($categories, 'categories', function ($join) {
@@ -51,7 +51,6 @@ class CollectionController extends Controller
                 'categories.category_name as category_name',
                 'regencies.id as regency_id',
                 'regencies.regency_name as regency_name',
-                'categories.target as category_target'
             );
 
 
@@ -67,8 +66,8 @@ class CollectionController extends Controller
                 'participants.participant_name',
                 'participants.category_name',
                 'participants.regency_name',
-                'participants.category_target'
             )
+            ->orderBy('collect_date','DESC')
             ->get();
 
         if ($request->ajax()) {

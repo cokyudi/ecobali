@@ -199,6 +199,7 @@ class DashboardTargetController extends Controller
             ["Belum Terkumpul", "Terkumpul"]
         ];
 
+
         array_push($dataPieChart, ["Belum Terkumpul", $totalTarget-$totalQty]);
         array_push($dataPieChart, ["Terkumpul", $totalQty]);
 
@@ -212,14 +213,14 @@ class DashboardTargetController extends Controller
         ];
 
 
-        $currentYear = (new DateTime)->format("Y");
-        $totalQtyYearly = $this->getYearlySumForAllCollection($currentYear);
-        $totalTargetYearly = $this->getYearlyTargetForAllCategory($currentYear);
+        $yearStart = date('Y', strtotime($request->startDates));
+        $yearEnd = date('Y', strtotime($request->endDates));
+        $totalQtyYearly = $this->getYearlySumForAllCollection($yearStart,$yearEnd);
+        $totalTargetYearly = $this->getYearlyTargetForAllCategory($yearStart,$yearEnd);
         array_push($dataPieExplode, ["Belum Terkumpul", $totalTargetYearly-$totalQtyYearly]);
         array_push($dataPieExplode, ["Terkumpul", $totalQtyYearly]);
 
         /* End Annual Target Achievement (ecoBali) */
-
 
         return response()->json([
             'dataByMonth' => $actualTargetBarByMonth,
@@ -262,12 +263,94 @@ class DashboardTargetController extends Controller
         return round($totalTarget,1);
     }
 
-    public static function getYearlySumForAllCollection($year) {
+    public function getTargetPapermillDonut(Request $request) {
+        $totalTarget = 0;
+
+        $categories = DB::table('categories')
+            ->leftJoin('category_details', function ($join) {
+                $join->on('categories.id', '=', 'category_details.category_id');
+            })
+            ->select(
+                'categories.id',
+                'categories.category_name',
+                'category_details.year',
+                'category_details.semester_1_target',
+                'category_details.semester_2_target',
+            )
+            ->get();
+
+
+        $categoryMap = [];
+        foreach ($categories as $category) {
+            $categoryMap[$category->year.'-'.$category->id] = array(
+                "semester_1_target"=>round($category->semester_1_target/6,1),
+                "semester_2_target"=>round($category->semester_2_target/6,1),
+            );
+
+        }
+
+
+        $collections = DB::table('collections')
+            ->where('collect_date', '>=',$request->startDates)
+            ->where('collect_date', '<=',$request->endDates)
+            ->select(
+                DB::raw('ROUND(SUM(quantity),1) qty'),
+                DB::raw('MONTH(collect_date) month'),
+                DB::raw('YEAR(collect_date) year')
+            )
+            ->groupBy('month','year')
+            ->orderBy('collect_date', 'asc')
+            ->get();
+
+        foreach ($collections as $collection) {
+            $monltyTarget = $this->getMonthlyTargetForAllCategory($collection->month,$collection->year,$categories, $categoryMap);
+            $totalTarget += $monltyTarget;
+        }
+
+
+
+        $sales = DB::table('sales')
+            ->select(
+                DB::raw('ROUND(SUM(delivered_to_papermill),1) qty'),
+            )
+            ->where('sale_date', '>=',$request->startDates)
+            ->where('sale_date', '<=',$request->endDates)
+            ->first();
+
+        $totalFilterQty = $sales->qty;
+
+        $dataDonutMonthly = [
+            ["Belum Terkumpul", "Terkumpul"]
+        ];
+        array_push($dataDonutMonthly, ["Belum Terkumpul", $totalTarget-$totalFilterQty]);
+        array_push($dataDonutMonthly, ["Terkumpul", $totalFilterQty]);
+
+
+
+        $dataDonutYearly = [
+            ["Belum Terkumpul", "Terkumpul"]
+        ];
+
+        $yearStart = date('Y', strtotime($request->startDates));
+        $yearEnd = date('Y', strtotime($request->endDates));
+        $totalQtyYearly = $this->getYearlySumForAllSales($yearStart, $yearEnd);
+        $totalTargetYearly = $this->getYearlyTargetForAllCategory($yearStart, $yearEnd);
+        array_push($dataDonutYearly, ["Belum Terkumpul", $totalTargetYearly-$totalQtyYearly]);
+        array_push($dataDonutYearly, ["Terkumpul", $totalQtyYearly]);
+
+        return response()->json([
+            'dataDonutMonthly' => $dataDonutMonthly,
+            'dataDonutYearly' => $dataDonutYearly,
+        ]);
+    }
+
+    public static function getYearlySumForAllCollection($yearStart, $yearEnd) {
         $collections = DB::table('collections')
             ->select(
                 DB::raw('ROUND(SUM(quantity),1) qty'),
             )
-            ->where( DB::raw('YEAR(collect_date)'), '=', $year)
+            ->where( DB::raw('YEAR(collect_date)'), '>=', $yearStart)
+            ->where( DB::raw('YEAR(collect_date)'), '<=', $yearEnd)
             ->first();
 
         $totalYearlyQty = $collections->qty;
@@ -275,7 +358,7 @@ class DashboardTargetController extends Controller
         return round($totalYearlyQty,1);
     }
 
-    public static function getYearlyTargetForAllCategory($year) {
+    public static function getYearlyTargetForAllCategory($yearStart, $yearEnd) {
         $categories = DB::table('categories')
             ->leftJoin('category_details', function ($join) {
                 $join->on('categories.id', '=', 'category_details.category_id');
@@ -284,12 +367,27 @@ class DashboardTargetController extends Controller
                 DB::raw('ROUND(SUM(category_details.semester_1_target),1) sumSmt1'),
                 DB::raw('ROUND(SUM(category_details.semester_2_target),1) sumSmt2'),
             )
-            ->where('category_details.year', '=',$year)
+            ->where('category_details.year', '>=',$yearStart)
+            ->where('category_details.year', '<=',$yearEnd)
             ->first();
 
         $totalYearlyTarget = $categories->sumSmt1 + $categories->sumSmt2;
 
         return floor($totalYearlyTarget);
+    }
+
+    public static function getYearlySumForAllSales($yearStart, $yearEnd) {
+        $sales = DB::table('sales')
+            ->select(
+                DB::raw('ROUND(SUM(delivered_to_papermill),1) qty'),
+            )
+            ->where( DB::raw('YEAR(sale_date)'), '>=', $yearStart)
+            ->where( DB::raw('YEAR(sale_date)'), '<=', $yearEnd)
+            ->first();
+
+        $totalYearlyQty = $sales->qty;
+
+        return round($totalYearlyQty,1);
     }
 
 

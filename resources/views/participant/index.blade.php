@@ -46,7 +46,6 @@
                                     <div class="card-body card-dashboard">
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewParticipant">Add New Participant</button>
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importParticipant">Import Participant</button>
-                                        @include('participant.modal')
                                         @include('participant.modalImport')
                                         <div class="table-responsive">
                                             <table id="participantTable" class="table table-striped table-bordered zero-configuration">
