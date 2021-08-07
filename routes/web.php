@@ -94,5 +94,7 @@ Route::resource('map', MapController::class);
 Route::get('getMapParticipantsInformation', [MapController::class, 'getMapParticipantsInformation']);
 
 Route::resource('dashboard-shipment', DashboardShipmentController::class);
+Route::get('getSales', [DashboardShipmentController::class, 'getSales']);
+
 Route::resource('dashboard-activities', DashboardActivitiesController::class);
 

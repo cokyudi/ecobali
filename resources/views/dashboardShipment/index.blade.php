@@ -30,7 +30,7 @@
                                         <div class="col-5 border-right">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-2 ">222</span>
+                                                    <span class="font-large-2 " id="delivered_to_papermill_ton">222</span>
                                                 </div>
 
                                             </div>
@@ -43,7 +43,7 @@
                                         <div class="col-5 ">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-1 ">222000</span>
+                                                    <span class="font-large-1" id="delivered_to_papermill_kg">222000</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -76,7 +76,7 @@
                                         <div class="col-4 border-right">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-2 ">222</span>
+                                                    <span class="font-large-2" id="received_at_papermill_ton">222</span>
                                                 </div>
 
                                             </div>
@@ -89,7 +89,7 @@
                                         <div class="col-3 ">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-1 ">222000</span>
+                                                    <span class="font-large-1" id="received_at_papermill_kg">222000</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -101,12 +101,12 @@
                                         <div class="col-3 pr-3 pl-3">
                                             <div class="row border-bottom-black-ship">
                                                 <div class="col-12">
-                                                    <strong class="font-medium-5 danger ">- 44</strong>
+                                                    <strong class="font-medium-5 danger " id="weighing_scale_gap_papermill">- 44</strong>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <strong class="font-medium-5 danger"><i class="la la-sort-down font-medium-2"></i>&ensp;- 0,1%</strong>
+                                                    <strong class="font-medium-5 danger" id="weighing_scale_gap_papermill_percent"><i class="la la-sort-down font-medium-2"></i>&ensp;- 0,1%</strong>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +134,7 @@
                                         <div class="col-5 border-right">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-2 ">222</span>
+                                                    <span class="font-large-2 " id="total_weight_accepted_ton">222</span>
                                                 </div>
 
                                             </div>
@@ -147,7 +147,7 @@
                                         <div class="col-5 ">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-1 ">222000</span>
+                                                    <span class="font-large-1 " id="total_weight_accepted_kg">222000</span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -442,6 +442,44 @@
             var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
             console.log(endDates);
         });
+
+        getDefaultSales();
+
+        function getDefaultSales() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#daterange').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
+            $('#daterange').data('daterangepicker').setEndDate(moment("31/01/2021","DD/MM/YYYY"));
+
+            var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
+            var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
+
+            var data = {
+                startDates: startDates,
+                endDates: endDates
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "getSales",
+                data:data,
+                success: function (data) {
+                    $('#district_coverage').html(data.data.districtsCoverage);
+                    $('#regency_coverage').html(data.data.regenciesCoverage);
+                    $('#total_collection_ton').html((data.data.totalCollection/1000).toFixed(1) + ' TON');
+                    $('#total_collection_kg').html('/ ' +data.data.totalCollection.toFixed(2) + ' Kg');
+                    $('#total_participant').html(data.data.totalParticipants);
+
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+
+        }
 
     });
 </script>
