@@ -23,6 +23,7 @@ use App\Http\Controllers\DashboardShipmentController;
 use App\Http\Controllers\DashboardActivitiesController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\ActivityProgramController;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserManagementController;
@@ -72,6 +73,7 @@ Route::resource('user-management', UserManagementController::class);
 Route::resource('collections', CollectionController::class);
 Route::post('importCollection',[CollectionController::class, 'importCollection'])->name('collections.importCollection');
 Route::resource('sales', SaleController::class);
+Route::resource('activityPrograms', ActivityProgramController::class);
 
 Route::resource('dashboard1', Dashboard1Controller::class);
 Route::get('getNumberOfParticipants', [Dashboard1Controller::class, 'getNumberOfParticipants']);
@@ -95,6 +97,8 @@ Route::get('getMapParticipantsInformation', [MapController::class, 'getMapPartic
 
 Route::resource('dashboard-shipment', DashboardShipmentController::class);
 Route::get('getSales', [DashboardShipmentController::class, 'getSales']);
+Route::get('getSentVsReceivedCustom', [DashboardShipmentController::class, 'getSentVsReceivedCustom']);
+Route::get('getMCCCustom', [DashboardShipmentController::class, 'getMCCCustom']);
 
 Route::resource('dashboard-activities', DashboardActivitiesController::class);
 

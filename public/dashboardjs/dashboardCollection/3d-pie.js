@@ -1,3 +1,4 @@
+var pie3d;
 function drawPie3d() {
     var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
     var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
@@ -14,7 +15,7 @@ function drawPie3d() {
             idParticipant: idParticipant,
             idRegency: idRegency
         }
-    
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -26,8 +27,12 @@ function drawPie3d() {
         url: "getNumberOfParticipants",
         data: data,
         success: function (data) {
+            if (pie3d) {
+                pie3d.destroy();
+            }
+
             var e = google.visualization.arrayToDataTable(data.data);
-            new google.visualization.PieChart(document.getElementById("pie-3d")).draw(e, {
+            pie3d = new google.visualization.PieChart(document.getElementById("pie-3d")).draw(e, {
                 title: "Number of Participant",
                 is3D: !0,
                 height: 400,

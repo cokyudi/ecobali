@@ -30,7 +30,7 @@
                                         <div class="col-5 border-right">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-2 " id="delivered_to_papermill_ton">222</span>
+                                                    <span class="font-large-2 " id="delivered_to_papermill_ton"></span>
                                                 </div>
 
                                             </div>
@@ -43,7 +43,7 @@
                                         <div class="col-5 ">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-1" id="delivered_to_papermill_kg">222000</span>
+                                                    <span class="font-large-1" id="delivered_to_papermill_kg"></span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -76,7 +76,7 @@
                                         <div class="col-4 border-right">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-2" id="received_at_papermill_ton">222</span>
+                                                    <span class="font-large-2" id="received_at_papermill_ton"></span>
                                                 </div>
 
                                             </div>
@@ -89,7 +89,7 @@
                                         <div class="col-3 ">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-1" id="received_at_papermill_kg">222000</span>
+                                                    <span class="font-large-1" id="received_at_papermill_kg"></span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -101,12 +101,13 @@
                                         <div class="col-3 pr-3 pl-3">
                                             <div class="row border-bottom-black-ship">
                                                 <div class="col-12">
-                                                    <strong class="font-medium-5 danger " id="weighing_scale_gap_papermill">- 44</strong>
+                                                    <strong class="font-medium-5 " id="weighing_scale_gap_papermill"></strong>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <strong class="font-medium-5 danger" id="weighing_scale_gap_papermill_percent"><i class="la la-sort-down font-medium-2"></i>&ensp;- 0,1%</strong>
+{{--                                                    <strong class="font-medium-5 danger" id="weighing_scale_gap_papermill_percent"><i class="la la-sort-down font-medium-2"></i>&ensp;- 0,1%</strong>--}}
+                                                    <i id="indikator_panah" class=" mr-1"></i><strong class="font-medium-5 danger" id="weighing_scale_gap_papermill_percent"></strong>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +135,7 @@
                                         <div class="col-5 border-right">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-2 " id="total_weight_accepted_ton">222</span>
+                                                    <span class="font-large-2 " id="total_weight_accepted_ton"></span>
                                                 </div>
 
                                             </div>
@@ -147,7 +148,7 @@
                                         <div class="col-5 ">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-1 " id="total_weight_accepted_kg">222000</span>
+                                                    <span class="font-large-1 " id="total_weight_accepted_kg"></span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -184,13 +185,11 @@
                     <div class="card-content collapse show">
                         <div class="card-body">
 {{--                            <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>--}}
-                            <div id="pie-3d"></div>
+                            <div id="pie_weight_reduction"></div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
 
             <div class="col-6 py-2">
                 <div class="card h-100">
@@ -209,7 +208,7 @@
                     <div class="card-content collapse show">
                         <div class="card-body">
 
-                            <div id="donut-chart"></div>
+                            <div id="donut_mcc"></div>
                         </div>
                     </div>
                 </div>
@@ -234,8 +233,11 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
-                            <p class="card-text">A column chart is a vertical bar chart rendered in the browser using SVG or VML, whichever is appropriate for the user's browser. Like all google charts, column charts display tooltips when the user hovers over the data.</p>
-                            <div id="column-chart"></div>
+                            <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
+                                <button onclick="drawSentVsReceivedCustom('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
+                                <button onclick="drawSentVsReceivedCustom('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
+                            </div>
+                            <div id="sentVsReceivedBar" class="mt-4"></div>
                         </div>
                     </div>
                 </div>
@@ -259,7 +261,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body chartjs">
-                            <canvas id="line-chart" height="500"></canvas>
+                            <canvas id="kmkSent" height="500"></canvas>
                         </div>
                     </div>
                 </div>
@@ -280,7 +282,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body chartjs">
-                            <canvas id="line-chart" height="500"></canvas>
+                            <canvas id="kmkReceived" height="500"></canvas>
                         </div>
                     </div>
                 </div>
@@ -305,7 +307,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body chartjs">
-                            <canvas id="line-chart" height="500"></canvas>
+                            <canvas id="kmkAccepted" height="500"></canvas>
                         </div>
                     </div>
                 </div>
@@ -326,7 +328,11 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
-                            <div id="column-chart"></div>
+                            <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
+                                <button onclick="drawMCCCustom('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
+                                <button onclick="drawMCCCustom('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
+                            </div>
+                            <div id="dynamicMcc" class="mt-4"></div>
                         </div>
                     </div>
                 </div>
@@ -362,8 +368,10 @@
             <h5 class="mt-1 mb-1 text-bold-500">Papermill</h5>
             <div class="form-group">
                 <div class="form-group">
-                    <select id="id_district" name="id_district" class="select2 form-control">
-                        <option value="0" selected="" disabled="">District</option>
+                    <select id="id_papermill" name="id_papermill[]" multiple="multiple" class="select2 form-control">
+                        @foreach($papermills as $papermill)
+                            <option value="{{$papermill->id}}">{{$papermill->papermill_name}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -371,7 +379,7 @@
                 <button id='backBtn' type="button" class="btn btn-warning mr-1">
                     <i class="ft-x"></i> Reset
                 </button>
-                <button id="saveBtn"  value="create" type="submit" class="btn btn-success">
+                <button id="filterBtn" type="button" class="btn btn-success">
                     <i class="la la-check-square-o"></i> Filter
                 </button>
             </div>
@@ -390,10 +398,14 @@
 <script src="{{asset('vendors/js/forms/select/select2.full.min.js')}}"></script>
 <script src="{{asset('js/scripts/forms/select/form-select2.min.js')}}"></script>
 
-<script src="{{asset('js/scripts/charts/google/pie/3d-pie.min.js')}}"></script>
-<script src="{{asset('js/scripts/charts/google/pie/3d-pie-exploded.min.js')}}"></script>
+{{--<script src="{{asset('js/scripts/charts/google/pie/3d-pie.min.js')}}"></script>--}}
+{{--<script src="{{asset('js/scripts/charts/google/pie/3d-pie-exploded.min.js')}}"></script>--}}
 <script src="{{asset('js/scripts/charts/google/bar/column.js')}}"></script>
-<script src="{{asset('js/scripts/charts/google/pie/donut.min.js')}}"></script>
+{{--<script src="{{asset('js/scripts/charts/google/pie/donut.min.js')}}"></script>--}}
+
+<script src="{{asset('dashboardjs/dashboardShipment/donut.js')}}"></script>
+<script src="{{asset('dashboardjs/dashboardShipment/columnChart.js')}}"></script>
+<script src="{{asset('dashboardjs/dashboardShipment/KMKLine.js')}}"></script>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -404,7 +416,7 @@
     $(document).ready(function() {
         $('#daterange').daterangepicker(
             {
-                startDate: moment().subtract('days', 29),
+                startDate: moment("01/01/2021","DD/MM/YYYY"),
                 endDate: moment(),
                 showDropdowns: true,
                 showWeekNumbers: true,
@@ -439,27 +451,29 @@
         );
 
         $('#backBtn').click(function() {
-            var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
-            console.log(endDates);
+            $('#dateRangeCollection').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
+            $('#dateRangeCollection').data('daterangepicker').setEndDate(moment());
+
+            getSales();
         });
 
-        getDefaultSales();
+        getSales();
 
-        function getDefaultSales() {
+        function getSales() {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $('#daterange').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
-            $('#daterange').data('daterangepicker').setEndDate(moment("31/01/2021","DD/MM/YYYY"));
 
             var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
             var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
+            var idPapermill = $('#id_papermill').val();
 
             var data = {
                 startDates: startDates,
-                endDates: endDates
+                endDates: endDates,
+                id_papermills : idPapermill,
             }
 
             $.ajax({
@@ -467,11 +481,33 @@
                 url: "getSales",
                 data:data,
                 success: function (data) {
-                    $('#district_coverage').html(data.data.districtsCoverage);
-                    $('#regency_coverage').html(data.data.regenciesCoverage);
-                    $('#total_collection_ton').html((data.data.totalCollection/1000).toFixed(1) + ' TON');
-                    $('#total_collection_kg').html('/ ' +data.data.totalCollection.toFixed(2) + ' Kg');
-                    $('#total_participant').html(data.data.totalParticipants);
+                    removeIndicator();
+                    $('#delivered_to_papermill_ton').html((data.data.delivered_to_papermill/1000).toFixed(1));
+                    $('#delivered_to_papermill_kg').html(data.data.delivered_to_papermill.toFixed(2));
+                    $('#received_at_papermill_ton').html((data.data.received_at_papermill/1000).toFixed(1));
+                    $('#received_at_papermill_kg').html(data.data.received_at_papermill.toFixed(2));
+
+                    $('#weighing_scale_gap_papermill').html(data.data.weighing_scale_gap_papermill);
+                    if (data.data.weighing_scale_gap_papermill >= 0) {
+                        $('#weighing_scale_gap_papermill').addClass("success")
+                    } else {
+                        $('#weighing_scale_gap_papermill').addClass("danger")
+                    }
+
+                    $('#weighing_scale_gap_papermill_percent').html(data.data.weighing_scale_gap_papermill_percent+' %');
+                    if (data.data.weighing_scale_gap_papermill_percent >= 0) {
+                        $('#weighing_scale_gap_papermill_percent').addClass("success");
+                        $('#indikator_panah').addClass("la la-sort-up font-medium-2 success");
+                    } else {
+                        $('#weighing_scale_gap_papermill_percent').addClass("danger");
+                        $('#indikator_panah').addClass("la la-sort-down font-medium-2 danger");
+                    }
+                    $('#total_weight_accepted_ton').html((data.data.total_weight_accepted/1000).toFixed(1));
+                    $('#total_weight_accepted_kg').html(data.data.total_weight_accepted.toFixed(2));
+
+                    drawDonutPie(data);
+                    drawSentVsReceived(data);
+                    drawKMKLine(data);
 
                 },
                 error: function (data) {
@@ -479,6 +515,21 @@
                 }
             });
 
+        }
+
+        $('#filterBtn').click(function() {
+            getSales();
+        });
+
+        function removeIndicator() {
+            $('#weighing_scale_gap_papermill').removeClass("success")
+            $('#weighing_scale_gap_papermill').removeClass("danger")
+            $('#weighing_scale_gap_papermill_percent').removeClass("success")
+            $('#indikator_panah').removeClass("la la-sort-down")
+            $('#indikator_panah').removeClass("success")
+            $('#weighing_scale_gap_papermill_percent').removeClass("danger")
+            $('#indikator_panah').removeClass("la la-sort-up")
+            $('#indikator_panah').removeClass("danger")
         }
 
     });
