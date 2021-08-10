@@ -436,7 +436,11 @@ class Dashboard1Controller extends Controller
             $found = false;
             foreach ($collectionByRegency as $collection) {
                 if ($collection->regency_name == $regency->regency_name) {
-                    $collectionByAllRegency[$collection->regency_name] = [$collection->qty, round(($collection->qty)/$totalAllQty,3)];
+                    $opacity = round(($collection->qty)/$totalAllQty,3);
+                    if ($opacity < 0.05) {
+                        $opacity = 0.05;
+                    }
+                    $collectionByAllRegency[$collection->regency_name] = [$collection->qty, $opacity];
                     $found = true;
                     break;
                 }

@@ -116,6 +116,8 @@
 							<li class="@yield('banks')"><a class="menu-item" href="{{url('banks')}}"><i class="la la-database mr-1"></i><span>Bank</span></a></li>
                             <li class="@yield('papermills')"><a class="menu-item" href="{{url('papermills')}}"><i class="la la-database mr-1"></i><span>Papermill</span></a></li>
                             <li class="@yield('papermillCategories')"><a class="menu-item" href="{{url('papermillCategories')}}"><i class="la la-database mr-1"></i><span>Papermill Categories</span></a></li>
+                            <li class="@yield('activityPrograms')"><a class="menu-item" href="{{url('activityPrograms')}}"><i class="la la-database mr-1"></i><span>Program Activity</span></a></li>
+                            <li class="@yield('activities')"><a class="menu-item" href="{{url('activities')}}"><i class="la la-database mr-1"></i><span>Activity</span></a></li>
 						</ul>
 					</li>
 

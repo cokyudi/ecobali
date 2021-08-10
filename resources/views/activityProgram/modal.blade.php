@@ -12,9 +12,9 @@
                     <input type="hidden" id="last_modified_by" name="last_modified_by" value="">
                     <input type="hidden" id="last_modified_datetime" name="last_modified_datetime" value="">
                     <div class="form-group">
-                        <label for="name" class="control-label">Activity Program</label>
+                        <label for="name" class="control-label">Program Activity</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="activity_program_name" name="activity_program_name" placeholder="Enter Activity Program" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="activity_program_name" name="activity_program_name" placeholder="Enter Program Activity" value="" maxlength="50" required="">
                         </div>
                     </div>
                     <div class="form-group">

@@ -24,6 +24,7 @@ use App\Http\Controllers\DashboardActivitiesController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ActivityProgramController;
+use App\Http\Controllers\ActivityController;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserManagementController;
@@ -74,6 +75,9 @@ Route::resource('collections', CollectionController::class);
 Route::post('importCollection',[CollectionController::class, 'importCollection'])->name('collections.importCollection');
 Route::resource('sales', SaleController::class);
 Route::resource('activityPrograms', ActivityProgramController::class);
+Route::resource('activities', ActivityController::class);
+Route::post('importActivity',[ActivityController::class, 'importActivity'])->name('activities.importActivity');
+
 
 Route::resource('dashboard1', Dashboard1Controller::class);
 Route::get('getNumberOfParticipants', [Dashboard1Controller::class, 'getNumberOfParticipants']);

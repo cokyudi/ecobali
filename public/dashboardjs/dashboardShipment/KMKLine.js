@@ -2,14 +2,14 @@ var kmkSent;
 var kmkReceived;
 var kmkAccepted;
 function drawKMKLine(data) {
-    // if (kmkSent || kmkReceived || kmkAccepted) {
-    //     kmkSent.destroy();
-    //     kmkReceived.destroy();
-    //     kmkAccepted.destroy();
-    // }
+    if (kmkSent || kmkReceived || kmkAccepted) {
+        kmkSent.destroy();
+        kmkReceived.destroy();
+        kmkAccepted.destroy();
+    }
 
-    kmkSent = $("#kmkSent");
-    new Chart(kmkSent, {
+    kmkSentId = $("#kmkSent");
+    kmkSent = new Chart(kmkSentId, {
         type: "line",
         options: {
             responsive: !0,
@@ -41,8 +41,8 @@ function drawKMKLine(data) {
         }
     })
 
-    kmkReceived = $("#kmkReceived");
-    new Chart(kmkReceived, {
+    kmkReceivedId = $("#kmkReceived");
+    kmkReceived = new Chart(kmkReceivedId, {
         type: "line",
         options: {
             responsive: !0,
@@ -74,8 +74,8 @@ function drawKMKLine(data) {
         }
     })
 
-    kmkAccepted = $("#kmkAccepted");
-    new Chart(kmkAccepted, {
+    kmkAcceptedId = $("#kmkAccepted");
+    kmkAccepted = new Chart(kmkAcceptedId, {
         type: "line",
         options: {
             responsive: !0,

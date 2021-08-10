@@ -1,12 +1,12 @@
 @extends('template', ['user'=>$user])
-@section('sales','active')
+@section('activities','active')
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
         <div class="content-wrapper">
             <div class="content-header row mb-1">
                 <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                    <h3 class="content-header-title mb-0 d-inline-block">Sales</h3>
+                    <h3 class="content-header-title mb-0 d-inline-block">Activities</h3>
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
@@ -14,7 +14,7 @@
                                 </li>
                                 <li class="breadcrumb-item"><a href="#">Data Master</a>
                                 </li>
-                                <li class="breadcrumb-item active">Sales
+                                <li class="breadcrumb-item active">Activities
                                 </li>
                             </ol>
                         </div>
@@ -28,7 +28,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h4 class="card-title">Sales Data Master</h4>
+                                    <h4 class="card-title">Activities Data Master</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -42,22 +42,20 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
                                     <!-- <a class="btn btn-success" href="javascript:void(0)" id="createNewDistrict"> Create New Book</a> -->
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewSales">Add New Sales</button>
-
-                                        @include('sale.modal')
-
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewActivity">Add New Activity</button>
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importActivity">Import Activity</button>
+                                        @include('activity.modal')
+                                        @include('activity.modalImport')
                                         <div class="table-responsive">
-                                            <table id="test" class="table table-striped table-bordered zero-configuration">
+                                            <table id="tableActivity" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>
                                                         <th>Date</th>
-                                                        <th>Papermill</th>
-                                                        <th>Delivered to <br>Papermill (Kg)</th>
-                                                        <th>Weighing scale Gap <br>ecoBali (Kg)</th>
-                                                        <th>% Weighing scale Gap <br>ecoBali</th>
-                                                        <th>Received at <br>Papermill (Kg)</th>
-                                                        <th>Total Weight Accepted</th>
+                                                        <th>Program Name</th>
+                                                        <th>Activity</th>
+                                                        <th>Location</th>
+                                                        <th>Number of Participant </th>
                                                         <th width="150px">Action</th>
                                                     </tr>
                                                 </thead>
@@ -68,12 +66,10 @@
                                                     <tr>
                                                         <th width="30px">No</th>
                                                         <th>Date</th>
-                                                        <th>Papermill</th>
-                                                        <th>Delivered to <br>Papermill (Kg)</th>
-                                                        <th>Weighing scale Gap <br>ecoBali (Kg)</th>
-                                                        <th>% Weighing scale Gap <br>ecoBali</th>
-                                                        <th>Received at <br>Papermill (Kg)</th>
-                                                        <th>Total Weight Accepted</th>
+                                                        <th>Program Name</th>
+                                                        <th>Activity</th>
+                                                        <th>Location</th>
+                                                        <th>Number of Participant </th>
                                                         <th width="150px">Action</th>
                                                     </tr>
                                                 </tfoot>
@@ -102,19 +98,17 @@ $(function () {
             }
       });
 
-    var table = $('#test').DataTable({
+    var table = $('#tableActivity').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('sales.index') }}",
+        ajax: "{{ route('activities.index') }}",
         columns: [
             {data: null},
-            {data: 'sale_date', name: 'sale_date'},
-            {data: 'papermill_name', name: 'papermill_name'},
-            {data: 'delivered_to_papermill', name: 'delivered_to_papermill'},
-            {data: 'weighing_scale_gap_eco', name: 'weighing_scale_gap_eco'},
-            {data: 'weighing_scale_gap_eco_percent', name: 'weighing_scale_gap_eco_percent'},
-            {data: 'received_at_papermill', name: 'received_at_papermill'},
-            {data: 'total_weight_accepted', name: 'total_weight_accepted'},
+            {data: 'activity_date', name: 'activity_date'},
+            {data: 'activity_program_name', name: 'activity_program_name'},
+            {data: 'activity', name: 'activity'},
+            {data: 'location', name: 'location'},
+            {data: 'participant_number', name: 'participant_number'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
@@ -126,28 +120,48 @@ $(function () {
         });
     });
 
-    $('body').on('click', '.editSale', function () {
-        var sales_id = $(this).data('id');
-        $.get("{{ route('sales.index') }}" +'/' + sales_id +'/edit', function (data) {
-            $('.salesDetail').show();
-            $('#modalHeading').html("Edit Sales");
+    $('#importActivity').click(function () {
+        $('#activtyImportModal').modal('show');
+    });
+
+    $('#saveBtnFormImport').click(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            data: new FormData($("#activityFormImport")[0]),
+            url: "{{ route('activities.importActivity') }}",
+            type: "POST",
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                $('#activityFormImport').trigger("reset");
+                $('#activtyImportModal').modal('hide');
+                table.draw();
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+        });
+
+    });
+
+
+    $('body').on('click', '.editActivity', function () {
+        var activity_id = $(this).data('id');
+        $.get("{{ route('activities.index') }}" +'/' + activity_id +'/edit', function (data) {
+            $('#modalHeading').html("Edit Activity");
             $('#saveBtn').val("edit");
-            $('#salesModal').modal('show');
-            $('#sales_id').val(data.id);
-            $('#sale_date').val(data.sale_date);
-            $('#collected_d_min_1').val(data.collected_d_min_1);
-            $('#delivered_to_papermill').val(data.delivered_to_papermill);
-            $('#weighing_scale_gap_eco').val(data.weighing_scale_gap_eco);
-            $('#weighing_scale_gap_eco_percent').val(data.weighing_scale_gap_eco_percent);
-            $("#id_papermill").val(data.id_papermill).trigger("change");
-            $('#received_at_papermill').val(data.received_at_papermill);
-            $('#weighing_scale_gap_papermill').val(data.weighing_scale_gap_papermill);
-            $('#weighing_scale_gap_papermill_percent').val(data.weighing_scale_gap_papermill_percent);
-            $('#moisture_content_and_contaminant').val(data.moisture_content_and_contaminant);
-            $('#moisture_content_and_contaminant_percent').val(data.moisture_content_and_contaminant_percent);
-            $('#deduction').val(data.deduction);
-            $('#deduction_percent').val(data.deduction_percent);
-            $('#total_weight_accepted').val(data.total_weight_accepted);
+            $('#activityModal').modal('show');
+            $('#activity_id').val(data.id);
+            $('#activity_date').val(data.activity_date);
+            $('#activity').val(data.activity);
+            $("#id_program_activity").val(data.id_program_activity).trigger("change");
+            $('#location').val(data.location);
+            $("#id_category").val(data.id_category).trigger("change");
+            $("#id_district").val(data.id_district).trigger("change");
+            $("#id_regency").val(data.id_regency).trigger("change");
+            $('#participant_number').val(data.participant_number);
             $('#created_by').val(data.created_by);
             $('#created_datetime').val(data.created_datetime);
             $('#last_modified_by').val(data.last_modified_by);
@@ -155,23 +169,22 @@ $(function () {
         })
     });
 
-    $('#createNewSales').click(function () {
+    $('#createNewActivity').click(function () {
         $('#saveBtn').val("create");
-        $('#sales_id').val('');
-        $('#salesForm').trigger("reset");
-        $('#modalHeading').html("Create New Sales");
-        $('#salesModal').modal('show');
-        $('.salesDetail').hide();
+        $('#activity_id').val('');
+        $('#activityForm').trigger("reset");
+        $('#modalHeading').html("Create New Activity");
+        $('#activityModal').modal('show');
 
     });
 
-    $('body').on('click', '.deleteSale', function () {
-        var sales_id = $(this).data("id");
+    $('body').on('click', '.deleteActivity', function () {
+        var activity_id = $(this).data("id");
         confirm("Are You sure want to delete !");
 
         $.ajax({
             type: "DELETE",
-            url: "{{ route('sales.store') }}"+'/'+sales_id,
+            url: "{{ route('activities.store') }}"+'/'+activity_id,
             success: function (data) {
                 table.draw();
             },
@@ -196,14 +209,14 @@ $(function () {
         $(this).html('Save');
 
         $.ajax({
-            data: $('#salesForm').serialize(),
-            url: "{{ route('sales.store') }}",
+            data: $('#activityForm').serialize(),
+            url: "{{ route('activities.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
 
-                $('#salesForm').trigger("reset");
-                $('#salesModal').modal('hide');
+                $('#activityForm').trigger("reset");
+                $('#activityModal').modal('hide');
                 table.draw();
 
             },

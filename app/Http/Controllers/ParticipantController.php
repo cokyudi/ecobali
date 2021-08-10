@@ -87,22 +87,6 @@ class ParticipantController extends Controller
         return view('participant/index',compact('participants', 'user'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
@@ -178,23 +162,7 @@ class ParticipantController extends Controller
         return response()->json(['success'=>'Participant saved successfully.','data'=>$data]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Participant  $participant
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Participant $participant)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Participant  $participant
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $user = Auth::user();
