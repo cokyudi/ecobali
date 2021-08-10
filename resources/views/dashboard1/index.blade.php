@@ -105,56 +105,54 @@
 
           </div>
 
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Number of Participants</h4>
+                            <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="card-body">
+                                <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>
+                                <div id="pie-3d"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="col-lg-6 col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Contribution</h4>
+                            <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="card-body">
+                                <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>
+                                <div id="pie-3d-exploded"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-
-<div class="row">
-  <div class="col-lg-6 col-12">
-    <div class="card">
-      <div class="card-header">
-          <h4 class="card-title">Number of Participants</h4>
-          <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-          <div class="heading-elements">
-              <ul class="list-inline mb-0">
-                  <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                  <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                  <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                  <li><a data-action="close"><i class="ft-x"></i></a></li>
-              </ul>
-          </div>
-      </div>
-      <div class="card-content collapse show">
-          <div class="card-body">
-              <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>
-              <div id="pie-3d"></div>
-          </div>
-      </div>
-  </div>
-  </div>
-
-  <div class="col-lg-6 col-12">
-    <div class="card">
-      <div class="card-header">
-          <h4 class="card-title">Contribution</h4>
-          <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-          <div class="heading-elements">
-              <ul class="list-inline mb-0">
-                  <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                  <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                  <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                  <li><a data-action="close"><i class="ft-x"></i></a></li>
-              </ul>
-          </div>
-      </div>
-      <div class="card-content collapse show">
-          <div class="card-body">
-              <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>
-              <div id="pie-3d-exploded"></div>
-          </div>
-      </div>
-  </div>
-  </div>
-</div>
             <div class="row mb-3">
                 <div class="col-6">
                     <div class="card h-100">
@@ -203,44 +201,36 @@
                 </div>
             </div>
 
-
-<div class="row">
-  <div class="col-xl-12 col-12">
-    <div class="card">
-      <div class="card-header">
-          <h4 class="card-title">Dinamics</h4>
-          <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-          <div class="heading-elements">
-              <ul class="list-inline mb-0">
-                  <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                  <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                  <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                  <li><a data-action="close"><i class="ft-x"></i></a></li>
-              </ul>
-          </div>
-      </div>
-      <div class="card-content collapse show">
-          <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
-            <button onclick="getLineChartData('week');" type="button" class="btn btn-sm btn-secondary">Week</button>
-            <button onclick="getLineChartData('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
-          </div>
-          <div class="card-body chartjs">
-              <canvas id="line-chart" height="500"></canvas>
-          </div>
-      </div>
-  </div>
-  </div>
-
-
-
-</div>
-
-
             <div class="row">
-                <div class="col-6">
+                <div class="col-xl-12 col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Dinamics</h4>
+                            <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-content collapse show">
+                            <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
+                                <button onclick="getLineChartData('week');" type="button" class="btn btn-sm btn-secondary">Week</button>
+                                <button onclick="getLineChartData('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
+                            </div>
+                            <div class="card-body chartjs">
+                                <canvas id="line-chart" height="500"></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+
+
             </div>
-<!--/ Revenue, Hit Rate & Deals -->
 
         </div>
       </div>

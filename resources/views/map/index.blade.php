@@ -130,7 +130,7 @@
         center: [115.188919, -8.409518], // starting position [lng, lat]
         zoom: 9 // starting zoom
     });
-    
+
 </script>
 
 <script type="text/javascript">
@@ -191,13 +191,15 @@
                 });
                 var geojson = {
                     'type': 'FeatureCollection',
-                    'features': data.data
+                    'features': data.data,
                 };
                 geojson.features.forEach(function (marker) {
                     // create a HTML element for each feature
                     var el = document.createElement('div');
                     el.className = 'marker';
                     el.style.backgroundImage = 'url(/images/markers/marker-'+marker.properties.category+'.png)';
+                    el.style.height = '45px';
+                    el.style.width = '45px';
 
                     // make a marker for each feature and add it to the map
                     var pin = new mapboxgl.Marker(el)
@@ -218,10 +220,11 @@
                     el.addEventListener("click", e => {
                         map.flyTo({
                             center: marker.geometry.coordinates,
-                            zoom: 15
+                            zoom: 20
                         });
                     });
                 });
+
                 console.log(markers);
 			},
 			error: function (data) {

@@ -1,5 +1,5 @@
 var geojsonLayer;
-var mymap;
+var mapActivity;
 function drawMap() {
     var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
     var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
@@ -16,10 +16,10 @@ function drawMap() {
         idParticipant: idParticipant,
         idRegency: idRegency,
     }
-    if (mymap) {
-        mymap.remove();
+    if (mapActivity) {
+        mapActivity.remove();
     }
-    mymap = L.map('mapid').setView([-8.36, 115.19], 8.75);
+    mapActivity = L.map('mapActivity').setView([-8.36, 115.19], 8.75);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGV2YWFkczIiLCJhIjoiY2twbXBweGkzMmgycTJvcmkxM3ozeDhmaCJ9.w1rN2S1A6G5SJFoitaoQvQ', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -28,7 +28,7 @@ function drawMap() {
         tileSize: 512,
         zoomOffset: -1,
         accessToken: 'pk.eyJ1IjoiZGV2YWFkczIiLCJhIjoiY2twbXBweGkzMmgycTJvcmkxM3ozeDhmaCJ9.w1rN2S1A6G5SJFoitaoQvQ'
-    }).addTo(mymap);
+    }).addTo(mapActivity);
 
     $.ajaxSetup({
         headers: {
@@ -73,7 +73,7 @@ function drawMap() {
                     layer.remove();
                     layer.bindPopup(feature.properties.kabupaten+" </br>  "+feature.properties.sampah);
                 }
-            }).addTo(mymap);
+            }).addTo(mapActivity);
         },
         error: function (data) {
             console.log('Error:', data);

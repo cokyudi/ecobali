@@ -1,17 +1,16 @@
 @extends('template', ['user'=>$user])
 @section('dashboard-activities','active')
-
 @push('css_extend')
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-   crossorigin=""/>
-   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-   crossorigin=""></script>
-   <style type="text/css">
-   	#mapid { height: 100%; width:100%;}
-   </style>
-<link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/selects/select2.min.css')}}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+    <style type="text/css">
+        #mapActivity { height: 100%; width:100%;}
+    </style>
+    <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/selects/select2.min.css')}}">
 @endpush
 
 @section('content')
@@ -22,36 +21,149 @@
     </div>
     <div class="content-body"><!-- Revenue, Hit Rate & Deals -->
     <!--/ Revenue, Hit Rate & Deals -->
-    <div class="row">
-        <div class="col-xl-12 col-12">
-            <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Dashboard Comparison</h4>
-                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                <div class="heading-elements">
-                    <ul class="list-inline mb-0">
-                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                        <li><a data-action="close"><i class="ft-x"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card-content collapse show">
-                        <div class="card-body chartjs">
-                            <canvas id="line-chart" height="500"></canvas>
+        <div class="row">
+            <div class="col-lg-3 col-12 pb-1">
+                <div class="card h-75 ">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted font-medium-3">District Coverage</h6>
+                                    <h3 class="font-large-2" id="district_coverage"></h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="la la-map success font-large-5 float-right"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
+            <div class="col-lg-3 col-12 pb-1">
+                <div class="card h-75 ">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted font-medium-3">Regency Coverage</h6>
+                                    <h3 class="font-large-2" id="regency_coverage"></h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="la la-map success font-large-5 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12 pb-1">
+                <div class="card h-75">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted font-medium-3">Location Coverage</h6>
+                                    <h3 class="font-large-2" id="total_participant"></h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="la la-map success font-large-5 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-12 pb-1">
+                <div class="card h-75">
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="media d-flex">
+                                <div class="media-body text-left">
+                                    <h6 class="text-muted font-medium-3">Total Participant</h6>
+                                    <h3 class="font-large-2" id="total_participant"></h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="la la-users success font-large-5 float-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
+        <div class="row mb-3">
+            <div class="col-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h4 class="card-title">Column Chart</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <p class="card-text">A column chart is a vertical bar chart rendered in the browser using SVG or VML, whichever is appropriate for the user's browser. Like all google charts, column charts display tooltips when the user hovers over the data.</p>
+                            <div id="column-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h4 class="card-title">Total</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            {{--								<p class="card-text">A bar chart is a horizontal bar chart rendered in the browser using SVG or VML, whichever is appropriate for the user's browser. Like all google charts, bar charts display tooltips when the user hovers over the data.</p>--}}
+                            <div class="chart-container">
+                                <div id="bar-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card h-100">
+                    <div class="card-header mb-0">
+                        <h4 class="card-title">Map</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body height-500">
+                            <div id="mapActivity" ></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -127,9 +239,12 @@
 @endsection
 
 @push('ajax_crud')
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="{{asset('js/scripts/charts/google/bar/column.js')}}"></script>
 <script src="{{asset('js/scripts/charts/chartjs/line/line.min.js')}}"></script>
 <script src="{{asset('vendors/js/forms/select/select2.full.min.js')}}"></script>
 <script src="{{asset('js/scripts/forms/select/form-select2.min.js')}}"></script>
+    <script src="{{asset('js/scripts/charts/google/bar/bar.min.js')}}"></script>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -174,6 +289,7 @@
             }
         );
 
+        drawMap();
         $('#backBtn').click(function() {
             var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
             console.log(endDates);
@@ -181,4 +297,5 @@
 
     });
 </script>
+    <script src="{{asset('dashboardjs/dashboardActivities/map.js')}}"></script>
 @endpush
