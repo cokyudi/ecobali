@@ -1,5 +1,14 @@
 @extends('template', ['user'=>$user])
 @section('districts','active')
+@push('css_extend')
+<style type="text/css">
+    label.error {
+        color: red !important;
+        text-transform: none !important;
+        font-weight: normal !important;
+    }
+</style>
+@endpush
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
@@ -83,8 +92,12 @@
 
 @push('ajax_crud')
 <script type="text/javascript">
+$(document).ready(function(e) {
+    var form = $("#districtForm");
+    form.validate();
+});
   $(function () {
-
+    var validator = $("#districtForm").validate();
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -127,6 +140,10 @@
               success: function (data) {
                   $('#districtFormImport').trigger("reset");
                   $('#districtImportModal').modal('hide');
+                  toastr.options = {
+                    "positionClass": "toast-bottom-right"
+                  };
+                  toastr.success('Berhasil di import.');
                   table.draw();
               },
               error: function(xhr, status, error) {
@@ -137,6 +154,7 @@
       });
 
       $('#createNewDistrict').click(function () {
+          validator.resetForm();
           $('#saveBtn').val("create");
           $('#district_id').val('');
           $('#districtForm').trigger("reset");
@@ -145,6 +163,7 @@
       });
 
       $('body').on('click', '.editDistrict', function () {
+        validator.resetForm();  
         var district_id = $(this).data('id');
         $.get("{{ route('districts.index') }}" +'/' + district_id +'/edit', function (data) {
             $('#modalHeading').html("Edit District");
@@ -161,54 +180,78 @@
      });
 
       $('#saveBtn').click(function (e) {
-          e.preventDefault();
-          if ($('#saveBtn').val() == "create")  {
-              $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val(null);
-              $('#last_modified_datetime').val(null);
-          } else {
-             $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val("Deva Dwi A Edit");
-              $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-          }
-          $(this).html('Save');
-
-          $.ajax({
-            data: $('#districtForm').serialize(),
-            url: "{{ route('districts.store') }}",
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-
-                $('#districtForm').trigger("reset");
-                $('#districtModal').modal('hide');
-                table.draw();
-
-            },
-            error: function (data) {
-                console.log('Error:', data);
-                $('#saveBtn').html('Save Changes');
+        if ($('#districtForm').valid()) {
+            e.preventDefault();
+            if ($('#saveBtn').val() == "create")  {
+                $('#created_by').val("Deva Dwi A");
+                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                $('#last_modified_by').val(null);
+                $('#last_modified_datetime').val(null);
+                var alertMessage = 'District berhasil ditambahkan.';
+            } else {
+                $('#created_by').val("Deva Dwi A");
+                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                $('#last_modified_by').val("Deva Dwi A Edit");
+                $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                var alertMessage = 'District berhasil di edit.';
             }
-        });
+            $(this).html('Save');
+
+            $.ajax({
+                data: $('#districtForm').serialize(),
+                url: "{{ route('districts.store') }}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+
+                    $('#districtForm').trigger("reset");
+                    $('#districtModal').modal('hide');
+                    table.draw();
+                    toastr.options = {
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.success(alertMessage);
+
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                    toastr.error('Gagal menambahkan data.');
+                    $('#saveBtn').html('Save Changes');
+                }
+            });
+        }
+          
       });
 
       $('body').on('click', '.deleteDistrict', function () {
 
           var district_id = $(this).data("id");
-          confirm("Are You sure want to delete !");
+          swal({
+            title: "Are you sure?",
+            text: "Apakah anda yakin untuk menghapus data ini ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('districts.store') }}"+'/'+district_id,
+                        success: function (data) {
+                            toastr.options = {
+                                "positionClass": "toast-bottom-right"
+                            }
+                            toastr.success('District berhasil dihapus.');
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                } else {}
+            });
 
-          $.ajax({
-              type: "DELETE",
-              url: "{{ route('districts.store') }}"+'/'+district_id,
-              success: function (data) {
-                  table.draw();
-              },
-              error: function (data) {
-                  console.log('Error:', data);
-              }
-          });
       });
 
     });

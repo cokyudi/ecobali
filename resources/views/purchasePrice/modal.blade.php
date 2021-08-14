@@ -15,7 +15,7 @@
                         <label for="name" class="control-label">Purchase Price (Rp.)</label>
                         <div class="col-sm-12">
                             <div class="controls">
-                                <input type="number" class="form-control" id="price" name="price" placeholder="Enter Purchase Price in Rupiah" value="" maxlength="100" required data-validation-required-message="This field is required">
+                                <input type="number" class="form-control" id="price" name="price" placeholder="Enter Purchase Price in Rupiah" value="" maxlength="100" required>
                             </div>
                         </div>
                     </div>

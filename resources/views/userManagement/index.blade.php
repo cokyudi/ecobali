@@ -175,17 +175,34 @@
      });
 
       $('#saveBtn').click(function (e) {
+        toastr.clear();
+        var nameField = $('#name').val();
+        if (nameField == '') {
+            toastr.options = {
+                "closeButton": true,
+                "positionClass": "toast-top-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "0",
+                "hideDuration": "0"
+            }
+            toastr.error('Nama tidak boleh kosong.');
+            $('#saveBtn').html('Save Changes');
+            return;
+        }
           e.preventDefault();
           if ($('#saveBtn').val() == "create")  {
               $('#created_by').val("Deva Dwi A");
               $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
               $('#last_modified_by').val(null);
               $('#last_modified_datetime').val(null);
+              var alertMessage = 'User berhasil ditambahkan.';
           } else {
              $('#created_by').val("Deva Dwi A");
               $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
               $('#last_modified_by').val("Deva Dwi A Edit");
               $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+              var alertMessage = 'User berhasil di edit.';
           }
           $(this).html('Save');
 
@@ -223,12 +240,13 @@
                 $('#userForm').trigger("reset");
                 $('#userModal').modal('hide');
                 var loginUser_id = <?=$user->id;?>;
-                console.log(loginUser_id);
-                console.log(data.editedUser.user_id);
                 if (data.editedUser && loginUser_id == data.editedUser.user_id) {
-                    console.log('a');
                     $('#user-identity').html(data.editedUser.name + ' / ' + data.editedUser.role);
                 }
+                toastr.options = {
+                    "positionClass": "toast-bottom-right"
+                };
+                toastr.success(alertMessage);
                 table.draw();
 
             },
@@ -241,19 +259,33 @@
 
       $('body').on('click', '.deleteUser', function () {
 
-          var area_id = $(this).data("id");
-          confirm("Are You sure want to delete !");
+        var area_id = $(this).data("id");
+        swal({
+            title: "Are you sure?",
+            text: "Apakah anda yakin untuk menghapus data ini ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    type: "DELETE",
+                    url: "{{ route('user-management.store') }}"+'/'+area_id,
+                    success: function (data) {
+                        toastr.options = {
+                            "positionClass": "toast-bottom-right"
+                        }
+                        toastr.success('User berhasil dihapus.');
+                        table.draw();
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
+            } else {}
+        });
 
-          $.ajax({
-              type: "DELETE",
-              url: "{{ route('user-management.store') }}"+'/'+area_id,
-              success: function (data) {
-                  table.draw();
-              },
-              error: function (data) {
-                  console.log('Error:', data);
-              }
-          });
       });
 
     });

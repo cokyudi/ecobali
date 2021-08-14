@@ -2,6 +2,13 @@
 @section('categories','active')
 @push('css_extend')
     <link rel="stylesheet" type="text/css" href="{{asset('css/plugins/extensions/toastr.min.css')}}">
+    <style type="text/css">
+        label.error {
+            color: red !important;
+            text-transform: none !important;
+            font-weight: normal !important;
+        }
+    </style>
 @endpush
 @section('content')
         <!-- BEGIN: Content-->
@@ -49,7 +56,7 @@
                                                         <input type="hidden" id="last_modified_datetime" name="last_modified_datetime" value="">
                                                         <div class="form-group">
                                                             <label for="category_name">Category Name</label>
-                                                            <input type="text" id="category_name" class="form-control" placeholder="Category Name" name="category_name" maxlength="50" value="{{ $category->category_name }}">
+                                                            <input required type="text" id="category_name" class="form-control" placeholder="Category Name" name="category_name" maxlength="50" value="{{ $category->category_name }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -131,8 +138,14 @@
 
 @push('ajax_crud')
 <script type="text/javascript">
-
+$(document).ready(function(e) {
+    var form = $("#categoryEditForm");
+    var form2 = $("#categoryTargetForm");
+    form.validate();
+    form2.validate();
+});
   $(function () {
+    var validator = $("#categoryTargetForm").validate();
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -166,30 +179,38 @@
       });
 
      $('#saveBtn').click(function (e) {
-        e.preventDefault();
+        if ($('#categoryEditForm').valid()) {
+            e.preventDefault();
 
-        $('#last_modified_by').val("Deva Dwi A Edit");
-        $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+            $('#last_modified_by').val("Deva Dwi A Edit");
+            $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
 
-        $.ajax({
-            data: $('#categoryEditForm').serialize(),
-            url: "{{ route('categories.store') }}",
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-                $('#categoryForm').trigger("reset");
-                $('#categoryModal').modal('hide');
-                table.draw();
+            $.ajax({
+                data: $('#categoryEditForm').serialize(),
+                url: "{{ route('categories.store') }}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+                    $('#categoryForm').trigger("reset");
+                    $('#categoryModal').modal('hide');
+                    toastr.options = {
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.success('Category berhasil di edit.');
+                    table.draw();
 
-            },
-            error: function (data) {
-                console.log('Error:', data);
-                $('#saveBtn').html('Save Changes');
-            }
-        });
+                },
+                error: function (data) {
+                    toastr.error('Gagal menambahkan data.');
+                    console.log('Error:', data);
+                    $('#saveBtn').html('Save Changes');
+                }
+            });
+        }
     });
 
     $('#createNewTarget').click(function () {
+          validator.resetForm();
           $('#saveTargetBtn').val("create");
           $('#category_detail_id').val('');
           $('#categoryTargetForm').trigger("reset");
@@ -198,47 +219,50 @@
     });
 
     $('#saveTargetBtn').click(function (e) {
-          e.preventDefault();
-          if ($('#saveTargetBtn').val() == "create")  {
-              $('#created_by_target').val("Deva Dwi A");
-              $('#created_datetime_target').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-          } else {
-              $('#last_modified_by_target').val("Deva Dwi A Edit");
-              $('#last_modified_datetime_target').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-          }
-          $(this).html('Save');
-
-          $.ajax({
-            data: $('#categoryTargetForm').serialize(),
-            url: "{{ route('categoryDetails.store') }}",
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-                if (data.errors) {
-                    for(var errorMsg in data.errors) {
-                        toastr.error(data.errors[errorMsg], "Failed to submit new target !");
-                    }
-                } else {
-                    toastr.success(data.success, "Success to submit new target !");
-                    $('#categoryTargetForm').trigger("reset");
-                    $('#categoryTargetModal').modal('hide');
-                    table.draw();
-                }
-            },
-            error: function ( jqXhr, json, errorThrown ) {
-                var errors = jqXhr.responseJSON;
-                var errorsHtml= '';
-                $.each( errors, function( key, value ) {
-                    errorsHtml += '<li>' + value[0] + '</li>';
-                });
-                console.log('Error:', errors.message);
+        if ($('#categoryTargetForm').valid()) {
+            e.preventDefault();
+            if ($('#saveTargetBtn').val() == "create")  {
+                $('#created_by_target').val("Deva Dwi A");
+                $('#created_datetime_target').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+            } else {
+                $('#last_modified_by_target').val("Deva Dwi A Edit");
+                $('#last_modified_datetime_target').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
             }
+            $(this).html('Save');
 
-        });
+            $.ajax({
+                data: $('#categoryTargetForm').serialize(),
+                url: "{{ route('categoryDetails.store') }}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+                    if (data.errors) {
+                        for(var errorMsg in data.errors) {
+                            toastr.error(data.errors[errorMsg], "Failed to submit new target !");
+                        }
+                    } else {
+                        toastr.success(data.success, "Success to submit new target !");
+                        $('#categoryTargetForm').trigger("reset");
+                        $('#categoryTargetModal').modal('hide');
+                        table.draw();
+                    }
+                },
+                error: function ( jqXhr, json, errorThrown ) {
+                    var errors = jqXhr.responseJSON;
+                    var errorsHtml= '';
+                    $.each( errors, function( key, value ) {
+                        errorsHtml += '<li>' + value[0] + '</li>';
+                    });
+                    console.log('Error:', errors.message);
+                }
+
+            });
+        }
 
       });
 
       $('body').on('click', '.editCategoryDetail', function () {
+        validator.resetForm();  
         var categoryDetail_id = $(this).data('id');
         $.get("{{ route('categoryDetails.index') }}" +'/' + categoryDetail_id +'/edit', function (data) {
             $('#modalHeadingTarget').html("Edit Target");
@@ -258,18 +282,29 @@
       $('body').on('click', '.deleteCategoryDetail', function () {
 
           var categoryDetail_id = $(this).data("id");
-          confirm("Are You sure want to delete !");
+          swal({
+            title: "Are you sure?",
+            text: "Apakah anda yakin untuk menghapus data ini ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('categoryDetails.store') }}"+'/'+categoryDetail_id,
+                        success: function (data) {
+                            toastr.success('Category detail berhasil dihapus.');
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                } else {}
+            });
 
-          $.ajax({
-              type: "DELETE",
-              url: "{{ route('categoryDetails.store') }}"+'/'+categoryDetail_id,
-              success: function (data) {
-                  table.draw();
-              },
-              error: function (data) {
-                  console.log('Error:', data);
-              }
-          });
       });
 
     });

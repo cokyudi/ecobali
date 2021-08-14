@@ -17,7 +17,7 @@
                             <div class="col-md-12">
                                 <div class="form-group form-group-style">
                                     <label for="activity_date">Date</label>
-                                    <input type="date" id="activity_date" class="form-control" name="activity_date">
+                                    <input required type="date" id="activity_date" class="form-control" name="activity_date">
                                 </div>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="id_program_activity">Activity Program</label>
-                                    <select id="id_program_activity" name="id_program_activity" class="select2 form-control">
+                                    <select required id="id_program_activity" name="id_program_activity" class="select2 form-control">
                                         <option value="0" selected="" disabled="">Activity Program</option>
                                         @foreach($activity_programs as $activity_program)
                                             <option value="{{$activity_program->id}}">{{$activity_program->activity_program_name}}</option>
@@ -38,9 +38,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="activity">Activity</label>
-                                    <div class="input-group mt-0">
-                                        <input type="text" class="form-control" placeholder="Activity" id="activity" name="activity">
-                                    </div>
+                                    <input required type="text" class="form-control" placeholder="Activity" id="activity" name="activity">
                                 </div>
                             </div>
                         </div>
@@ -49,7 +47,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="id_category">Category</label>
-                                    <select id="id_category" name="id_category" class="form-control">
+                                    <select required id="id_category" name="id_category" class="form-control">
                                         <option value="0" selected="" disabled="">Select Category</option>
                                         @foreach($categories as $category)
                                             <option value="{{$category->id}}">{{$category->category_name}}</option>
@@ -60,9 +58,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="location">Location</label>
-                                    <div class="input-group mt-0">
-                                        <input type="text" class="form-control" placeholder="Location" id="location" name="location">
-                                    </div>
+                                    <input required type="text" class="form-control" placeholder="Location" id="location" name="location">
                                 </div>
                             </div>
                         </div>
@@ -71,7 +67,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="id_district">District</label>
-                                    <select id="id_district" name="id_district" class="select2 form-control">
+                                    <select required id="id_district" name="id_district" class="select2 form-control">
                                         <option value="0" selected="" disabled="">District</option>
                                         @foreach($districts as $district)
                                             <option value="{{$district->id}}">{{$district->district_name}}</option>
@@ -82,7 +78,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="id_regency">Regency</label>
-                                    <select id="id_regency" name="id_regency" class="form-control">
+                                    <select required id="id_regency" name="id_regency" class="form-control">
                                         <option value="0" selected="" disabled="">Regency</option>
                                         @foreach($regencies as $regency)
                                             <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
@@ -96,9 +92,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="participant_number">Participant Number</label>
-                                    <div class="input-group mt-0">
-                                        <input type="number" class="form-control" placeholder="Participant Number" id="participant_number" name="participant_number">
-                                    </div>
+                                    <input required type="number" class="form-control" placeholder="Participant Number" id="participant_number" name="participant_number">
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,14 @@
 @extends('template', ['user'=>$user])
 @section('categories','active')
+@push('css_extend')
+<style type="text/css">
+    label.error {
+        color: red !important;
+        text-transform: none !important;
+        font-weight: normal !important;
+    }
+</style>
+@endpush
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
@@ -85,7 +94,13 @@
 
 @push('ajax_crud')
 <script type="text/javascript">
+$(document).ready(function(e) {
+    var form = $("#categoryForm");
+    form.validate();
+});
+
 $(function () {
+    var validator = $("#categoryForm").validate();
 
     $.ajaxSetup({
             headers: {
@@ -119,6 +134,7 @@ $(function () {
     });
 
     $('#createNewCategory').click(function () {
+        validator.resetForm();
         $('#saveBtn').val("create");
         $('#category_id').val('');
         $('#categoryForm').trigger("reset");
@@ -128,53 +144,77 @@ $(function () {
 
     $('body').on('click', '.deleteCategory', function () {
         var category_id = $(this).data("id");
-        confirm("Are You sure want to delete !");
+        swal({
+            title: "Are you sure?",
+            text: "Apakah anda yakin untuk menghapus data ini ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('categories.store') }}"+'/'+category_id,
+                        success: function (data) {
+                            toastr.options = {
+                                "positionClass": "toast-bottom-right"
+                            }
+                            toastr.success('Category berhasil dihapus.');
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                } else {}
+            });
 
-        $.ajax({
-            type: "DELETE",
-            url: "{{ route('categories.store') }}"+'/'+category_id,
-            success: function (data) {
-                table.draw();
-            },
-            error: function (data) {
-                console.log('Error:', data);
-            }
-        });
     });
 
     $('#saveBtn').click(function (e) {
-        e.preventDefault();
-        if ($('#saveBtn').val() == "create")  {
-            $('#created_by').val("Deva Dwi A");
-            $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-            $('#last_modified_by').val(null);
-            $('#last_modified_datetime').val(null);
-        } else {
-            $('#created_by').val("Deva Dwi A");
-            $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-            $('#last_modified_by').val("Deva Dwi A Edit");
-            $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-        }
-
-        $(this).html('Save');
-
-        $.ajax({
-            data: $('#categoryForm').serialize(),
-            url: "{{ route('categories.store') }}",
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-
-                $('#categoryForm').trigger("reset");
-                $('#categoryModal').modal('hide');
-                table.draw();
-
-            },
-            error: function (data) {
-                console.log('Error:', data);
-                $('#saveBtn').html('Save Changes');
+        if ($('#categoryForm').valid()) {
+            e.preventDefault();
+            if ($('#saveBtn').val() == "create")  {
+                $('#created_by').val("Deva Dwi A");
+                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                $('#last_modified_by').val(null);
+                $('#last_modified_datetime').val(null);
+                var alertMessage = 'Category berhasil ditambahkan.';
+            } else {
+                $('#created_by').val("Deva Dwi A");
+                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                $('#last_modified_by').val("Deva Dwi A Edit");
+                $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                var alertMessage = 'Category berhasil di edit.';
             }
-        });
+
+            $(this).html('Save');
+
+            $.ajax({
+                data: $('#categoryForm').serialize(),
+                url: "{{ route('categories.store') }}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+
+                    $('#categoryForm').trigger("reset");
+                    $('#categoryModal').modal('hide');
+                    toastr.options = {
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.success(alertMessage);
+                    table.draw();
+
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                    toastr.error('Gagal menambahkan data.');
+                    $('#saveBtn').html('Save Changes');
+                }
+            });
+        }
+        
     });
 
 });

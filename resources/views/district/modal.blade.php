@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <label class="control-label">Description</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="description" name="description" placeholder="Enter Description" value="" maxlength="50" required="">
+                            <input type="text" class="form-control" id="description" name="description" placeholder="Enter Description" value="" maxlength="50">
                         </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">

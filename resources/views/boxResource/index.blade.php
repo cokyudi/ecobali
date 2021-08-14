@@ -1,5 +1,14 @@
 @extends('template', ['user'=>$user])
 @section('boxResources','active')
+@push('css_extend')
+<style type="text/css">
+    label.error {
+        color: red !important;
+        text-transform: none !important;
+        font-weight: normal !important;
+    }
+</style>
+@endpush
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
@@ -82,8 +91,12 @@
 
 @push('ajax_crud')
 <script type="text/javascript">
+$(document).ready(function(e) {
+    var form = $("#boxResourceForm");
+    form.validate();
+});
   $(function () {
-      
+    var validator = $("#boxResourceForm").validate();  
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -110,6 +123,7 @@
         });
   
       $('#createNewBoxResource').click(function () {
+          validator.resetForm();
           $('#saveBtn').val("create");
           $('#boxResource_id').val('');
           $('#boxResourceForm').trigger("reset");
@@ -118,6 +132,7 @@
       });
   
       $('body').on('click', '.editBoxResource', function () {
+        validator.resetForm();  
         var boxResource_id = $(this).data('id');
         $.get("{{ route('boxResources.index') }}" +'/' + boxResource_id +'/edit', function (data) {
             $('#modalHeading').html("Edit Box Resource");
@@ -134,54 +149,78 @@
      });
   
       $('#saveBtn').click(function (e) {
-          e.preventDefault();
-          if ($('#saveBtn').val() == "create")  {
-              $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val(null);
-              $('#last_modified_datetime').val(null);
-          } else {
-             $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val("Deva Dwi A Edit");
-              $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-          }
-          $(this).html('Save');
-      
-          $.ajax({
-            data: $('#boxResourceForm').serialize(),
-            url: "{{ route('boxResources.store') }}",
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-       
-                $('#boxResourceForm').trigger("reset");
-                $('#boxResourceModal').modal('hide');
-                table.draw();
-           
-            },
-            error: function (data) {
-                console.log('Error:', data);
-                $('#saveBtn').html('Save Changes');
+        if ($('#boxResourceForm').valid()) {
+            e.preventDefault();
+            if ($('#saveBtn').val() == "create")  {
+                $('#created_by').val("Deva Dwi A");
+                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                $('#last_modified_by').val(null);
+                $('#last_modified_datetime').val(null);
+                var alertMessage = 'Box Source berhasil ditambahkan.';
+            } else {
+                $('#created_by').val("Deva Dwi A");
+                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                $('#last_modified_by').val("Deva Dwi A Edit");
+                $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                var alertMessage = 'Box Source berhasil di edit.';
             }
-        });
+            $(this).html('Save');
+        
+            $.ajax({
+                data: $('#boxResourceForm').serialize(),
+                url: "{{ route('boxResources.store') }}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+        
+                    $('#boxResourceForm').trigger("reset");
+                    $('#boxResourceModal').modal('hide');
+                    table.draw();
+                    toastr.options = {
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.success(alertMessage);
+            
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                    toastr.error('Gagal menambahkan data.');
+                    $('#saveBtn').html('Save Changes');
+                }
+            });
+        }
+          
       });
       
       $('body').on('click', '.deleteBoxResource', function () {
        
           var boxResource_id = $(this).data("id");
-          confirm("Are You sure want to delete !");
+          swal({
+            title: "Are you sure?",
+            text: "Apakah anda yakin untuk menghapus data ini ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('boxResources.store') }}"+'/'+boxResource_id,
+                        success: function (data) {
+                            toastr.options = {
+                                "positionClass": "toast-bottom-right"
+                            }
+                            toastr.success('Box Source berhasil dihapus.');
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                } else {}
+            });
         
-          $.ajax({
-              type: "DELETE",
-              url: "{{ route('boxResources.store') }}"+'/'+boxResource_id,
-              success: function (data) {
-                  table.draw();
-              },
-              error: function (data) {
-                  console.log('Error:', data);
-              }
-          });
       });
        
     });
