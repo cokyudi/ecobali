@@ -1,7 +1,15 @@
 @extends('template', ['user'=>$user])
 
 @section('banks','active')
-
+@push('css_extend')
+<style type="text/css">
+    label.error {
+        color: red !important;
+        text-transform: none !important;
+        font-weight: normal !important;
+    }
+</style>
+@endpush
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
@@ -84,8 +92,12 @@
 
 @push('ajax_crud')
 <script type="text/javascript">
+$(document).ready(function(e) {
+    var form = $("#bankForm");
+    form.validate();
+});
   $(function () {
-      
+    var validator = $("#bankForm").validate();   
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -112,6 +124,7 @@
         });
   
       $('#createNewBank').click(function () {
+          validator.resetForm();
           $('#saveBtn').val("create");
           $('#bank_id').val('');
           $('#bankForm').trigger("reset");
@@ -120,6 +133,7 @@
       });
   
       $('body').on('click', '.editBank', function () {
+        validator.resetForm();  
         var bank_id = $(this).data('id');
         $.get("{{ route('banks.index') }}" +'/' + bank_id +'/edit', function (data) {
             $('#modalHeading').html("Edit Bank");
@@ -136,54 +150,78 @@
      });
   
       $('#saveBtn').click(function (e) {
-          e.preventDefault();
-          if ($('#saveBtn').val() == "create")  {
-              $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val(null);
-              $('#last_modified_datetime').val(null);
-          } else {
-             $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val("Deva Dwi A Edit");
-              $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-          }
-          $(this).html('Save');
-      
-          $.ajax({
-            data: $('#bankForm').serialize(),
-            url: "{{ route('banks.store') }}",
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-       
-                $('#bankForm').trigger("reset");
-                $('#bankModal').modal('hide');
-                table.draw();
-           
-            },
-            error: function (data) {
-                console.log('Error:', data);
-                $('#saveBtn').html('Save Changes');
+        if ($('#bankForm').valid()) {
+            e.preventDefault();
+            if ($('#saveBtn').val() == "create")  {
+                $('#created_by').val("Deva Dwi A");
+                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                $('#last_modified_by').val(null);
+                $('#last_modified_datetime').val(null);
+                var alertMessage = 'Bank berhasil ditambahkan.';
+            } else {
+                $('#created_by').val("Deva Dwi A");
+                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                $('#last_modified_by').val("Deva Dwi A Edit");
+                $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                var alertMessage = 'Bank berhasil di edit.';
             }
-        });
+            $(this).html('Save');
+        
+            $.ajax({
+                data: $('#bankForm').serialize(),
+                url: "{{ route('banks.store') }}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+        
+                    $('#bankForm').trigger("reset");
+                    $('#bankModal').modal('hide');
+                    table.draw();
+                    toastr.options = {
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.success(alertMessage);
+            
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                    toastr.error('Gagal menambahkan data.');
+                    $('#saveBtn').html('Save Changes');
+                }
+            });
+        }
+          
       });
       
       $('body').on('click', '.deleteBank', function () {
        
           var bank_id = $(this).data("id");
-          confirm("Are You sure want to delete !");
+          swal({
+            title: "Are you sure?",
+            text: "Apakah anda yakin untuk menghapus data ini ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('banks.store') }}"+'/'+bank_id,
+                        success: function (data) {
+                            toastr.options = {
+                                "positionClass": "toast-bottom-right"
+                            }
+                            toastr.success('Bank berhasil dihapus.');
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                } else {}
+            });
         
-          $.ajax({
-              type: "DELETE",
-              url: "{{ route('banks.store') }}"+'/'+bank_id,
-              success: function (data) {
-                  table.draw();
-              },
-              error: function (data) {
-                  console.log('Error:', data);
-              }
-          });
       });
        
     });

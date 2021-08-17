@@ -3,6 +3,15 @@
 @push('ajax_crud')
 <!-- <link rel="stylesheet" type="text/css" href="{{asset('css/plugins/forms/validation/form-validation.css')}}"> -->
 @endpush
+@push('css_extend')
+<style type="text/css">
+    label.error {
+        color: red !important;
+        text-transform: none !important;
+        font-weight: normal !important;
+    }
+</style>
+@endpush
 
 @section('content')
         <!-- BEGIN: Content-->
@@ -85,11 +94,13 @@
         @endsection
 
 @push('ajax_crud')
-<script src="{{asset('vendors/js/forms/validation/jqBootstrapValidation.js')}}"></script>
-<script src="{{asset('js/scripts/forms/validation/form-validation.js')}}"></script>
 <script type="text/javascript">
+$(document).ready(function(e) {
+    var form = $("#purchasePriceForm");
+    form.validate();
+});
   $(function () {
-
+    var validator = $("#purchasePriceForm").validate();  
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -116,6 +127,7 @@
         });
 
       $('#createNewPurchasePrice').click(function () {
+          validator.resetForm();
           $('#saveBtn').val("create");
           $('#purchasePrice_id').val('');
           $('#purchasePriceForm').trigger("reset");
@@ -124,6 +136,7 @@
       });
 
       $('body').on('click', '.editPurchasePrice', function () {
+        validator.resetForm();  
         var purchasePrice_id = $(this).data('id');
         $.get("{{ route('purchasePrices.index') }}" +'/' + purchasePrice_id +'/edit', function (data) {
             $('#modalHeading').html("Edit Purchase Price");
@@ -140,54 +153,78 @@
      });
 
       $('#saveBtn').click(function (e) {
-          e.preventDefault();
-          if ($('#saveBtn').val() == "create")  {
-              $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val(null);
-              $('#last_modified_datetime').val(null);
-          } else {
-             $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val("Deva Dwi A Edit");
-              $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-          }
-          $(this).html('Save');
-
-          $.ajax({
-            data: $('#purchasePriceForm').serialize(),
-            url: "{{ route('purchasePrices.store') }}",
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-
-                $('#purchasePriceForm').trigger("reset");
-                $('#purchasePriceModal').modal('hide');
-                table.draw();
-
-            },
-            error: function (data) {
-                console.log('Error:', data);
-                $('#saveBtn').html('Save Changes');
+        if ($('#purchasePriceForm').valid()) {
+            e.preventDefault();
+            if ($('#saveBtn').val() == "create")  {
+                $('#created_by').val("Deva Dwi A");
+                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                $('#last_modified_by').val(null);
+                $('#last_modified_datetime').val(null);
+                var alertMessage = 'Price berhasil ditambahkan.';
+            } else {
+                $('#created_by').val("Deva Dwi A");
+                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                $('#last_modified_by').val("Deva Dwi A Edit");
+                $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                var alertMessage = 'Price berhasil di edit.';
             }
-        });
+            $(this).html('Save');
+
+            $.ajax({
+                data: $('#purchasePriceForm').serialize(),
+                url: "{{ route('purchasePrices.store') }}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+
+                    $('#purchasePriceForm').trigger("reset");
+                    $('#purchasePriceModal').modal('hide');
+                    table.draw();
+                    toastr.options = {
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.success(alertMessage);
+
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                    toastr.error('Gagal menambahkan data.');
+                    $('#saveBtn').html('Save Changes');
+                }
+            });
+        }
       });
 
       $('body').on('click', '.deletePurchasePrice', function () {
 
           var purchasePrice_id = $(this).data("id");
-          confirm("Are You sure want to delete !");
+          swal({
+            title: "Are you sure?",
+            text: "Apakah anda yakin untuk menghapus data ini ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('purchasePrices.store') }}"+'/'+purchasePrice_id,
+                        success: function (data) {
+                                toastr.options = {
+                                    "positionClass": "toast-bottom-right"
+                                }
+                                toastr.success('Price berhasil dihapus.');
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                } else {}
+            });
 
-          $.ajax({
-              type: "DELETE",
-              url: "{{ route('purchasePrices.store') }}"+'/'+purchasePrice_id,
-              success: function (data) {
-                  table.draw();
-              },
-              error: function (data) {
-                  console.log('Error:', data);
-              }
-          });
+          
       });
 
     });

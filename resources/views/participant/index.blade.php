@@ -187,6 +187,7 @@
 
             },
             error: function (data) {
+                toastr.error('Gagal menambahkan data.');
                 console.log('Error:', data);
                 $('#saveBtn').html('Save Changes');
             }
@@ -196,18 +197,32 @@
       $('body').on('click', '.deleteParticipant', function () {
 
           var participant_id = $(this).data("id");
-          confirm("Are You sure want to delete !");
+          swal({
+            title: "Are you sure?",
+            text: "Apakah anda yakin untuk menghapus data ini ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('participants.store') }}"+'/'+participant_id,
+                        success: function (data) {
+                            toastr.options = {
+                            "positionClass": "toast-bottom-right"
+                        }
+                        toastr.success('Participant berhasil dihapus.');
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                } else {}
+            });
 
-          $.ajax({
-              type: "DELETE",
-              url: "{{ route('participants.store') }}"+'/'+participant_id,
-              success: function (data) {
-                  table.draw();
-              },
-              error: function (data) {
-                  console.log('Error:', data);
-              }
-          });
       });
 
     });

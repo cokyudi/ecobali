@@ -1,5 +1,14 @@
 @extends('template', ['user'=>$user])
 @section('activities','active')
+@push('css_extend')
+<style type="text/css">
+    label.error {
+        color: red !important;
+        text-transform: none !important;
+        font-weight: normal !important;
+    }
+</style>
+@endpush
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
@@ -90,8 +99,12 @@
 
 @push('ajax_crud')
 <script type="text/javascript">
+$(document).ready(function(e) {
+    var form = $("#activityForm");
+    form.validate();
+});
 $(function () {
-
+    var validator = $("#activityForm").validate();
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -138,6 +151,10 @@ $(function () {
                 $('#activityFormImport').trigger("reset");
                 $('#activtyImportModal').modal('hide');
                 table.draw();
+                toastr.options = {
+                    "positionClass": "toast-bottom-right"
+                  };
+                  toastr.success('Berhasil di import.');
             },
             error: function (data) {
                 console.log('Error:', data);
@@ -148,6 +165,7 @@ $(function () {
 
 
     $('body').on('click', '.editActivity', function () {
+        validator.resetForm();
         var activity_id = $(this).data('id');
         $.get("{{ route('activities.index') }}" +'/' + activity_id +'/edit', function (data) {
             $('#modalHeading').html("Edit Activity");
@@ -170,6 +188,7 @@ $(function () {
     });
 
     $('#createNewActivity').click(function () {
+        validator.resetForm();
         $('#saveBtn').val("create");
         $('#activity_id').val('');
         $('#activityForm').trigger("reset");
@@ -180,51 +199,74 @@ $(function () {
 
     $('body').on('click', '.deleteActivity', function () {
         var activity_id = $(this).data("id");
-        confirm("Are You sure want to delete !");
+        swal({
+            title: "Are you sure?",
+            text: "Apakah anda yakin untuk menghapus data ini ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('activities.store') }}"+'/'+activity_id,
+                        success: function (data) {
+                            toastr.options = {
+                                "positionClass": "toast-bottom-right"
+                            }
+                            toastr.success('Activity berhasil dihapus.');
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                } else {}
+            });
 
-        $.ajax({
-            type: "DELETE",
-            url: "{{ route('activities.store') }}"+'/'+activity_id,
-            success: function (data) {
-                table.draw();
-            },
-            error: function (data) {
-                console.log('Error:', data);
-            }
-        });
     });
 
     $('#saveBtn').click(function (e) {
-        e.preventDefault();
-        if ($('#saveBtn').val() == "create")  {
-            $('#created_by').val("Deva Dwi A");
-            $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-            $('#last_modified_by').val(null);
-            $('#last_modified_datetime').val(null);
-        } else {
-            $('#last_modified_by').val("Deva Dwi A Edit");
-            $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-        }
-
-        $(this).html('Save');
-
-        $.ajax({
-            data: $('#activityForm').serialize(),
-            url: "{{ route('activities.store') }}",
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-
-                $('#activityForm').trigger("reset");
-                $('#activityModal').modal('hide');
-                table.draw();
-
-            },
-            error: function (data) {
-                console.log('Error:', data);
-                $('#saveBtn').html('Save Changes');
+        if ($('#activityForm').valid()) {
+            e.preventDefault();
+            if ($('#saveBtn').val() == "create")  {
+                $('#created_by').val("Deva Dwi A");
+                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                $('#last_modified_by').val(null);
+                $('#last_modified_datetime').val(null);
+                var alertMessage = 'Activity berhasil ditambahkan.';
+            } else {
+                $('#last_modified_by').val("Deva Dwi A Edit");
+                $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                var alertMessage = 'Activity berhasil di edit.';
             }
-        });
+
+            $(this).html('Save');
+
+            $.ajax({
+                data: $('#activityForm').serialize(),
+                url: "{{ route('activities.store') }}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+
+                    $('#activityForm').trigger("reset");
+                    $('#activityModal').modal('hide');
+                    table.draw();
+                    toastr.options = {
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.success(alertMessage);
+
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                    toastr.error('Gagal menambahkan data.');
+                    $('#saveBtn').html('Save Changes');
+                }
+            });
+        }
     });
 
 });

@@ -1,7 +1,15 @@
 @extends('template', ['user'=>$user])
 
 @section('papermillCategories','active')
-
+@push('css_extend')
+<style type="text/css">
+    label.error {
+        color: red !important;
+        text-transform: none !important;
+        font-weight: normal !important;
+    }
+</style>
+@endpush
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
@@ -84,8 +92,12 @@
 
 @push('ajax_crud')
 <script type="text/javascript">
+$(document).ready(function(e) {
+    var form = $("#papermillCategoryForm");
+    form.validate();
+});
   $(function () {
-
+    var validator = $("#papermillCategoryForm").validate();  
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -112,6 +124,7 @@
         });
 
       $('#createNewPapermillCategory').click(function () {
+          validator.resetForm();
           $('#saveBtn').val("create");
           $('#papermill_category_id').val('');
           $('#papermillCategoryForm').trigger("reset");
@@ -120,6 +133,7 @@
       });
 
       $('body').on('click', '.editPapermillCategory', function () {
+        validator.resetForm();  
         var papermill_category_id = $(this).data('id');
         $.get("{{ route('papermillCategories.index') }}" +'/' + papermill_category_id +'/edit', function (data) {
             $('#modalHeading').html("Edit Papermill Category");
@@ -136,52 +150,76 @@
      });
 
       $('#saveBtn').click(function (e) {
-          e.preventDefault();
-          if ($('#saveBtn').val() == "create")  {
-              $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val(null);
-              $('#last_modified_datetime').val(null);
-          } else {
-              $('#last_modified_by').val("Deva Dwi A Edit");
-              $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-          }
-          $(this).html('Save');
-
-          $.ajax({
-            data: $('#papermillCategoryForm').serialize(),
-            url: "{{ route('papermillCategories.store') }}",
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-
-                $('#papermillCategoryForm').trigger("reset");
-                $('#papermillCategoryModal').modal('hide');
-                table.draw();
-
-            },
-            error: function (data) {
-                console.log('Error:', data);
-                $('#saveBtn').html('Save Changes');
+        if ($('#papermillCategoryForm').valid()) {
+            e.preventDefault();
+            if ($('#saveBtn').val() == "create")  {
+                $('#created_by').val("Deva Dwi A");
+                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                $('#last_modified_by').val(null);
+                $('#last_modified_datetime').val(null);
+                var alertMessage = 'Papermill Category berhasil ditambahkan.';
+            } else {
+                $('#last_modified_by').val("Deva Dwi A Edit");
+                $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                var alertMessage = 'Papermill Category berhasil di edit.';
             }
-        });
+            $(this).html('Save');
+
+            $.ajax({
+                data: $('#papermillCategoryForm').serialize(),
+                url: "{{ route('papermillCategories.store') }}",
+                type: "POST",
+                dataType: 'json',
+                success: function (data) {
+
+                    $('#papermillCategoryForm').trigger("reset");
+                    $('#papermillCategoryModal').modal('hide');
+                    table.draw();
+                    toastr.options = {
+                        "positionClass": "toast-bottom-right"
+                    };
+                    toastr.success(alertMessage);
+
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                    toastr.error('Gagal menambahkan data.');
+                    $('#saveBtn').html('Save Changes');
+                }
+            });
+        }
+          
       });
 
       $('body').on('click', '.deletePapermillCategory', function () {
 
           var papermill_category_id = $(this).data("id");
-          confirm("Are You sure want to delete !");
-
-          $.ajax({
-              type: "DELETE",
-              url: "{{ route('papermillCategories.store') }}"+'/'+papermill_category_id,
-              success: function (data) {
-                  table.draw();
-              },
-              error: function (data) {
-                  console.log('Error:', data);
-              }
-          });
+          swal({
+            title: "Are you sure?",
+            text: "Apakah anda yakin untuk menghapus data ini ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('papermillCategories.store') }}"+'/'+papermill_category_id,
+                        success: function (data) {
+                            toastr.options = {
+                                "positionClass": "toast-bottom-right"
+                            }
+                            toastr.success('Papermill Category berhasil dihapus.');
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                } else {}
+            });
+          
       });
 
     });

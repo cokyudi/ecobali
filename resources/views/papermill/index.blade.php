@@ -129,18 +129,32 @@
       $('body').on('click', '.deletePapermill', function () {
 
           var papermill_id = $(this).data("id");
-          confirm("Are You sure want to delete !");
-
-          $.ajax({
-              type: "DELETE",
-              url: "{{ route('papermills.store') }}"+'/'+papermill_id,
-              success: function (data) {
-                  table.draw();
-              },
-              error: function (data) {
-                  console.log('Error:', data);
-              }
-          });
+          swal({
+            title: "Are you sure?",
+            text: "Apakah anda yakin untuk menghapus data ini ?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('papermills.store') }}"+'/'+papermill_id,
+                        success: function (data) {
+                            toastr.options = {
+                                "positionClass": "toast-bottom-right"
+                            }
+                            toastr.success('Papermill berhasil dihapus.');
+                            table.draw();
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                } else {}
+            });
+          
       });
 
     });
