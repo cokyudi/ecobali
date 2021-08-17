@@ -236,8 +236,13 @@
                     <div class="card-content collapse show">
                         <div class="card-body">
                             <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
-                                <button onclick="drawSentVsReceivedCustom('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
-                                <button onclick="drawSentVsReceivedCustom('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
+{{--                                <button onclick="drawSentVsReceivedCustom('month');" type="button" class="btn btn-sm btn-secondary">Month</button>--}}
+{{--                                <button onclick="drawSentVsReceivedCustom('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>--}}
+{{--                                <button onclick="drawSentVsReceivedCustom('year');" type="button" class="btn btn-sm btn-secondary">Year</button>--}}
+
+                                <button onclick="getSales('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
+                                <button onclick="getSales('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
+                                <button onclick="getSales('year');" type="button" class="btn btn-sm btn-secondary">Year</button>
                             </div>
                             <div id="sentVsReceivedBar" class="mt-4"></div>
                         </div>
@@ -331,8 +336,8 @@
                     <div class="card-content collapse show">
                         <div class="card-body">
                             <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
-                                <button onclick="drawMCCCustom('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
-                                <button onclick="drawMCCCustom('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
+{{--                                <button onclick="drawMCCCustom('month');" type="button" class="btn btn-sm btn-secondary">Month</button>--}}
+{{--                                <button onclick="drawMCCCustom('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>--}}
                             </div>
                             <div id="dynamicMcc" class="mt-4"></div>
                         </div>
@@ -415,7 +420,6 @@
 
 <script type="text/javascript">
 
-
     $(document).ready(function() {
         $('#daterange').daterangepicker(
             {
@@ -454,74 +458,77 @@
         );
 
         $('#backBtn').click(function() {
-            $('#dateRangeCollection').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
-            $('#dateRangeCollection').data('daterangepicker').setEndDate(moment());
+            $('#daterange').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
+            $('#daterange').data('daterangepicker').setEndDate(moment());
 
-            getSales();
+            getSales("month");
         });
 
-        getSales();
-
-        function getSales() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
-            var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
-            var idPapermill = $('#id_papermill').val();
-
-            var data = {
-                startDates: startDates,
-                endDates: endDates,
-                id_papermills : idPapermill,
-            }
-
-            $.ajax({
-                type: "GET",
-                url: "getSales",
-                data:data,
-                success: function (data) {
-                    removeIndicator();
-                    $('#delivered_to_papermill_ton').html((data.data.delivered_to_papermill/1000).toFixed(1));
-                    $('#delivered_to_papermill_kg').html(data.data.delivered_to_papermill.toFixed(1));
-                    $('#received_at_papermill_ton').html((data.data.received_at_papermill/1000).toFixed(1));
-                    $('#received_at_papermill_kg').html(data.data.received_at_papermill.toFixed(1));
-
-                    $('#weighing_scale_gap_papermill').html(data.data.weighing_scale_gap_papermill);
-                    if (data.data.weighing_scale_gap_papermill >= 0) {
-                        $('#weighing_scale_gap_papermill').addClass("success")
-                    } else {
-                        $('#weighing_scale_gap_papermill').addClass("danger")
-                    }
-
-                    $('#weighing_scale_gap_papermill_percent').html(data.data.weighing_scale_gap_papermill_percent+' %');
-                    if (data.data.weighing_scale_gap_papermill_percent >= 0) {
-                        $('#weighing_scale_gap_papermill_percent').addClass("success");
-                        $('#indikator_panah').addClass("la la-sort-up font-medium-2 success");
-                    } else {
-                        $('#weighing_scale_gap_papermill_percent').addClass("danger");
-                        $('#indikator_panah').addClass("la la-sort-down font-medium-2 danger");
-                    }
-                    $('#total_weight_accepted_ton').html((data.data.total_weight_accepted/1000).toFixed(1));
-                    $('#total_weight_accepted_kg').html(data.data.total_weight_accepted.toFixed(1));
-
-                    drawDonutPie(data);
-                    drawSentVsReceived(data);
-                    drawKMKLine(data);
-
-                },
-                error: function (data) {
-                    console.log('Error:', data);
-                }
-            });
-
-        }
+        getSales("month");
 
         $('#filterBtn').click(function() {
-            getSales();
+            getSales("month");
+        });
+
+
+    });
+</script>
+<script type="text/javascript">
+    function getSales(type) {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
+        var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
+        var idPapermill = $('#id_papermill').val();
+
+        var data = {
+            startDates: startDates,
+            endDates: endDates,
+            id_papermills : idPapermill,
+            type:type,
+        }
+
+        $.ajax({
+            type: "GET",
+            url: "getSales",
+            data:data,
+            success: function (data) {
+                removeIndicator();
+                $('#delivered_to_papermill_ton').html((data.data.delivered_to_papermill/1000).toFixed(1));
+                $('#delivered_to_papermill_kg').html(data.data.delivered_to_papermill.toFixed(1));
+                $('#received_at_papermill_ton').html((data.data.received_at_papermill/1000).toFixed(1));
+                $('#received_at_papermill_kg').html(data.data.received_at_papermill.toFixed(1));
+
+                $('#weighing_scale_gap_papermill').html(data.data.weighing_scale_gap_papermill);
+                if (data.data.weighing_scale_gap_papermill >= 0) {
+                    $('#weighing_scale_gap_papermill').addClass("success")
+                } else {
+                    $('#weighing_scale_gap_papermill').addClass("danger")
+                }
+
+                $('#weighing_scale_gap_papermill_percent').html(data.data.weighing_scale_gap_papermill_percent+' %');
+                if (data.data.weighing_scale_gap_papermill_percent >= 0) {
+                    $('#weighing_scale_gap_papermill_percent').addClass("success");
+                    $('#indikator_panah').addClass("la la-sort-up font-medium-2 success");
+                } else {
+                    $('#weighing_scale_gap_papermill_percent').addClass("danger");
+                    $('#indikator_panah').addClass("la la-sort-down font-medium-2 danger");
+                }
+                $('#total_weight_accepted_ton').html((data.data.total_weight_accepted/1000).toFixed(1));
+                $('#total_weight_accepted_kg').html(data.data.total_weight_accepted.toFixed(1));
+
+                drawDonutPie(data);
+                drawSentVsReceived(data);
+                drawKMKLine(data);
+
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
         });
 
         function removeIndicator() {
@@ -535,6 +542,7 @@
             $('#indikator_panah').removeClass("danger")
         }
 
-    });
+    }
 </script>
+
 @endpush

@@ -75,6 +75,7 @@ Route::post('importParticipant',[ParticipantController::class, 'importParticipan
 Route::get('getDatatableCollection',[ParticipantController::class, 'getDatatableCollection'])->name('participants.getDatatableCollection');
 Route::get('getLineChartDataCollection', [ParticipantController::class, 'getLineChartDataCollection']);
 Route::get('getLineChartDataCollection', [ParticipantController::class, 'getLineChartDataCollection']);
+Route::get('downloadParticipants', [ParticipantController::class, 'downloadParticipants']);
 
 Route::resource('user-management', UserManagementController::class);
 Route::resource('collections', CollectionController::class);

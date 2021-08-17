@@ -453,7 +453,7 @@ class Dashboard1Controller extends Controller
                 )
                 ->groupBy('year','month','week_of_month','monthName');
 
-        } else {
+        } else if ($request->type == 'month') {
             $collections = DB::table('collections')
                 ->leftJoin('participants', function ($join) {
                     $join->on('collections.id_participant', '=', 'participants.id');
@@ -467,6 +467,33 @@ class Dashboard1Controller extends Controller
                     DB::raw('YEAR(collect_date) year')
                 )
                 ->groupBy('month','monthName','year');
+
+        } else if ($request->type == 'quarter') {
+            $collections = DB::table('collections')
+                ->leftJoin('participants', function ($join) {
+                    $join->on('collections.id_participant', '=', 'participants.id');
+                })
+                ->where('collect_date', '>=',$request->startDates)
+                ->where('collect_date', '<=',$request->endDates)
+                ->select(
+                    DB::raw('ROUND(SUM(quantity),1) qty'),
+                    DB::raw('YEAR(collect_date) year'),
+                    DB::raw('QUARTER(collect_date) quarter')
+                )
+                ->groupBy('year','quarter');
+
+        } else if ($request->type == 'year') {
+            $collections = DB::table('collections')
+                ->leftJoin('participants', function ($join) {
+                    $join->on('collections.id_participant', '=', 'participants.id');
+                })
+                ->where('collect_date', '>=',$request->startDates)
+                ->where('collect_date', '<=',$request->endDates)
+                ->select(
+                    DB::raw('ROUND(SUM(quantity),1) qty'),
+                    DB::raw('YEAR(collect_date) year')
+                )
+                ->groupBy('year');
         }
 
         if (isset($request->idCategory) && count($request->idCategory) != 0) {
@@ -493,10 +520,22 @@ class Dashboard1Controller extends Controller
                 $data['label'][] = ['W'.$collection->week_of_month,$collection->monthName,$collection->year];
                 $data['qty'][] = $collection->qty;
             }
-        } else {
+        } else if ($request->type == 'month') {
             $data = [];
             foreach ($collections as $collection) {
                 $data['label'][] = [$collection->monthName,$collection->year];
+                $data['qty'][] = $collection->qty;
+            }
+        } else if ($request->type == 'quarter') {
+            $data = [];
+            foreach ($collections as $collection) {
+                $data['label'][] = ['Q'.$collection->quarter,$collection->year];
+                $data['qty'][] = $collection->qty;
+            }
+        } else if ($request->type == 'year') {
+            $data = [];
+            foreach ($collections as $collection) {
+                $data['label'][] = [$collection->year];
                 $data['qty'][] = $collection->qty;
             }
         }

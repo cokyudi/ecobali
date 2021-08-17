@@ -65,6 +65,7 @@
                         <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
                             <button onclick="drawActualTargetBarByMonth('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
                             <button onclick="drawActualTargetBarByMonth('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
+                            <button onclick="drawActualTargetBarByMonth('year');" type="button" class="btn btn-sm btn-secondary">Year</button>
                         </div>
                         <div class="card-body mt-2">
 

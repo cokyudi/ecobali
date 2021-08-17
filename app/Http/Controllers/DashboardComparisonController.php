@@ -54,7 +54,7 @@ class DashboardComparisonController extends Controller
                 )
                 ->groupBy('year','month','week_of_month','monthName','participant_name','id');
 
-        } else {
+        } else if ($request->type == 'month'){
             $collections = DB::table('collections')
                 ->leftJoin('participants', function ($join) {
                     $join->on('collections.id_participant', '=', 'participants.id');
@@ -70,6 +70,35 @@ class DashboardComparisonController extends Controller
                     'participants.id',
                 )
                 ->groupBy('month','monthName','year','participant_name','id');
+        } else if ($request->type == 'quarter'){
+            $collections = DB::table('collections')
+                ->leftJoin('participants', function ($join) {
+                    $join->on('collections.id_participant', '=', 'participants.id');
+                })
+                ->where('collect_date', '>=',$request->startDates)
+                ->where('collect_date', '<=',$request->endDates)
+                ->select(
+                    DB::raw('ROUND(SUM(quantity),1) qty'),
+                    DB::raw('YEAR(collect_date) year'),
+                    DB::raw('QUARTER(collect_date) quarter'),
+                    'participants.participant_name',
+                    'participants.id',
+                )
+                ->groupBy('quarter','year','participant_name','id');
+        } else if ($request->type == 'year'){
+            $collections = DB::table('collections')
+                ->leftJoin('participants', function ($join) {
+                    $join->on('collections.id_participant', '=', 'participants.id');
+                })
+                ->where('collect_date', '>=',$request->startDates)
+                ->where('collect_date', '<=',$request->endDates)
+                ->select(
+                    DB::raw('ROUND(SUM(quantity),1) qty'),
+                    DB::raw('YEAR(collect_date) year'),
+                    'participants.participant_name',
+                    'participants.id',
+                )
+                ->groupBy('year','participant_name','id');
         }
 
         if (isset($request->idCategory) && count($request->idCategory) != 0) {
@@ -126,7 +155,7 @@ class DashboardComparisonController extends Controller
                 ];
                 array_push($participantsCollections, $participantCollection);
             }
-        } else {
+        } else if ($request->type == 'month') {
             foreach($collections as $collection) {
                 $group[$collection->id][] = $collection;
                 $intervalName[] = ([$collection->monthName,$collection->year]);
@@ -141,6 +170,65 @@ class DashboardComparisonController extends Controller
 
             foreach ($group as $grp) {
                 $dataQty = $this->getQtyByMonth($intervalUnique, $grp);
+                $participantCollection = [
+                    'label' => $grp[0]->participant_name,
+                    'data'  => $dataQty,
+                    'lineTension'=> 0,
+                    'fill'=> !1,
+                    'borderColor'=> $listColor[array_rand($listColor)],
+                    'pointBorderColor'=> $listColor[array_rand($listColor)],
+                    'pointBackgroundColor'=> "#FFF",
+                    'pointBorderWidth'=> 2,
+                    'pointHoverBorderWidth'=> 2,
+                    'pointRadius'=> 4,
+                ];
+                array_push($participantsCollections, $participantCollection);
+            }
+
+        } else if ($request->type == 'quarter') {
+            foreach($collections as $collection) {
+                $group[$collection->id][] = $collection;
+                $intervalName[] = (['Q'.$collection->quarter,$collection->year]);
+                $intervalMap[] = array(
+                    "quarter"=>$collection->quarter,
+                    "year"=>$collection->year,
+                );
+            }
+
+            $intervalUnique = array_unique($intervalMap,SORT_REGULAR);
+            $intervalNameUnique = array_unique($intervalName,SORT_REGULAR);
+
+            foreach ($group as $grp) {
+                $dataQty = $this->getQtyByQuarter($intervalUnique, $grp);
+                $participantCollection = [
+                    'label' => $grp[0]->participant_name,
+                    'data'  => $dataQty,
+                    'lineTension'=> 0,
+                    'fill'=> !1,
+                    'borderColor'=> $listColor[array_rand($listColor)],
+                    'pointBorderColor'=> $listColor[array_rand($listColor)],
+                    'pointBackgroundColor'=> "#FFF",
+                    'pointBorderWidth'=> 2,
+                    'pointHoverBorderWidth'=> 2,
+                    'pointRadius'=> 4,
+                ];
+                array_push($participantsCollections, $participantCollection);
+            }
+
+        } else if ($request->type == 'year') {
+            foreach($collections as $collection) {
+                $group[$collection->id][] = $collection;
+                $intervalName[] = ([''.$collection->year]);
+                $intervalMap[] = array(
+                    "year"=>$collection->year,
+                );
+            }
+
+            $intervalUnique = array_unique($intervalMap,SORT_REGULAR);
+            $intervalNameUnique = array_unique($intervalName,SORT_REGULAR);
+
+            foreach ($group as $grp) {
+                $dataQty = $this->getQtyByYear($intervalUnique, $grp);
                 $participantCollection = [
                     'label' => $grp[0]->participant_name,
                     'data'  => $dataQty,
@@ -192,6 +280,44 @@ class DashboardComparisonController extends Controller
             $qty = 0;
             foreach ($collection as $col) {
                 if ($interval['month'] == $col->month && $col->year == $interval['year']) {
+                    $qty = $col->qty;
+                    array_push($dataQty,$col->qty );
+                    break;
+                }
+            }
+            if ($qty == 0) {
+                array_push($dataQty,0 );
+            }
+        }
+
+        return $dataQty;
+    }
+
+    public static function getQtyByQuarter($intervalMap, $collection) {
+        $dataQty = [];
+        foreach ($intervalMap as $interval) {
+            $qty = 0;
+            foreach ($collection as $col) {
+                if ($interval['quarter'] == $col->quarter && $col->year == $interval['year']) {
+                    $qty = $col->qty;
+                    array_push($dataQty,$col->qty );
+                    break;
+                }
+            }
+            if ($qty == 0) {
+                array_push($dataQty,0 );
+            }
+        }
+
+        return $dataQty;
+    }
+
+    public static function getQtyByYear($intervalMap, $collection) {
+        $dataQty = [];
+        foreach ($intervalMap as $interval) {
+            $qty = 0;
+            foreach ($collection as $col) {
+                if ($col->year == $interval['year']) {
                     $qty = $col->qty;
                     array_push($dataQty,$col->qty );
                     break;

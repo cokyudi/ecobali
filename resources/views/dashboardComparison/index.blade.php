@@ -32,8 +32,10 @@
                     <div class="col-12">
                         <div class="card-content collapse show">
                             <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
-                                <button onclick="getComparisonLineChartData('week');" type="button" class="btn btn-sm btn-secondary">Weekly</button>
-                                <button onclick="getComparisonLineChartData('month');" type="button" class="btn btn-sm btn-secondary">Monthly</button>
+                                <button onclick="getComparisonLineChartData('week');" type="button" class="btn btn-sm btn-secondary">Week</button>
+                                <button onclick="getComparisonLineChartData('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
+                                <button onclick="getComparisonLineChartData('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
+                                <button onclick="getComparisonLineChartData('year');" type="button" class="btn btn-sm btn-secondary">Year</button>
                               </div>
                             <div class="card-body chartjs">
                                 <canvas id="line-chart" height="700"></canvas>

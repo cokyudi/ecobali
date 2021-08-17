@@ -223,6 +223,8 @@
                             <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
                                 <button onclick="getLineChartData('week');" type="button" class="btn btn-sm btn-secondary">Week</button>
                                 <button onclick="getLineChartData('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
+                                <button onclick="getLineChartData('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
+                                <button onclick="getLineChartData('year');" type="button" class="btn btn-sm btn-secondary">Year</button>
                             </div>
                             <div class="card-body chartjs">
                                 <canvas id="line-chart" height="500"></canvas>

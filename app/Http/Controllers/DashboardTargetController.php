@@ -167,7 +167,7 @@ class DashboardTargetController extends Controller
                 $totalQty += $collection->qty;
                 $totalTarget += $monltyTarget;
             }
-        } else {
+        } else if ($request->type == 'quarter') {
             $actualTargetBarByMonth = [
                 ["Quarter", "Target", "Total"],
             ];
@@ -189,6 +189,31 @@ class DashboardTargetController extends Controller
                 array_push($actualTargetBarByMonth, ['Q'.$collection->quarter."\n".$collection->year, $quarterlyTarget,$collection->qty]);
                 $totalQty += $collection->qty;
                 $totalTarget += $quarterlyTarget;
+            }
+
+        } else if ($request->type == 'year') {
+            $actualTargetBarByMonth = [
+                ["Year", "Target", "Total"],
+            ];
+
+            $collections = DB::table('collections')
+                ->where('collect_date', '>=',$request->startDates)
+                ->where('collect_date', '<=',$request->endDates)
+                ->select(
+                    DB::raw('ROUND(SUM(quantity),1) qty'),
+                    DB::raw('YEAR(collect_date) year')
+                )
+                ->groupBy('year')
+                ->orderBy('collect_date', 'asc')
+                ->get();
+
+            $yearStart = date('Y', strtotime($request->startDates));
+            $yearEnd = date('Y', strtotime($request->endDates));
+            foreach ($collections as $collection) {
+                $yearlyTarget = $this->getYearlyTargetForAllCategory($yearStart,$yearEnd);
+                array_push($actualTargetBarByMonth, [''.$collection->year, $yearlyTarget,$collection->qty]);
+                $totalQty += $collection->qty;
+                $totalTarget += $yearlyTarget;
             }
         }
 
