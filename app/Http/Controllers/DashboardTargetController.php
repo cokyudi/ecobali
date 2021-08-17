@@ -327,8 +327,6 @@ class DashboardTargetController extends Controller
         array_push($dataDonutMonthly, ["Belum Terkumpul", round($totalTarget-$totalFilterQty,0)]);
         array_push($dataDonutMonthly, ["Terkumpul", round($totalFilterQty,0)]);
 
-
-
         $dataDonutYearly = [
             ["Belum Terkumpul", "Terkumpul"]
         ];

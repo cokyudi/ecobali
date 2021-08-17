@@ -13,7 +13,7 @@
                     <input type="hidden" id="last_modified_datetime" name="last_modified_datetime" value="">
                     <div class="form-group form-group-style">
                         <label for="id_category">Category</label>
-                        <select id="id_category" name="id_category" class="form-control">
+                        <select id="id_category" name="id_category" class="form-control" required="">
                             <option value="0" selected="" disabled="">Select Category</option>
                             @foreach($categories as $category)
                                 <option value="{{$category->id}}">{{$category->category_name}}</option>
@@ -23,19 +23,19 @@
                     <div class="form-group">
                         <label for="potential_low" class="control-label">Low</label>
                         <div class="col-sm-12">
-                            <input type="number" class="form-control" id="potential_low" name="potential_low" placeholder="Enter Low Potential" value="">
+                            <input type="number" class="form-control" id="potential_low" name="potential_low" placeholder="Enter Low Potential" value="" required="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="potential_medium" class="control-label">Medium</label>
                         <div class="col-sm-12">
-                            <input type="number" class="form-control" id="potential_medium" name="potential_medium" placeholder="Enter Medium Potential" value="">
+                            <input type="number" class="form-control" id="potential_medium" name="potential_medium" placeholder="Enter Medium Potential" value="" required="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="potential_high" class="control-label">High</label>
                         <div class="col-sm-12">
-                            <input type="number" class="form-control" id="potential_high" name="potential_high" placeholder="Enter High Potential" value="">
+                            <input type="number" class="form-control" id="potential_high" name="potential_high" placeholder="Enter High Potential" value="" required="">
                         </div>
                     </div>
                     <div class="col-sm-offset-2 col-sm-10">

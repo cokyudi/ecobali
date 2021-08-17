@@ -51,7 +51,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewRegency">Add New Regency</button>
-                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importRegency">Import Regency</button>
+{{--                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importRegency">Import Regency</button>--}}
                                         @include('regency.modal')
                                         @include('regency.modalImport')
                                         <div class="table-responsive">
@@ -164,7 +164,7 @@ $(document).ready(function(e) {
       });
 
       $('body').on('click', '.editRegency', function () {
-        validator.resetForm();  
+        validator.resetForm();
         var regency_id = $(this).data('id');
         $.get("{{ route('regencies.index') }}" +'/' + regency_id +'/edit', function (data) {
             $('#modalHeading').html("Edit Regency");
@@ -221,7 +221,7 @@ $(document).ready(function(e) {
                 }
             });
         }
-          
+
       });
 
       $('body').on('click', '.deleteRegency', function () {

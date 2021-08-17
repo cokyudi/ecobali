@@ -148,10 +148,6 @@ class DashboardShipmentController extends Controller
             'dynamicsMcc' => $dynamicsOfMCC,
         ];
 
-        Log::info($data);
-
-
-
         return response()->json(['data'=>$data]);
     }
 

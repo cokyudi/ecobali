@@ -53,7 +53,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewArea">Add New Area</button>
-                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importArea">Import Area</button>
+{{--                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importArea">Import Area</button>--}}
                                         @include('area.modal')
                                         @include('area.modalImport')
                                         <div class="table-responsive">
@@ -223,7 +223,7 @@ $(document).ready(function(e) {
                 }
             });
         }
-          
+
       });
 
       $('body').on('click', '.deleteArea', function () {

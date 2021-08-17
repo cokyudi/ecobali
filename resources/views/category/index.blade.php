@@ -182,8 +182,6 @@ $(function () {
                 $('#last_modified_datetime').val(null);
                 var alertMessage = 'Category berhasil ditambahkan.';
             } else {
-                $('#created_by').val("Deva Dwi A");
-                $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
                 $('#last_modified_by').val("Deva Dwi A Edit");
                 $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
                 var alertMessage = 'Category berhasil di edit.';
@@ -214,7 +212,7 @@ $(function () {
                 }
             });
         }
-        
+
     });
 
 });

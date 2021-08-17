@@ -47,8 +47,6 @@ class Dashboard1Controller extends Controller
 
     public function getCollection (Request $request) {
         $collections = Collection::latest();
-//        $regencies = Regency::latest()->get();
-//        $collectionByRegency = [];
 
         $districtsCoverage = Collection::distinct('id_district')
                                         ->join('participants','collections.id_participant','=','participants.id');
@@ -73,13 +71,31 @@ class Dashboard1Controller extends Controller
             'regenciesCoverage' =>$regenciesCoverage,
             'totalParticipants'=> $totalParticipants,
             'totalCollection' => $totalCollection,
-//            'collectionByRegency' => $collectionByRegency
         ];
 
         return response()->json(['data'=>$data]);
     }
 
     public function getNumberOfParticipants(Request $request) {
+        $mapColor = [];
+        $mapColor[1] = "#FCF377";
+        $mapColor[2] = "#8BCFC7";
+        $mapColor[3] = "#F59AF5";
+        $mapColor[4] = "#185e40";
+        $mapColor[5] = "#888781";
+        $mapColor[6] = "#0F0E0F";
+        $mapColor[7] = "#B622FF";
+        $mapColor[8] = "#3560BC";
+        $mapColor[9] = "#FCA21E";
+        $mapColor[10] = "#FE4E54";
+        $mapColor[11] = "#11E98A";
+        $mapColor[12] = "#7dcdf3";
+        $mapColor[13] = "#99B898";
+        $mapColor[14] = "#FECEA8";
+        $mapColor[15] = "#FF847C";
+        $mapColor[16] = "#E84A5F";
+        $mapColor[17] = "#474747";
+        $dataColor = [];
 
         $participantCategory = Category::latest()->get();
         $numberOfParticipants = [
@@ -113,14 +129,38 @@ class Dashboard1Controller extends Controller
 
             if ($countParticipant !== 0) {
                 array_push($numberOfParticipants, [$categoryName, $countParticipant]);
+                array_push($dataColor, $mapColor[$participantCategory[$i]->id]);
             }
+
         }
 
-        return response()->json(['data'=>$numberOfParticipants]);
+
+        return response()->json(['data'=>$numberOfParticipants,'dataColor'=>$dataColor]);
     }
 
     public function getContribution(Request $request) {
         $participantCategory = Category::latest()->get();
+
+        $mapColor = [];
+        $mapColor[1] = "#FCF377";
+        $mapColor[2] = "#8BCFC7";
+        $mapColor[3] = "#F59AF5";
+        $mapColor[4] = "#185e40";
+        $mapColor[5] = "#888781";
+        $mapColor[6] = "#0F0E0F";
+        $mapColor[7] = "#B622FF";
+        $mapColor[8] = "#3560BC";
+        $mapColor[9] = "#FCA21E";
+        $mapColor[10] = "#FE4E54";
+        $mapColor[11] = "#11E98A";
+        $mapColor[12] = "#7dcdf3";
+        $mapColor[13] = "#99B898";
+        $mapColor[14] = "#FECEA8";
+        $mapColor[15] = "#FF847C";
+        $mapColor[16] = "#E84A5F";
+        $mapColor[17] = "#474747";
+        $dataColor = [];
+
         $contribution = [
             ["Category", "Contribution"]
         ];
@@ -156,11 +196,13 @@ class Dashboard1Controller extends Controller
 
             if ($categoryContribution != 0) {
                 array_push($contribution, [$categoryName, $categoryContribution]);
+                array_push($dataColor, $mapColor[$participantCategory[$i]->id]);
             }
+
 
         }
 
-        return response()->json(['data'=>$contribution]);
+        return response()->json(['data'=>$contribution,'dataColor'=>$dataColor]);
     }
 
     public function getBarContribution(Request $request) {
@@ -168,7 +210,24 @@ class Dashboard1Controller extends Controller
             ["Category", "Contribution", ["role"=>"style"]]
         ];
 
-        $listColor = array("#99B898", "#FECEA8", "#FF847C", "#E84A5F", "#474747","#2494be","F6B75A","#c6ebc9","#70af85","#f0e2d0","#aa8976","#125d98");
+        $mapColor = [];
+        $mapColor[1] = "#FCF377";
+        $mapColor[2] = "#8BCFC7";
+        $mapColor[3] = "#F59AF5";
+        $mapColor[4] = "#185e40";
+        $mapColor[5] = "#888781";
+        $mapColor[6] = "#0F0E0F";
+        $mapColor[7] = "#B622FF";
+        $mapColor[8] = "#3560BC";
+        $mapColor[9] = "#FCA21E";
+        $mapColor[10] = "#FE4E54";
+        $mapColor[11] = "#11E98A";
+        $mapColor[12] = "#7dcdf3";
+        $mapColor[13] = "#99B898";
+        $mapColor[14] = "#FECEA8";
+        $mapColor[15] = "#FF847C";
+        $mapColor[16] = "#E84A5F";
+        $mapColor[17] = "#474747";
 
         $subParticipants = DB::table('participants')
             ->leftJoin('categories', function ($join) {
@@ -189,9 +248,10 @@ class Dashboard1Controller extends Controller
                 $join->on('collections.id_participant', '=', 'participants.participant_id');
             })
             ->select('participants.category_name',
+                'participants.category_id',
                 DB::raw('ROUND(SUM(quantity),1) qty')
             )
-            ->groupBy('category_name');
+            ->groupBy('category_name','category_id');
 
         if (isset($request->idCategory) && count($request->idCategory) != 0) {
             $participantCollectionsByCategory = $participantCollectionsByCategory->whereIn('participants.category_id', $request->idCategory);
@@ -212,7 +272,7 @@ class Dashboard1Controller extends Controller
         $participantCollectionsByCategory = $participantCollectionsByCategory->get();
 
        foreach ($participantCollectionsByCategory as $collectionsByCategory) {
-           array_push($contribution, [$collectionsByCategory->category_name, $collectionsByCategory->qty, $listColor[array_rand($listColor)]]);
+           array_push($contribution, [$collectionsByCategory->category_name, $collectionsByCategory->qty, $mapColor[$collectionsByCategory->category_id]]);
        }
 
        if (sizeof($participantCollectionsByCategory) === 0) {
@@ -281,50 +341,11 @@ class Dashboard1Controller extends Controller
             $totalCollection = $totalCollection + $collections[$i]->quantity;
         }
 
-//        for ($i = 0; $i < count($regencies); $i++) {
-//            $regencyName = $regencies[$i]->regency_name;
-//            $countCollectionByRegency = Collection::join('participants','collections.id_participant','=','participants.id')
-//                                                    ->where('id_regency','=',$regencies[$i]->id)
-//                                                    ->whereBetween('collect_date', [$request->startDates,$request->endDates])
-//                                                    ->get();
-//            $totalCollectionByRegency = 0;
-//            for ($j = 0; $j < count($countCollectionByRegency); $j++) {
-//                $totalCollectionByRegency = $totalCollectionByRegency + $countCollectionByRegency[$j]->quantity;
-//            }
-//
-//            if ($totalCollectionByRegency <= 10) {
-//                $opacity = 0.1;
-//            }
-//
-//            if ($totalCollectionByRegency > 10 && $totalCollectionByRegency <= 50) {
-//                $opacity = 0.2;
-//            }
-//
-//            if ($totalCollectionByRegency > 50 && $totalCollectionByRegency <= 100) {
-//                $opacity = 0.3;
-//            }
-//
-//            if ($totalCollectionByRegency > 100 && $totalCollectionByRegency <= 500) {
-//                $opacity = 0.4;
-//            }
-//
-//            if ($totalCollectionByRegency > 500 && $totalCollectionByRegency < 1000) {
-//                $opacity = 0.5;
-//            }
-//
-//            if ($totalCollectionByRegency >= 1000) {
-//                $opacity = 0.6;
-//            }
-//
-//            $collectionByRegency[$regencyName] = [$totalCollectionByRegency, $opacity];
-//        }
-
         $data = [
             'districtsCoverage' => $districtsCoverage,
             'regenciesCoverage' =>$regenciesCoverage,
             'totalParticipants'=> $totalParticipants,
             'totalCollection' => $totalCollection,
-//            'collectionByRegency' => $collectionByRegency
         ];
 
         return response()->json(['data'=>$data]);

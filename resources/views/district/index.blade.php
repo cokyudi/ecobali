@@ -51,7 +51,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewDistrict">Add New District</button>
-                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importDistrict">Import District</button>
+{{--                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importDistrict">Import District</button>--}}
                                         @include('district.modal')
                                         @include('district.modalImport')
                                         <div class="table-responsive">
@@ -163,7 +163,7 @@ $(document).ready(function(e) {
       });
 
       $('body').on('click', '.editDistrict', function () {
-        validator.resetForm();  
+        validator.resetForm();
         var district_id = $(this).data('id');
         $.get("{{ route('districts.index') }}" +'/' + district_id +'/edit', function (data) {
             $('#modalHeading').html("Edit District");
@@ -220,7 +220,7 @@ $(document).ready(function(e) {
                 }
             });
         }
-          
+
       });
 
       $('body').on('click', '.deleteDistrict', function () {

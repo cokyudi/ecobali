@@ -1,10 +1,18 @@
 @extends('template', ['user'=>$user])
 
 @section('potentials','active')
-
+@push('css_extend')
+    <style type="text/css">
+        label.error {
+            color: red !important;
+            text-transform: none !important;
+            font-weight: normal !important;
+        }
+    </style>
+@endpush
 @section('content')
-        <!-- BEGIN: Content-->
-        <div class="app-content content">
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
         <div class="content-wrapper">
             <div class="content-header row mb-1">
                 <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
@@ -49,27 +57,27 @@
                                         <div class="table-responsive">
                                             <table id="potentialTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
-                                                    <tr>
-                                                        <th width="30px">No</th>
-                                                        <th>Category</th>
-                                                        <th>Low</th>
-                                                        <th>Medium</th>
-                                                        <th>High</th>
-                                                        <th width="250px">Action</th>
-                                                    </tr>
+                                                <tr>
+                                                    <th width="30px">No</th>
+                                                    <th>Category</th>
+                                                    <th>Low</th>
+                                                    <th>Medium</th>
+                                                    <th>High</th>
+                                                    <th width="250px">Action</th>
+                                                </tr>
                                                 </thead>
                                                 <tbody>
 
                                                 </tbody>
                                                 <tfoot>
-                                                    <tr>
-                                                        <th width="30px">No</th>
-                                                        <th>Category</th>
-                                                        <th>Low</th>
-                                                        <th>Medium</th>
-                                                        <th>High</th>
-                                                        <th width="250px">Action</th>
-                                                    </tr>
+                                                <tr>
+                                                    <th width="30px">No</th>
+                                                    <th>Category</th>
+                                                    <th>Low</th>
+                                                    <th>Medium</th>
+                                                    <th>High</th>
+                                                    <th width="250px">Action</th>
+                                                </tr>
                                                 </tfoot>
                                             </table>
                                         </div>
@@ -83,116 +91,145 @@
             </div>
         </div>
     </div>
-        <!-- END: Content -->
-        @endsection
+    <!-- END: Content -->
+@endsection
 
 @push('ajax_crud')
-<script type="text/javascript">
-  $(function () {
 
-    $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-      });
+    <script type="text/javascript">
+        $(document).ready(function(e) {
+            var form = $("#potentialForm");
+            form.validate();
+        });
 
-      var table = $('#potentialTable').DataTable({
-          processing: true,
-          serverSide: true,
-          ajax: "{{ route('potentials.index') }}",
-          columns: [
-              {data: null},
-              {data: 'category_name', name: 'category_name'},
-              {data: 'potential_low', name: 'potential_low'},
-              {data: 'potential_medium', name: 'potential_medium'},
-              {data: 'potential_high', name: 'potential_high'},
-              {data: 'action', name: 'action', orderable: false, searchable: false},
-          ]
-      });
+        $(function () {
 
-      table.on('draw.dt', function () {
-            var info = table.page.info();
-            table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
-                cell.innerHTML = i + 1 + info.start;
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
             });
-        });
 
-      $('#createNewPotential').click(function () {
-          $('#saveBtn').val("create");
-          $('#potential_id').val('');
-          $('#potentialForm').trigger("reset");
-          $('#modalHeading').html("Create New Potential");
-          $('#potentialModal').modal('show');
-      });
+            var table = $('#potentialTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('potentials.index') }}",
+                columns: [
+                    {data: null},
+                    {data: 'category_name', name: 'category_name'},
+                    {data: 'potential_low', name: 'potential_low'},
+                    {data: 'potential_medium', name: 'potential_medium'},
+                    {data: 'potential_high', name: 'potential_high'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                ]
+            });
 
-      $('body').on('click', '.editPotential', function () {
-        var potential_id = $(this).data('id');
-        $.get("{{ route('potentials.index') }}" +'/' + potential_id +'/edit', function (data) {
-            $('#modalHeading').html("Edit Potential");
-            $('#saveBtn').val("edit");
-            $('#potentialModal').modal('show');
-            $('#potential_id').val(data.id);
-            $('#id_category').val(data.id_category);
-            $('#potential_low').val(data.potential_low);
-            $('#potential_medium').val(data.potential_medium);
-            $('#potential_high').val(data.potential_high);
-            $('#created_by').val(data.created_by);
-            $('#created_datetime').val(data.created_datetime);
-            $('#last_modified_by').val(data.last_modified_by);
-            $('#last_modified_datetime').val(data.last_modified_datetime);
-        })
-     });
+            table.on('draw.dt', function () {
+                var info = table.page.info();
+                table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1 + info.start;
+                });
+            });
 
-      $('#saveBtn').click(function (e) {
-          e.preventDefault();
-          if ($('#saveBtn').val() == "create")  {
-              $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-              $('#last_modified_by').val(null);
-              $('#last_modified_datetime').val(null);
-          } else {
-              $('#last_modified_by').val("Deva Dwi A Edit");
-              $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-          }
-          $(this).html('Save');
-
-          $.ajax({
-            data: $('#potentialForm').serialize(),
-            url: "{{ route('potentials.store') }}",
-            type: "POST",
-            dataType: 'json',
-            success: function (data) {
-
+            $('#createNewPotential').click(function () {
+                $('#saveBtn').val("create");
+                $('#potential_id').val('');
                 $('#potentialForm').trigger("reset");
-                $('#potentialModal').modal('hide');
-                table.draw();
+                $('#modalHeading').html("Create New Potential");
+                $('#potentialModal').modal('show');
+            });
 
-            },
-            error: function (data) {
-                console.log('Error:', data);
-                $('#saveBtn').html('Save Changes');
-            }
+            $('body').on('click', '.editPotential', function () {
+                var potential_id = $(this).data('id');
+                $.get("{{ route('potentials.index') }}" +'/' + potential_id +'/edit', function (data) {
+                    $('#modalHeading').html("Edit Potential");
+                    $('#saveBtn').val("edit");
+                    $('#potentialModal').modal('show');
+                    $('#potential_id').val(data.id);
+                    $('#id_category').val(data.id_category);
+                    $('#potential_low').val(data.potential_low);
+                    $('#potential_medium').val(data.potential_medium);
+                    $('#potential_high').val(data.potential_high);
+                    $('#created_by').val(data.created_by);
+                    $('#created_datetime').val(data.created_datetime);
+                    $('#last_modified_by').val(data.last_modified_by);
+                    $('#last_modified_datetime').val(data.last_modified_datetime);
+                })
+            });
+
+            $('#saveBtn').click(function (e) {
+                if ($('#potentialForm').valid()) {
+                    e.preventDefault();
+                    if ($('#saveBtn').val() == "create")  {
+                        $('#created_by').val("Deva Dwi A");
+                        $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                        $('#last_modified_by').val(null);
+                        $('#last_modified_datetime').val(null);
+                        var alertMessage = 'Potential berhasil ditambahkan.';
+                    } else {
+                        $('#last_modified_by').val("Deva Dwi A Edit");
+                        $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
+                        var alertMessage = 'Potential berhasil di edit.';
+                    }
+                    $(this).html('Save');
+
+                    $.ajax({
+                        data: $('#potentialForm').serialize(),
+                        url: "{{ route('potentials.store') }}",
+                        type: "POST",
+                        dataType: 'json',
+                        success: function (data) {
+                            $('#potentialForm').trigger("reset");
+                            $('#potentialModal').modal('hide');
+                            toastr.options = {
+                                "positionClass": "toast-bottom-right"
+                            };
+                            toastr.success(alertMessage);
+                            table.draw();
+
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                            toastr.error('Gagal menambahkan data.');
+                            $('#saveBtn').html('Save Changes');
+                        }
+                    });
+                }
+
+            });
+
+
+            $('body').on('click', '.deletePotential', function () {
+                var potential_id = $(this).data("id");
+                swal({
+                    title: "Are you sure?",
+                    text: "Apakah anda yakin untuk menghapus data ini ?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $.ajax({
+                                type: "DELETE",
+                                url: "{{ route('potentials.store') }}"+'/'+potential_id,
+                                success: function (data) {
+                                    toastr.options = {
+                                        "positionClass": "toast-bottom-right"
+                                    }
+                                    toastr.success('Potential berhasil dihapus.');
+                                    table.draw();
+                                },
+                                error: function (data) {
+                                    console.log('Error:', data);
+                                }
+                            });
+                        } else {}
+                    });
+
+            });
+
         });
-      });
-
-      $('body').on('click', '.deletePotential', function () {
-
-          var potential_id = $(this).data("id");
-          confirm("Are You sure want to delete !");
-
-          $.ajax({
-              type: "DELETE",
-              url: "{{ route('potentials.store') }}"+'/'+potential_id,
-              success: function (data) {
-                  table.draw();
-              },
-              error: function (data) {
-                  console.log('Error:', data);
-              }
-          });
-      });
-
-    });
-</script>
+    </script>
 
 @endpush

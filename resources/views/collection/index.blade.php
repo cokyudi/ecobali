@@ -46,7 +46,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewCollection">Add New Collection</button>
-                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importCollection">Import Collection</button>
+{{--                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importCollection">Import Collection</button>--}}
                                         @include('collection.modal')
                                         @include('collection.modalImport')
                                         <div class="table-responsive">

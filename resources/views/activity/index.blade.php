@@ -52,7 +52,7 @@
                                     <div class="card-body card-dashboard">
                                     <!-- <a class="btn btn-success" href="javascript:void(0)" id="createNewDistrict"> Create New Book</a> -->
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewActivity">Add New Activity</button>
-                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importActivity">Import Activity</button>
+{{--                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importActivity">Import Activity</button>--}}
                                         @include('activity.modal')
                                         @include('activity.modalImport')
                                         <div class="table-responsive">
