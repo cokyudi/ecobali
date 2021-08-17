@@ -31,27 +31,84 @@
     <div class="row">
         <div class="col-xl-12 col-12">
             <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Participants Map</h4>
-                <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                <div class="heading-elements">
-                    <ul class="list-inline mb-0">
-                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                        <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                        <li><a data-action="close"><i class="ft-x"></i></a></li>
-                    </ul>
+                <div class="card-header">
+                    <h4 class="card-title">Participants Map</h4>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                            <li><a data-action="close"><i class="ft-x"></i></a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card-content collapse show">
-                        <div class="card-body height-700">
-                            <div id="mapid" ></div>
+
+
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card-content collapse show">
+                            <div class="card-body height-700">
+                                <div id="mapid" ></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <div class="row mb-1">
+                    <div class="col-12 text-center">
+                        <h2>Legend</h2>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-12 ml-2">
+                        <ul class="list-inline align-items-center">
+                            <li class="list-inline-item mr-2">
+                                <span><img src="{{asset('images/markers/marker-1.png')}}" height="30px">Bank Sampah Induk</span>
+                            </li>
+                            <li class="list-inline-item mr-2">
+                                <span><img src="{{asset('images/markers/marker-2.png')}}" height="30px" >Bank Sampah Unit</span>
+                            </li>
+                            <li class="list-inline-item mr-2">
+                                <span><img src="{{asset('images/markers/marker-3.png')}}" height="30px" >Bisnis</span>
+                            </li>
+                            <li class="list-inline-item mr-2">
+                                <span><img src="{{asset('images/markers/marker-4.png')}}" height="30px" >EB Residential Service</span>
+                            </li>
+                            <li class="list-inline-item mr-2">
+                                <span><img src="{{asset('images/markers/marker-5.png')}}" height="30px" >Hotel</span>
+                            </li>
+                            <li class="list-inline-item mr-2">
+                                <span><img src="{{asset('images/markers/marker-6.png')}}" height="30px" >Individu</span>
+                            </li>
+                            <li class="list-inline-item mr-2">
+                                <span><img src="{{asset('images/markers/marker-7.png')}}" height="30px" >Jasa Sampah</span>
+                            </li>
+                            <li class="list-inline-item mr-2">
+                                <span><img src="{{asset('images/markers/marker-8.png')}}" height="30px" >Pengepul</span>
+                            </li>
+                            <li class="list-inline-item mr-2">
+                                <span><img src="{{asset('images/markers/marker-9.png')}}" height="30px" >Sekolah</span>
+                            </li>
+                            <li class="list-inline-item mr-2">
+                                <span><img src="{{asset('images/markers/marker-10.png')}}" height="30px" >TPA</span>
+                            </li>
+                            <li class="list-inline-item mr-2">
+                                <span><img src="{{asset('images/markers/marker-11.png')}}" height="30px" >TPS3R</span>
+                            </li>
+                            <li class="list-inline-item mr-2">
+                                <span><img src="{{asset('images/markers/marker-12.png')}}" height="30px" >TPST3R</span>
+                            </li>
+
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
 
             </div>
         </div>
@@ -68,6 +125,16 @@
         <hr>
 
         <form id="filterForm" name="filterForm">
+            <h5 class="mt-1 mb-1 text-bold-500">Participant</h5>
+            <div class="form-group ">
+                <select id="id_participant" name="id_participant[]" multiple="multiple" class="select2 form-control">
+                    @foreach($participants as $participant)
+                        <option value="{{$participant->id}}">{{$participant->participant_name}}</option>
+                    @endforeach
+
+                </select>
+            </div>
+            <hr>
 
             <h5 class="mt-1 mb-1 text-bold-500">Category</h5>
             <div class="form-group ">
@@ -141,7 +208,7 @@
         getParticipantsInformation(markers);
 
         $('#backBtn').click(function() {
-
+            $('#id_participant').val(null).trigger('change');
             $('#id_category').val(null).trigger('change');
             $('#id_district').val(null).trigger('change');
             $('#id_regency').val(null).trigger('change');
@@ -167,11 +234,13 @@
         var idCategory = $('#id_category').val();
         var idDistrict = $('#id_district').val();
         var idRegency = $('#id_regency').val();
+        var idParticipant = $('#id_participant').val();
 
         var params = {
             idCategory: idCategory,
             idDistrict: idDistrict,
-            idRegency: idRegency
+            idRegency: idRegency,
+            idParticipant: idParticipant,
         }
 
         $.ajaxSetup({

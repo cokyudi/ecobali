@@ -11,7 +11,7 @@ function drawSentVsReceived(data) {
     var options_column = {
         height: 400,
         fontSize: 12,
-        colors:['#2494be','#F6B75A'],
+        colors:['#2e53a1','#7dcdf3'],
         chartArea: {
             left: '5%',
             width: '90%',
@@ -64,7 +64,7 @@ function drawSentVsReceivedCustom(type) {
     var options_column = {
         height: 400,
         fontSize: 12,
-        colors:['#2494be','#F6B75A'],
+        colors:['#2e53a1','#7dcdf3'],
         chartArea: {
             left: '5%',
             width: '90%',
@@ -126,7 +126,7 @@ function drawMCCCustom(type) {
     var options_column = {
         height: 400,
         fontSize: 12,
-        colors:['#2494be','#F6B75A'],
+        colors:['#2e53a1','#7dcdf3'],
         chartArea: {
             left: '5%',
             width: '90%',

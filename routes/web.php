@@ -28,7 +28,8 @@ use App\Http\Controllers\ActivityController;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserManagementController;
-
+use App\Http\Controllers\ParticipantListController;
+use App\Http\Controllers\PotentialController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,9 +68,14 @@ Route::resource('banks', BankController::class);
 Route::resource('papermillCategories', PapermillCategoryController::class);
 Route::resource('papermills', PapermillController::class);
 Route::get('createPapermill',[PapermillController::class, 'createPapermill'])->name('papermills.createPapermill');
+
 Route::resource('participants', ParticipantController::class);
 Route::get('createParticipant',[ParticipantController::class, 'createParticipant'])->name('participants.createParticipant');
 Route::post('importParticipant',[ParticipantController::class, 'importParticipant'])->name('participants.importParticipant');
+Route::get('getDatatableCollection',[ParticipantController::class, 'getDatatableCollection'])->name('participants.getDatatableCollection');
+Route::get('getLineChartDataCollection', [ParticipantController::class, 'getLineChartDataCollection']);
+Route::get('getLineChartDataCollection', [ParticipantController::class, 'getLineChartDataCollection']);
+
 Route::resource('user-management', UserManagementController::class);
 Route::resource('collections', CollectionController::class);
 Route::post('importCollection',[CollectionController::class, 'importCollection'])->name('collections.importCollection');
@@ -77,6 +83,10 @@ Route::resource('sales', SaleController::class);
 Route::resource('activityPrograms', ActivityProgramController::class);
 Route::resource('activities', ActivityController::class);
 Route::post('importActivity',[ActivityController::class, 'importActivity'])->name('activities.importActivity');
+
+Route::resource('potentials', PotentialController::class);
+
+
 
 
 Route::resource('dashboard1', Dashboard1Controller::class);
@@ -105,4 +115,8 @@ Route::get('getSentVsReceivedCustom', [DashboardShipmentController::class, 'getS
 Route::get('getMCCCustom', [DashboardShipmentController::class, 'getMCCCustom']);
 
 Route::resource('dashboard-activities', DashboardActivitiesController::class);
+Route::get('getActivities', [DashboardActivitiesController::class, 'getActivities']);
+
+
+Route::resource('participantList', ParticipantListController::class);
 

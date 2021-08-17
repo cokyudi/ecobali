@@ -14,7 +14,7 @@ function drawPie3dExploded() {
             idParticipant: idParticipant,
             idRegency: idRegency
         }
-    
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

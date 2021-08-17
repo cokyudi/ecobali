@@ -26,16 +26,17 @@
             <div class="row">
 
                 <div class="col-lg-3 col-12 pb-1">
-                    <div class="card h-75 ">
+                    <div class="card">
                         <div class="card-content">
-                            <div class="card-body">
+                            <div class="card-body card-custom">
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
-                                        <h6 class="text-muted font-medium-3">District Coverage</h6>
-                                        <h3 class="font-large-2" id="district_coverage"></h3>
+                                        <h6 class="font-weight-bold font-medium-5">District Coverage</h6>
+                                        <h3 class="font-large-4" id="district_coverage"></h3>
                                     </div>
                                     <div class="align-self-center">
-                                        <i class="la la-map success font-large-5 float-right"></i>
+                                        <img src="{{asset('images/icons/district.png')}}" alt="" height="85px">
+{{--                                        <i class="la la-map-marker success font-large-5 float-right"></i>--}}
                                     </div>
                                 </div>
                             </div>
@@ -43,16 +44,18 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-12 pb-1">
-                    <div class="card h-75 ">
-                        <div class="card-content">
-                            <div class="card-body">
+                    <div class="card" >
+                        <div class="card-content" >
+                            <div class="card-body card-custom">
+{{--                                <div class="media d-flex test-deva" style="padding-top: 1.5rem;">--}}
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
-                                        <h6 class="text-muted font-medium-3">Regency Coverage</h6>
-                                        <h3 class="font-large-2" id="regency_coverage"></h3>
+                                        <h6 class="font-weight-bold font-medium-5">Regency Coverage</h6>
+                                        <h3 class="font-large-4" id="regency_coverage"></h3>
                                     </div>
                                     <div class="align-self-center">
-                                        <i class="la la-map success font-large-5 float-right"></i>
+                                        <img src="{{asset('images/icons/regency.png')}}" alt="" height="85px">
+{{--                                        <i class="la la-map success font-large-5 float-right"></i>--}}
                                     </div>
                                 </div>
                             </div>
@@ -60,12 +63,12 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-12 pb-1">
-                    <div class="card h-75 ">
+                    <div class="card ">
                         <div class="card-content">
-                            <div class="card-body">
+                            <div class="card-body card-custom">
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
-                                        <h6 class="text-muted font-medium-3">Total Collection</h6>
+                                        <h6 class="font-weight-bold font-medium-5">Total Collection</h6>
                                         <div class="row">
                                             <div class="col-12">
                                                 <h4 class="font-large-2" id="total_collection_ton"></h4>
@@ -78,7 +81,8 @@
                                         </div>
                                     </div>
                                     <div class="align-self-center">
-                                        <i class="la la-database success font-large-5 float-right"></i>
+                                        <img src="{{asset('images/icons/jumlah-kotak-susu.png')}}" alt="" height="90px">
+{{--                                        <i class="la la-box success font-large-5 float-right"></i>--}}
                                     </div>
                                 </div>
                             </div>
@@ -86,16 +90,17 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-12 pb-1">
-                    <div class="card h-75">
+                    <div class="card">
                         <div class="card-content">
-                            <div class="card-body">
+                            <div class="card-body card-custom">
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
-                                        <h6 class="text-muted font-medium-3">Total Participant</h6>
-                                        <h3 class="font-large-2" id="total_participant"></h3>
+                                        <h6 class="font-weight-bold font-medium-5">Total Participant</h6>
+                                        <h3 class="font-large-4" id="total_participant"></h3>
                                     </div>
                                     <div class="align-self-center">
-                                        <i class="la la-users success font-large-5 float-right"></i>
+                                        <img src="{{asset('images/icons/participant.png')}}" alt="" height="85px">
+{{--                                        <i class="la la-users success font-large-5 float-right"></i>--}}
                                     </div>
                                 </div>
                             </div>
@@ -109,7 +114,7 @@
                 <div class="col-lg-6 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Number of Participants</h4>
+                            <h4 class="font-weight-bold font-medium-5">Number of Participants</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -122,7 +127,6 @@
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body">
-                                <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>
                                 <div id="pie-3d"></div>
                             </div>
                         </div>
@@ -132,7 +136,7 @@
                 <div class="col-lg-6 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Contribution</h4>
+                            <h4 class="font-weight-bold font-medium-5">Contribution</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -145,7 +149,6 @@
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body">
-                                <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>
                                 <div id="pie-3d-exploded"></div>
                             </div>
                         </div>
@@ -154,10 +157,10 @@
             </div>
 
             <div class="row mb-3">
-                <div class="col-6">
+                <div class="col-lg-6 col-12 pb-1">
                     <div class="card h-100">
                         <div class="card-header mb-0">
-                            <h4 class="card-title">Map</h4>
+                            <h4 class="font-weight-bold font-medium-5">Map</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -175,10 +178,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-lg-6 col-12 pb-1">
                     <div class="card h-100">
                         <div class="card-header">
-                            <h4 class="card-title">Total</h4>
+                            <h4 class="font-weight-bold font-medium-5">Total</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -205,7 +208,7 @@
                 <div class="col-xl-12 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Dinamics</h4>
+                            <h4 class="font-weight-bold font-medium-5">Dinamics</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -239,7 +242,7 @@
 
 
     <!-- BEGIN: Customizer-->
-    <div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-danger box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
+    <div class="customizer border-left-blue-grey border-left-lighten-4 "><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-danger box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
 	<h4 class="text-uppercase mb-0">Data Filter Customizer</h4>
 	<hr>
 
@@ -414,7 +417,7 @@
 					$('#district_coverage').html(data.data.districtsCoverage);
                     $('#regency_coverage').html(data.data.regenciesCoverage);
 					$('#total_collection_ton').html((data.data.totalCollection/1000).toFixed(1) + ' TON');
-					$('#total_collection_kg').html('/ ' + data.data.totalCollection.toFixed(2) + ' Kg');
+					$('#total_collection_kg').html('/ ' + data.data.totalCollection.toFixed(1) + ' Kg');
 					$('#total_participant').html(data.data.totalParticipants);
 
 					getLineChartData('week');
@@ -471,10 +474,10 @@
 				$('#district_coverage').html(data.data.districtsCoverage);
                 $('#regency_coverage').html(data.data.regenciesCoverage);
 				$('#total_collection_ton').html((data.data.totalCollection/1000).toFixed(1) + ' TON');
-				$('#total_collection_kg').html('/ ' +data.data.totalCollection.toFixed(2) + ' Kg');
+				$('#total_collection_kg').html('/ ' +data.data.totalCollection.toFixed(1) + ' Kg');
 				$('#total_participant').html(data.data.totalParticipants);
 
-				getLineChartData('week');
+				getLineChartData('month');
 
 				google.load("visualization", "1.0", { packages: ["corechart"] }),
 				google.setOnLoadCallback(drawPie3dExploded),

@@ -222,13 +222,6 @@
 
                 $('#userForm').trigger("reset");
                 $('#userModal').modal('hide');
-                var loginUser_id = <?=$user->id;?>;
-                console.log(loginUser_id);
-                console.log(data.editedUser.user_id);
-                if (data.editedUser && loginUser_id == data.editedUser.user_id) {
-                    console.log('a');
-                    $('#user-identity').html(data.editedUser.name + ' / ' + data.editedUser.role);
-                }
                 table.draw();
 
             },

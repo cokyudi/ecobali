@@ -59,14 +59,14 @@ function drawActualTargetBar() {
                 labels: data.data.label,
                 datasets: [{
                     label: "Actual",
-                    backgroundColor: '#99B898',
+                    backgroundColor: '#2e53a1',
                     // backgroundColor: 'rgba(22,211,154,.8)',
                     borderWidth: 1,
                     data: data.data.actual,
                     xAxisID: "bar-x-axis1",
                 }, {
                     label: "Target",
-                    backgroundColor: '#FECEA8',
+                    backgroundColor: '#7dcdf3',
                     // backgroundColor: 'rgba(81,117,224,.8)',
                     borderWidth: 1,
                     data: data.data.target,

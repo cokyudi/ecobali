@@ -373,9 +373,6 @@
                                                                     <div class="custom-file">
                                                                         <label for="url_photo_2">Attach a photograph</label>
                                                                         <input type="file" name="url_photo_2" id="url_photo_2" accept="image/*" class="form-control-file">
-                                                                        @error('url_photo_1')
-                                                                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                                                        @enderror
                                                                     </div>
                                                                 </fieldset>
                                                             </div>

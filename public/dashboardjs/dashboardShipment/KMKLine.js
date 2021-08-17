@@ -14,7 +14,7 @@ function drawKMKLine(data) {
         options: {
             responsive: !0,
             maintainAspectRatio: !1,
-            legend: { position: "bottom" },
+            legend: { position: "none" },
             hover: { mode: "label" },
             scales: {
                 xAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Month", padding: 10, },ticks: {
@@ -31,8 +31,9 @@ function drawKMKLine(data) {
                 data: data.data.dynamicsKMKSentData,
                 lineTension: 0,
                 fill: !1,
-                borderColor: "#FF7D4D",
-                pointBorderColor: "#FF7D4D",
+                borderColor: "#2e53a1",
+                borderWidth: 5,
+                pointBorderColor: "#2e53a1",
                 pointBackgroundColor: "#FFF",
                 pointBorderWidth: 2,
                 pointHoverBorderWidth: 2,
@@ -47,7 +48,7 @@ function drawKMKLine(data) {
         options: {
             responsive: !0,
             maintainAspectRatio: !1,
-            legend: { position: "bottom" },
+            legend: { position: "none" },
             hover: { mode: "label" },
             scales: {
                 xAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Month", padding: 10, },ticks: {
@@ -64,8 +65,9 @@ function drawKMKLine(data) {
                 data: data.data.dynamicsKMKRecievedData,
                 lineTension: 0,
                 fill: !1,
-                borderColor: "#FF7D4D",
-                pointBorderColor: "#FF7D4D",
+                borderColor: "#2e53a1",
+                borderWidth: 5,
+                pointBorderColor: "#2e53a1",
                 pointBackgroundColor: "#FFF",
                 pointBorderWidth: 2,
                 pointHoverBorderWidth: 2,
@@ -80,7 +82,7 @@ function drawKMKLine(data) {
         options: {
             responsive: !0,
             maintainAspectRatio: !1,
-            legend: { position: "bottom" },
+            legend: { position: "none" },
             hover: { mode: "label" },
             scales: {
                 xAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Month", padding: 10, },ticks: {
@@ -97,8 +99,9 @@ function drawKMKLine(data) {
                 data: data.data.dynamicsKMKAcceptedData,
                 lineTension: 0,
                 fill: !1,
-                borderColor: "#FF7D4D",
-                pointBorderColor: "#FF7D4D",
+                borderColor: "#2e53a1",
+                borderWidth: 5,
+                pointBorderColor: "#2e53a1",
                 pointBackgroundColor: "#FFF",
                 pointBorderWidth: 2,
                 pointHoverBorderWidth: 2,

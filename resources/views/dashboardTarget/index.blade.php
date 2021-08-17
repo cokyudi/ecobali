@@ -26,7 +26,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Actual vs Target by Categories</h4>
+                        <h4 class="font-weight-bold font-medium-5">Actual vs Target by Categories</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -50,7 +50,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Dinamics of Actual vs Target by Month</h4>
+                        <h4 class="font-weight-bold font-medium-5">Dinamics of Actual vs Target by Month</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -79,7 +79,7 @@
             <div class="col-lg-6 col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Monthly Target Achievement (ecoBali)</h4>
+                        <h4 class="font-weight-bold font-medium-5">Monthly Target Achievement (ecoBali)</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -92,7 +92,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
-{{--                            <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>--}}
+                            <h3>Terkumpul <strong id="monthly_eco_terkumpul"></strong> Kg dari Target <strong id="monthly_eco_target"></strong> Kg.</h3>
                             <div id="pie-3d"></div>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
             <div class="col-lg-6 col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Annual Target Achievement (ecoBali)</h4>
+                        <h4 class="font-weight-bold font-medium-5">Annual Target Achievement (ecoBali)</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -115,6 +115,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
+                            <h3>Terkumpul <strong id="annual_eco_terkumpul"></strong> Kg dari Target <strong id="annual_eco_target"></strong> Kg.</h3>
 {{--                            <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>--}}
                             <div id="pie-3d-exploded"></div>
                         </div>
@@ -127,7 +128,7 @@
             <div class="col-xl-6 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Monthly Target Achievement (Sent to Papermill)</h4>
+                        <h4 class="font-weight-bold font-medium-5">Monthly Target Achievement (Sent to Papermill)</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -140,6 +141,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
+                            <h3>Terkumpul <strong id="monthly_papermill_terkumpul"></strong> Kg dari Target <strong id="monthly_papermill_target"></strong> Kg.</h3>
                            <div id="donut_monthly_papermill"></div>
                         </div>
                     </div>
@@ -148,7 +150,7 @@
             <div class="col-xl-6 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Annual Target Achievement (Sent to Papermill)</h4>
+                        <h4 class="font-weight-bold font-medium-5">Annual Target Achievement (Sent to Papermill)</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -161,6 +163,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
+                            <h3>Terkumpul <strong id="annual_papermill_terkumpul"></strong> Kg dari Target <strong id="annual_papermill_target"></strong> Kg.</h3>
                            <div id="donut_annual_papermill"></div>
                         </div>
                     </div>

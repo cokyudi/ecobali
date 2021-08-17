@@ -28,11 +28,11 @@
                         <div class="card-body">
                             <div class="media d-flex">
                                 <div class="media-body text-left">
-                                    <h6 class="text-muted font-medium-3">District Coverage</h6>
+                                    <h6 class="font-weight-bold font-medium-5">District Coverage</h6>
                                     <h3 class="font-large-2" id="district_coverage"></h3>
                                 </div>
                                 <div class="align-self-center">
-                                    <i class="la la-map success font-large-5 float-right"></i>
+                                    <img src="{{asset('images/icons/district.png')}}" alt="" width="80px">
                                 </div>
                             </div>
                         </div>
@@ -45,11 +45,11 @@
                         <div class="card-body">
                             <div class="media d-flex">
                                 <div class="media-body text-left">
-                                    <h6 class="text-muted font-medium-3">Regency Coverage</h6>
+                                    <h6 class="font-weight-bold font-medium-5">Regency Coverage</h6>
                                     <h3 class="font-large-2" id="regency_coverage"></h3>
                                 </div>
                                 <div class="align-self-center">
-                                    <i class="la la-map success font-large-5 float-right"></i>
+                                    <img src="{{asset('images/icons/regency.png')}}" alt="" width="80px">
                                 </div>
                             </div>
                         </div>
@@ -62,11 +62,11 @@
                         <div class="card-body">
                             <div class="media d-flex">
                                 <div class="media-body text-left">
-                                    <h6 class="text-muted font-medium-3">Location Coverage</h6>
-                                    <h3 class="font-large-2" id="total_participant"></h3>
+                                    <h6 class="font-weight-bold font-medium-5">Location Coverage</h6>
+                                    <h3 class="font-large-2" id="location_coverage"></h3>
                                 </div>
                                 <div class="align-self-center">
-                                    <i class="la la-map success font-large-5 float-right"></i>
+                                    <img src="{{asset('images/icons/location.png')}}" alt="" width="80px">
                                 </div>
                             </div>
                         </div>
@@ -79,11 +79,11 @@
                         <div class="card-body">
                             <div class="media d-flex">
                                 <div class="media-body text-left">
-                                    <h6 class="text-muted font-medium-3">Total Participant</h6>
+                                    <h6 class="font-weight-bold font-medium-5">Total Participant</h6>
                                     <h3 class="font-large-2" id="total_participant"></h3>
                                 </div>
                                 <div class="align-self-center">
-                                    <i class="la la-users success font-large-5 float-right"></i>
+                                    <img src="{{asset('images/icons/participant.png')}}" alt="" width="80px">
                                 </div>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
             <div class="col-6">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="card-title">Column Chart</h4>
+                        <h4 class="font-weight-bold font-medium-5">Number of Participant</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -109,8 +109,8 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
-                            <p class="card-text">A column chart is a vertical bar chart rendered in the browser using SVG or VML, whichever is appropriate for the user's browser. Like all google charts, column charts display tooltips when the user hovers over the data.</p>
-                            <div id="column-chart"></div>
+{{--                            <p class="card-text">A column chart is a vertical bar chart rendered in the browser using SVG or VML, whichever is appropriate for the user's browser. Like all google charts, column charts display tooltips when the user hovers over the data.</p>--}}
+                            <div id="numberOfParticipantBar"></div>
                         </div>
                     </div>
                 </div>
@@ -118,7 +118,7 @@
             <div class="col-6">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="card-title">Total</h4>
+                        <h4 class="font-weight-bold font-medium-5">Number of Organization</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -145,7 +145,7 @@
             <div class="col-12">
                 <div class="card h-100">
                     <div class="card-header mb-0">
-                        <h4 class="card-title">Map</h4>
+                        <h4 class="font-weight-bold font-medium-5">Map</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -175,16 +175,6 @@
         <hr>
 
         <form id="filterForm" name="filterForm">
-            <h5 class="mt-1 mb-1 text-bold-500">Category</h5>
-            <div class="form-group ">
-                <select id="id_category" name="id_category[]" multiple="multiple" class="select2 form-control">
-                    @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{$category->category_name}}</option>
-                    @endforeach
-
-                </select>
-            </div>
-            <hr>
 
             <h5 class="mt-1 mb-1 text-bold-500">District</h5>
             <div class="form-group ">
@@ -208,6 +198,28 @@
             </div>
             <hr>
 
+            <h5 class="mt-1 mb-1 text-bold-500">Category</h5>
+            <div class="form-group ">
+                <select id="id_category" name="id_category[]" multiple="multiple" class="select2 form-control">
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}">{{$category->category_name}}</option>
+                    @endforeach
+
+                </select>
+            </div>
+            <hr>
+
+            <h5 class="mt-1 mb-1 text-bold-500">Program</h5>
+            <div class="form-group ">
+                <select class="select2 form-control" id="id_program" name="id_program[]" multiple="multiple">
+                    @foreach($programs as $program)
+                        <option value="{{$program->id}}">{{$program->activity_program_name}}</option>
+                    @endforeach
+                </select>
+
+            </div>
+            <hr>
+
             <h5 class="mt-1 mb-1 text-bold-500">Date Range Options</h5>
             <div class="form-group">
                 <div class="form-group">
@@ -222,10 +234,10 @@
                 </div>
             </div>
             <div class="form-actions text-right">
-                <button id='backBtn' type="button" class="btn btn-warning mr-1">
+                <button id='resetFilter' type="button" class="btn btn-warning mr-1">
                     <i class="ft-x"></i> Reset
                 </button>
-                <button id="saveBtn"  value="create" type="submit" class="btn btn-success">
+                <button id="filterBtn"  value="create" type="button" class="btn btn-success">
                     <i class="la la-check-square-o"></i> Filter
                 </button>
             </div>
@@ -240,22 +252,21 @@
 
 @push('ajax_crud')
     <script src="https://www.google.com/jsapi"></script>
-    <script src="{{asset('js/scripts/charts/google/bar/column.js')}}"></script>
-<script src="{{asset('js/scripts/charts/chartjs/line/line.min.js')}}"></script>
+{{--    <script src="{{asset('js/scripts/charts/google/bar/column.js')}}"></script>--}}
 <script src="{{asset('vendors/js/forms/select/select2.full.min.js')}}"></script>
 <script src="{{asset('js/scripts/forms/select/form-select2.min.js')}}"></script>
-    <script src="{{asset('js/scripts/charts/google/bar/bar.min.js')}}"></script>
+{{--    <script src="{{asset('js/scripts/charts/google/bar/bar.min.js')}}"></script>--}}
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 <script type="text/javascript">
-
     $(document).ready(function() {
+
         $('#daterange').daterangepicker(
             {
-                startDate: moment().subtract('days', 29),
+                startDate: moment("01/01/2019","DD/MM/YYYY"),
                 endDate: moment(),
                 showDropdowns: true,
                 showWeekNumbers: true,
@@ -289,11 +300,18 @@
             }
         );
 
-        drawMap();
-        $('#backBtn').click(function() {
-            var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
-            console.log(endDates);
+        getAllData();
+
+        $('#resetFilter').click(function() {
+            $('#dateRange').data('daterangepicker').setStartDate(moment("01/01/2019","DD/MM/YYYY"));
+            $('#dateRange').data('daterangepicker').setEndDate(moment());
+            getAllData();
         });
+
+        $('#filterBtn').click(function() {
+            getAllData();
+        });
+
 
     });
 </script>

@@ -47,8 +47,8 @@ class Dashboard1Controller extends Controller
 
     public function getCollection (Request $request) {
         $collections = Collection::latest();
-        $regencies = Regency::latest()->get();
-        $collectionByRegency = [];
+//        $regencies = Regency::latest()->get();
+//        $collectionByRegency = [];
 
         $districtsCoverage = Collection::distinct('id_district')
                                         ->join('participants','collections.id_participant','=','participants.id');
@@ -63,44 +63,6 @@ class Dashboard1Controller extends Controller
         $regenciesCoverage = $regenciesCoverage->whereBetween('collect_date', [$request->startDates,$request->endDates])->count();
         $totalParticipants = $totalParticipants->whereBetween('collect_date', [$request->startDates,$request->endDates])->count();
 
-        for ($i = 0; $i < count($regencies); $i++) {
-            $regencyName = $regencies[$i]->regency_name;
-            $countCollectionByRegency = Collection::join('participants','collections.id_participant','=','participants.id')
-                                                    ->where('id_regency','=',$regencies[$i]->id)
-                                                    ->whereBetween('collect_date', [$request->startDates,$request->endDates])
-                                                    ->get();
-            $totalCollectionByRegency = 0;
-            for ($j = 0; $j < count($countCollectionByRegency); $j++) {
-                $totalCollectionByRegency = $totalCollectionByRegency + $countCollectionByRegency[$j]->quantity;
-            }
-
-            if ($totalCollectionByRegency <= 10) {
-                $opacity = 0.1;
-            }
-
-            if ($totalCollectionByRegency > 10 && $totalCollectionByRegency <= 50) {
-                $opacity = 0.2;
-            }
-
-            if ($totalCollectionByRegency > 50 && $totalCollectionByRegency <= 100) {
-                $opacity = 0.3;
-            }
-
-            if ($totalCollectionByRegency > 100 && $totalCollectionByRegency <= 500) {
-                $opacity = 0.4;
-            }
-
-            if ($totalCollectionByRegency > 500 && $totalCollectionByRegency < 1000) {
-                $opacity = 0.5;
-            }
-
-            if ($totalCollectionByRegency >= 1000) {
-                $opacity = 0.6;
-            }
-
-            $collectionByRegency[$regencyName] = [$totalCollectionByRegency, $opacity];
-        }
-
         $totalCollection = 0;
         for ($i = 0; $i < count($collections); $i++) {
             $totalCollection = $totalCollection + $collections[$i]->quantity;
@@ -111,7 +73,7 @@ class Dashboard1Controller extends Controller
             'regenciesCoverage' =>$regenciesCoverage,
             'totalParticipants'=> $totalParticipants,
             'totalCollection' => $totalCollection,
-            'collectionByRegency' => $collectionByRegency
+//            'collectionByRegency' => $collectionByRegency
         ];
 
         return response()->json(['data'=>$data]);
@@ -319,50 +281,50 @@ class Dashboard1Controller extends Controller
             $totalCollection = $totalCollection + $collections[$i]->quantity;
         }
 
-        for ($i = 0; $i < count($regencies); $i++) {
-            $regencyName = $regencies[$i]->regency_name;
-            $countCollectionByRegency = Collection::join('participants','collections.id_participant','=','participants.id')
-                                                    ->where('id_regency','=',$regencies[$i]->id)
-                                                    ->whereBetween('collect_date', [$request->startDates,$request->endDates])
-                                                    ->get();
-            $totalCollectionByRegency = 0;
-            for ($j = 0; $j < count($countCollectionByRegency); $j++) {
-                $totalCollectionByRegency = $totalCollectionByRegency + $countCollectionByRegency[$j]->quantity;
-            }
-
-            if ($totalCollectionByRegency <= 10) {
-                $opacity = 0.1;
-            }
-
-            if ($totalCollectionByRegency > 10 && $totalCollectionByRegency <= 50) {
-                $opacity = 0.2;
-            }
-
-            if ($totalCollectionByRegency > 50 && $totalCollectionByRegency <= 100) {
-                $opacity = 0.3;
-            }
-
-            if ($totalCollectionByRegency > 100 && $totalCollectionByRegency <= 500) {
-                $opacity = 0.4;
-            }
-
-            if ($totalCollectionByRegency > 500 && $totalCollectionByRegency < 1000) {
-                $opacity = 0.5;
-            }
-
-            if ($totalCollectionByRegency >= 1000) {
-                $opacity = 0.6;
-            }
-
-            $collectionByRegency[$regencyName] = [$totalCollectionByRegency, $opacity];
-        }
+//        for ($i = 0; $i < count($regencies); $i++) {
+//            $regencyName = $regencies[$i]->regency_name;
+//            $countCollectionByRegency = Collection::join('participants','collections.id_participant','=','participants.id')
+//                                                    ->where('id_regency','=',$regencies[$i]->id)
+//                                                    ->whereBetween('collect_date', [$request->startDates,$request->endDates])
+//                                                    ->get();
+//            $totalCollectionByRegency = 0;
+//            for ($j = 0; $j < count($countCollectionByRegency); $j++) {
+//                $totalCollectionByRegency = $totalCollectionByRegency + $countCollectionByRegency[$j]->quantity;
+//            }
+//
+//            if ($totalCollectionByRegency <= 10) {
+//                $opacity = 0.1;
+//            }
+//
+//            if ($totalCollectionByRegency > 10 && $totalCollectionByRegency <= 50) {
+//                $opacity = 0.2;
+//            }
+//
+//            if ($totalCollectionByRegency > 50 && $totalCollectionByRegency <= 100) {
+//                $opacity = 0.3;
+//            }
+//
+//            if ($totalCollectionByRegency > 100 && $totalCollectionByRegency <= 500) {
+//                $opacity = 0.4;
+//            }
+//
+//            if ($totalCollectionByRegency > 500 && $totalCollectionByRegency < 1000) {
+//                $opacity = 0.5;
+//            }
+//
+//            if ($totalCollectionByRegency >= 1000) {
+//                $opacity = 0.6;
+//            }
+//
+//            $collectionByRegency[$regencyName] = [$totalCollectionByRegency, $opacity];
+//        }
 
         $data = [
             'districtsCoverage' => $districtsCoverage,
             'regenciesCoverage' =>$regenciesCoverage,
             'totalParticipants'=> $totalParticipants,
             'totalCollection' => $totalCollection,
-            'collectionByRegency' => $collectionByRegency
+//            'collectionByRegency' => $collectionByRegency
         ];
 
         return response()->json(['data'=>$data]);
@@ -401,7 +363,6 @@ class Dashboard1Controller extends Controller
             ->groupBy('regency_name');
 
         if (isset($request->idCategory) && count($request->idCategory) != 0) {
-            Log::info($request->idCategory);
             $collectionByRegency = $collectionByRegency->whereIn('participants.category_id', $request->idCategory);
         }
 
@@ -419,7 +380,6 @@ class Dashboard1Controller extends Controller
 
         $collectionByRegency = $collectionByRegency->get();
 
-        Log::info($collectionByRegency);
         $totalAllQty = 0;
         foreach ($collectionByRegency as $collection) {
             $totalAllQty += $collection->qty;

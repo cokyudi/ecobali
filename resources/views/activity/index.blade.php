@@ -47,7 +47,7 @@
                                         @include('activity.modal')
                                         @include('activity.modalImport')
                                         <div class="table-responsive">
-                                            <table id="tableActivity" class="table table-striped table-bordered zero-configuration">
+                                            <table id="tableActivity" class="table table-striped table-bordered zero-configuration" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>

@@ -8,6 +8,7 @@ use App\Models\Regency;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MapController extends Controller
 {
@@ -22,37 +23,58 @@ class MapController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $categories = Category::latest()->get();
-        $regencies = Regency::latest()->get();
-        $districts = District::latest()->get();
+        $categories = DB::table('categories')->orderBy('category_name','ASC')->get();
+        $districts = DB::table('districts')->orderBy('district_name','ASC')->get();
+        $regencies = DB::table('regencies')->orderBy('regency_name','ASC')->get();
+        $participants = DB::table('participants')->orderBy('participant_name','ASC')->get();
 
         return view('map/index', array(
-            'user' => $user, 
+            'user' => $user,
             'districts'=>$districts,
             'categories' => $categories,
-            'regencies' => $regencies
+            'regencies' => $regencies,
+            'participants' => $participants
         ));
     }
 
     public function getMapParticipantsInformation(Request $request) {
-        $participants = Participant::select('participants.id as id_participant','participants.*','districts.district_name','regencies.regency_name','areas.area_name','categories.category_name')
-                                    ->join('categories','participants.id_category','=','categories.id')
-                                    ->join('districts','participants.id_district','=','districts.id')
-                                    ->join('regencies','participants.id_regency','=','regencies.id')
-                                    ->join('areas','participants.id_area','=','areas.id');
+        $participants = DB::table('participants')
+            ->leftJoin('categories', function ($join) {
+                $join->on('participants.id_category', '=', 'categories.id');
+            })
+            ->leftJoin('areas', function ($join) {
+                $join->on('participants.id_area', '=', 'areas.id');
+            })
+            ->leftJoin('districts', function ($join) {
+                $join->on('participants.id_district', '=', 'districts.id');
+            })
+            ->leftJoin('regencies', function ($join) {
+                $join->on('participants.id_regency', '=', 'regencies.id');
+            })
+            ->select(
+                'participants.id as id_participant',
+                'participants.*','districts.district_name',
+                'regencies.regency_name',
+                'areas.area_name',
+                'categories.category_name'
+            );
 
         $participantsInformation = [];
 
         if (isset($request->idCategory) && count($request->idCategory) != 0) {
             $participants = $participants->whereIn('id_category', $request->idCategory);
         }
-    
+
         if (isset($request->idDistrict) && count($request->idDistrict) != 0) {
             $participants = $participants->whereIn('id_district', $request->idDistrict);
         }
 
         if (isset($request->idRegency) && count($request->idRegency) != 0) {
             $participants = $participants->whereIn('id_regency', $request->idRegency);
+        }
+
+        if (isset($request->idParticipant) && count($request->idParticipant) != 0) {
+            $participants = $participants->whereIn('participants.id', $request->idParticipant);
         }
 
         $participants = $participants->get();
@@ -68,7 +90,7 @@ class MapController extends Controller
             $information = [
                 'type' => 'FeatureCollection',
                 'geometry' => [
-                    'type' => 'Point',    
+                    'type' => 'Point',
                     'coordinates' => [(float) $participant->langitude, (float) $participant->latitude]
                 ],
                 'properties'=> [
@@ -82,7 +104,7 @@ class MapController extends Controller
             if ($participant->langitude != NULL && $participant->latitude != NULL) {
                 array_push($participantsInformation, $information);
             }
-            
+
         }
 
         return response()->json(['data'=>$participantsInformation]);

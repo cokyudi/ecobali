@@ -14,18 +14,19 @@
     <div class="content-body"><!-- Revenue, Hit Rate & Deals -->
     <!--/ Revenue, Hit Rate & Deals -->
         <div class="row">
-            <div class="col-lg-3 col-12">
+            <div class="col-lg-4 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
-                                <h6 class="text-muted font-medium-3">Sent to Papermill</h6>
+                                <h6 class="font-weight-bold font-medium-5">Sent to Papermill</h6>
                             </div>
                             <div class="media d-flex">
                                 <div class="media-body text-center ">
                                     <div class="row align-items-center">
                                         <div class="col-2">
-                                            <i class="la la-database success font-large-4"></i>
+                                            <img src="{{asset('images/icons/sent_to_papermill.png')}}" alt="" width="85px">
+{{--                                            <i class="la la-database success font-large-4"></i>--}}
                                         </div>
                                         <div class="col-5 border-right">
                                             <div class="row">
@@ -60,18 +61,19 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-12">
+            <div class="col-lg-4 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
-                                <h6 class="text-muted font-medium-3">Received at Papermill</h6>
+                                <h6 class="font-weight-bold font-medium-5">Received at Papermill</h6>
                             </div>
                             <div class="media d-flex">
                                 <div class="media-body text-center ">
                                     <div class="row align-items-center">
                                         <div class="col-2">
-                                            <i class="la la-database success font-large-4"></i>
+                                            <img src="{{asset('images/icons/recieved_at_papermill.png')}}" alt="" width="85px">
+
                                         </div>
                                         <div class="col-4 border-right">
                                             <div class="row">
@@ -89,7 +91,7 @@
                                         <div class="col-3 ">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-1" id="received_at_papermill_kg"></span>
+                                                    <span class="font-medium-5" id="received_at_papermill_kg"></span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -101,14 +103,13 @@
                                         <div class="col-3 pr-3 pl-3">
                                             <div class="row border-bottom-black-ship">
                                                 <div class="col-12">
-                                                    <strong class="font-medium-5 " id="weighing_scale_gap_papermill"></strong>
+                                                    <strong class="font-medium-2 " id="weighing_scale_gap_papermill"></strong>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-12">
+
 {{--                                                    <strong class="font-medium-5 danger" id="weighing_scale_gap_papermill_percent"><i class="la la-sort-down font-medium-2"></i>&ensp;- 0,1%</strong>--}}
-                                                    <i id="indikator_panah" class=" mr-1"></i><strong class="font-medium-5 danger" id="weighing_scale_gap_papermill_percent"></strong>
-                                                </div>
+                                                <i id="indikator_panah" class=" "></i><strong class="font-medium-1 danger" id="weighing_scale_gap_papermill_percent"></strong>
                                             </div>
                                         </div>
                                     </div>
@@ -119,18 +120,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-12">
+            <div class="col-lg-4 col-12">
                 <div class="card pull-up">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
-                                <h6 class="text-muted font-medium-3">Accepted to Recycle</h6>
+                                <h6 class="font-weight-bold font-medium-5">Accepted to Recycle</h6>
                             </div>
                             <div class="media d-flex">
                                 <div class="media-body text-center ">
                                     <div class="row align-items-center">
                                         <div class="col-2">
-                                            <i class="la la-database success font-large-4"></i>
+                                            <img src="{{asset('images/icons/shipment-accepted.png')}}" alt="" width="85px">
                                         </div>
                                         <div class="col-5 border-right">
                                             <div class="row">
@@ -171,7 +172,7 @@
             <div class="col-6 py-2">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="card-title">Weight Reduction at ecoBali</h4>
+                        <h4 class="font-weight-bold font-medium-5">Weight Reduction at ecoBali</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -184,6 +185,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
+                            <h3>Total Penyusutan <strong id="weight_reduction_susut"></strong> Kg dan Total Tidak Susut <strong id="weight_reduction_tidak_susut"></strong> Kg.</h3>
 {{--                            <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>--}}
                             <div id="pie_weight_reduction"></div>
                         </div>
@@ -194,7 +196,7 @@
             <div class="col-6 py-2">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="card-title">Moiisture Content, Contaminant</h4>
+                        <h4 class="font-weight-bold font-medium-5">Moiisture Content, Contaminant</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -207,7 +209,7 @@
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
-
+                            <h3>Total MCC :  <strong id="text_mcc"></strong> Kg dan Total UBC : <strong id="text_ubc"></strong> Kg.</h3>
                             <div id="donut_mcc"></div>
                         </div>
                     </div>
@@ -220,7 +222,7 @@
             <div class="col-12 py-2">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="card-title">Sent vs Received</h4>
+                        <h4 class="font-weight-bold font-medium-5">Sent vs Received</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -248,7 +250,7 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Dinamics of KMK Sent</h4>
+                        <h4 class="font-weight-bold font-medium-5">Dinamics of KMK Sent</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -269,7 +271,7 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Dinamics of KMK Received</h4>
+                        <h4 class="font-weight-bold font-medium-5">Dinamics of KMK Received</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -294,7 +296,7 @@
             <div class="col-6 py-2">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="card-title">Dinamics of KMK Accepted</h4>
+                        <h4 class="font-weight-bold font-medium-5">Dinamics of KMK Accepted</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -315,7 +317,7 @@
             <div class="col-6 py-2">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="card-title">Dinamics of MCC</h4>
+                        <h4 class="font-weight-bold font-medium-5">Dinamics of MCC</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
@@ -413,6 +415,7 @@
 
 <script type="text/javascript">
 
+
     $(document).ready(function() {
         $('#daterange').daterangepicker(
             {
@@ -483,9 +486,9 @@
                 success: function (data) {
                     removeIndicator();
                     $('#delivered_to_papermill_ton').html((data.data.delivered_to_papermill/1000).toFixed(1));
-                    $('#delivered_to_papermill_kg').html(data.data.delivered_to_papermill.toFixed(2));
+                    $('#delivered_to_papermill_kg').html(data.data.delivered_to_papermill.toFixed(1));
                     $('#received_at_papermill_ton').html((data.data.received_at_papermill/1000).toFixed(1));
-                    $('#received_at_papermill_kg').html(data.data.received_at_papermill.toFixed(2));
+                    $('#received_at_papermill_kg').html(data.data.received_at_papermill.toFixed(1));
 
                     $('#weighing_scale_gap_papermill').html(data.data.weighing_scale_gap_papermill);
                     if (data.data.weighing_scale_gap_papermill >= 0) {
@@ -503,7 +506,7 @@
                         $('#indikator_panah').addClass("la la-sort-down font-medium-2 danger");
                     }
                     $('#total_weight_accepted_ton').html((data.data.total_weight_accepted/1000).toFixed(1));
-                    $('#total_weight_accepted_kg').html(data.data.total_weight_accepted.toFixed(2));
+                    $('#total_weight_accepted_kg').html(data.data.total_weight_accepted.toFixed(1));
 
                     drawDonutPie(data);
                     drawSentVsReceived(data);

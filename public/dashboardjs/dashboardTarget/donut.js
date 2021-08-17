@@ -27,21 +27,29 @@ function drawTargetPapermillDonut() {
             var dataMonthly = google.visualization.arrayToDataTable(data.dataDonutMonthly);
             donutMonthly = new google.visualization.PieChart(document.getElementById("donut_monthly_papermill")).draw(dataMonthly, {
                 title: "",
+                legend:'bottom',
                 height: 400,
                 fontSize: 12,
-                colors: ["#E84A5F", "#99B898", "#FF847C", "#E84A5F", "#474747"],
+                colors: ["#7dcdf3", "#2e53a1", "#FF847C", "#E84A5F", "#474747"],
                 pieHole: 0.55,
                 chartArea: { left: "5%", width: "90%", height: 350 },
             });
+            $('#monthly_papermill_target').html(parseFloat((data.dataDonutMonthly[2][1]+data.dataDonutMonthly[1][1]).toFixed(1)).toLocaleString());
+            $('#monthly_papermill_terkumpul').html(data.dataDonutMonthly[2][1].toLocaleString());
+
+
             var dataAnnual = google.visualization.arrayToDataTable(data.dataDonutYearly);
             donutAnnual = new google.visualization.PieChart(document.getElementById("donut_annual_papermill")).draw(dataAnnual, {
                 title: "",
+                legend:'bottom',
                 height: 400,
                 fontSize: 12,
-                colors: ["#E84A5F", "#99B898", "#FF847C", "#E84A5F", "#474747"],
+                colors: ["#7dcdf3", "#2e53a1", "#FF847C", "#E84A5F", "#474747"],
                 pieHole: 0.55,
                 chartArea: { left: "5%", width: "90%", height: 350 },
             });
+            $('#annual_papermill_target').html(parseFloat((data.dataDonutYearly[2][1]+data.dataDonutYearly[1][1]).toFixed(1)).toLocaleString());
+            $('#annual_papermill_terkumpul').html(data.dataDonutYearly[2][1].toLocaleString());
 
         },
         error: function (data) {

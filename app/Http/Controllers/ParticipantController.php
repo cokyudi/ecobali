@@ -178,8 +178,14 @@ class ParticipantController extends Controller
         $payment_methods = DB::table('payment_methods')->get();
         $banks = DB::table('banks')->get();
 
-        return view('participant/edit',
-            compact('user','participant','categories','transport_intensities','areas','districts','regencies','purchase_prices','payment_methods','banks','boxresources'));
+        if($user->role == "Admin") {
+            return view('participant/edit',
+                compact('user','participant','categories','transport_intensities','areas','districts','regencies','purchase_prices','payment_methods','banks','boxresources'));
+        } else {
+            return view('participant/editForViewer',
+                compact('user','participant','categories','transport_intensities','areas','districts','regencies','purchase_prices','payment_methods','banks','boxresources'));
+        }
+
     }
 
     /**
@@ -235,5 +241,169 @@ class ParticipantController extends Controller
         return response()->json(['success'=>'Import successfully.']);
 
     }
+
+    public function getDatatableCollection(Request $request){
+        $collections = DB::table('collections')
+            ->where('id_participant','=',$request->idParticipant)
+            ->where('collect_date', '>=',$request->startDates)
+            ->where('collect_date', '<=',$request->endDates)
+            ->select(
+                'id',
+                DB::raw("(DATE_FORMAT(collect_date,'%d %b %Y')) collect_date"),
+//                'collect_date',
+                'quantity',
+            )
+            ->orderBy('collect_date','ASC')
+            ->get();
+
+        return Datatables::of($collections)
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+    public function getLineChartDataCollection(Request $request){
+        if ($request->type == 'week') {
+            $collections = DB::table('collections')
+                ->where('collect_date', '>=',$request->startDates)
+                ->where('collect_date', '<=',$request->endDates)
+                ->where('id_participant','=',$request->idParticipant)
+                ->select(
+                    DB::raw('ROUND(SUM(quantity),1) qty'),
+                    DB::raw('FLOOR((DAYOFMONTH(collect_date) - 1) / 7) + 1 week_of_month'),
+                    DB::raw('MONTH(collect_date) month'),
+                    DB::raw('DATE_FORMAT(collect_date, "%b") monthName'),
+                    DB::raw('YEAR(collect_date) year')
+                )
+                ->groupBy('year','month','week_of_month','monthName');
+
+        } else {
+            $collections = DB::table('collections')
+                ->where('collect_date', '>=',$request->startDates)
+                ->where('collect_date', '<=',$request->endDates)
+                ->where('id_participant','=',$request->idParticipant)
+                ->select(
+                    DB::raw('ROUND(SUM(quantity),1) qty'),
+                    DB::raw('MONTH(collect_date) month'),
+                    DB::raw('MONTHNAME(collect_date) monthName'),
+                    DB::raw('YEAR(collect_date) year')
+                )
+                ->groupBy('month','monthName','year');
+        }
+
+        $collections = $collections->get();
+
+        $totalQty = 0;
+        if ($request->type == 'week') {
+            $dataLine = [];
+            foreach ($collections as $collection) {
+                $dataLine['label'][] = ['W'.$collection->week_of_month,$collection->monthName,$collection->year];
+                $dataLine['qty'][] = $collection->qty;
+                $totalQty += $collection->qty;
+            }
+        } else {
+            $dataLine = [];
+            foreach ($collections as $collection) {
+                $dataLine['label'][] = [$collection->monthName,$collection->year];
+                $dataLine['qty'][] = $collection->qty;
+                $totalQty += $collection->qty;
+            }
+        }
+
+        $getCategory = DB::table('categories')
+            ->leftJoin('participants', function ($join) {
+                $join->on('participants.id_category', '=', 'categories.id');
+            })
+            ->leftJoin('potentials', function ($join) {
+                $join->on('potentials.id_category', '=', 'categories.id');
+            })
+            ->where('participants.id','=',$request->idParticipant)
+            ->select(
+                'potentials.potential_low',
+                'potentials.potential_medium',
+                'potentials.potential_high'
+            )
+            ->first();
+
+        $potential = "";
+        $date1 = $request->startDates;
+        $date2 = $request->endDates;
+
+        $ts1 = strtotime($date1);
+        $ts2 = strtotime($date2);
+
+        $year1 = date('Y', $ts1);
+        $year2 = date('Y', $ts2);
+
+        $month1 = date('m', $ts1);
+        $month2 = date('m', $ts2);
+
+        $monthDiff = (($year2 - $year1) * 12) + ($month2 - $month1) +1;
+
+        $average = $totalQty / $monthDiff;
+        $potentialColor = "";
+
+        if ( $average <= $getCategory->potential_low ) {
+            $potential = "Low";
+            $potentialColor = "btn-danger";
+        } else if ($average > $getCategory->potential_medium && $average <= $getCategory->potential_high ) {
+            $potential = "Medium";
+            $potentialColor = "btn-warning";
+        } else if ($average > $getCategory->potential_high) {
+            $potential = "High";
+            $potentialColor = "btn-success";
+        }
+
+        $monthlyCollections = DB::table('collections')
+            ->where('collect_date', '>=',$request->startDates)
+            ->where('collect_date', '<=',$request->endDates)
+            ->where('id_participant','=',$request->idParticipant)
+            ->select(
+                DB::raw('ROUND(SUM(quantity),1) qty'),
+                DB::raw('MONTH(collect_date) month'),
+                DB::raw('MONTHNAME(collect_date) monthName'),
+                DB::raw('YEAR(collect_date) year')
+            )
+            ->groupBy('month','monthName','year')
+            ->get();
+
+        $jumlahBulanPengangkutan = 0;
+
+        foreach ($monthlyCollections as $collection) {
+            $jumlahBulanPengangkutan += 1;
+        }
+
+        $continuity = "";
+        $continuityPercentage = ($jumlahBulanPengangkutan / $monthDiff)*100;
+        $continuityColor = "";
+
+        if ($continuityPercentage <= 0) {
+            $continuity = "None";
+            $continuityColor = "btn-danger";
+        } elseif ($continuityPercentage > 0 && $continuityPercentage <= 50) {
+            $continuity = "Less Stable";
+            $continuityColor = "btn-warning";
+        } elseif ($continuityPercentage > 50 && $continuityPercentage < 100) {
+            $continuity = "Medium";
+            $continuityColor = "btn-info";
+        } elseif ($continuityPercentage = 100) {
+            $continuity = "Stable";
+            $continuityColor = "btn-success";
+        }
+
+
+
+
+        $data = [
+            'dataLine' => $dataLine,
+            'potential' =>$potential,
+            'continuity' =>$continuity,
+            'potentialColor' =>$potentialColor,
+            'continuityColor' =>$continuityColor
+        ];
+
+        return response()->json(['data'=>$data]);
+
+    }
+
 
 }

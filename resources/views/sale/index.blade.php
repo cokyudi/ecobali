@@ -47,7 +47,7 @@
                                         @include('sale.modal')
 
                                         <div class="table-responsive">
-                                            <table id="test" class="table table-striped table-bordered zero-configuration">
+                                            <table id="test" class="table table-striped table-bordered zero-configuration" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>

@@ -50,7 +50,7 @@
                                         @include('collection.modal')
                                         @include('collection.modalImport')
                                         <div class="table-responsive">
-                                            <table id="collectionTable" class="table table-striped table-bordered zero-configuration">
+                                            <table id="collectionTable" class="table table-striped table-bordered zero-configuration" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>

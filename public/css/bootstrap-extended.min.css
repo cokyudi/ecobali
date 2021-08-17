@@ -911,11 +911,11 @@ select.form-control {
     transition: 0.3s ease all;
 }
 .header-navbar .navbar-header .navbar-brand {
-    padding: 18px 0;
+    padding: 10px 0;
     margin-right: 0;
 }
 .header-navbar .navbar-header .navbar-brand .brand-logo {
-    width: 36px;
+    width: 50px;
 }
 .header-navbar .navbar-header .navbar-brand .brand-text {
     display: inline;
@@ -1118,8 +1118,9 @@ select.form-control {
 .navbar-semi-dark {
     background: #fff;
 }
+/* ubahWarnaDasar */
 .navbar-semi-dark .navbar-header {
-    background: #2c303b;
+    background: #2e53a1;
 }
 .navbar-semi-dark .navbar-header .brand-text {
     color: #fff;

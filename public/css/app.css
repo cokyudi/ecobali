@@ -5,3 +5,9 @@
 .border-bottom-black-ship{
     border-bottom:3px solid !important;
 }
+
+.card-custom{
+    height: 160px;
+    top: 50%;
+}
+

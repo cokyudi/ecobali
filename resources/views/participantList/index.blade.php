@@ -1,16 +1,7 @@
 @extends('template', ['user'=>$user])
-@section('dashboard-collection','active')
+@section('participantList','active')
 
 @push('css_extend')
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-   crossorigin=""/>
-   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-   crossorigin=""></script>
-   <style type="text/css">
-   	#mapid { height: 100%; width:100%;}
-   </style>
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/selects/select2.min.css')}}">
 @endpush
 
@@ -22,190 +13,11 @@
         <div class="content-header row mb-1">
         </div>
         <div class="content-body"><!-- Revenue, Hit Rate & Deals -->
-
             <div class="row">
-
-                <div class="col-lg-3 col-12 pb-1">
-                    <div class="card h-75 ">
-                        <div class="card-content">
-                            <div class="card-body">
-                                <div class="media d-flex">
-                                    <div class="media-body text-left">
-                                        <h6 class="text-muted font-medium-3">District Coverage</h6>
-                                        <h3 class="font-large-2" id="district_coverage"></h3>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="la la-map success font-large-5 float-right"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-12 pb-1">
-                    <div class="card h-75 ">
-                        <div class="card-content">
-                            <div class="card-body">
-                                <div class="media d-flex">
-                                    <div class="media-body text-left">
-                                        <h6 class="text-muted font-medium-3">Regency Coverage</h6>
-                                        <h3 class="font-large-2" id="regency_coverage"></h3>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="la la-map success font-large-5 float-right"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-12 pb-1">
-                    <div class="card h-75 ">
-                        <div class="card-content">
-                            <div class="card-body">
-                                <div class="media d-flex">
-                                    <div class="media-body text-left">
-                                        <h6 class="text-muted font-medium-3">Total Collection</h6>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h4 class="font-large-2" id="total_collection_ton"></h4>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h4 class="font-large-1" id="total_collection_kg"></h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="la la-database success font-large-5 float-right"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-12 pb-1">
-                    <div class="card h-75">
-                        <div class="card-content">
-                            <div class="card-body">
-                                <div class="media d-flex">
-                                    <div class="media-body text-left">
-                                        <h6 class="text-muted font-medium-3">Total Participant</h6>
-                                        <h3 class="font-large-2" id="total_participant"></h3>
-                                    </div>
-                                    <div class="align-self-center">
-                                        <i class="la la-users success font-large-5 float-right"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-          </div>
-
-            <div class="row">
-                <div class="col-lg-6 col-12">
+                <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Number of Participants</h4>
-                            <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-                            <div class="heading-elements">
-                                <ul class="list-inline mb-0">
-                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-content collapse show">
-                            <div class="card-body">
-                                <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>
-                                <div id="pie-3d"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-6 col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Contribution</h4>
-                            <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-                            <div class="heading-elements">
-                                <ul class="list-inline mb-0">
-                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-content collapse show">
-                            <div class="card-body">
-                                <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>
-                                <div id="pie-3d-exploded"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-6">
-                    <div class="card h-100">
-                        <div class="card-header mb-0">
-                            <h4 class="card-title">Map</h4>
-                            <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-                            <div class="heading-elements">
-                                <ul class="list-inline mb-0">
-                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-content collapse show">
-                            <div class="card-body height-500">
-                                <div id="mapid" ></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            <h4 class="card-title">Total</h4>
-                            <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-                            <div class="heading-elements">
-                                <ul class="list-inline mb-0">
-                                    <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                    <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-content collapse show">
-                            <div class="card-body">
-                                {{--								<p class="card-text">A bar chart is a horizontal bar chart rendered in the browser using SVG or VML, whichever is appropriate for the user's browser. Like all google charts, bar charts display tooltips when the user hovers over the data.</p>--}}
-                                <div class="chart-container">
-                                    <div id="bar-chart"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xl-12 col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Dinamics</h4>
+                        <div class="card-header pb-0">
+                            <h4 class="card-title">Participant List</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -217,20 +29,42 @@
                             </div>
                         </div>
                         <div class="card-content collapse show">
-                            <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
-                                <button onclick="getLineChartData('week');" type="button" class="btn btn-sm btn-secondary">Week</button>
-                                <button onclick="getLineChartData('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
-                            </div>
-                            <div class="card-body chartjs">
-                                <canvas id="line-chart" height="500"></canvas>
+                            <div class="card-body card-dashboard">
+                                <div class="table-responsive">
+                                    <table id="participantTable" class="table table-striped table-bordered zero-configuration pr-1">
+                                        <thead>
+                                        <tr>
+                                            <th width="30px">No</th>
+                                            <th>Participant Name</th>
+                                            <th>Regency</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                            <th>Last Submit</th>
+                                            <th>Joined Date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th width="30px">No</th>
+                                            <th>Participant Name</th>
+                                            <th>Regency</th>
+                                            <th>Category</th>
+                                            <th>Status</th>
+                                            <th>Last Submit</th>
+                                            <th>Joined Date</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
+
 
         </div>
       </div>
@@ -244,22 +78,21 @@
 	<hr>
 
         <form id="filterForm" name="filterForm">
-            <h5 class="mt-1 mb-1 text-bold-500">Participant</h5>
+            <h5 class="mt-1 mb-1 text-bold-500">Status</h5>
             <div class="form-group ">
-                <select id="id_participant" name="id_participant[]" multiple="multiple" class="select2 form-control">
-                    @foreach($participants as $participant)
-                        <option value="{{$participant->id}}">{{$participant->participant_name}}</option>
-                    @endforeach
+                <select id="id_status" name="id_status" class="form-control">
+                    <option value="0" disabled selected>Select Status</option>
+                    <option value="1" >Active</option>
+                    <option value="2" >Inactive</option>
 
                 </select>
             </div>
             <hr>
-
-            <h5 class="mt-1 mb-1 text-bold-500">Category</h5>
+            <h5 class="mt-1 mb-1 text-bold-500">Area</h5>
             <div class="form-group ">
-                <select id="id_category" name="id_category[]" multiple="multiple" class="select2 form-control">
-                    @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{$category->category_name}}</option>
+                <select id="id_area" name="id_area[]" multiple="multiple" class="select2 form-control">
+                    @foreach($areas as $area)
+                        <option value="{{$area->id}}">{{$area->area_name}}</option>
                     @endforeach
 
                 </select>
@@ -288,21 +121,32 @@
             </div>
             <hr>
 
-            <h5 class="mt-1 mb-1 text-bold-500">Date Range Options</h5>
-            <div class="form-group">
-                <div class="form-group">
-                    <div class='input-group'>
-                        <input type="text" id="daterange" name="daterange" class = "form-control" value="" />
-                        <div class="input-group-append">
-                            <span class="input-group-text">
-                                <span class="la la-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+            <h5 class="mt-1 mb-1 text-bold-500">Category</h5>
+            <div class="form-group ">
+                <select id="id_category" name="id_category[]" multiple="multiple" class="select2 form-control">
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}">{{$category->category_name}}</option>
+                    @endforeach
+
+                </select>
             </div>
+{{--            <hr>--}}
+
+{{--            <h5 class="mt-1 mb-1 text-bold-500">Date Range Options</h5>--}}
+{{--            <div class="form-group">--}}
+{{--                <div class="form-group">--}}
+{{--                    <div class='input-group'>--}}
+{{--                        <input type="text" id="daterange" name="daterange" class = "form-control" value="" />--}}
+{{--                        <div class="input-group-append">--}}
+{{--                            <span class="input-group-text">--}}
+{{--                                <span class="la la-calendar"></span>--}}
+{{--                            </span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <div class="form-actions text-right">
-                <button id='backBtn' type="button" class="btn btn-warning mr-1">
+                <button id='reset' type="button" class="btn btn-warning mr-1">
                     <i class="ft-x"></i> Reset
                 </button>
                 <button id="filterBtn" value="create" type="button" class="btn btn-success">
@@ -327,6 +171,8 @@
 {{--<script src="{{asset('js/scripts/charts/google/pie/pie.min.js')}}"></script>--}}
 <script src="{{asset('vendors/js/forms/select/select2.full.min.js')}}"></script>
 <script src="{{asset('js/scripts/forms/select/form-select2.min.js')}}"></script>
+
+
 
 <script type="text/javascript">
 
@@ -366,154 +212,79 @@
 
             }
         );
-        drawMap();
-		getDefaultCollection();
 
-      $('#backBtn').click(function() {
+        fetchData();
 
-          $('#daterange').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
-          $('#daterange').data('daterangepicker').setEndDate(moment());
 
-            $('#id_category').val(null).trigger('change');
-            $('#id_district').val(null).trigger('change');
-            $('#id_participant').val(null).trigger('change');
-            $('#id_regency').val(null).trigger('change');
+      $('#reset').click(function() {
 
-            getDefaultCollection();
+          // $('#daterange').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
+          // $('#daterange').data('daterangepicker').setEndDate(moment());
+
+          $('#id_status').val(0).trigger("change");
+          $('#id_category').val(0).trigger("change");
+          $("#id_area").val(0).trigger("change");
+          $('#id_district').val(0).trigger("change");
+          $('#id_regency').val(0).trigger("change");
+
+
       });
 
 		$('#filterBtn').click(function() {
-
-			var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
-            var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
-			var idCategory = $('#id_category').val();
-			var idDistrict = $('#id_district').val();
-			var idParticipant = $('#id_participant').val();
-            var idRegency = $('#id_regency').val();
-
-			var params = {
-				startDates: startDates,
-				endDates: endDates,
-				idCategory: idCategory,
-				idDistrict: idDistrict,
-				idParticipant: idParticipant,
-                idRegency: idRegency,
-			}
-
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
-			});
-
-			$.ajax({
-				type: "GET",
-				url: "getCollectionByFilters",
-				data: params,
-				success: function (data) {
-					$('#district_coverage').html(data.data.districtsCoverage);
-                    $('#regency_coverage').html(data.data.regenciesCoverage);
-					$('#total_collection_ton').html((data.data.totalCollection/1000).toFixed(1) + ' TON');
-					$('#total_collection_kg').html('/ ' + data.data.totalCollection.toFixed(2) + ' Kg');
-					$('#total_participant').html(data.data.totalParticipants);
-
-					getLineChartData('week');
-
-					google.load("visualization", "1.0", { packages: ["corechart"] }),
-					google.setOnLoadCallback(drawPie3dExploded),
-					$(function () {
-						function e() {
-							drawPie3dExploded();
-						}
-						$(window).on("resize", e), $(".menu-toggle").on("click", e);
-					});
-
-					google.load("visualization", "1.0", { packages: ["corechart"] }),
-					google.setOnLoadCallback(drawPie3d),
-					$(function () {
-						function e() {
-							drawPie3d();
-						}
-						$(window).on("resize", e), $(".menu-toggle").on("click", e);
-					});
-                    drawMap();
-                    drawBar();
-
-				},
-				error: function (data) {
-					console.log('Error:', data);
-				}
-			});
+            $('#participantTable').DataTable().draw(true);
+            fetchData();
         });
 
     });
 
-	function getDefaultCollection () {
+    function fetchData(){
+        // var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
+        // var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
+        var idCategory = $('#id_category').val();
+        var idDistrict = $('#id_district').val();
+        var idArea = $('#id_area').val();
+        var idRegency = $('#id_regency').val();
+        var idStatus = $('#id_status').val();
 
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
+        var params = {
+            // startDates: startDates,
+            // endDates: endDates,
+            idCategory: idCategory,
+            idDistrict: idDistrict,
+            idRegency: idRegency,
+            idArea:idArea,
+            idStatus:idStatus,
+        }
 
-		var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
-        var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
-		var data = {
-				startDates: startDates,
-				endDates: endDates
-			}
+        var table = $('#participantTable').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url:"{{ route('participantList.index') }}",
+                data: params
+            },
+            columns: [
+                {data: null},
+                {data: 'participant_name_link', name: 'participant_name_link'},
+                {data: 'regency_name', name: 'regency_name'},
+                {data: 'category_name', name: 'category_name'},
+                {data: 'status', name: 'status'},
+                {data: 'lastSubmit', name: 'lastSubmit'},
+                {data: 'joined_date', name: 'joined_date'},
+            ],
+            columnDefs: [
+                { className: 'text-center', targets: [4] },
+            ]
+        });
 
-		$.ajax({
-			type: "GET",
-			url: "getCollection",
-			data:data,
-			success: function (data) {
-				$('#district_coverage').html(data.data.districtsCoverage);
-                $('#regency_coverage').html(data.data.regenciesCoverage);
-				$('#total_collection_ton').html((data.data.totalCollection/1000).toFixed(1) + ' TON');
-				$('#total_collection_kg').html('/ ' +data.data.totalCollection.toFixed(2) + ' Kg');
-				$('#total_participant').html(data.data.totalParticipants);
-
-				getLineChartData('week');
-
-				google.load("visualization", "1.0", { packages: ["corechart"] }),
-				google.setOnLoadCallback(drawPie3dExploded),
-				$(function () {
-					function e() {
-						drawPie3dExploded();
-					}
-					$(window).on("resize", e), $(".menu-toggle").on("click", e);
-				});
-
-				google.load("visualization", "1.0", { packages: ["corechart"] }),
-				google.setOnLoadCallback(drawPie3d),
-				$(function () {
-					function e() {
-						drawPie3d();
-					}
-					$(window).on("resize", e), $(".menu-toggle").on("click", e);
-				});
-
-				google.load("visualization", "1.0", { packages: ["corechart"] }),
-				google.setOnLoadCallback(drawBar),
-				$(function () {
-					function e() {
-						drawBar();
-					}
-					$(window).on("resize", e), $(".menu-toggle").on("click", e);
-				});
-			},
-			error: function (data) {
-				console.log('Error:', data);
-			}
-		});
-	}
+        table.on('draw.dt', function () {
+            var info = table.page.info();
+            table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + info.start;
+            });
+        });
+    }
 
 </script>
-
-<script src="{{asset('dashboardjs/dashboardCollection/line.js')}}"></script>
-<script src="{{asset('dashboardjs/dashboardCollection/3d-pie.js')}}"></script>
-<script src="{{asset('dashboardjs/dashboardCollection/3d-pie-exploded.js')}}"></script>
-<script src="{{asset('dashboardjs/dashboardCollection/bar.js')}}"></script>
-<script src="{{asset('dashboardjs/dashboardCollection/map.js')}}"></script>
 @endpush

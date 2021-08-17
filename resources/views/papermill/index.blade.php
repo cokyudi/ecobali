@@ -46,7 +46,7 @@
                                     <div class="card-body card-dashboard">
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewPapermill">Add New Papermill</button>
                                         <div class="table-responsive">
-                                            <table id="papermillTable" class="table table-striped table-bordered zero-configuration">
+                                            <table id="papermillTable" class="table table-striped table-bordered zero-configuration" width="100%">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>

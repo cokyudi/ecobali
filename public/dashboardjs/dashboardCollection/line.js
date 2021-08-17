@@ -53,10 +53,10 @@ function getLineChartData (type) {
                         {
                             label: "Collection",
                             data: data.data.qty,
-                            lineTension: 0,
                             fill: !1,
-                            borderColor: "#FF7D4D",
-                            pointBorderColor: "#FF7D4D",
+                            borderWidth: 5,
+                            borderColor: "#7dcdf3",
+                            pointBorderColor: "#2e53a1",
                             pointBackgroundColor: "#FFF",
                             pointBorderWidth: 2,
                             pointHoverBorderWidth: 2,

@@ -159,6 +159,8 @@ class DashboardTargetController extends Controller
                 ->orderBy('collect_date', 'asc')
                 ->get();
 
+
+
             foreach ($collections as $collection) {
                 $monltyTarget = $this->getMonthlyTargetForAllCategory($collection->month,$collection->year,$categories, $categoryMap);
                 array_push($actualTargetBarByMonth, [$collection->monthName."\n".$collection->year, $monltyTarget,$collection->qty]);
@@ -200,8 +202,8 @@ class DashboardTargetController extends Controller
         ];
 
 
-        array_push($dataPieChart, ["Belum Terkumpul", $totalTarget-$totalQty]);
-        array_push($dataPieChart, ["Terkumpul", $totalQty]);
+        array_push($dataPieChart, ["Belum Terkumpul", round($totalTarget-$totalQty,0)]);
+        array_push($dataPieChart, ["Terkumpul", round($totalQty,0)]);
 
         /* End Monthly Target Achievement */
 
@@ -217,8 +219,8 @@ class DashboardTargetController extends Controller
         $yearEnd = date('Y', strtotime($request->endDates));
         $totalQtyYearly = $this->getYearlySumForAllCollection($yearStart,$yearEnd);
         $totalTargetYearly = $this->getYearlyTargetForAllCategory($yearStart,$yearEnd);
-        array_push($dataPieExplode, ["Belum Terkumpul", $totalTargetYearly-$totalQtyYearly]);
-        array_push($dataPieExplode, ["Terkumpul", $totalQtyYearly]);
+        array_push($dataPieExplode, ["Belum Terkumpul", round($totalTargetYearly-$totalQtyYearly,0)]);
+        array_push($dataPieExplode, ["Terkumpul", round($totalQtyYearly,0)]);
 
         /* End Annual Target Achievement (ecoBali) */
 
@@ -322,8 +324,8 @@ class DashboardTargetController extends Controller
         $dataDonutMonthly = [
             ["Belum Terkumpul", "Terkumpul"]
         ];
-        array_push($dataDonutMonthly, ["Belum Terkumpul", $totalTarget-$totalFilterQty]);
-        array_push($dataDonutMonthly, ["Terkumpul", $totalFilterQty]);
+        array_push($dataDonutMonthly, ["Belum Terkumpul", round($totalTarget-$totalFilterQty,0)]);
+        array_push($dataDonutMonthly, ["Terkumpul", round($totalFilterQty,0)]);
 
 
 
@@ -335,8 +337,8 @@ class DashboardTargetController extends Controller
         $yearEnd = date('Y', strtotime($request->endDates));
         $totalQtyYearly = $this->getYearlySumForAllSales($yearStart, $yearEnd);
         $totalTargetYearly = $this->getYearlyTargetForAllCategory($yearStart, $yearEnd);
-        array_push($dataDonutYearly, ["Belum Terkumpul", $totalTargetYearly-$totalQtyYearly]);
-        array_push($dataDonutYearly, ["Terkumpul", $totalQtyYearly]);
+        array_push($dataDonutYearly, ["Belum Terkumpul", round($totalTargetYearly-$totalQtyYearly,0)]);
+        array_push($dataDonutYearly, ["Terkumpul", round($totalQtyYearly,0)]);
 
         return response()->json([
             'dataDonutMonthly' => $dataDonutMonthly,

@@ -29,7 +29,7 @@ class CategoryController extends Controller
             })
             ->select(
                 'categories.*',
-                DB::raw('NVL((CASE WHEN MONTH(NOW()) < 7 THEN category_details.semester_1_target ELSE  category_details.semester_1_target END), "Not Set") AS target'))
+                DB::raw('NVL((CASE WHEN MONTH(NOW()) < 7 THEN category_details.semester_1_target ELSE  category_details.semester_2_target END), "Not Set") AS target'))
             ->get();
 
         if ($request->ajax()) {

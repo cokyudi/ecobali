@@ -1,6 +1,6 @@
 @extends('template', ['user'=>$user])
 
-@section('areas','active')
+@section('potentials','active')
 
 @section('content')
         <!-- BEGIN: Content-->
@@ -30,7 +30,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h4 class="card-title">Area Data Master</h4>
+                                    <h4 class="card-title">Category Potential Data Master</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -43,17 +43,18 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewArea">Add New Area</button>
-                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importArea">Import Area</button>
-                                        @include('area.modal')
-                                        @include('area.modalImport')
+                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewPotential">Add New Potential</button>
+                                        @include('potential.modal')
+
                                         <div class="table-responsive">
-                                            <table id="areaTable" class="table table-striped table-bordered zero-configuration">
+                                            <table id="potentialTable" class="table table-striped table-bordered zero-configuration">
                                                 <thead>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Area</th>
-                                                        <th>Description</th>
+                                                        <th>Category</th>
+                                                        <th>Low</th>
+                                                        <th>Medium</th>
+                                                        <th>High</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </thead>
@@ -63,8 +64,10 @@
                                                 <tfoot>
                                                     <tr>
                                                         <th width="30px">No</th>
-                                                        <th>Area</th>
-                                                        <th>Description</th>
+                                                        <th>Category</th>
+                                                        <th>Low</th>
+                                                        <th>Medium</th>
+                                                        <th>High</th>
                                                         <th width="250px">Action</th>
                                                     </tr>
                                                 </tfoot>
@@ -93,14 +96,16 @@
             }
       });
 
-      var table = $('#areaTable').DataTable({
+      var table = $('#potentialTable').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('areas.index') }}",
+          ajax: "{{ route('potentials.index') }}",
           columns: [
               {data: null},
-              {data: 'area_name', name: 'area_name'},
-              {data: 'description', name: 'description'},
+              {data: 'category_name', name: 'category_name'},
+              {data: 'potential_low', name: 'potential_low'},
+              {data: 'potential_medium', name: 'potential_medium'},
+              {data: 'potential_high', name: 'potential_high'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
@@ -112,50 +117,25 @@
             });
         });
 
-      $('#createNewArea').click(function () {
+      $('#createNewPotential').click(function () {
           $('#saveBtn').val("create");
-          $('#area_id').val('');
-          $('#areaForm').trigger("reset");
-          $('#modalHeading').html("Create New Area");
-          $('#areaModal').modal('show');
+          $('#potential_id').val('');
+          $('#potentialForm').trigger("reset");
+          $('#modalHeading').html("Create New Potential");
+          $('#potentialModal').modal('show');
       });
 
-      $('#importArea').click(function () {
-          $('#areaImportModal').modal('show');
-      });
-
-      $('#saveBtnFormImport').click(function (e) {
-          e.preventDefault();
-
-          $.ajax({
-              data: new FormData($("#areaFormImport")[0]),
-              url: "{{ route('areas.importArea') }}",
-              type: "POST",
-              dataType: 'json',
-              processData: false,
-              contentType: false,
-              success: function (data) {
-                  $('#areaFormImport').trigger("reset");
-                  $('#areaImportModal').modal('hide');
-                  table.draw();
-              },
-              error: function (data) {
-                  console.log('Error:', data);
-              }
-          });
-
-      });
-
-
-      $('body').on('click', '.editArea', function () {
-        var area_id = $(this).data('id');
-        $.get("{{ route('areas.index') }}" +'/' + area_id +'/edit', function (data) {
-            $('#modalHeading').html("Edit Area");
+      $('body').on('click', '.editPotential', function () {
+        var potential_id = $(this).data('id');
+        $.get("{{ route('potentials.index') }}" +'/' + potential_id +'/edit', function (data) {
+            $('#modalHeading').html("Edit Potential");
             $('#saveBtn').val("edit");
-            $('#areaModal').modal('show');
-            $('#area_id').val(data.id);
-            $('#area_name').val(data.area_name);
-            $('#description').val(data.description);
+            $('#potentialModal').modal('show');
+            $('#potential_id').val(data.id);
+            $('#id_category').val(data.id_category);
+            $('#potential_low').val(data.potential_low);
+            $('#potential_medium').val(data.potential_medium);
+            $('#potential_high').val(data.potential_high);
             $('#created_by').val(data.created_by);
             $('#created_datetime').val(data.created_datetime);
             $('#last_modified_by').val(data.last_modified_by);
@@ -171,22 +151,20 @@
               $('#last_modified_by').val(null);
               $('#last_modified_datetime').val(null);
           } else {
-             $('#created_by').val("Deva Dwi A");
-              $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
               $('#last_modified_by').val("Deva Dwi A Edit");
               $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
           }
           $(this).html('Save');
 
           $.ajax({
-            data: $('#areaForm').serialize(),
-            url: "{{ route('areas.store') }}",
+            data: $('#potentialForm').serialize(),
+            url: "{{ route('potentials.store') }}",
             type: "POST",
             dataType: 'json',
             success: function (data) {
 
-                $('#areaForm').trigger("reset");
-                $('#areaModal').modal('hide');
+                $('#potentialForm').trigger("reset");
+                $('#potentialModal').modal('hide');
                 table.draw();
 
             },
@@ -197,14 +175,14 @@
         });
       });
 
-      $('body').on('click', '.deleteArea', function () {
+      $('body').on('click', '.deletePotential', function () {
 
-          var area_id = $(this).data("id");
+          var potential_id = $(this).data("id");
           confirm("Are You sure want to delete !");
 
           $.ajax({
               type: "DELETE",
-              url: "{{ route('areas.store') }}"+'/'+area_id,
+              url: "{{ route('potentials.store') }}"+'/'+potential_id,
               success: function (data) {
                   table.draw();
               },
