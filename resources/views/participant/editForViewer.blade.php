@@ -63,6 +63,8 @@
                                                 <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
                                                     <button onclick="getLineChartDataCollection('week');" type="button" class="btn btn-sm btn-secondary">Week</button>
                                                     <button onclick="getLineChartDataCollection('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
+                                                    <button onclick="getLineChartDataCollection('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
+                                                    <button onclick="getLineChartDataCollection('year');" type="button" class="btn btn-sm btn-secondary">Year</button>
                                                 </div>
                                                 <div class="card-body chartjs">
                                                     <canvas id="line-chart" height="500"></canvas>
@@ -289,7 +291,7 @@
             processing: true,
             serverSide: true,
             searching: false,
-            order: [[1, "asc"]],
+            order: [[2, "desc"]],
             ajax: {
                 url:"{{ route('participants.getDatatableCollection') }}",
                 data: params
@@ -297,7 +299,13 @@
             columns: [
                 {data: null},
                 {data: 'id', name: 'id', visible: false},
-                {data: 'collect_date', name: 'collect_date',orderable: false},
+                {
+                    name: 'collect_date.timestamp',
+                    data: {
+                        _: 'collect_date.display',
+                        sort: 'collect_date.timestamp'
+                    }
+                },
                 {data: 'quantity', name: 'quantity'},
             ],
         });
@@ -354,10 +362,10 @@
                         legend: { position: "none" },
                         hover: { mode: "label" },
                         scales: {
-                            xAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Week / Month", padding: 10, },ticks: {
+                            xAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Interval", padding: 10, },ticks: {
                                     padding: 10
                                 } }],
-                            yAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Collections", padding: 10 },ticks: { padding: 10}}],
+                            yAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "UBC (Kg)", padding: 10 },ticks: { padding: 10, beginAtZero: true}}],
                         },
                         title: { display: !0, text: "" },
                     },

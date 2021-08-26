@@ -37,8 +37,10 @@ class DashboardActivitiesController extends Controller
                 DB::raw('COUNT(DISTINCT id_regency) regency_coverage'),
                 DB::raw('COUNT(DISTINCT id_district) district_coverage'),
                 DB::raw('COUNT(DISTINCT location) location_coverage'),
-                DB::raw('SUM(participant_number) participant_number'),
-            );
+                DB::raw('NVL(SUM(participant_number),0) participant_number'),
+            )
+            ->where('activity_date', '>=',$request->startDates)
+            ->where('activity_date', '<=',$request->endDates);
 
         $numberOfParticipant = DB::table('activities')
             ->leftJoin('activity_programs', function ($join) {
@@ -48,6 +50,8 @@ class DashboardActivitiesController extends Controller
                 DB::raw('SUM(participant_number) participant_number'),
                 DB::raw('activity_program_name'),
             )
+            ->where('activity_date', '>=',$request->startDates)
+            ->where('activity_date', '<=',$request->endDates)
             ->groupBy('activity_program_name');
 
         $numberOfLocation = DB::table('activities')
@@ -58,12 +62,16 @@ class DashboardActivitiesController extends Controller
                 DB::raw('COUNT(location) location'),
                 DB::raw('category_name'),
             )
+            ->where('activity_date', '>=',$request->startDates)
+            ->where('activity_date', '<=',$request->endDates)
             ->groupBy('category_name');
 
         $mapData = DB::table('activities')
             ->leftJoin('regencies', function ($join) {
                 $join->on('activities.id_regency', '=', 'regencies.id');
             })
+            ->where('activity_date', '>=',$request->startDates)
+            ->where('activity_date', '<=',$request->endDates)
             ->select(
                 DB::raw('SUM(participant_number) participant_number'),
                 DB::raw('regency_name'),
@@ -104,7 +112,6 @@ class DashboardActivitiesController extends Controller
         $mapData = $mapData->get();
 
         $totalAllParticipant = $activitiesGeneral->participant_number;
-
 
         $locations = [
             ["Category", "Location", ["role"=>"style"]]

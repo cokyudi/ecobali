@@ -23,6 +23,7 @@ function drawActualTargetBar() {
                 stacked: true,
                 id: "bar-x-axis1",
                 barThickness: 70,
+                scaleLabel: { display: !0, labelString: "Category", padding: 5 },
             }, {
                 display: false,
                 stacked: true,
@@ -34,13 +35,15 @@ function drawActualTargetBar() {
                 gridLines: {
                     offsetGridLines: true
                 },
-                offset: true
+                offset: true,
+
             }],
             yAxes: [{
                 stacked: false,
                 ticks: {
                     beginAtZero: true
                 },
+                scaleLabel: { display: !0, labelString: "Target - Collection (UBC (Kg)", padding: 10 },
             }]
 
         }
@@ -60,14 +63,12 @@ function drawActualTargetBar() {
                 datasets: [{
                     label: "Actual",
                     backgroundColor: '#2e53a1',
-                    // backgroundColor: 'rgba(22,211,154,.8)',
                     borderWidth: 1,
                     data: data.data.actual,
                     xAxisID: "bar-x-axis1",
                 }, {
                     label: "Target",
                     backgroundColor: '#7dcdf3',
-                    // backgroundColor: 'rgba(81,117,224,.8)',
                     borderWidth: 1,
                     data: data.data.target,
                     xAxisID: "bar-x-axis2",

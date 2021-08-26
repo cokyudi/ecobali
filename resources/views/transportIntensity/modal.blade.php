@@ -12,9 +12,9 @@
                     <input type="hidden" id="last_modified_by" name="last_modified_by" value="">
                     <input type="hidden" id="last_modified_datetime" name="last_modified_datetime" value="">
                     <div class="form-group">
-                        <label for="name" class="control-label">Transport Intensity</label>
+                        <label for="name" class="control-label">Collection Frequently</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="intensity" name="intensity" placeholder="Enter Transport Intensity" value="" maxlength="200" required="">
+                            <input type="text" class="form-control" id="intensity" name="intensity" placeholder="Enter Collection Frequently" value="" maxlength="200" required="">
                         </div>
                     </div>
                     <div class="form-group">

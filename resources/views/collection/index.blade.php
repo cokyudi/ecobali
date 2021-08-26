@@ -45,8 +45,10 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
+                                        @if ($user['role'] == 'Admin')
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewCollection">Add New Collection</button>
-{{--                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importCollection">Import Collection</button>--}}
+                                        @endif
+                                        <a class="btn btn-info btn-min-width mr-1 mb-1 white" hidden href="{{ url('downloadCollections') }}">Download</a>
                                         @include('collection.modal')
                                         @include('collection.modalImport')
                                         <div class="table-responsive">
@@ -59,7 +61,10 @@
                                                         <th>Regency</th>
                                                         <th>KMK</th>
                                                         <th>Collect Date</th>
-                                                        <th width="180px">Action</th>
+                                                        @if ($user['role'] == 'Admin')
+                                                            <th width="180px">Action</th>
+                                                        @endif
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -73,7 +78,9 @@
                                                         <th>Regency</th>
                                                         <th>KMK</th>
                                                         <th>Collect Date</th>
+                                                        @if ($user['role'] == 'Admin')
                                                         <th width="180px">Action</th>
+                                                            @endif
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -103,20 +110,39 @@
             }
       });
 
-      var table = $('#collectionTable').DataTable({
-          processing: true,
-          serverSide: true,
-          ajax: "{{ route('collections.index') }}",
-          columns: [
-              {data: null},
-              {data: 'participant_name', name: 'participant_name'},
-              {data: 'category_name', name: 'category_name'},
-              {data: 'regency_name', name: 'regency_name'},
-              {data: 'quantity', name: 'quantity'},
-              {data: 'collect_date', name: 'collect_date'},
-              {data: 'action', name: 'action', orderable: false, searchable: false},
-          ]
-      });
+      var role = '{{$user['role']}}';
+      var table;
+      if(role == "Admin") {
+          table = $('#collectionTable').DataTable({
+              processing: true,
+              serverSide: true,
+              ajax: "{{ route('collections.index') }}",
+              columns: [
+                  {data: null},
+                  {data: 'participant_name', name: 'participant_name'},
+                  {data: 'category_name', name: 'category_name'},
+                  {data: 'regency_name', name: 'regency_name'},
+                  {data: 'quantity', name: 'quantity'},
+                  {data: 'collect_date', name: 'collect_date'},
+                  {data: 'action', name: 'action', orderable: false, searchable: false},
+              ]
+          });
+      } else {
+          table = $('#collectionTable').DataTable({
+              processing: true,
+              serverSide: true,
+              ajax: "{{ route('collections.index') }}",
+              columns: [
+                  {data: null},
+                  {data: 'participant_name', name: 'participant_name'},
+                  {data: 'category_name', name: 'category_name'},
+                  {data: 'regency_name', name: 'regency_name'},
+                  {data: 'quantity', name: 'quantity'},
+                  {data: 'collect_date', name: 'collect_date'},
+              ]
+          });
+      }
+
 
       table.on('draw.dt', function () {
             var info = table.page.info();

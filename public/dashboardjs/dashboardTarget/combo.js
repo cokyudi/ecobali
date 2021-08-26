@@ -37,8 +37,8 @@ function drawActualTargetBarByMonth(type) {
                 fontSize: 12,
                 lineWidth: 5,
                 chartArea: { left: "5%", width: "90%", height: 350 },
-                vAxis: { title: "Target", gridlines: { color: "#e9e9e9", count: 5 }, minValue: 0 },
-                hAxis: { title: "Month", gridlines: { color: "#e9e9e9", count: 5 }, minValue: 0 },
+                vAxis: { title: "Target - Collection (UBC (Kg)", gridlines: { color: "#e9e9e9", count: 5 }, minValue: 0 },
+                hAxis: { title: "Interval", gridlines: { color: "#e9e9e9", count: 5 }, minValue: 0 },
                 legend: { position: "top", alignment: "center", textStyle: { fontSize: 12 } },
             });
 

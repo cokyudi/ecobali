@@ -54,10 +54,10 @@ function getAllData() {
 
             var options_column = {
                 height: 400,
-                fontSize: 10,
+                fontSize: 8,
                 colors:['#7dcdf3','#7dcdf3'],
                 chartArea: {
-                    left: '5%',
+                    left: '10%',
                     width: '90%',
                     height: 350,
                     bottom: 40
@@ -67,7 +67,11 @@ function getAllData() {
                         color: '#e9e9e9',
                         count: 10
                     },
-                    minValue: 0
+                    minValue: 0,
+                    title: "People"
+                },
+                hAxis: {
+                    title: "Program"
                 },
                 legend: {
                     position: 'top',
@@ -88,8 +92,8 @@ function getAllData() {
                 height: 400,
                 fontSize: 12,
                 chartArea: { left: "20%", width: "70%", height: "90%" },
-                hAxis: { gridlines: { color: "#e9e9e9" } },
-                vAxis: { gridlines: { count: 10 }, minValue: 0 },
+                hAxis: { gridlines: { color: "#e9e9e9" },title: "Number of Organization"},
+                vAxis: { gridlines: { count: 10 }, minValue: 0 ,title: "Category"},
                 legend: { position: "none" },
             });
 

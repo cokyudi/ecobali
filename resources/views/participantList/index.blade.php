@@ -39,6 +39,7 @@
                                             <th>Regency</th>
                                             <th>Category</th>
                                             <th>Status</th>
+                                            <th>Average (Kg)</th>
                                             <th>Last Submit</th>
                                             <th>Joined Date</th>
                                         </tr>
@@ -53,6 +54,7 @@
                                             <th>Regency</th>
                                             <th>Category</th>
                                             <th>Status</th>
+                                            <th>Average (Kg)</th>
                                             <th>Last Submit</th>
                                             <th>Joined Date</th>
                                         </tr>
@@ -73,7 +75,7 @@
 
 
     <!-- BEGIN: Customizer-->
-    <div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-danger box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
+    <div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-info box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
 	<h4 class="text-uppercase mb-0">Data Filter Customizer</h4>
 	<hr>
 
@@ -270,6 +272,7 @@
                 {data: 'regency_name', name: 'regency_name'},
                 {data: 'category_name', name: 'category_name'},
                 {data: 'status', name: 'status'},
+                {data: 'avg', name: 'avg'},
                 {data: 'lastSubmit', name: 'lastSubmit'},
                 {data: 'joined_date', name: 'joined_date'},
             ],

@@ -15,20 +15,16 @@
     <!--/ Revenue, Hit Rate & Deals -->
         <div class="row">
             <div class="col-lg-4 col-12">
-                <div class="card pull-up">
+                <div class="card pull-up h-100">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
-                                <h6 class="font-weight-bold font-medium-5">Sent to Papermill</h6>
+                                <h6 class="font-weight-bold font-medium-5">Sent to Papermill </h6> <img src="{{asset('images/icons/sent_to_papermill.png')}}" alt="" width="85px">
                             </div>
-                            <div class="media d-flex">
+                            <div class="media d-flex mt-2">
                                 <div class="media-body text-center ">
                                     <div class="row align-items-center">
-                                        <div class="col-2">
-                                            <img src="{{asset('images/icons/sent_to_papermill.png')}}" alt="" width="85px">
-{{--                                            <i class="la la-database success font-large-4"></i>--}}
-                                        </div>
-                                        <div class="col-5 border-right">
+                                        <div class="col-6 border-right">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <span class="font-large-2 " id="delivered_to_papermill_ton"></span>
@@ -41,7 +37,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-5 ">
+                                        <div class="col-6 ">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <span class="font-large-1" id="delivered_to_papermill_kg"></span>
@@ -62,19 +58,16 @@
                 </div>
             </div>
             <div class="col-lg-4 col-12">
-                <div class="card pull-up">
+                <div class="card pull-up h-100">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
                                 <h6 class="font-weight-bold font-medium-5">Received at Papermill</h6>
+                                <img src="{{asset('images/icons/recieved_at_papermill.png')}}" alt="" width="85px">
                             </div>
-                            <div class="media d-flex">
+                            <div class="media d-flex mt-2">
                                 <div class="media-body text-center ">
                                     <div class="row align-items-center">
-                                        <div class="col-2">
-                                            <img src="{{asset('images/icons/recieved_at_papermill.png')}}" alt="" width="85px">
-
-                                        </div>
                                         <div class="col-4 border-right">
                                             <div class="row">
                                                 <div class="col-12">
@@ -88,10 +81,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-3 ">
+                                        <div class="col-4 ">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-medium-5" id="received_at_papermill_kg"></span>
+                                                    <span class="font-large-1" id="received_at_papermill_kg"></span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -100,16 +93,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-3 pr-3 pl-3">
-                                            <div class="row border-bottom-black-ship">
+                                        <div class="col-4 ">
+                                            <div class="row ">
                                                 <div class="col-12">
-                                                    <strong class="font-medium-2 " id="weighing_scale_gap_papermill"></strong>
+                                                    <strong class="font-medium-2" id="weighing_scale_gap_papermill"></strong>
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <hr style="height:2px;border-width:0;color:black;background-color:black" class="mr-2 ml-2">
+                                            <div class="row align-items-center">
+                                                <div class="col-12">
+                                                    <i id="indikator_panah" ></i>
+                                                    <strong class="font-medium-1 danger" id="weighing_scale_gap_papermill_percent"></strong>
+                                                </div>
 
-{{--                                                    <strong class="font-medium-5 danger" id="weighing_scale_gap_papermill_percent"><i class="la la-sort-down font-medium-2"></i>&ensp;- 0,1%</strong>--}}
-                                                <i id="indikator_panah" class=" "></i><strong class="font-medium-1 danger" id="weighing_scale_gap_papermill_percent"></strong>
+
                                             </div>
                                         </div>
                                     </div>
@@ -121,19 +118,18 @@
                 </div>
             </div>
             <div class="col-lg-4 col-12">
-                <div class="card pull-up">
+                <div class="card pull-up h-100">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
                                 <h6 class="font-weight-bold font-medium-5">Accepted to Recycle</h6>
+                                <img src="{{asset('images/icons/shipment-accepted.png')}}" alt="" width="85px">
                             </div>
-                            <div class="media d-flex">
+                            <div class="media d-flex mt-2">
                                 <div class="media-body text-center ">
                                     <div class="row align-items-center">
-                                        <div class="col-2">
-                                            <img src="{{asset('images/icons/shipment-accepted.png')}}" alt="" width="85px">
-                                        </div>
-                                        <div class="col-5 border-right">
+
+                                        <div class="col-6 border-right">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <span class="font-large-2 " id="total_weight_accepted_ton"></span>
@@ -146,7 +142,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-5 ">
+                                        <div class="col-6 ">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <span class="font-large-1 " id="total_weight_accepted_kg"></span>
@@ -169,7 +165,7 @@
         </div>
 
         <div class="row">
-            <div class="col-6 py-2">
+            <div class="col-sm-6 col-12 py-2">
                 <div class="card h-100">
                     <div class="card-header">
                         <h4 class="font-weight-bold font-medium-5">Weight Reduction at ecoBali</h4>
@@ -186,14 +182,13 @@
                     <div class="card-content collapse show">
                         <div class="card-body">
                             <h3>Total Penyusutan <strong id="weight_reduction_susut"></strong> Kg dan Total Tidak Susut <strong id="weight_reduction_tidak_susut"></strong> Kg.</h3>
-{{--                            <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>--}}
                             <div id="pie_weight_reduction"></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-6 py-2">
+            <div class="col-sm-6 col-12 py-2">
                 <div class="card h-100">
                     <div class="card-header">
                         <h4 class="font-weight-bold font-medium-5">Moiisture Content, Contaminant</h4>
@@ -353,7 +348,7 @@
 </div>
     <!-- END: Content-->
 <!-- BEGIN: Customizer-->
-<div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-danger box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
+<div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-info box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
         <h4 class="text-uppercase mb-0">Data Filter Customizer</h4>
         <hr>
 

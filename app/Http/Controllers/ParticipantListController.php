@@ -52,6 +52,7 @@ class ParticipantListController extends Controller
                 'categories.category_name',
                 'regencies.regency_name',
                 DB::raw('ROUND(SUM(collections.quantity),1) qty'),
+                DB::raw('ROUND(AVG(collections.quantity),1) avg'),
                 DB::raw('DATE_FORMAT(MAX(collect_date), "%d/%m/%Y") lastSubmit'),
                 DB::raw('CASE WHEN MAX(collect_date) >= CURDATE() - INTERVAL 3 MONTH THEN "ACTIVE" ELSE "INACTIVE" END status')
             )
@@ -83,9 +84,6 @@ class ParticipantListController extends Controller
         }
 
         $participants = $participants->get();
-
-
-
 
         if ($request->ajax()) {
             return Datatables::of($participants)

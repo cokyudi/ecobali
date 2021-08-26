@@ -16,14 +16,18 @@ function drawSentVsReceived(data) {
             left: '5%',
             width: '90%',
             height: 350,
-            bottom: 30
+            bottom: 60
         },
         vAxis: {
             gridlines:{
                 color: '#e9e9e9',
                 count: 10
             },
-            minValue: 0
+            minValue: 0,
+            title: "UBC (Kg)"
+        },
+        hAxis: {
+            title: "Interval"
         },
         legend: {
             position: 'top',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Export\CollectionExport;
 use App\Models\Collection;
 use Illuminate\Http\Request;
 use DataTables;
@@ -130,5 +131,10 @@ class CollectionController extends Controller
 
         return response()->json(['success'=>'Import successfully.']);
 
+    }
+
+    function downloadCollections()
+    {
+        return Excel::download(new CollectionExport, 'collections.xlsx');
     }
 }

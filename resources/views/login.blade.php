@@ -34,9 +34,11 @@
                             <div class="card border-grey border-lighten-3 m-0">
                                 <div class="card-header border-0">
                                     <div class="card-title text-center">
-                                        <img src="{{asset('images/logo/test.png')}}" width="30%">
+                                        <img src="{{asset('images/logo/ecobali-logo.png')}}" width="80" class="mr-1 img-fluid">
+                                        <span class="h3">in partnership</span>
+                                        <img src="{{asset('images/logo/tetrapak-indonesia-logo.png')}}" width="80" class="ml-1 img-fluid">
                                     </div>
-                                    <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Login to ECOTP Bali</span></h6>
+                                    <h6 class="card-subtitle line-on-side text-muted text-center font-small-4 pt-2"><span>Login to ecoBali UBC/KBM</span></h6>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">

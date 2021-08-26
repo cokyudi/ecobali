@@ -41,9 +41,10 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                    <!-- <a class="btn btn-success" href="javascript:void(0)" id="createNewDistrict"> Create New Book</a> -->
+                                        @if ($user['role'] == 'Admin')
                                     <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewSales">Add New Sales</button>
-
+                                        @endif
+                                            <a class="btn btn-info btn-min-width mr-1 mb-1 white" hidden href="{{ url('downloadSales') }}">Download</a>
                                         @include('sale.modal')
 
                                         <div class="table-responsive">
@@ -53,12 +54,16 @@
                                                         <th width="30px">No</th>
                                                         <th>Date</th>
                                                         <th>Papermill</th>
-                                                        <th>Delivered to <br>Papermill (Kg)</th>
-                                                        <th>Weighing scale Gap <br>ecoBali (Kg)</th>
-                                                        <th>% Weighing scale Gap <br>ecoBali</th>
-                                                        <th>Received at <br>Papermill (Kg)</th>
-                                                        <th>Total Weight Accepted</th>
-                                                        <th width="150px">Action</th>
+                                                        <th>Delivered to <br>Papermill <br>(Kg)</th>
+                                                        <th>Weighing scale <br>Gap ecoBali <br>(Kg)</th>
+                                                        <th>Weighing <br>scale Gap <br>ecoBali (%)</th>
+                                                        <th>Total MCC <br>(Kg)</th>
+                                                        <th>Total MCC <br>(%)</th>
+                                                        <th>Received at <br>Papermill <br>(Kg)</th>
+                                                        <th>Total <br>Weight <br>Accepted (Kg)</th>
+                                                        @if ($user['role'] == 'Admin')
+                                                            <th width="130px">Action</th>
+                                                        @endif
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -69,12 +74,16 @@
                                                         <th width="30px">No</th>
                                                         <th>Date</th>
                                                         <th>Papermill</th>
-                                                        <th>Delivered to <br>Papermill (Kg)</th>
-                                                        <th>Weighing scale Gap <br>ecoBali (Kg)</th>
-                                                        <th>% Weighing scale Gap <br>ecoBali</th>
-                                                        <th>Received at <br>Papermill (Kg)</th>
-                                                        <th>Total Weight Accepted</th>
-                                                        <th width="150px">Action</th>
+                                                        <th>Delivered to <br>Papermill <br>(Kg)</th>
+                                                        <th>Weighing scale <br>Gap ecoBali <br>(Kg)</th>
+                                                        <th>Weighing <br>scale Gap <br>ecoBali (%)</th>
+                                                        <th>Total MCC <br>(Kg)</th>
+                                                        <th>Total MCC <br>(%)</th>
+                                                        <th>Received at <br>Papermill <br>(Kg)</th>
+                                                        <th>Total <br>Weight <br>Accepted (Kg)</th>
+                                                        @if ($user['role'] == 'Admin')
+                                                            <th width="130px">Action</th>
+                                                        @endif
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -102,22 +111,60 @@ $(function () {
             }
       });
 
-    var table = $('#test').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('sales.index') }}",
-        columns: [
-            {data: null},
-            {data: 'sale_date', name: 'sale_date'},
-            {data: 'papermill_name', name: 'papermill_name'},
-            {data: 'delivered_to_papermill', name: 'delivered_to_papermill'},
-            {data: 'weighing_scale_gap_eco', name: 'weighing_scale_gap_eco'},
-            {data: 'weighing_scale_gap_eco_percent', name: 'weighing_scale_gap_eco_percent'},
-            {data: 'received_at_papermill', name: 'received_at_papermill'},
-            {data: 'total_weight_accepted', name: 'total_weight_accepted'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ]
-    });
+    var role = '{{$user['role']}}';
+    var table;
+    if(role == "Admin") {
+        table = $('#test').DataTable({
+            processing: true,
+            serverSide: true,
+            order: [[1, "desc"]],
+            ajax: "{{ route('sales.index') }}",
+            columns: [
+                {data: null},
+                {
+                    name: 'sale_date.timestamp',
+                    data: {
+                        _: 'sale_date.display',
+                        sort: 'sale_date.timestamp'
+                    }
+                },
+                {data: 'papermill_name', name: 'papermill_name'},
+                {data: 'delivered_to_papermill', name: 'delivered_to_papermill'},
+                {data: 'weighing_scale_gap_eco', name: 'weighing_scale_gap_eco'},
+                {data: 'weighing_scale_gap_eco_percent', name: 'weighing_scale_gap_eco_percent'},
+                {data: 'moisture_content_and_contaminant', name: 'moisture_content_and_contaminant'},
+                {data: 'moisture_content_and_contaminant_percent', name: 'moisture_content_and_contaminant_percent'},
+                {data: 'received_at_papermill', name: 'received_at_papermill'},
+                {data: 'total_weight_accepted', name: 'total_weight_accepted'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ]
+        });
+    } else {
+        table = $('#test').DataTable({
+            processing: true,
+            serverSide: true,
+            order: [[1, "desc"]],
+            ajax: "{{ route('sales.index') }}",
+            columns: [
+                {data: null},
+                {
+                    name: 'sale_date.timestamp',
+                    data: {
+                        _: 'sale_date.display',
+                        sort: 'sale_date.timestamp'
+                    }
+                },
+                {data: 'papermill_name', name: 'papermill_name'},
+                {data: 'delivered_to_papermill', name: 'delivered_to_papermill'},
+                {data: 'weighing_scale_gap_eco', name: 'weighing_scale_gap_eco'},
+                {data: 'weighing_scale_gap_eco_percent', name: 'weighing_scale_gap_eco_percent'},
+                {data: 'moisture_content_and_contaminant', name: 'moisture_content_and_contaminant'},
+                {data: 'moisture_content_and_contaminant_percent', name: 'moisture_content_and_contaminant_percent'},
+                {data: 'received_at_papermill', name: 'received_at_papermill'},
+                {data: 'total_weight_accepted', name: 'total_weight_accepted'},
+            ]
+        });
+    }
 
     table.on('draw.dt', function () {
         var info = table.page.info();

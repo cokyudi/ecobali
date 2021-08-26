@@ -39,10 +39,10 @@ function getComparisonLineChartData (type) {
                     legend: { position: "bottom" },
                     hover: { mode: "label" },
                     scales: {
-                        xAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Month", padding: 10, },ticks: {
+                        xAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Interval", padding: 10, },ticks: {
                             padding: 10
                         } }],
-                        yAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Value", padding: 10 },ticks: { padding: 10}}],
+                        yAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "UBC (Kg)", padding: 10 },ticks: { padding: 10,beginAtZero: true}}],
                     },
                     title: { display: !0, text: "" },
                 },

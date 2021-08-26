@@ -31,7 +31,7 @@
                             <div class="card-body card-custom">
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
-                                        <h6 class="font-weight-bold font-medium-5">District Coverage</h6>
+                                        <h6 class="font-weight-bold font-medium-5 " >District Coverage</h6>
                                         <h3 class="font-large-4" id="district_coverage"></h3>
                                     </div>
                                     <div class="align-self-center">
@@ -50,7 +50,7 @@
 {{--                                <div class="media d-flex test-deva" style="padding-top: 1.5rem;">--}}
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
-                                        <h6 class="font-weight-bold font-medium-5">Regency Coverage</h6>
+                                        <h6 class="font-weight-bold font-medium-5" >Regency Coverage</h6>
                                         <h3 class="font-large-4" id="regency_coverage"></h3>
                                     </div>
                                     <div class="align-self-center">
@@ -69,14 +69,15 @@
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
                                         <h6 class="font-weight-bold font-medium-5">Total Collection</h6>
+
                                         <div class="row">
                                             <div class="col-12">
-                                                <h4 class="font-large-2" id="total_collection_ton"></h4>
+                                                <h4 class="font-large-3 collectionTon" id="total_collection_ton"></h4>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                                <h4 class="font-large-1" id="total_collection_kg"></h4>
+                                                <h4 class="font-medium-5 collectionTon" id="total_collection_kg"></h4>
                                             </div>
                                         </div>
                                     </div>
@@ -244,7 +245,7 @@
 
 
     <!-- BEGIN: Customizer-->
-    <div class="customizer border-left-blue-grey border-left-lighten-4 "><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-danger box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
+    <div id="customizer-filter" class="customizer border-left-blue-grey border-left-lighten-4 "><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-info box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
 	<h4 class="text-uppercase mb-0">Data Filter Customizer</h4>
 	<hr>
 

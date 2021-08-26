@@ -17,7 +17,7 @@
         <div class="col-xl-12 col-12">
             <div class="card">
             <div class="card-header">
-                <h4 class="font-weight-bold font-medium-5">Dashboard Comparison</h4>
+                <h4 class="font-weight-bold font-medium-5">Participants Performance Comparisson</h4>
                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 <div class="heading-elements">
                     <ul class="list-inline mb-0">
@@ -55,7 +55,7 @@
 </div>
     <!-- END: Content-->
 <!-- BEGIN: Customizer-->
-<div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-danger box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
+<div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-info box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
         <h4 class="text-uppercase mb-0">Data Filter Customizer</h4>
         <hr>
 
@@ -121,7 +121,7 @@
                 <button id='backBtn' type="button" class="btn btn-warning mr-1">
                     <i class="ft-x"></i> Reset
                 </button>
-                <button id="saveBtn"  value="create" type="button" class="btn btn-success">
+                <button id="filterBtn"  value="create" type="button" class="btn btn-success">
                     <i class="la la-check-square-o"></i> Filter
                 </button>
             </div>
@@ -181,7 +181,7 @@
             }
         );
 
-        getComparisonLineChartData('week');
+        getBlankLine();
 
         $('#backBtn').click(function() {
             $('#daterange').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
@@ -191,15 +191,38 @@
             $('#id_district').val(null).trigger('change');
             $('#id_participant').val(null).trigger('change');
             $('#id_regency').val(null).trigger('change');
-            getComparisonLineChartData('week');
+            getBlankLine();
         });
 
-        $('#saveBtn').click(function() {
+        $('#filterBtn').click(function() {
             getComparisonLineChartData('week');
         });
 
 
     });
+    function getBlankLine() {
+        var o = $("#line-chart");
+        myLineChart = new Chart(o, {
+            type: "line",
+            options: {
+                responsive: !0,
+                maintainAspectRatio: !1,
+                legend: { position: "bottom" },
+                hover: { mode: "label" },
+                scales: {
+                    xAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "Interval", padding: 10, },ticks: {
+                            padding: 10
+                        } }],
+                    yAxes: [{ display: !0, gridLines: { color: "#f3f3f3", drawTicks: !1 }, scaleLabel: { display: !0, labelString: "UBC (Kg)", padding: 10 },ticks: { padding: 10,beginAtZero: true}}],
+                },
+                title: { display: !0, text: "" },
+            },
+            data: {
+                labels: [],
+                datasets: []
+            },
+        });
+    }
 </script>
 <script src="{{asset('dashboardjs/dashboardComparison/line.js')}}"></script>
 @endpush

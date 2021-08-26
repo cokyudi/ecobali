@@ -15,15 +15,15 @@
         <div class="content-wrapper">
             <div class="content-header row mb-1">
                 <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                    <h3 class="content-header-title mb-0 d-inline-block">Basic DataTables</h3>
+                    <h3 class="content-header-title mb-0 d-inline-block">Collection Frequently</h3>
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                <li class="breadcrumb-item"><a href="#">Home</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">DataTables</a>
+                                <li class="breadcrumb-item"><a href="#">Master Data</a>
                                 </li>
-                                <li class="breadcrumb-item active">Basic DataTables
+                                <li class="breadcrumb-item active">Collection Frequently
                                 </li>
                             </ol>
                         </div>
@@ -37,7 +37,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header pb-0">
-                                    <h4 class="card-title">Transport Intensity Data Master</h4>
+                                    <h4 class="card-title">Collection Frequently Data Master</h4>
                                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
                                         <ul class="list-inline mb-0">
@@ -50,8 +50,8 @@
                                 </div>
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
-                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewTransportIntensity">Add New Transport Intensity</button>
-										
+                                    <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewTransportIntensity">Add New Collection Frequently</button>
+
                                         @include('transportIntensity.modal')
                                         <div class="table-responsive">
                                             <table id="transportIntensityTable" class="table table-striped table-bordered zero-configuration">
@@ -64,7 +64,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -99,13 +99,13 @@ $(document).ready(function(e) {
     form.validate();
 });
   $(function () {
-    var validator = $("#transportIntensityForm").validate();    
+    var validator = $("#transportIntensityForm").validate();
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
       });
-  
+
       var table = $('#transportIntensityTable').DataTable({
           processing: true,
           serverSide: true,
@@ -117,25 +117,25 @@ $(document).ready(function(e) {
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
-  
+
       table.on('draw.dt', function () {
             var info = table.page.info();
             table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1 + info.start;
             });
         });
-  
+
       $('#createNewTransportIntensity').click(function () {
           validator.resetForm();
           $('#saveBtn').val("create");
           $('#transportIntensity_id').val('');
           $('#transportIntensityForm').trigger("reset");
-          $('#modalHeading').html("Create New Transport Intensity");
+          $('#modalHeading').html("Create New Collection Frequently");
           $('#transportIntensityModal').modal('show');
       });
-  
+
       $('body').on('click', '.editTransportIntensity', function () {
-        validator.resetForm();  
+        validator.resetForm();
         var transportIntensity_id = $(this).data('id');
         $.get("{{ route('transportIntensities.index') }}" +'/' + transportIntensity_id +'/edit', function (data) {
             $('#modalHeading').html("Edit Transport Intensity");
@@ -150,7 +150,7 @@ $(document).ready(function(e) {
             $('#last_modified_datetime').val(data.last_modified_datetime);
         })
      });
-  
+
       $('#saveBtn').click(function (e) {
         if ($('#transportIntensityForm').valid()) {
             e.preventDefault();
@@ -159,23 +159,23 @@ $(document).ready(function(e) {
                 $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
                 $('#last_modified_by').val(null);
                 $('#last_modified_datetime').val(null);
-                var alertMessage = 'Transport Intensity berhasil ditambahkan.';
+                var alertMessage = 'Collection Frequently berhasil ditambahkan.';
             } else {
                 $('#created_by').val("Deva Dwi A");
                 $('#created_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
                 $('#last_modified_by').val("Deva Dwi A Edit");
                 $('#last_modified_datetime').val(new Date().toISOString().slice(0, 19).replace('T', ' '));
-                var alertMessage = 'Transport Intensity berhasil di edit.';
+                var alertMessage = 'Collection Frequently berhasil di edit.';
             }
             $(this).html('Save');
-        
+
             $.ajax({
                 data: $('#transportIntensityForm').serialize(),
                 url: "{{ route('transportIntensities.store') }}",
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
-        
+
                     $('#transportIntensityForm').trigger("reset");
                     $('#transportIntensityModal').modal('hide');
                     table.draw();
@@ -183,7 +183,7 @@ $(document).ready(function(e) {
                         "positionClass": "toast-bottom-right"
                     };
                     toastr.success(alertMessage);
-            
+
                 },
                 error: function (data) {
                     console.log('Error:', data);
@@ -192,11 +192,11 @@ $(document).ready(function(e) {
                 }
             });
         }
-          
+
       });
-      
+
       $('body').on('click', '.deleteTransportIntensity', function () {
-       
+
           var transportIntensity_id = $(this).data("id");
           swal({
             title: "Are you sure?",
@@ -214,7 +214,7 @@ $(document).ready(function(e) {
                             toastr.options = {
                                 "positionClass": "toast-bottom-right"
                             }
-                            toastr.success('Transfer Intensity berhasil dihapus.');
+                            toastr.success('Collection Frequently berhasil dihapus.');
                             table.draw();
                         },
                         error: function (data) {
@@ -223,10 +223,10 @@ $(document).ready(function(e) {
                     });
                 } else {}
             });
-          
+
       });
-       
+
     });
 </script>
 
-@endpush 
+@endpush

@@ -80,7 +80,10 @@ Route::get('downloadParticipants', [ParticipantController::class, 'downloadParti
 Route::resource('user-management', UserManagementController::class);
 Route::resource('collections', CollectionController::class);
 Route::post('importCollection',[CollectionController::class, 'importCollection'])->name('collections.importCollection');
+Route::get('downloadCollections', [CollectionController::class, 'downloadCollections']);
+
 Route::resource('sales', SaleController::class);
+Route::get('downloadSales', [SaleController::class, 'downloadSales']);
 Route::resource('activityPrograms', ActivityProgramController::class);
 Route::resource('activities', ActivityController::class);
 Route::post('importActivity',[ActivityController::class, 'importActivity'])->name('activities.importActivity');

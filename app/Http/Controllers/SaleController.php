@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Export\SalesExport;
 use App\Models\Area;
 use App\Models\Sale;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use DataTables;
 use Illuminate\Support\Facades\Log;
 use DateTime;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SaleController extends Controller
 {
@@ -28,11 +30,13 @@ class SaleController extends Controller
             })
             ->select(
                 'sales.id',
-                DB::raw('DATE_FORMAT(sales.sale_date, "%d/%m/%Y") sale_date'),
+                'sales.sale_date',
                 'papermills.papermill_name',
                 'sales.delivered_to_papermill',
                 'sales.weighing_scale_gap_eco',
                 'sales.weighing_scale_gap_eco_percent',
+                'sales.moisture_content_and_contaminant',
+                'sales.moisture_content_and_contaminant_percent',
                 'sales.received_at_papermill',
                 'sales.total_weight_accepted',
             )
@@ -51,6 +55,13 @@ class SaleController extends Controller
                     return $btn;
                 })
                 ->rawColumns(['action'])
+                ->editColumn('sale_date', function ($collection)
+                {
+                    return [
+                        'display' => \Carbon\Carbon::parse($collection->sale_date)->format('d/m/Y'),
+                        'timestamp' => $collection->sale_date
+                    ];
+                })
                 ->make(true);
         }
 
@@ -150,5 +161,10 @@ class SaleController extends Controller
         Sale::find($id)->delete();
 
         return response()->json(['success'=>'Sales deleted successfully.']);
+    }
+
+    function downloadSales()
+    {
+        return Excel::download(new SalesExport, 'sales.xlsx');
     }
 }

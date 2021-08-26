@@ -10,6 +10,7 @@ use DataTables;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
+use App\Export\ParticipantExport;
 
 
 class ParticipantController extends Controller
@@ -249,15 +250,21 @@ class ParticipantController extends Controller
             ->where('collect_date', '<=',$request->endDates)
             ->select(
                 'id',
-                DB::raw("(DATE_FORMAT(collect_date,'%d %b %Y')) collect_date"),
-//                'collect_date',
+                'collect_date',
                 'quantity',
             )
-            ->orderBy('collect_date','ASC')
+            ->orderBy('collect_date','desc')
             ->get();
 
         return Datatables::of($collections)
             ->addIndexColumn()
+            ->editColumn('collect_date', function ($collection)
+            {
+                return [
+                    'display' => \Carbon\Carbon::parse($collection->collect_date)->format('d M Y'),
+                    'timestamp' => $collection->collect_date
+                ];
+            })
             ->make(true);
     }
 
@@ -276,7 +283,7 @@ class ParticipantController extends Controller
                 )
                 ->groupBy('year','month','week_of_month','monthName');
 
-        } else {
+        } else if ($request->type == 'month') {
             $collections = DB::table('collections')
                 ->where('collect_date', '>=',$request->startDates)
                 ->where('collect_date', '<=',$request->endDates)
@@ -288,6 +295,30 @@ class ParticipantController extends Controller
                     DB::raw('YEAR(collect_date) year')
                 )
                 ->groupBy('month','monthName','year');
+
+        } else if ($request->type == 'quarter') {
+            $collections = DB::table('collections')
+                ->where('collect_date', '>=',$request->startDates)
+                ->where('collect_date', '<=',$request->endDates)
+                ->where('id_participant','=',$request->idParticipant)
+                ->select(
+                    DB::raw('ROUND(SUM(quantity),1) qty'),
+                    DB::raw('YEAR(collect_date) year'),
+                    DB::raw('QUARTER(collect_date) quarter')
+                )
+                ->groupBy('year','quarter');
+
+        } else if ($request->type == 'year') {
+            $collections = DB::table('collections')
+                ->where('collect_date', '>=',$request->startDates)
+                ->where('collect_date', '<=',$request->endDates)
+                ->where('id_participant','=',$request->idParticipant)
+                ->select(
+                    DB::raw('ROUND(SUM(quantity),1) qty'),
+                    DB::raw('YEAR(collect_date) year')
+                )
+                ->groupBy('year');
+
         }
 
         $collections = $collections->get();
@@ -300,10 +331,24 @@ class ParticipantController extends Controller
                 $dataLine['qty'][] = $collection->qty;
                 $totalQty += $collection->qty;
             }
-        } else {
+        } else if ($request->type == 'month') {
             $dataLine = [];
             foreach ($collections as $collection) {
                 $dataLine['label'][] = [$collection->monthName,$collection->year];
+                $dataLine['qty'][] = $collection->qty;
+                $totalQty += $collection->qty;
+            }
+        } else if ($request->type == 'quarter') {
+            $dataLine = [];
+            foreach ($collections as $collection) {
+                $dataLine['label'][] = ['Q'.$collection->quarter,$collection->year];
+                $dataLine['qty'][] = $collection->qty;
+                $totalQty += $collection->qty;
+            }
+        } else if ($request->type == 'year') {
+            $dataLine = [];
+            foreach ($collections as $collection) {
+                $dataLine['label'][] = [$collection->year];
                 $dataLine['qty'][] = $collection->qty;
                 $totalQty += $collection->qty;
             }
@@ -390,9 +435,6 @@ class ParticipantController extends Controller
             $continuityColor = "btn-success";
         }
 
-
-
-
         $data = [
             'dataLine' => $dataLine,
             'potential' =>$potential,
@@ -404,6 +446,9 @@ class ParticipantController extends Controller
         return response()->json(['data'=>$data]);
 
     }
-
+    function downloadParticipants()
+    {
+        return Excel::download(new ParticipantExport, 'participants.xlsx');
+    }
 
 }

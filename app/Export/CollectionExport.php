@@ -4,6 +4,7 @@ namespace App\Export;
 
 use App\Models\Participant;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -17,63 +18,141 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Carbon\Carbon;
 
 
-class SalesExport implements FromQuery, WithHeadings, WithMapping,WithColumnFormatting,ShouldAutoSize,WithStyles
+class CollectionExport implements FromQuery, WithHeadings, WithMapping,WithColumnFormatting,ShouldAutoSize,WithStyles
 {
+    public $categoryMap;
+    public $categoryMapYear;
+
+    public function __construct(){
+        $this->categoryMap = $this->getTargetMap();
+        $this->categoryMapYear = $this->getTargetMapYearly();
+    }
 
     public function query()
     {
-        $sales = DB::table('sales')
-            ->leftJoin('papermills', function ($join) {
-                $join->on('sales.id_papermill', '=', 'papermills.id');
+        $collections = DB::table('collections')
+            ->leftJoin('participants', function ($join) {
+                $join->on('collections.id_participant', '=', 'participants.id');
+            })
+            ->leftJoin('categories', function ($join) {
+                $join->on('participants.id_category', '=', 'categories.id');
+            })
+            ->leftJoin('districts', function ($join) {
+                $join->on('participants.id_district', '=', 'districts.id');
+            })
+            ->leftJoin('regencies', function ($join) {
+                $join->on('participants.id_regency', '=', 'regencies.id');
             })
             ->select(
-                'sales.sale_date',
-                'sales.collected_d_min_1',
-                'sales.delivered_to_papermill',
-                'sales.weighing_scale_gap_eco',
-                'sales.weighing_scale_gap_eco_percent',
-                'papermills.papermill_name',
-                'sales.received_at_papermill',
-                'sales.weighing_scale_gap_papermill',
-                'sales.weighing_scale_gap_papermill_percent',
-                'sales.moisture_content_and_contaminant',
-                'sales.moisture_content_and_contaminant_percent',
-                'sales.deduction',
-                'sales.deduction_percent',
-                'sales.total_weight_accepted',
+                'collections.collect_date',
+                DB::raw('FLOOR((DAYOFMONTH(collections.collect_date) - 1) / 7) + 1 week_of_month'),
+                'participants.participant_name',
+                'categories.id',
+                'categories.category_name',
+                'regencies.regency_name',
+                'districts.district_name',
+                'collections.quantity',
             )
-            ->orderBy('sales.sale_date','DESC');
-        return $sales;
+            ->orderBy('collections.id','ASC');
+        return $collections;
 
     }
 
-    public function map($sales): array
+    public function map($collections): array
     {
+
         return [
-            Date::stringToExcel($sales->sale_date),
-            strtoupper(date('(m) M', strtotime($sales->sale_date))),
-            'Q'.ceil(date("n", strtotime($sales->sale_date))/3),
-            date('Y', strtotime($sales->sale_date)),
-            $sales->collected_d_min_1,
-            $sales->delivered_to_papermill,
-            $sales->weighing_scale_gap_eco,
-            $sales->weighing_scale_gap_eco_percent,
-            $sales->papermill_name,
-            $sales->received_at_papermill,
-            $sales->weighing_scale_gap_papermill,
-            $sales->weighing_scale_gap_papermill_percent,
-            $sales->moisture_content_and_contaminant,
-            $sales->moisture_content_and_contaminant_percent,
-            $sales->deduction,
-            $sales->deduction_percent,
-            $sales->total_weight_accepted,
+            Date::stringToExcel($collections->collect_date),
+            $collections->week_of_month,
+            'Q'.ceil(date("n", strtotime($collections->collect_date))/3),
+            date('d', strtotime($collections->collect_date)),
+            strtoupper(date('(m) M', strtotime($collections->collect_date))),
+            date('Y', strtotime($collections->collect_date)),
+
+            $collections->participant_name,
+            $collections->category_name,
+            $collections->regency_name,
+            $collections->district_name,
+            $collections->quantity,
+            $this->getMonthlyTargetForAllCategory(date('m', strtotime($collections->collect_date)),date('Y', strtotime($collections->collect_date)),$collections->id,$this->categoryMap),
+            $this->getYearlyTargetForAllCategory(date('Y', strtotime($collections->collect_date)),$collections->id,$this->categoryMapYear),
+
         ];
+    }
+
+    function getTargetMap(){
+        $categories = DB::table('categories')
+            ->leftJoin('category_details', function ($join) {
+                $join->on('categories.id', '=', 'category_details.category_id');
+            })
+            ->select(
+                'categories.id',
+                'categories.category_name',
+                'category_details.year',
+                'category_details.semester_1_target',
+                'category_details.semester_2_target',
+            )
+            ->get();
+
+        $categoryMap = [];
+        foreach ($categories as $category) {
+            $categoryMap[$category->year.'-'.$category->id] = array(
+                "semester_1_target"=>round($category->semester_1_target/6,1),
+                "semester_2_target"=>round($category->semester_2_target/6,1),
+            );
+
+        }
+
+        return $categoryMap;
+    }
+
+     function getMonthlyTargetForAllCategory($month, $year, $categoryId, $categoryMap ) {
+        $totalTarget = 0;
+
+        if ($month < 7) {
+            $totalTarget += $categoryMap[$year."-".$categoryId]['semester_1_target'];
+        } else {
+            $totalTarget += $categoryMap[$year."-".$categoryId]['semester_2_target'];
+        }
+
+        return round($totalTarget,1);
+    }
+
+    function getTargetMapYearly(){
+        $categories = DB::table('categories')
+            ->leftJoin('category_details', function ($join) {
+                $join->on('categories.id', '=', 'category_details.category_id');
+            })
+            ->select(
+                'categories.id',
+                'categories.category_name',
+                'category_details.year',
+                'category_details.semester_1_target',
+                'category_details.semester_2_target',
+            )
+            ->get();
+
+        $categoryMapYear = [];
+        foreach ($categories as $category) {
+            $categoryMapYear[$category->year.'-'.$category->id] = array(
+                "target"=>round($category->semester_1_target,1)+round($category->semester_2_target,1),
+            );
+
+        }
+
+        return $categoryMapYear;
+    }
+
+    function getYearlyTargetForAllCategory($year, $categoryId, $categoryMapYear ) {
+        $totalTarget = 0;
+        $totalTarget += $categoryMapYear[$year."-".$categoryId]['target'];
+
+        return round($totalTarget,1);
     }
 
     public function headings() :array
     {
-        return ["Date", "Month", "Quartal","Year", "Collected D-1 Sell (Kg)", "Delivered to Papermill (Kg)","Weighing scale Gap ecoBali (Kg)", "Weighing scale Gap ecoBali (%)", "Papermill","Received at Papermill (Kg)", "Weighing scale Gap papermill (Kg)", "Weighing scale Gap papermill (%)"
-            ,"Moisture Content and Contaminant (Kg)", "Moisture Content and Contaminant  (%)", "Total Gap / Deduction (Kg)","Total Gap / Deduction (%)", "Total Weight Accepted (Kg)"];
+        return ["Date", "Week","Quartal", "Date","Month", "Year", "Participant", "Category","Regency", "District", "∑ KMK (Kg)","Monthly Target", "Yearly Target"];
     }
 
     public function columnFormats(): array

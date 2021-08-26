@@ -14,222 +14,72 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use Carbon\Carbon;
 
 
-class ParticipantExport implements FromQuery, WithHeadings, WithMapping,WithColumnFormatting,ShouldAutoSize,WithStyles
+class SalesExport implements FromQuery, WithHeadings, WithMapping,WithColumnFormatting,ShouldAutoSize,WithStyles
 {
 
     public function query()
     {
-        $participants = DB::table('participants')
-            ->leftJoin('categories', function ($join) {
-                $join->on('participants.id_category', '=', 'categories.id');
-            })
-            ->leftJoin('transport_intensities', function ($join) {
-                $join->on('participants.id_transport_intensity', '=', 'transport_intensities.id');
-            })
-            ->leftJoin('areas', function ($join) {
-                $join->on('participants.id_area', '=', 'areas.id');
-            })
-            ->leftJoin('districts', function ($join) {
-                $join->on('participants.id_district', '=', 'districts.id');
-            })
-            ->leftJoin('regencies', function ($join) {
-                $join->on('participants.id_regency', '=', 'regencies.id');
-            })
-            ->leftJoin('box_resources', function ($join) {
-                $join->on('participants.id_box_resource', '=', 'box_resources.id');
-            })
-            ->leftJoin('purchase_prices', function ($join) {
-                $join->on('participants.id_purchase_price', '=', 'purchase_prices.id');
-            })
-            ->leftJoin('payment_methods', function ($join) {
-                $join->on('participants.id_payment_method', '=', 'payment_methods.id');
-            })
-            ->leftJoin('banks', function ($join) {
-                $join->on('participants.id_bank', '=', 'banks.id');
+        $sales = DB::table('sales')
+            ->leftJoin('papermills', function ($join) {
+                $join->on('sales.id_papermill', '=', 'papermills.id');
             })
             ->select(
-                'participants.id',
-                'participants.participant_name',
-                'categories.category_name',
-                'participants.address',
-                'participants.latitude',
-                'participants.langitude',
-                'participants.contact_name_1',
-                'participants.contact_position_1',
-                'participants.contact_phone_1',
-                'participants.contact_email_1',
-                'participants.contact_name_2',
-                'participants.contact_position_2',
-                'participants.contact_phone_2',
-                'participants.contact_email_2',
-                'participants.service_area',
-                'areas.area_name',
-                'districts.district_name',
-                'regencies.regency_name',
-                'participants.joined_date',
-                'participants.id_box_resource',
-                'participants.resource_description',
-                'purchase_prices.price',
-                'transport_intensities.intensity',
-                'payment_methods.payment_method',
-                'banks.bank_name',
-                'participants.bank_branch',
-                'participants.bank_account_number',
-                'participants.bank_account_holder_name',
+                'sales.sale_date',
+                'sales.collected_d_min_1',
+                'sales.delivered_to_papermill',
+                'sales.weighing_scale_gap_eco',
+                'sales.weighing_scale_gap_eco_percent',
+                'papermills.papermill_name',
+                'sales.received_at_papermill',
+                'sales.weighing_scale_gap_papermill',
+                'sales.weighing_scale_gap_papermill_percent',
+                'sales.moisture_content_and_contaminant',
+                'sales.moisture_content_and_contaminant_percent',
+                'sales.deduction',
+                'sales.deduction_percent',
+                'sales.total_weight_accepted',
             )
-            ->where('participants.id','=','1')
-            ->orderBy('participants.id','DESC');
-        return $participants;
+            ->orderBy('sales.sale_date','DESC');
+        return $sales;
 
     }
-    /*
-    public function collection()
-    {
-        $participants = DB::table('participants')
-            ->leftJoin('categories', function ($join) {
-                $join->on('participants.id_category', '=', 'categories.id');
-            })
-            ->leftJoin('transport_intensities', function ($join) {
-                $join->on('participants.id_transport_intensity', '=', 'transport_intensities.id');
-            })
-            ->leftJoin('areas', function ($join) {
-                $join->on('participants.id_area', '=', 'areas.id');
-            })
-            ->leftJoin('districts', function ($join) {
-                $join->on('participants.id_district', '=', 'districts.id');
-            })
-            ->leftJoin('regencies', function ($join) {
-                $join->on('participants.id_regency', '=', 'regencies.id');
-            })
-            ->leftJoin('box_resources', function ($join) {
-                $join->on('participants.id_box_resource', '=', 'box_resources.id');
-            })
-            ->leftJoin('purchase_prices', function ($join) {
-                $join->on('participants.id_purchase_price', '=', 'purchase_prices.id');
-            })
-            ->leftJoin('payment_methods', function ($join) {
-                $join->on('participants.id_payment_method', '=', 'payment_methods.id');
-            })
-            ->leftJoin('banks', function ($join) {
-                $join->on('participants.id_bank', '=', 'banks.id');
-            })
-            ->select(
-                'participants.id',
-                'participants.participant_name',
-                'categories.category_name',
-                'participants.address',
-                'participants.latitude',
-                'participants.langitude',
-                'participants.contact_name_1',
-                'participants.contact_position_1',
-                'participants.contact_phone_1',
-                'participants.contact_email_1',
-                'participants.contact_name_2',
-                'participants.contact_position_2',
-                'participants.contact_phone_2',
-                'participants.contact_email_2',
-                'participants.service_area',
-                'areas.area_name',
-                'districts.district_name',
-                'regencies.regency_name',
-                'participants.joined_date',
-                'participants.id_box_resource',
-                'participants.resource_description',
-                'purchase_prices.price',
-                'transport_intensities.intensity',
-                'payment_methods.payment_method',
-                'banks.bank_name',
-                'participants.bank_branch',
-                'participants.bank_account_number',
-                'participants.bank_account_holder_name',
-            )
-            ->where('participants.id','=','1')
-            ->get();
-        return $participants;
-    }
-    */
 
-    public function map($participants): array
+    public function map($sales): array
     {
-        $boxResourceMap = $this->getBoxResourceMap();
         return [
-            $participants->id,
-            $participants->participant_name,
-            $participants->category_name,
-            $participants->address,
-            $participants->latitude,
-            $participants->langitude,
-            $participants->contact_name_1,
-            $participants->contact_position_1,
-            $participants->contact_phone_1,
-            $participants->contact_email_1,
-            $participants->contact_name_2,
-            $participants->contact_position_2,
-            $participants->contact_phone_2,
-            $participants->contact_email_2,
-            $participants->service_area,
-            $participants->area_name,
-            $participants->district_name,
-            $participants->regency_name,
-            Date::stringToExcel($participants->joined_date),
-            $this->getListIdInArray($boxResourceMap, $participants->id_box_resource),
-            $participants->resource_description,
-            $participants->price,
-            $participants->intensity,
-            $participants->payment_method,
-            $participants->bank_name,
-            $participants->bank_branch,
-            $participants->bank_account_number,
-            $participants->bank_account_holder_name,
+            Date::stringToExcel($sales->sale_date),
+            strtoupper(date('(m) M', strtotime($sales->sale_date))),
+            'Q'.ceil(date("n", strtotime($sales->sale_date))/3),
+            date('Y', strtotime($sales->sale_date)),
+            $sales->collected_d_min_1,
+            $sales->delivered_to_papermill,
+            $sales->weighing_scale_gap_eco,
+            $sales->weighing_scale_gap_eco_percent,
+            $sales->papermill_name,
+            $sales->received_at_papermill,
+            $sales->weighing_scale_gap_papermill,
+            $sales->weighing_scale_gap_papermill_percent,
+            $sales->moisture_content_and_contaminant,
+            $sales->moisture_content_and_contaminant_percent,
+            $sales->deduction,
+            $sales->deduction_percent,
+            $sales->total_weight_accepted,
         ];
     }
 
-//    public function headings() :array
-//    {
-//        return ["Participant ID", "Name","Join Date"];
-//    }
-
     public function headings() :array
     {
-        return ["Participant ID", "Name", "Category","Address", "LATITUDE X", "LANGITUDE Y","PIC 1", "Position 1", "Contact 1","Email 1", "PIC 2", "Position 2"
-            ,"Contact 2", "Email 2", "Service Data","Area", "District", "Regency","Start Join","Source", "Source Detail", "Price","Intensity", "Payment System", "Bank", "Branch"
-            , "Account Number", "Account Holder Name"];
-    }
-
-    function isExistInArray($array, $var):bool {
-        return array_key_exists($var,$array);
-    }
-
-    function getListIdInArray($array, $var) {
-        $sources = explode(",", $var);
-        $idList = "";
-
-        foreach ($sources as $source) {
-            if ($this->isExistInArray($array, strtolower(trim($source)))) {
-                $idList .= "," . $array[strtolower(trim($source))];
-            }
-        }
-
-        return substr($idList,1);
-
-    }
-
-    function getBoxResourceMap() {
-        $boxResources =  DB::table('box_resources')->pluck('id','resource_name');
-        $boxResourceMap = [];
-
-        foreach ($boxResources as $id => $resource_name) {
-            $boxResourceMap[trim(strtolower($resource_name))] = $id;
-        }
-        return $boxResourceMap;
+        return ["Date", "Month", "Quartal","Year", "Collected D-1 Sell (Kg)", "Delivered to Papermill (Kg)","Weighing scale Gap ecoBali (Kg)", "Weighing scale Gap ecoBali (%)", "Papermill","Received at Papermill (Kg)", "Weighing scale Gap papermill (Kg)", "Weighing scale Gap papermill (%)"
+            ,"Moisture Content and Contaminant (Kg)", "Moisture Content and Contaminant  (%)", "Total Gap / Deduction (Kg)","Total Gap / Deduction (%)", "Total Weight Accepted (Kg)"];
     }
 
     public function columnFormats(): array
     {
         return [
-            'S' => NumberFormat::FORMAT_DATE_DDMMYYYY
+            'A' => NumberFormat::FORMAT_DATE_DDMMYYYY
         ];
     }
 

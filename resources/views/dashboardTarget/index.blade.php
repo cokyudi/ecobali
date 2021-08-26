@@ -22,60 +22,8 @@
     </div>
     <div class="content-body"><!-- Revenue, Hit Rate & Deals -->
     <!--/ Revenue, Hit Rate & Deals -->
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="font-weight-bold font-medium-5">Actual vs Target by Categories</h4>
-                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-                        <div class="heading-elements">
-                            <ul class="list-inline mb-0">
-                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-content collapse show">
-                        <div class="card-body">
-                            <canvas id="actual-target" height="500"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="font-weight-bold font-medium-5">Dinamics of Actual vs Target by Month</h4>
-                        <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-                        <div class="heading-elements">
-                            <ul class="list-inline mb-0">
-                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-content collapse show">
-                        <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
-                            <button onclick="drawActualTargetBarByMonth('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
-                            <button onclick="drawActualTargetBarByMonth('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
-                            <button onclick="drawActualTargetBarByMonth('year');" type="button" class="btn btn-sm btn-secondary">Year</button>
-                        </div>
-                        <div class="card-body mt-2">
-
-                            <div id="combo-chart"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        {{--Monthly Target & Annual Target ecoBali--}}
         <div class="row">
             <div class="col-lg-6 col-12">
                 <div class="card">
@@ -117,7 +65,7 @@
                     <div class="card-content collapse show">
                         <div class="card-body">
                             <h3>Terkumpul <strong id="annual_eco_terkumpul"></strong> Kg dari Target <strong id="annual_eco_target"></strong> Kg.</h3>
-{{--                            <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>--}}
+                            {{--                            <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>--}}
                             <div id="pie-3d-exploded"></div>
                         </div>
                     </div>
@@ -125,6 +73,63 @@
             </div>
         </div>
 
+        {{--Dynamic--}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="font-weight-bold font-medium-5">Dinamics of Actual vs Target by Month</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
+                            <button onclick="drawActualTargetBarByMonth('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
+                            <button onclick="drawActualTargetBarByMonth('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
+                            <button onclick="drawActualTargetBarByMonth('year');" type="button" class="btn btn-sm btn-secondary">Year</button>
+                        </div>
+                        <div class="card-body mt-2">
+
+                            <div id="combo-chart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{--Actual vs Target--}}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="font-weight-bold font-medium-5">Actual vs Target by Categories</h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <canvas id="actual-target" height="500"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{--Monthly Target & Annual Target papermill--}}
         <div class="row">
             <div class="col-xl-6 col-lg-12">
                 <div class="card">
@@ -178,7 +183,7 @@
 </div>
     <!-- END: Content-->
 <!-- BEGIN: Customizer-->
-<div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-danger box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
+<div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-info box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
         <h4 class="text-uppercase mb-0">Collection Filter Customizer</h4>
         <hr>
 
