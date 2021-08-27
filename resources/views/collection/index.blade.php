@@ -116,6 +116,7 @@
           table = $('#collectionTable').DataTable({
               processing: true,
               serverSide: true,
+              order: [[5, "desc"]],
               ajax: "{{ route('collections.index') }}",
               columns: [
                   {data: null},
@@ -123,7 +124,13 @@
                   {data: 'category_name', name: 'category_name'},
                   {data: 'regency_name', name: 'regency_name'},
                   {data: 'quantity', name: 'quantity'},
-                  {data: 'collect_date', name: 'collect_date'},
+                  {
+                      name: 'collect_date.timestamp',
+                      data: {
+                          _: 'collect_date.display',
+                          sort: 'collect_date.timestamp'
+                      }
+                  },
                   {data: 'action', name: 'action', orderable: false, searchable: false},
               ]
           });
@@ -131,6 +138,7 @@
           table = $('#collectionTable').DataTable({
               processing: true,
               serverSide: true,
+              order: [[5, "desc"]],
               ajax: "{{ route('collections.index') }}",
               columns: [
                   {data: null},
@@ -138,7 +146,13 @@
                   {data: 'category_name', name: 'category_name'},
                   {data: 'regency_name', name: 'regency_name'},
                   {data: 'quantity', name: 'quantity'},
-                  {data: 'collect_date', name: 'collect_date'},
+                  {
+                      name: 'collect_date.timestamp',
+                      data: {
+                          _: 'collect_date.display',
+                          sort: 'collect_date.timestamp'
+                      }
+                  },
               ]
           });
       }

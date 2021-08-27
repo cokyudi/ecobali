@@ -191,7 +191,7 @@
             <div class="col-sm-6 col-12 py-2">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="font-weight-bold font-medium-5">Moiisture Content, Contaminant</h4>
+                        <h4 class="font-weight-bold font-medium-5">Moisture Content, Contaminant</h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">

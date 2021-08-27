@@ -28,7 +28,7 @@ function drawActualTargetBar() {
                 display: false,
                 stacked: true,
                 id: "bar-x-axis2",
-                barThickness: 70,
+                barThickness: 85,
                 type: 'category',
                 categoryPercentage: 0.8,
                 barPercentage: 0.9,

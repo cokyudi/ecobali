@@ -28,7 +28,7 @@ function drawPie3dExploded() {
         success: function (data) {
             var e = google.visualization.arrayToDataTable(data.data);
             new google.visualization.PieChart(document.getElementById("pie-3d-exploded")).draw(e, {
-                title: "Contribution",
+                title: "",
                 is3D: !0,
                 height: 400,
                 fontSize: 12,

@@ -33,7 +33,7 @@ function drawPie3d() {
 
             var e = google.visualization.arrayToDataTable(data.data);
             pie3d = new google.visualization.PieChart(document.getElementById("pie-3d")).draw(e, {
-                title: "Number of Participant",
+                title: "",
                 is3D: !0,
                 height: 400,
                 fontSize: 12,

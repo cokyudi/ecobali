@@ -68,7 +68,6 @@ class CollectionController extends Controller
                 'participants.category_name',
                 'participants.regency_name',
             )
-            ->orderBy('collect_date','DESC')
             ->get();
 
         if ($request->ajax()) {
@@ -84,6 +83,13 @@ class CollectionController extends Controller
                     return $btn;
                 })
                 ->rawColumns(['action'])
+                ->editColumn('collect_date', function ($collection)
+                {
+                    return [
+                        'display' => \Carbon\Carbon::parse($collection->collect_date)->format('d/m/Y'),
+                        'timestamp' => $collection->collect_date
+                    ];
+                })
                 ->make(true);
         }
         return view('collection/index',compact('collections','user','participants'));
