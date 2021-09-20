@@ -92,25 +92,25 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_name_1">Contact Name 1</label>
-                                                            <input type="text" id="contact_name_1" class="form-control" placeholder="Contact Name 1" name="contact_name_1"  maxlength="250" required>
+                                                            <input type="text" id="contact_name_1" class="form-control" placeholder="Contact Name 1" name="contact_name_1"  maxlength="250" >
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_position_1">Contact Position 1</label>
-                                                            <input type="text" id="contact_position_1" class="form-control" placeholder="Contact Position 1" name="contact_position_1"  maxlength="200" required>
+                                                            <input type="text" id="contact_position_1" class="form-control" placeholder="Contact Position 1" name="contact_position_1"  maxlength="200" >
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_phone_1">Contact Phone 1</label>
-                                                            <input type="number" id="contact_phone_1" class="form-control" placeholder="Contact Phone 1" name="contact_phone_1"  maxlength="50" required>
+                                                            <input type="number" id="contact_phone_1" class="form-control" placeholder="Contact Phone 1" name="contact_phone_1"  maxlength="50" >
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_email_1">Contact Email 1</label>
-                                                            <input type="email" id="contact_email_1" class="form-control" placeholder="Contact Email 1" name="contact_email_1"  maxlength="200" required>
+                                                            <input type="email" id="contact_email_1" class="form-control" placeholder="Contact Email 1" name="contact_email_1"  maxlength="200" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -147,7 +147,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
                                                             <label for="id_transport_intensity">Transport Intensity</label>
-                                                            <select id="id_transport_intensity" name="id_transport_intensity" class="form-control" required>
+                                                            <select id="id_transport_intensity" name="id_transport_intensity" class="form-control" >
                                                                 <option value="0" selected="" disabled="">Transport Intensity</option>
                                                                 @foreach($transport_intensities as $transport_intensity)
                                                                     <option value="{{$transport_intensity->id}}">{{$transport_intensity->intensity}}</option>
@@ -159,7 +159,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
                                                             <label for="joined_date">Joined Date</label>
-                                                            <input type="date" id="joined_date" class="form-control" name="joined_date" required>
+                                                            <input type="date" id="joined_date" class="form-control" name="joined_date" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -174,7 +174,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group form-group-style">
                                                             <label for="address">Address</label>
-                                                            <input type="text" id="address" class="form-control" placeholder="Address" name="address"  maxlength="400" required>
+                                                            <input type="text" id="address" class="form-control" placeholder="Address" name="address"  maxlength="400" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -183,13 +183,13 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="latitude">Latitude</label>
-                                                            <input type="number" id="latitude" class="form-control" placeholder="Latitude" name="latitude"  maxlength="100" required>
+                                                            <input type="number" id="latitude" class="form-control" placeholder="Latitude" name="latitude"  maxlength="100" >
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="langitude">Langitude</label>
-                                                            <input type="number" id="langitude" class="form-control" placeholder="Langitude" name="langitude"  maxlength="100" required>
+                                                            <input type="number" id="langitude" class="form-control" placeholder="Langitude" name="langitude"  maxlength="100" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -198,7 +198,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="service_area">Service Area</label>
-                                                            <input type="text" id="service_area" class="form-control" placeholder="Service Area" name="service_area"  maxlength="400" required>
+                                                            <input type="text" id="service_area" class="form-control" placeholder="Service Area" name="service_area"  maxlength="400" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -208,7 +208,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label for="id_area">Area</label>
-                                                            <select id="id_area" name="id_area" class="select2 form-control" required>  
+                                                            <select id="id_area" name="id_area" class="select2 form-control" >
                                                                 <option value="0" selected="" disabled="">Area</option>
                                                                 @foreach($areas as $area)
                                                                     <option value="{{$area->id}}">{{$area->area_name}}</option>
@@ -220,7 +220,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="id_district">District</label>
-                                                            <select id="id_district" name="id_district" class="form-control" required>
+                                                            <select id="id_district" name="id_district" class="form-control">
                                                                 <option value="0" selected="" disabled="">District</option>
                                                                 @foreach($districts as $district)
                                                                     <option value="{{$district->id}}">{{$district->district_name}}</option>
@@ -232,7 +232,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="id_regency">Regency</label>
-                                                            <select id="id_regency" name="id_regency" class="form-control" required>
+                                                            <select id="id_regency" name="id_regency" class="form-control">
                                                                 <option value="0" selected="" disabled="">Regency</option>
                                                                 @foreach($regencies as $regency)
                                                                     <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
@@ -254,7 +254,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
                                                             <label for="id_box_resource">Box Resources</label>
-                                                            <select class="select2 form-control" id="id_box_resource" name="id_box_resource[]" multiple="multiple" required>
+                                                            <select class="select2 form-control" id="id_box_resource" name="id_box_resource[]" multiple="multiple" >
                                                                 @foreach($boxresources as $boxresource)
                                                                     <option value="{{$boxresource->id}}">{{$boxresource->resource_name}}</option>
                                                                 @endforeach
@@ -279,7 +279,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="id_purchase_price">Purchase Price</label>
-                                                            <select id="id_purchase_price" name="id_purchase_price" class="form-control" required>
+                                                            <select id="id_purchase_price" name="id_purchase_price" class="form-control" >
                                                                 <option value="0" selected="" disabled="">Purchase Price</option>
                                                                 @foreach($purchase_prices as $purchase_price)
                                                                     <option value="{{$purchase_price->id}}">{{$purchase_price->price}}</option>
@@ -298,7 +298,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
                                                             <label for="id_payment_method">Payment Method</label>
-                                                            <select id="id_payment_method" name="id_payment_method" class="form-control" required>
+                                                            <select id="id_payment_method" name="id_payment_method" class="form-control" >
                                                                 <option value="0" selected="" disabled="">Payment Method</option>
                                                                 @foreach($payment_methods as $payment_method)
                                                                     <option value="{{$payment_method->id}}">{{$payment_method->payment_method}}</option>
@@ -310,7 +310,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
                                                             <label for="id_bank">Bank</label>
-                                                            <select id="id_bank" name="id_bank" class="form-control" required>
+                                                            <select id="id_bank" name="id_bank" class="form-control" >
                                                                 <option value="0" selected="" disabled="">Bank</option>
                                                                 @foreach($banks as $bank)
                                                                     <option value="{{$bank->id}}">{{$bank->bank_name}}</option>
@@ -324,19 +324,19 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="bank_branch">Bank Branch</label>
-                                                            <input type="text" id="bank_branch" class="form-control" placeholder="Bank Branch" name="bank_branch"  maxlength="200" required>
+                                                            <input type="text" id="bank_branch" class="form-control" placeholder="Bank Branch" name="bank_branch"  maxlength="200" >
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="bank_account_number">Bank Account Number</label>
-                                                            <input type="number" id="bank_account_number" class="form-control" name="bank_account_number"  maxlength="200" required>
+                                                            <input type="number" id="bank_account_number" class="form-control" name="bank_account_number"  maxlength="200" >
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="bank_account_holder_name">Bank Account Holder Name</label>
-                                                            <input type="text" id="bank_account_holder_name" class="form-control" placeholder="Bank Account Holder Name" name="bank_account_holder_name"  maxlength="200" required>
+                                                            <input type="text" id="bank_account_holder_name" class="form-control" placeholder="Bank Account Holder Name" name="bank_account_holder_name"  maxlength="200" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -526,7 +526,7 @@
                     }
                 });
             }
-            
+
 
         });
     });

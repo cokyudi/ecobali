@@ -29,16 +29,14 @@ class Dashboard1Controller extends Controller
     public function index()
     {
         $user = Auth::user();
-        $categories = Category::latest()->get();
-        $regencies = Regency::latest()->get();
-        $districts = District::latest()->get();
-        $collections = Collection::latest()->get();
-        $participants = Participant::latest()->get();
+        $categories = DB::table('categories')->orderBy('category_name', 'asc')->get();
+        $regencies = DB::table('regencies')->orderBy('regency_name', 'asc')->get();
+        $districts = DB::table('districts')->orderBy('district_name', 'asc')->get();
+        $participants = DB::table('participants')->orderBy('participant_name', 'asc')->get();
 
         return view('dashboard1/index', array(
             'user' => $user,
             'districts'=>$districts,
-            'collections'=> $collections,
             'participants'=> $participants,
             'categories' => $categories,
             'regencies' => $regencies

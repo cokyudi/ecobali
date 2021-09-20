@@ -31,11 +31,19 @@
                             <div class="card-body card-custom">
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
-                                        <h6 class="font-weight-bold font-medium-5 " >District Coverage</h6>
+                                        <h6 class="font-weight-bold font-medium-2 " >
+
+                                            District Coverage
+                                            <i class="la la-info-circle " data-toggle="popover"
+                                               data-content="Jumlah kecamatan yang menjadi lokasi pengumpulan Kemasan Bekas Minuman (KBM) " data-trigger="hover"
+                                               data-original-title="Number of District where Used Beverage Cartons (UBC) are collected">
+                                            </i>
+                                        </h6>
+
                                         <h3 class="font-large-4" id="district_coverage"></h3>
                                     </div>
                                     <div class="align-self-center">
-                                        <img src="{{asset('images/icons/district.png')}}" alt="" height="85px">
+                                        <img src="{{asset('images/icons/district.png')}}" alt="" height="70px">
 {{--                                        <i class="la la-map-marker success font-large-5 float-right"></i>--}}
                                     </div>
                                 </div>
@@ -50,11 +58,16 @@
 {{--                                <div class="media d-flex test-deva" style="padding-top: 1.5rem;">--}}
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
-                                        <h6 class="font-weight-bold font-medium-5" >Regency Coverage</h6>
+                                        <h6 class="font-weight-bold font-medium-2" >Regency Coverage
+                                            <i class="la la-info-circle" data-toggle="popover"
+                                               data-content="Jumlah Kabupaten yang menjadi lokasi pengumpulan Kemasan Bekas Minuman (KBM)" data-trigger="hover"
+                                               data-original-title="Number of Regency where Used Beverage Cartons (UBC) are collected">
+                                            </i>
+                                        </h6>
                                         <h3 class="font-large-4" id="regency_coverage"></h3>
                                     </div>
                                     <div class="align-self-center">
-                                        <img src="{{asset('images/icons/regency.png')}}" alt="" height="85px">
+                                        <img src="{{asset('images/icons/regency.png')}}" alt="" height="70px">
 {{--                                        <i class="la la-map success font-large-5 float-right"></i>--}}
                                     </div>
                                 </div>
@@ -68,21 +81,25 @@
                             <div class="card-body card-custom">
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
-                                        <h6 class="font-weight-bold font-medium-5">Total Collection</h6>
-
+                                        <h6 class="font-weight-bold font-medium-2">Total <br>Collection
+                                            <i class="la la-info-circle" data-toggle="popover"
+                                               data-content="Jumlah Kemasan Bekas Minuman (KBM) yang dikumpulkan di ecoBali" data-trigger="hover"
+                                               data-original-title="Total number of Used Beverage Cartons (UBC) collected at ecoBali">
+                                            </i>
+                                        </h6>
                                         <div class="row">
                                             <div class="col-12">
-                                                <h4 class="font-large-3 collectionTon" id="total_collection_ton"></h4>
+                                                <h4 class="font-large-3 collectionTon mb-0 mt-1" id="total_collection_ton"></h4>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                                <h4 class="font-medium-5 collectionTon" id="total_collection_kg"></h4>
+                                                <h4 class="font-medium-5 collectionKg" id="total_collection_kg"></h4>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="align-self-center">
-                                        <img src="{{asset('images/icons/jumlah-kotak-susu.png')}}" alt="" height="90px">
+                                        <img src="{{asset('images/icons/jumlah-kotak-susu.png')}}" alt="" height="75px">
 {{--                                        <i class="la la-box success font-large-5 float-right"></i>--}}
                                     </div>
                                 </div>
@@ -96,11 +113,16 @@
                             <div class="card-body card-custom">
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
-                                        <h6 class="font-weight-bold font-medium-5">Total Participant</h6>
+                                        <h6 class="font-weight-bold font-medium-2">Total Participant
+                                            <i class="la la-info-circle" data-toggle="popover"
+                                               data-content="Jumlah Partisipan yang mengumpulkan Kemasan Bekas Minuman (KBM) di ecoBali" data-trigger="hover"
+                                               data-original-title="Total of Participants who collect Used Beverage Cartons (UBC)">
+                                            </i>
+                                        </h6>
                                         <h3 class="font-large-4" id="total_participant"></h3>
                                     </div>
                                     <div class="align-self-center">
-                                        <img src="{{asset('images/icons/participant.png')}}" alt="" height="85px">
+                                        <img src="{{asset('images/icons/participant.png')}}" alt="" height="60px">
 {{--                                        <i class="la la-users success font-large-5 float-right"></i>--}}
                                     </div>
                                 </div>
@@ -115,7 +137,14 @@
                 <div class="col-lg-6 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="font-weight-bold font-medium-5">Number of Participants</h4>
+                            <h4 class="font-weight-bold font-medium-3">Composition of Participants
+                                <i class="la la-info-circle" data-toggle="popover"
+                                   data-content="Jumlah dan persentase Partisipan yang mengumpulkan Kemasan Bekas Minuman (KBM) berdasarkan kategori. <br>
+(Rumus: jumlah partisipan setiap kategori / total partisipan seluruh kategori)" data-trigger="hover" data-html="true"
+                                   data-original-title="Total number and percentage of participants who collect Used Beverage Cartons (UBC) based on category <br>
+(Formula: total participants per category / total participants all categories)">
+                                </i>
+                            </h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -137,7 +166,14 @@
                 <div class="col-lg-6 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="font-weight-bold font-medium-5">Contribution</h4>
+                            <h4 class="font-weight-bold font-medium-3">Contribution of Participants
+                                <i class="la la-info-circle" data-toggle="popover"
+                                   data-content="Jumlah dan persentase Kemasan Bekas Minuman (KBM) yang dikumpulkan berdasarkan kategori<br>
+(Rumus: jumlah KBM setiap kategori / total KBM seluruh kategori)" data-trigger="hover" data-html="true"
+                                   data-original-title="Total number and percentage of Used Beverage Cartons (UBC) collected based on category <br>
+                                (Formula: total UBC per category / total UBC all categories)">
+                                </i>
+                            </h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -161,7 +197,12 @@
                 <div class="col-lg-6 col-12 pb-1">
                     <div class="card h-100">
                         <div class="card-header mb-0">
-                            <h4 class="font-weight-bold font-medium-5">Map</h4>
+                            <h4 class="font-weight-bold font-medium-3">Map
+                                <i class="la la-info-circle" data-toggle="popover"
+                                   data-content="Jumlah Kemasan Bekas Minuman (KBM) yang dikumpulkan berdasarkan wilayah Kabupaten" data-trigger="hover"
+                                   data-original-title="Total number of Used Beverage Cartons (UBC) collected based on Region (Regency)">
+                                </i>
+                            </h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -182,7 +223,12 @@
                 <div class="col-lg-6 col-12 pb-1">
                     <div class="card h-100">
                         <div class="card-header">
-                            <h4 class="font-weight-bold font-medium-5">Total</h4>
+                            <h4 class="font-weight-bold font-medium-3">Total Collection by Categories
+                                <i class="la la-info-circle" data-toggle="popover"
+                                   data-content="Jumlah Kemasan Bekas Minuman (KBM) yang dikumpulkan berdasarkan kategori" data-trigger="hover"
+                                   data-original-title="Total number of Used Beverage Cartons (UBC) collected based on category of participant">
+                                </i>
+                            </h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -209,7 +255,12 @@
                 <div class="col-xl-12 col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="font-weight-bold font-medium-5">Dinamics</h4>
+                            <h4 class="font-weight-bold font-medium-3">Collection Trend
+                                <i class="la la-info-circle" data-toggle="popover"
+                                   data-content="Dinamika jumlah Kemasan Bekas Minuman (KBM) yang dikumpulkan berdasarkan interval waktu" data-trigger="hover"
+                                   data-original-title="The trend of the number of Used Beverage Cartons (UBC) collected based on time interval">
+                                </i>
+                            </h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
@@ -245,61 +296,58 @@
 
 
     <!-- BEGIN: Customizer-->
-    <div id="customizer-filter" class="customizer border-left-blue-grey border-left-lighten-4 "><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-info box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
-	<h4 class="text-uppercase mb-0">Data Filter Customizer</h4>
+    <div id="customizer-filter" class="customizer border-left-blue-grey border-left-lighten-4 "><a class="customizer-close" href="#"><i class="ft-x font-medium-2"></i></a><a class="customizer-toggle bg-info box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
+	<h5 class="text-uppercase mb-0">Data Filter Customizer</h5>
 	<hr>
 
         <form id="filterForm" name="filterForm">
-            <h5 class="mt-1 mb-1 text-bold-500">Participant</h5>
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Participant</h6>
             <div class="form-group ">
-                <select id="id_participant" name="id_participant[]" multiple="multiple" class="select2 form-control">
+                <select id="id_participant" name="id_participant[]" multiple="multiple" class="select2 form-control " data-placeholder="Select Participant">
                     @foreach($participants as $participant)
                         <option value="{{$participant->id}}">{{$participant->participant_name}}</option>
                     @endforeach
-
                 </select>
             </div>
-            <hr>
 
-            <h5 class="mt-1 mb-1 text-bold-500">Category</h5>
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Category</h6>
             <div class="form-group ">
-                <select id="id_category" name="id_category[]" multiple="multiple" class="select2 form-control">
+                <select id="id_category" name="id_category[]" multiple="multiple" class="select2 form-control" data-placeholder="Select Category">
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->category_name}}</option>
                     @endforeach
 
                 </select>
             </div>
-            <hr>
 
-            <h5 class="mt-1 mb-1 text-bold-500">District</h5>
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">District</h6>
             <div class="form-group ">
-                <select id="id_district" name="id_district[]" multiple="multiple" class="select2 form-control">
+                <select id="id_district" name="id_district[]" multiple="multiple" class="select2 form-control" data-placeholder="Select District">
                     @foreach($districts as $district)
                         <option value="{{$district->id}}">{{$district->district_name}}</option>
                     @endforeach
 
                 </select>
             </div>
-            <hr>
 
-            <h5 class="mt-1 mb-1 text-bold-500">Regency</h5>
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Regency</h6>
             <div class="form-group ">
-                <select class="select2 form-control" id="id_regency" name="id_regency[]" multiple="multiple">
-                    @foreach($regencies as $regency)
-                        <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
-                    @endforeach
-                </select>
-
+                <div class="input-group">
+                    <select class="select2 form-control" id="id_regency" name="id_regency[]" multiple="multiple" data-placeholder="Select Regency">
+                        @foreach($regencies as $regency)
+                            <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
-            <hr>
 
-            <h5 class="mt-1 mb-1 text-bold-500">Date Range Options</h5>
+
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Date Range Options</h6>
             <div class="form-group">
-                <div class="form-group">
-                    <div class='input-group'>
+                <div class="form-group " >
+                    <div class="input-group">
                         <input type="text" id="daterange" name="daterange" class = "form-control" value="" />
-                        <div class="input-group-append">
+                        <div class="input-group-append" id="icon-calendar">
                             <span class="input-group-text">
                                 <span class="la la-calendar"></span>
                             </span>
@@ -337,6 +385,8 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
+
+
         $('#daterange').daterangepicker(
             {
                 startDate: moment("01/01/2021","DD/MM/YYYY"),
@@ -366,7 +416,8 @@
                     daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
                     monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                     firstDay: 1
-                }
+                },
+                drops: 'up',
             },
             function(start, end) {
 
@@ -374,6 +425,10 @@
         );
         drawMap();
 		getDefaultCollection();
+
+        $('#icon-calendar').click(function() {
+            $("#daterange").focus();
+        });
 
       $('#backBtn').click(function() {
 
@@ -419,8 +474,8 @@
 				success: function (data) {
 					$('#district_coverage').html(data.data.districtsCoverage);
                     $('#regency_coverage').html(data.data.regenciesCoverage);
-					$('#total_collection_ton').html((data.data.totalCollection/1000).toFixed(1) + ' TON');
-					$('#total_collection_kg').html('/ ' + data.data.totalCollection.toFixed(1) + ' Kg');
+					$('#total_collection_ton').html((data.data.totalCollection/1000).toFixed(1) + ' T');
+					$('#total_collection_kg').html('' + data.data.totalCollection.toFixed(1) + ' Kg');
 					$('#total_participant').html(data.data.totalParticipants);
 
 					getLineChartData('week');
@@ -476,8 +531,8 @@
 			success: function (data) {
 				$('#district_coverage').html(data.data.districtsCoverage);
                 $('#regency_coverage').html(data.data.regenciesCoverage);
-				$('#total_collection_ton').html((data.data.totalCollection/1000).toFixed(1) + ' TON');
-				$('#total_collection_kg').html('/ ' +data.data.totalCollection.toFixed(1) + ' Kg');
+				$('#total_collection_ton').html((data.data.totalCollection/1000).toFixed(1) + ' T');
+				$('#total_collection_kg').html('' +data.data.totalCollection.toFixed(1) + ' Kg');
 				$('#total_participant').html(data.data.totalParticipants);
 
 				getLineChartData('month');

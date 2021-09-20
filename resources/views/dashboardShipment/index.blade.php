@@ -14,12 +14,17 @@
     <div class="content-body"><!-- Revenue, Hit Rate & Deals -->
     <!--/ Revenue, Hit Rate & Deals -->
         <div class="row">
-            <div class="col-lg-4 col-12">
+            <div class="col-md-4 col-12 ">
                 <div class="card pull-up h-100">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
-                                <h6 class="font-weight-bold font-medium-5">Sent to Papermill </h6> <img src="{{asset('images/icons/sent_to_papermill.png')}}" alt="" width="85px">
+                                <h6 class="font-weight-bold font-medium-2">Sent to Papermill
+                                    <i class="la la-info-circle" data-toggle="popover"
+                                       data-content="Total Kemasan Bekas Minuman (KBM) yang dikumpulkan oleh ecoBali dan dikirim menuju pabrik" data-trigger="hover" data-html="true"
+                                       data-original-title="Total number of Used Beverage Cartons (UBC) collected at ecoBali and sent to papermill">
+                                    </i>
+                                </h6> <img src="{{asset('images/icons/sent_to_papermill.png')}}" alt="" width="75px">
                             </div>
                             <div class="media d-flex mt-2">
                                 <div class="media-body text-center ">
@@ -40,7 +45,7 @@
                                         <div class="col-6 ">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-1" id="delivered_to_papermill_kg"></span>
+                                                    <span class="font-medium-4" id="delivered_to_papermill_kg"></span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -57,18 +62,23 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-12">
+            <div class="col-md-4 col-12 ">
                 <div class="card pull-up h-100">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
-                                <h6 class="font-weight-bold font-medium-5">Received at Papermill</h6>
-                                <img src="{{asset('images/icons/recieved_at_papermill.png')}}" alt="" width="85px">
+                                <h6 class="font-weight-bold font-medium-2">Received at Papermill
+                                    <i class="la la-info-circle" data-toggle="popover"
+                                       data-content="Total Kemasan Bekas Minuman (KBM) yang diterima dipabrik sebelum dikurangi bahan cair dan kontaminan " data-trigger="hover" data-html="true"
+                                       data-original-title="Total number of Used Beverage Cartons (UBC) received at papermill before moisture content and contaminant reduction">
+                                    </i>
+                                </h6>
+                                <img src="{{asset('images/icons/recieved_at_papermill.png')}}" alt="" width="75px">
                             </div>
                             <div class="media d-flex mt-2">
                                 <div class="media-body text-center ">
                                     <div class="row align-items-center">
-                                        <div class="col-4 border-right">
+                                        <div class="col-6 border-right">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <span class="font-large-2" id="received_at_papermill_ton"></span>
@@ -81,10 +91,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-4 ">
+                                        <div class="col-6 ">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-1" id="received_at_papermill_kg"></span>
+                                                    <span class="font-medium-4" id="received_at_papermill_kg"></span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -93,37 +103,38 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-4 ">
-                                            <div class="row ">
-                                                <div class="col-12">
-                                                    <strong class="font-medium-2" id="weighing_scale_gap_papermill"></strong>
-                                                </div>
-                                            </div>
-                                            <hr style="height:2px;border-width:0;color:black;background-color:black" class="mr-2 ml-2">
-                                            <div class="row align-items-center">
-                                                <div class="col-12">
-                                                    <i id="indikator_panah" ></i>
-                                                    <strong class="font-medium-1 danger" id="weighing_scale_gap_papermill_percent"></strong>
-                                                </div>
 
-
-                                            </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-12 mt-2">
+                                            <span class="font-medium-2" >Differences : </span>
                                         </div>
                                     </div>
-
+                                    <div class="row align-items-center">
+                                        <div class="col-12">
+                                            <strong class="font-medium-2" id="weighing_scale_gap_papermill"></strong><span> Kg / </span> <i id="indikator_panah" ></i><span> ( </span><strong class="font-medium-2 danger" id="weighing_scale_gap_papermill_percent"></strong><span>)</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-12">
+            <div class="col-md-4 col-12 ">
                 <div class="card pull-up h-100">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
-                                <h6 class="font-weight-bold font-medium-5">Accepted to Recycle</h6>
-                                <img src="{{asset('images/icons/shipment-accepted.png')}}" alt="" width="85px">
+                                <h6 class="font-weight-bold font-medium-2">Final Weight at Papermill
+                                    <i class="la la-info-circle" data-toggle="popover"
+                                       data-content="Total Kemasan Bekas Minuman (KBM) yang diterima dipabrik setelah dikurangi bahan cair dan kontaminan <br>
+(Rumus: total KBM di terima di pabrik - total bahan cair dan kontaminan)" data-trigger="hover" data-html="true"
+                                       data-original-title="Total of Used Beverage Cartons (UBC) received at papermill after moisture content and contaminant reduction <br>
+(Formula: total UBC received at papermill - total moisture content and contaminant)">
+                                    </i>
+                                </h6>
+                                <img src="{{asset('images/icons/shipment-accepted.png')}}" alt="" width="75px">
                             </div>
                             <div class="media d-flex mt-2">
                                 <div class="media-body text-center ">
@@ -145,12 +156,26 @@
                                         <div class="col-6 ">
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <span class="font-large-1 " id="total_weight_accepted_kg"></span>
+                                                    <span class="font-medium-4 " id="total_weight_accepted_kg"></span>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12">
                                                     <span class="">KG</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-12 ">
+                                            <div class="row align-items-center">
+                                                <div class="col-12 mt-2">
+                                                    <span class="font-medium-2" >Differences : </span>
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center">
+                                                <div class="col-12">
+                                                    <strong class="font-medium-2" id="diff_mcc"></strong><span> Kg / </span> <i id="indikator_panah_mcc" ></i><span> ( </span><strong class="font-medium-2 danger" id="mcc_percent"></strong><span>)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -165,76 +190,26 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-6 col-12 py-2">
-                <div class="card h-100">
-                    <div class="card-header">
-                        <h4 class="font-weight-bold font-medium-5">Weight Reduction at ecoBali</h4>
-                        <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-                        <div class="heading-elements">
-                            <ul class="list-inline mb-0">
-                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-content collapse show">
-                        <div class="card-body">
-                            <h3>Total Penyusutan <strong id="weight_reduction_susut"></strong> Kg dan Total Tidak Susut <strong id="weight_reduction_tidak_susut"></strong> Kg.</h3>
-                            <div id="pie_weight_reduction"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-6 col-12 py-2">
-                <div class="card h-100">
-                    <div class="card-header">
-                        <h4 class="font-weight-bold font-medium-5">Moisture Content, Contaminant</h4>
-                        <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-                        <div class="heading-elements">
-                            <ul class="list-inline mb-0">
-                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="card-content collapse show">
-                        <div class="card-body">
-                            <h3>Total MCC :  <strong id="text_mcc"></strong> Kg dan Total UBC : <strong id="text_ubc"></strong> Kg.</h3>
-                            <div id="donut_mcc"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="row">
             <div class="col-12 py-2">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="font-weight-bold font-medium-5">Sent vs Received</h4>
+                        <h4 class="font-weight-bold font-medium-3">Sent vs Received
+                            <i class="la la-info-circle" data-toggle="popover"
+                               data-content="Perbandingan jumlah Kemasan Bekas Minuman (KBM) yang sudah dikumpulkan oleh ecoBali dengan Total Kemasan Bekas Minuman (KBM) yang diterima dipabrik untuk memonitoring perjalanan barang menuju pabrik" data-trigger="hover" data-html="true"
+                               data-original-title="Comparison between the total number of Used Beverage Cartons (UBC) collected and sent by ecoBali to papermill by ecoBali and the total number of used beverage Cartons (UBC) received at the papermill">
+                            </i>
+                        </h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
                                 <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                 <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
                             <div class="btn-group pull-right mr-3" role="group" aria-label="Basic example">
-{{--                                <button onclick="drawSentVsReceivedCustom('month');" type="button" class="btn btn-sm btn-secondary">Month</button>--}}
-{{--                                <button onclick="drawSentVsReceivedCustom('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>--}}
-{{--                                <button onclick="drawSentVsReceivedCustom('year');" type="button" class="btn btn-sm btn-secondary">Year</button>--}}
-
                                 <button onclick="getSales('month');" type="button" class="btn btn-sm btn-secondary">Month</button>
                                 <button onclick="getSales('quarter');" type="button" class="btn btn-sm btn-secondary">Quarter</button>
                                 <button onclick="getSales('year');" type="button" class="btn btn-sm btn-secondary">Year</button>
@@ -247,17 +222,80 @@
         </div>
 
         <div class="row">
+            <div class="col-sm-6 col-12 py-2">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h4 class="font-weight-bold font-medium-3">Weight Reduction at ecoBali
+                            <i class="la la-info-circle" data-toggle="popover"
+                               data-content="Jumlah susut Kemasan Bekas Minuman (KBM) yang dikumpulkan oleh ecoBali dari partisipannya ecoBali <br>
+(Rumus: jumlah KBM dikirim ke pabrik - Jumlah KBM yang dikumpulkan di ecoBali H-1 penjualan)" data-trigger="hover" data-html="true"
+                               data-original-title="Total number of depreciation of Used Beverage Cartons (UBC) collected by ecoBali from ecoBali partners <br>
+(Formula: Total UBC sent to papermill - Total UBC Collected D-1)">
+                            </i>
+                        </h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <h3>Total Penyusutan : <strong id="weight_reduction_susut"></strong> Kg dari Total UBC Terkumpul : <strong id="weight_reduction_tidak_susut"></strong> Kg.</h3>
+                            <div id="pie_weight_reduction"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-12 py-2">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h4 class="font-weight-bold font-medium-3">Moisture Content, Contaminant (MCC)
+                            <i class="la la-info-circle" data-toggle="popover"
+                               data-content="Jumlah dan persentase bahan cair dan kontaminan dari Kemasan Bekas Minuman (KBM) yang diterima dipabrik <br>
+(Rumus: jumlah bahan cair dan kontaminan / jumlah KBM yang diterima di pabrik)" data-trigger="hover" data-html="true"
+                               data-original-title="Total number and percentage of moisture content and contaminant in Used Beverage Cartons (UBC) received at papermill. <br>
+(Formula: total moisture content and contaminant / total UBC received at papermill)">
+                            </i>
+                        </h4>
+                        <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <h3>Total MCC :  <strong id="text_mcc"></strong> Kg dari Total UBC Diterima di Pabrik : <strong id="text_ubc"></strong> Kg.</h3>
+                            <div id="donut_mcc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
             <div class="col-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="font-weight-bold font-medium-5">Dinamics of KMK Sent</h4>
+                        <h4 class="font-weight-bold font-medium-3">Trend of UBC Sent
+                            <i class="la la-info-circle" data-toggle="popover"
+                               data-content="Dinamika jumlah Kemasan Bekas Minuman (KBM) yang sudah dikumpulkan oleh ecoBali dan dikirim menuju pabrik" data-trigger="hover" data-html="true"
+                               data-original-title="The trend of total number of Used Beverage Cartons (UBC) collected at ecoBali and sent to papermill">
+                            </i>
+                        </h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
                                 <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                 <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -271,14 +309,17 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="font-weight-bold font-medium-5">Dinamics of KMK Received</h4>
+                        <h4 class="font-weight-bold font-medium-3">Trend of UBC Received
+                            <i class="la la-info-circle" data-toggle="popover"
+                               data-content="Dinamika jumlah Kemasan Bekas Minuman (KBM) yang diterima dipabrik sebelum dikurangi bahan cair dan kontaminan " data-trigger="hover" data-html="true"
+                               data-original-title="The trend of total number of Used Beverage Cartons (UBC) received at papermill before moisture content and contaminant reduction">
+                            </i>
+                        </h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
                                 <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                 <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -296,14 +337,17 @@
             <div class="col-6 py-2">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="font-weight-bold font-medium-5">Dinamics of KMK Accepted</h4>
+                        <h4 class="font-weight-bold font-medium-3">Trend of UBC Final Weight
+                            <i class="la la-info-circle" data-toggle="popover"
+                               data-content="Dinamika jumlah Kemasan Bekas Minuman (KBM) yang diterima dipabrik setelah dikurangi bahan cair dan kontaminan" data-trigger="hover" data-html="true"
+                               data-original-title="The trend of total number of Used Beverage Cartons (UBC) received at papermill after moisture content and contaminant reduction">
+                            </i>
+                        </h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
                                 <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                 <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -317,14 +361,17 @@
             <div class="col-6 py-2">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="font-weight-bold font-medium-5">Dinamics of MCC</h4>
+                        <h4 class="font-weight-bold font-medium-3">Trend of MCC
+                            <i class="la la-info-circle" data-toggle="popover"
+                               data-content="Dinamika Jumlah bahan cair dan kontaminan dari Kemasan Bekas Minuman (KBM) yang diterima dipabrik " data-trigger="hover" data-html="true"
+                               data-original-title="The trend of total number of moisture content and contaminant in Used Beverage Cartons (UBC) received at papermill">
+                            </i>
+                        </h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
                                 <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                 <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -513,6 +560,26 @@
                     $('#weighing_scale_gap_papermill_percent').addClass("danger");
                     $('#indikator_panah').addClass("la la-sort-down font-medium-2 danger");
                 }
+
+                var diffMcc = data.data.total_weight_accepted.toFixed(1)-data.data.received_at_papermill.toFixed(1);
+                $('#diff_mcc').html(diffMcc);
+                if (diffMcc >= 0) {
+                    $('#diff_mcc').addClass("success")
+                } else {
+                    $('#diff_mcc').addClass("danger")
+                }
+
+                var mccPercent = (diffMcc / data.data.received_at_papermill.toFixed(1))*100;
+                $('#mcc_percent').html(mccPercent.toFixed(1)+' %');
+                if (data.data.weighing_scale_gap_papermill_percent >= 0) {
+                    $('#mcc_percent').addClass("success");
+                    $('#indikator_panah_mcc').addClass("la la-sort-up font-medium-2 success");
+                } else {
+                    $('#mcc_percent').addClass("danger");
+                    $('#indikator_panah_mcc').addClass("la la-sort-down font-medium-2 danger");
+                }
+
+
                 $('#total_weight_accepted_ton').html((data.data.total_weight_accepted/1000).toFixed(1));
                 $('#total_weight_accepted_kg').html(data.data.total_weight_accepted.toFixed(1));
 
@@ -535,6 +602,15 @@
             $('#weighing_scale_gap_papermill_percent').removeClass("danger")
             $('#indikator_panah').removeClass("la la-sort-up")
             $('#indikator_panah').removeClass("danger")
+
+            $('#diff_mcc').removeClass("success")
+            $('#diff_mcc').removeClass("danger")
+            $('#mcc_percent').removeClass("success")
+            $('#indikator_panah_mcc').removeClass("la la-sort-down")
+            $('#indikator_panah_mcc').removeClass("success")
+            $('#mcc_percent').removeClass("danger")
+            $('#indikator_panah_mcc').removeClass("la la-sort-up")
+            $('#indikator_panah_mcc').removeClass("danger")
         }
 
     }

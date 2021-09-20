@@ -51,8 +51,11 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
                                     <!-- <a class="btn btn-success" href="javascript:void(0)" id="createNewDistrict"> Create New Book</a> -->
+                                        @if ($user['role'] == 'Admin')
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewActivity">Add New Activity</button>
+                                        @endif
 {{--                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importActivity">Import Activity</button>--}}
+                                        <a class="btn btn-info btn-min-width mr-1 mb-1 white" hidden href="{{ url('downloadActivities') }}">Download</a>
                                         @include('activity.modal')
                                         @include('activity.modalImport')
                                         <div class="table-responsive">
@@ -61,11 +64,13 @@
                                                     <tr>
                                                         <th width="30px">No</th>
                                                         <th>Date</th>
-                                                        <th>Program Name</th>
+                                                        <th>Program <br>Name</th>
                                                         <th>Activity</th>
                                                         <th>Location</th>
-                                                        <th>Number of Participant </th>
-                                                        <th width="150px">Action</th>
+                                                        <th>Number of <br>Participant </th>
+                                                        @if ($user['role'] == 'Admin')
+                                                            <th width="130px">Action</th>
+                                                        @endif
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -75,11 +80,13 @@
                                                     <tr>
                                                         <th width="30px">No</th>
                                                         <th>Date</th>
-                                                        <th>Program Name</th>
+                                                        <th>Program <br>Name</th>
                                                         <th>Activity</th>
                                                         <th>Location</th>
-                                                        <th>Number of Participant </th>
-                                                        <th width="150px">Action</th>
+                                                        <th>Number of <br>Participant </th>
+                                                        @if ($user['role'] == 'Admin')
+                                                            <th width="130px">Action</th>
+                                                        @endif
                                                     </tr>
                                                 </tfoot>
                                             </table>
@@ -111,20 +118,40 @@ $(function () {
             }
       });
 
-    var table = $('#tableActivity').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('activities.index') }}",
-        columns: [
-            {data: null},
-            {data: 'activity_date', name: 'activity_date'},
-            {data: 'activity_program_name', name: 'activity_program_name'},
-            {data: 'activity', name: 'activity'},
-            {data: 'location', name: 'location'},
-            {data: 'participant_number', name: 'participant_number'},
-            {data: 'action', name: 'action', orderable: false, searchable: false},
-        ]
-    });
+    var role = '{{$user['role']}}';
+    var table;
+
+    if(role == "Admin") {
+        table = $('#tableActivity').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('activities.index') }}",
+            columns: [
+                {data: null},
+                {data: 'activity_date', name: 'activity_date'},
+                {data: 'activity_program_name', name: 'activity_program_name'},
+                {data: 'activity', name: 'activity'},
+                {data: 'location', name: 'location'},
+                {data: 'participant_number', name: 'participant_number'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ]
+        });
+    } else {
+        table = $('#tableActivity').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('activities.index') }}",
+            columns: [
+                {data: null},
+                {data: 'activity_date', name: 'activity_date'},
+                {data: 'activity_program_name', name: 'activity_program_name'},
+                {data: 'activity', name: 'activity'},
+                {data: 'location', name: 'location'},
+                {data: 'participant_number', name: 'participant_number'},
+            ]
+        });
+    }
+
 
     table.on('draw.dt', function () {
         var info = table.page.info();

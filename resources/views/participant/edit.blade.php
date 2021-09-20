@@ -423,6 +423,7 @@
 
                                         <div class="tab-pane" id="tabCollection" >
                                             <div class="d-flex">
+
                                                 <div class="p-2">
                                                     <button type="button" class="btn round btn-min-width " id="btnContinuity">Continuity : <b id="continuity">None</b></button>
                                                 </div>
@@ -432,6 +433,14 @@
 
                                                 <div class="p-2">
                                                     <input type="text" id="daterange" name="daterange" class = "form-control" value="" />
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="pr-2 pl-2 pt-0">
+                                                    <button type="button" class="btn btn-primary round btn-min-width " id="btnAverage">Total : <b id="average">129312 Kg</b></button>
+                                                </div>
+                                                <div class="mr-auto pr-2 pl-2 pt-0">
+                                                    <button type="button" class="btn btn-secondary round btn-min-width " id="btnAverage">Average : <b id="average">129 Kg</b></button>
                                                 </div>
                                             </div>
                                             <div class="card-content">

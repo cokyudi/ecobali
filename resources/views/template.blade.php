@@ -93,9 +93,11 @@
 						</ul>
 					</li>
 					<li class="@yield('map') nav-item"><a href="{{url('map')}}"><i class="la la-map-marked-alt"></i><span class="menu-title" >Map</span></a></li>
-					<li class="@yield('collections') nav-item"><a href="{{url('collections')}}"><i class="la la-arrow-circle-down"></i><span class="menu-title" >Collection</span></a></li>
+                    <li class="@yield('participantList') nav-item"><a href="{{url('participantList')}}"><i class="la la-user-friends"></i><span class="menu-title" >Participant List</span></a></li>
+
+                    <li class="@yield('collections') nav-item"><a href="{{url('collections')}}"><i class="la la-arrow-circle-down"></i><span class="menu-title" >Collection</span></a></li>
                     <li class="@yield('sales') nav-item"><a href="{{url('sales')}}"><i class="la la-dollar-sign"></i><span class="menu-title" >Sales</span></a></li>
-					<li class="@yield('participantList') nav-item"><a href="{{url('participantList')}}"><i class="la la-user-friends"></i><span class="menu-title" >Participant List</span></a></li>
+                    <li class="@yield('activities')"><a class="menu-item" href="{{url('activities')}}"><i class="la la-chalkboard mr-1"></i><span>Activities</span></a></li>
 
                     @if ($user['role'] == 'Admin')
 					<li class="nav-item">
@@ -114,7 +116,7 @@
                             <li class="@yield('papermills')"><a class="menu-item" href="{{url('papermills')}}"><i class="la la-industry mr-1"></i><span>Papermill</span></a></li>
                             <li class="@yield('papermillCategories')"><a class="menu-item" href="{{url('papermillCategories')}}"><i class="la la-layer-group mr-1"></i><span>Papermill Categories</span></a></li>
                             <li class="@yield('activityPrograms')"><a class="menu-item" href="{{url('activityPrograms')}}"><i class="la la-universal-access mr-1"></i><span>Program Activity</span></a></li>
-                            <li class="@yield('activities')"><a class="menu-item" href="{{url('activities')}}"><i class="la la-chalkboard mr-1"></i><span>Activity</span></a></li>
+
                             <li class="@yield('potentials')"><a class="menu-item" href="{{url('potentials')}}"><i class="la la-compress mr-1"></i><span>Category Potential</span></a></li>
 						</ul>
 					</li>
@@ -167,6 +169,8 @@
 		<script src="{{asset('js/scripts/customizer.min.js')}}"></script>
 		<script src="{{asset('js/scripts/footer.min.js')}}"></script>
 		<!-- END: Theme JS-->
+
+        <script src="{{asset('js/scripts/popover/popover.min.js')}}"></script>
 		<!-- BEGIN: Page JS-->
 
         @stack('ajax_crud')

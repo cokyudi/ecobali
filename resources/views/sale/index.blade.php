@@ -57,9 +57,9 @@
                                                         <th>Delivered to <br>Papermill <br>(Kg)</th>
                                                         <th>Weighing scale <br>Gap ecoBali <br>(Kg)</th>
                                                         <th>Weighing <br>scale Gap <br>ecoBali (%)</th>
+                                                        <th>Received at <br>Papermill <br>(Kg)</th>
                                                         <th>Total MCC <br>(Kg)</th>
                                                         <th>Total MCC <br>(%)</th>
-                                                        <th>Received at <br>Papermill <br>(Kg)</th>
                                                         <th>Total <br>Weight <br>Accepted (Kg)</th>
                                                         @if ($user['role'] == 'Admin')
                                                             <th width="130px">Action</th>
@@ -77,9 +77,9 @@
                                                         <th>Delivered to <br>Papermill <br>(Kg)</th>
                                                         <th>Weighing scale <br>Gap ecoBali <br>(Kg)</th>
                                                         <th>Weighing <br>scale Gap <br>ecoBali (%)</th>
+                                                        <th>Received at <br>Papermill <br>(Kg)</th>
                                                         <th>Total MCC <br>(Kg)</th>
                                                         <th>Total MCC <br>(%)</th>
-                                                        <th>Received at <br>Papermill <br>(Kg)</th>
                                                         <th>Total <br>Weight <br>Accepted (Kg)</th>
                                                         @if ($user['role'] == 'Admin')
                                                             <th width="130px">Action</th>
@@ -132,9 +132,9 @@ $(function () {
                 {data: 'delivered_to_papermill', name: 'delivered_to_papermill'},
                 {data: 'weighing_scale_gap_eco', name: 'weighing_scale_gap_eco'},
                 {data: 'weighing_scale_gap_eco_percent', name: 'weighing_scale_gap_eco_percent'},
+                {data: 'received_at_papermill', name: 'received_at_papermill'},
                 {data: 'moisture_content_and_contaminant', name: 'moisture_content_and_contaminant'},
                 {data: 'moisture_content_and_contaminant_percent', name: 'moisture_content_and_contaminant_percent'},
-                {data: 'received_at_papermill', name: 'received_at_papermill'},
                 {data: 'total_weight_accepted', name: 'total_weight_accepted'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
@@ -158,9 +158,9 @@ $(function () {
                 {data: 'delivered_to_papermill', name: 'delivered_to_papermill'},
                 {data: 'weighing_scale_gap_eco', name: 'weighing_scale_gap_eco'},
                 {data: 'weighing_scale_gap_eco_percent', name: 'weighing_scale_gap_eco_percent'},
+                {data: 'received_at_papermill', name: 'received_at_papermill'},
                 {data: 'moisture_content_and_contaminant', name: 'moisture_content_and_contaminant'},
                 {data: 'moisture_content_and_contaminant_percent', name: 'moisture_content_and_contaminant_percent'},
-                {data: 'received_at_papermill', name: 'received_at_papermill'},
                 {data: 'total_weight_accepted', name: 'total_weight_accepted'},
             ]
         });

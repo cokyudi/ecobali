@@ -17,7 +17,12 @@
         <div class="col-xl-12 col-12">
             <div class="card">
             <div class="card-header">
-                <h4 class="font-weight-bold font-medium-5">Participants Performance Comparisson</h4>
+                <h4 class="font-weight-bold font-medium-5">Participant Performance Comparison
+                    <i class="la la-info-circle" data-toggle="popover"
+                       data-content="Perbadingan dinamika dan jumlah Kemasan Bekas Minuman (KBM) yang dikumpulkan oleh setiap partisipan" data-trigger="hover"
+                       data-original-title="Comparison of total number trend of Used Beverage Cartons (UBC) collected by Participant">
+                    </i>
+                </h4>
                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 <div class="heading-elements">
                     <ul class="list-inline mb-0">

@@ -28,11 +28,16 @@
                         <div class="card-body">
                             <div class="media d-flex">
                                 <div class="media-body text-left">
-                                    <h6 class="font-weight-bold font-medium-5">District Coverage</h6>
+                                    <h6 class="font-weight-bold font-medium-3">District Coverage
+                                        <i class="la la-info-circle" data-toggle="popover"
+                                           data-content="Jumlah kecamatan yang menjadi lokasi sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM)" data-trigger="hover" data-html="true"
+                                           data-original-title="Number of district received socialization / education about Used Beverage Cartons (UBC) recycling">
+                                        </i>
+                                    </h6>
                                     <h3 class="font-large-2" id="district_coverage"></h3>
                                 </div>
                                 <div class="align-self-center">
-                                    <img src="{{asset('images/icons/district.png')}}" alt="" width="80px">
+                                    <img src="{{asset('images/icons/district.png')}}" alt="" width="60px">
                                 </div>
                             </div>
                         </div>
@@ -45,11 +50,16 @@
                         <div class="card-body">
                             <div class="media d-flex">
                                 <div class="media-body text-left">
-                                    <h6 class="font-weight-bold font-medium-5">Regency Coverage</h6>
+                                    <h6 class="font-weight-bold font-medium-3">Regency Coverage
+                                        <i class="la la-info-circle" data-toggle="popover"
+                                           data-content="Jumlah kabupaten yang menjadi lokasi sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM)" data-trigger="hover" data-html="true"
+                                           data-original-title="Number of regency received socialization / education about Used Beverage Cartons (UBC) recyling">
+                                        </i>
+                                    </h6>
                                     <h3 class="font-large-2" id="regency_coverage"></h3>
                                 </div>
                                 <div class="align-self-center">
-                                    <img src="{{asset('images/icons/regency.png')}}" alt="" width="80px">
+                                    <img src="{{asset('images/icons/regency.png')}}" alt="" width="60px">
                                 </div>
                             </div>
                         </div>
@@ -62,11 +72,16 @@
                         <div class="card-body">
                             <div class="media d-flex">
                                 <div class="media-body text-left">
-                                    <h6 class="font-weight-bold font-medium-5">Location Coverage</h6>
+                                    <h6 class="font-weight-bold font-medium-3">Location Coverage
+                                        <i class="la la-info-circle" data-toggle="popover"
+                                           data-content="Jumlah lokasi / organisasi yang mendapat sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM)" data-trigger="hover" data-html="true"
+                                           data-original-title="Number of organization / location received socialization / education about Used Beverage Cartons (UBC) recycling">
+                                        </i>
+                                    </h6>
                                     <h3 class="font-large-2" id="location_coverage"></h3>
                                 </div>
                                 <div class="align-self-center">
-                                    <img src="{{asset('images/icons/location.png')}}" alt="" width="80px">
+                                    <img src="{{asset('images/icons/location.png')}}" alt="" width="60px">
                                 </div>
                             </div>
                         </div>
@@ -79,11 +94,16 @@
                         <div class="card-body">
                             <div class="media d-flex">
                                 <div class="media-body text-left">
-                                    <h6 class="font-weight-bold font-medium-5">Total Participant</h6>
+                                    <h6 class="font-weight-bold font-medium-3">Total Participant
+                                        <i class="la la-info-circle" data-toggle="popover"
+                                           data-content="Jumlah orang yang mengikuti dan mendapat sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM)" data-trigger="hover" data-html="true"
+                                           data-original-title="Number of people who participated and received socialization / education about Used Beverage Cartons (UBC) recycling">
+                                        </i>
+                                    </h6>
                                     <h3 class="font-large-2" id="total_participant"></h3>
                                 </div>
                                 <div class="align-self-center">
-                                    <img src="{{asset('images/icons/participant.png')}}" alt="" width="80px">
+                                    <img src="{{asset('images/icons/participant.png')}}" alt="" width="50px">
                                 </div>
                             </div>
                         </div>
@@ -96,14 +116,17 @@
             <div class="col-6">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="font-weight-bold font-medium-5">Number of Participant</h4>
+                        <h4 class="font-weight-bold font-medium-3">Number of Participant
+                            <i class="la la-info-circle" data-toggle="popover"
+                               data-content="Jumlah orang yang mengikuti dan mendapat sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM) berdasarkan program" data-trigger="hover" data-html="true"
+                               data-original-title="Number of people who participated and received socialization / education about Used Beverage Cartons (UBC) recycling, based on program">
+                            </i>
+                        </h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
                                 <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                 <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -118,20 +141,22 @@
             <div class="col-6">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h4 class="font-weight-bold font-medium-5">Number of Organization</h4>
+                        <h4 class="font-weight-bold font-medium-3">Number of Location
+                            <i class="la la-info-circle" data-toggle="popover"
+                               data-content="Jumlah lokasi / organisasi yang mendapat sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM) berdasarkan kategori lokasi / organisasi" data-trigger="hover" data-html="true"
+                               data-original-title="Number of organizations / locations that received socialization / education about Used Beverage Cartons (UBC) recycling, based on organization/location category">
+                            </i>
+                        </h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
                                 <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                 <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="card-content collapse show">
                         <div class="card-body">
-                            {{--								<p class="card-text">A bar chart is a horizontal bar chart rendered in the browser using SVG or VML, whichever is appropriate for the user's browser. Like all google charts, bar charts display tooltips when the user hovers over the data.</p>--}}
                             <div class="chart-container">
                                 <div id="bar-chart"></div>
                             </div>
@@ -145,14 +170,17 @@
             <div class="col-12">
                 <div class="card h-100">
                     <div class="card-header mb-0">
-                        <h4 class="font-weight-bold font-medium-5">Map</h4>
+                        <h4 class="font-weight-bold font-medium-3">Map
+                            <i class="la la-info-circle" data-toggle="popover"
+                               data-content="Jumlah orang yang mengikuti dan mendapat sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM) berdasarkan wilayah Kabupaten" data-trigger="hover" data-html="true"
+                               data-original-title="Number of people who participated and received socialization / education about Used Beverage Cartons (UBC) recycling, based on region (regency)">
+                            </i>
+                        </h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
                                 <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                 <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>
                             </ul>
                         </div>
                     </div>

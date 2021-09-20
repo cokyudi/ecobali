@@ -87,6 +87,7 @@ Route::get('downloadSales', [SaleController::class, 'downloadSales']);
 Route::resource('activityPrograms', ActivityProgramController::class);
 Route::resource('activities', ActivityController::class);
 Route::post('importActivity',[ActivityController::class, 'importActivity'])->name('activities.importActivity');
+Route::get('downloadActivities', [ActivityController::class, 'downloadActivities']);
 
 Route::resource('potentials', PotentialController::class);
 

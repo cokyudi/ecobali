@@ -25,6 +25,7 @@ function drawTargetPapermillDonut() {
             }
 
             var dataMonthly = google.visualization.arrayToDataTable(data.dataDonutMonthly);
+            // var dataMonthly = google.visualization.arrayToDataTable(["Belum Terkumpul", "Terkumpul"]);
             donutMonthly = new google.visualization.PieChart(document.getElementById("donut_monthly_papermill")).draw(dataMonthly, {
                 title: "",
                 legend:'bottom',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Export\ActivityExport;
 use App\Imports\ActivitiesImport;
 use App\Models\Activity;
 use Illuminate\Http\Request;
@@ -111,5 +112,10 @@ class ActivityController extends Controller
         }
 
         return response()->json(['success'=>'Import successfully.']);
+    }
+
+    function downloadActivities()
+    {
+        return Excel::download(new ActivityExport, 'activities.xlsx');
     }
 }
