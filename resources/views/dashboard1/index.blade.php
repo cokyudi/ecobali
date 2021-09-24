@@ -1,6 +1,12 @@
 @extends('template', ['user'=>$user])
 @section('dashboard-collection','active')
 
+@push('menu_title')
+    <li class="nav-item d-none d-lg-block">
+        <a class="nav-link text-bold-700" href="{{url('dashboard1')}}">Dashboard Collection</a>
+    </li>
+@endpush
+
 @push('css_extend')
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -18,14 +24,14 @@
 @section('content')
           <!-- BEGIN: Content-->
     <div class="app-content content">
-      <div class="content-wrapper">
-        <div class="content-header row mb-1">
+      <div class="content-wrapper pt-1">
+        <div class="content-header row">
         </div>
         <div class="content-body"><!-- Revenue, Hit Rate & Deals -->
 
             <div class="row">
 
-                <div class="col-lg-3 col-12 pb-1">
+                <div class="col-lg-3 col-12">
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body card-custom">
@@ -40,10 +46,10 @@
                                             </i>
                                         </h6>
 
-                                        <h3 class="font-large-4" id="district_coverage"></h3>
+                                        <h3 class="font-large-3" id="district_coverage"></h3>
                                     </div>
                                     <div class="align-self-center">
-                                        <img src="{{asset('images/icons/district.png')}}" alt="" height="70px">
+                                        <img src="{{asset('images/icons/district.png')}}" alt="" height="60px">
 {{--                                        <i class="la la-map-marker success font-large-5 float-right"></i>--}}
                                     </div>
                                 </div>
@@ -51,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-12 pb-1">
+                <div class="col-lg-3 col-12">
                     <div class="card" >
                         <div class="card-content" >
                             <div class="card-body card-custom">
@@ -64,10 +70,10 @@
                                                data-original-title="Number of Regency where Used Beverage Cartons (UBC) are collected">
                                             </i>
                                         </h6>
-                                        <h3 class="font-large-4" id="regency_coverage"></h3>
+                                        <h3 class="font-large-3" id="regency_coverage"></h3>
                                     </div>
                                     <div class="align-self-center">
-                                        <img src="{{asset('images/icons/regency.png')}}" alt="" height="70px">
+                                        <img src="{{asset('images/icons/regency.png')}}" alt="" height="60px">
 {{--                                        <i class="la la-map success font-large-5 float-right"></i>--}}
                                     </div>
                                 </div>
@@ -75,7 +81,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-12 pb-1">
+                <div class="col-lg-3 col-12">
                     <div class="card ">
                         <div class="card-content">
                             <div class="card-body card-custom">
@@ -89,17 +95,17 @@
                                         </h6>
                                         <div class="row">
                                             <div class="col-12">
-                                                <h4 class="font-large-3 collectionTon mb-0 mt-1" id="total_collection_ton"></h4>
+                                                <h4 class="font-large-2 collectionTon mb-0 mt-1" id="total_collection_ton"></h4>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                                <h4 class="font-medium-5 collectionKg" id="total_collection_kg"></h4>
+                                                <h4 class="font-medium-4 collectionKg" id="total_collection_kg"></h4>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="align-self-center">
-                                        <img src="{{asset('images/icons/jumlah-kotak-susu.png')}}" alt="" height="75px">
+                                        <img src="{{asset('images/icons/jumlah-kotak-susu.png')}}" alt="" height="60px">
 {{--                                        <i class="la la-box success font-large-5 float-right"></i>--}}
                                     </div>
                                 </div>
@@ -107,7 +113,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-12 pb-1">
+                <div class="col-lg-3 col-12 ">
                     <div class="card">
                         <div class="card-content">
                             <div class="card-body card-custom">
@@ -119,10 +125,10 @@
                                                data-original-title="Total of Participants who collect Used Beverage Cartons (UBC)">
                                             </i>
                                         </h6>
-                                        <h3 class="font-large-4" id="total_participant"></h3>
+                                        <h3 class="font-large-3" id="total_participant"></h3>
                                     </div>
                                     <div class="align-self-center">
-                                        <img src="{{asset('images/icons/participant.png')}}" alt="" height="60px">
+                                        <img src="{{asset('images/icons/participant.png')}}" alt="" height="55px">
 {{--                                        <i class="la la-users success font-large-5 float-right"></i>--}}
                                     </div>
                                 </div>
@@ -149,9 +155,7 @@
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
                                     <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                     <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -178,9 +182,7 @@
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
                                     <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                     <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -193,9 +195,10 @@
                 </div>
             </div>
 
-            <div class="row mb-3">
-                <div class="col-lg-6 col-12 pb-1">
-                    <div class="card h-100">
+
+            <div class="row">
+                <div class="col-lg-6 col-12 ">
+                    <div class="card">
                         <div class="card-header mb-0">
                             <h4 class="font-weight-bold font-medium-3">Map
                                 <i class="la la-info-circle" data-toggle="popover"
@@ -207,21 +210,19 @@
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
                                     <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                     <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="card-content collapse show">
-                            <div class="card-body height-500">
+                            <div class="card-body height-450">
                                 <div id="mapid" ></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-12 pb-1">
-                    <div class="card h-100">
+                <div class="col-lg-6 col-12">
+                    <div class="card ">
                         <div class="card-header">
                             <h4 class="font-weight-bold font-medium-3">Total Collection by Categories
                                 <i class="la la-info-circle" data-toggle="popover"
@@ -233,14 +234,12 @@
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
                                     <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                     <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="card-content collapse show">
-                            <div class="card-body">
+                            <div class="card-body height-450">
                                 {{--								<p class="card-text">A bar chart is a horizontal bar chart rendered in the browser using SVG or VML, whichever is appropriate for the user's browser. Like all google charts, bar charts display tooltips when the user hovers over the data.</p>--}}
                                 <div class="chart-container">
                                     <div id="bar-chart"></div>
@@ -265,9 +264,7 @@
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
                                     <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                                    <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                                     <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                    <li><a data-action="close"><i class="ft-x"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -284,8 +281,6 @@
                         </div>
                     </div>
                 </div>
-
-
 
             </div>
 
@@ -383,9 +378,7 @@
 <script src="{{asset('js/scripts/forms/select/form-select2.min.js')}}"></script>
 
 <script type="text/javascript">
-
     $(document).ready(function() {
-
 
         $('#daterange').daterangepicker(
             {
@@ -569,6 +562,8 @@
 			}
 		});
 	}
+
+
 
 </script>
 

@@ -1,6 +1,12 @@
 @extends('template', ['user'=>$user])
 @section('dashboard-shipment','active')
 
+@push('menu_title')
+    <li class="nav-item d-none d-lg-block">
+        <a class="nav-link text-bold-700" href="{{url('dashboard-shipment')}}">Dashboard Shipment</a>
+    </li>
+@endpush
+
 @push('css_extend')
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/selects/select2.min.css')}}">
 @endpush
@@ -9,17 +15,17 @@
 <!-- BEGIN: Content-->
 <div class="app-content content">
     <div class="content-wrapper">
-        <div class="content-header row mb-1">
+        <div class="content-header row ">
     </div>
     <div class="content-body"><!-- Revenue, Hit Rate & Deals -->
     <!--/ Revenue, Hit Rate & Deals -->
         <div class="row">
             <div class="col-md-4 col-12 ">
-                <div class="card pull-up h-100">
+                <div class="card pull-up" style="height: 300px;">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
-                                <h6 class="font-weight-bold font-medium-2">Sent to Papermill
+                                <h6 class="font-weight-bold font-medium-1">Sent to Papermill
                                     <i class="la la-info-circle" data-toggle="popover"
                                        data-content="Total Kemasan Bekas Minuman (KBM) yang dikumpulkan oleh ecoBali dan dikirim menuju pabrik" data-trigger="hover" data-html="true"
                                        data-original-title="Total number of Used Beverage Cartons (UBC) collected at ecoBali and sent to papermill">
@@ -63,11 +69,11 @@
                 </div>
             </div>
             <div class="col-md-4 col-12 ">
-                <div class="card pull-up h-100">
+                <div class="card pull-up " style="height: 300px;">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
-                                <h6 class="font-weight-bold font-medium-2">Received at Papermill
+                                <h6 class="font-weight-bold font-medium-1">Received at Papermill
                                     <i class="la la-info-circle" data-toggle="popover"
                                        data-content="Total Kemasan Bekas Minuman (KBM) yang diterima dipabrik sebelum dikurangi bahan cair dan kontaminan " data-trigger="hover" data-html="true"
                                        data-original-title="Total number of Used Beverage Cartons (UBC) received at papermill before moisture content and contaminant reduction">
@@ -122,11 +128,11 @@
                 </div>
             </div>
             <div class="col-md-4 col-12 ">
-                <div class="card pull-up h-100">
+                <div class="card pull-up " style="height: 300px;">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
-                                <h6 class="font-weight-bold font-medium-2">Final Weight at Papermill
+                                <h6 class="font-weight-bold font-medium-1">Final Weight at Papermill
                                     <i class="la la-info-circle" data-toggle="popover"
                                        data-content="Total Kemasan Bekas Minuman (KBM) yang diterima dipabrik setelah dikurangi bahan cair dan kontaminan <br>
 (Rumus: total KBM di terima di pabrik - total bahan cair dan kontaminan)" data-trigger="hover" data-html="true"
@@ -190,8 +196,8 @@
         </div>
 
         <div class="row">
-            <div class="col-12 py-2">
-                <div class="card h-100">
+            <div class="col-12">
+                <div class="card">
                     <div class="card-header">
                         <h4 class="font-weight-bold font-medium-3">Sent vs Received
                             <i class="la la-info-circle" data-toggle="popover"
@@ -222,8 +228,8 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-6 col-12 py-2">
-                <div class="card h-100">
+            <div class="col-sm-6 col-12 ">
+                <div class="card">
                     <div class="card-header">
                         <h4 class="font-weight-bold font-medium-3">Weight Reduction at ecoBali
                             <i class="la la-info-circle" data-toggle="popover"
@@ -250,8 +256,8 @@
                 </div>
             </div>
 
-            <div class="col-sm-6 col-12 py-2">
-                <div class="card h-100">
+            <div class="col-sm-6 col-12 ">
+                <div class="card ">
                     <div class="card-header">
                         <h4 class="font-weight-bold font-medium-3">Moisture Content, Contaminant (MCC)
                             <i class="la la-info-circle" data-toggle="popover"
@@ -334,7 +340,7 @@
         </div>
 
         <div class="row">
-            <div class="col-6 py-2">
+            <div class="col-6">
                 <div class="card h-100">
                     <div class="card-header">
                         <h4 class="font-weight-bold font-medium-3">Trend of UBC Final Weight
@@ -358,7 +364,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 py-2">
+            <div class="col-6">
                 <div class="card h-100">
                     <div class="card-header">
                         <h4 class="font-weight-bold font-medium-3">Trend of MCC
@@ -396,11 +402,11 @@
     <!-- END: Content-->
 <!-- BEGIN: Customizer-->
 <div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-info box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
-        <h4 class="text-uppercase mb-0">Data Filter Customizer</h4>
+        <h5 class="text-uppercase mb-0">Data Filter Customizer</h5>
         <hr>
 
         <form id="filterForm" name="filterForm">
-            <h5 class="mt-1 mb-1 text-bold-500">Date Range Options</h5>
+            <h6 class="mt-1 mb-1 text-bold-500">Date Range Options</h6>
             <div class="form-group">
                 <div class="form-group">
                     <div class='input-group'>
@@ -414,10 +420,10 @@
                 </div>
             </div>
 
-            <h5 class="mt-1 mb-1 text-bold-500">Papermill</h5>
+            <h6 class="mt-1 mb-1 text-bold-500">Papermill</h6>
             <div class="form-group">
                 <div class="form-group">
-                    <select id="id_papermill" name="id_papermill[]" multiple="multiple" class="select2 form-control">
+                    <select id="id_papermill" name="id_papermill[]" multiple="multiple" class="select2 form-control" data-placeholder="Select Papermill">
                         @foreach($papermills as $papermill)
                             <option value="{{$papermill->id}}">{{$papermill->papermill_name}}</option>
                         @endforeach

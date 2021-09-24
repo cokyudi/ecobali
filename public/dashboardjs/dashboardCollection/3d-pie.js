@@ -35,11 +35,10 @@ function drawPie3d() {
             pie3d = new google.visualization.PieChart(document.getElementById("pie-3d")).draw(e, {
                 title: "",
                 is3D: !0,
-                height: 400,
+                height: 250,
                 fontSize: 12,
-                // colors: ["#99B898", "#FECEA8", "#FF847C", "#E84A5F", "#474747"],
                 colors: data.dataColor,
-                chartArea: { left: "5%", width: "90%", height: 350 },
+                chartArea: { left: "5%", width: "90%", height: 250 },
                 slices: { 1: { offset: 0.2 }, 2: { offset: 0.15 }, 3: { offset: 0.16 }, 4: { offset: 0.12 } },
             });
         },

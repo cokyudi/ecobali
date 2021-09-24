@@ -22,10 +22,11 @@ class DashboardActivitiesController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $categories = Category::latest()->get();
-        $regencies = Regency::latest()->get();
-        $districts = District::latest()->get();
-        $programs = ActivityProgram::latest()->get();
+
+        $categories = DB::table('categories')->orderBy('category_name', 'asc')->get();
+        $regencies = DB::table('regencies')->orderBy('regency_name', 'asc')->get();
+        $districts = DB::table('districts')->orderBy('district_name', 'asc')->get();
+        $programs = DB::table('activity_programs')->orderBy('activity_program_name', 'asc')->get();
 
         return view('dashboardActivities/index',compact('user','categories','regencies','districts','programs'));
     }
@@ -114,7 +115,7 @@ class DashboardActivitiesController extends Controller
         $totalAllParticipant = $activitiesGeneral->participant_number;
 
         $locations = [
-            ["Category", "Location", ["role"=>"style"]]
+            ["Category", "Number", ["role"=>"style"]]
         ];
 
         $listColor = array("#99B898", "#FECEA8", "#FF847C", "#E84A5F", "#474747","#2494be","F6B75A","#c6ebc9","#70af85","#f0e2d0","#aa8976","#125d98");
