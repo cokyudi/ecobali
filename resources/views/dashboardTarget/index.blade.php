@@ -29,7 +29,23 @@
             <div class="content-body"><!-- Revenue, Hit Rate & Deals -->
                 <!--/ Revenue, Hit Rate & Deals -->
 
+                <div class="row">
+                    <div class="col text-center mb-1">
+                        <button type="button" class="btn btn-success round" id="btn01"><b>JAN</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn02"><b>FEB</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn03"><b>MAR</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn04"><b>APR</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn05"><b>MAY</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn06"><b>JUN</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn07"><b>JUL</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn08"><b>AUG</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn09"><b>SEP</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn10"><b>OCT</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn11"><b>NOV</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn12"><b>DEC</b></button>
+                    </div>
 
+                </div>
                 {{--Monthly Target & Annual Target ecoBali--}}
                 <div class="row ">
                     <div class="col-lg-4 col-12">
@@ -49,8 +65,8 @@
                                     <div class="card-content collapse show">
                                         <div class="card-body">
                                             <h5>Total Annual Target</h5>
-                                            <h1> <strong >250</strong> T</h1>
-                                            <h3> <strong >250,000 </strong>Kg</h3>
+                                            <h1> <strong id="annualTon"></strong> T</h1>
+                                            <h3> <strong id="annualKg"></strong> Kg</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -73,8 +89,8 @@
                                     <div class="card-content collapse show">
                                         <div class="card-body">
                                             <h5>Total Monthly Target</h5>
-                                            <h1> <strong >20.8</strong> T</h1>
-                                            <h3> <strong >20,833 </strong>Kg</h3>
+                                            <h1> <strong id="monthlyTon"></strong> T</h1>
+                                            <h3> <strong id="monthlyKg"></strong> Kg</h3>
                                         </div>
                                     </div>
                                 </div>

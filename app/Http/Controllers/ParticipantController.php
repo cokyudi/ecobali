@@ -435,12 +435,24 @@ class ParticipantController extends Controller
             $continuityColor = "btn-success";
         }
 
+        $totalAndAverage = DB::table('collections')
+            ->where('collect_date', '>=',$request->startDates)
+            ->where('collect_date', '<=',$request->endDates)
+            ->where('id_participant','=',$request->idParticipant)
+            ->select(
+                DB::raw('COUNT(id_participant) totalPengangkutan'),
+                DB::raw('ROUND(SUM(quantity),1) qty')
+            )
+            ->first();
+
         $data = [
             'dataLine' => $dataLine,
             'potential' =>$potential,
             'continuity' =>$continuity,
             'potentialColor' =>$potentialColor,
-            'continuityColor' =>$continuityColor
+            'continuityColor' =>$continuityColor,
+            'totalUbc' =>$totalAndAverage->qty,
+            'average' => round($totalAndAverage->qty / $totalAndAverage->totalPengangkutan,1)
         ];
 
         return response()->json(['data'=>$data]);

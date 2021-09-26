@@ -48,15 +48,24 @@
                                     <div class="tab-content px-1">
                                         <div class="tab-pane active" id="tabCollection" >
                                             <div class="d-flex">
+
                                                 <div class="p-2">
-                                                    <button type="button" class="btn round btn-min-width " id="btnContinuity">Continuity : <b id="continuity">None</b></button>
+                                                    <button type="button" class="btn round btn-min-width " id="btnContinuity" style="width: 180px">Continuity : <b id="continuity">None</b></button>
                                                 </div>
                                                 <div class="mr-auto p-2">
-                                                    <button type="button" class="btn round btn-min-width " id="btnPotential">Potential : <b id="potential">Low</b></button>
+                                                    <button type="button" class="btn round btn-min-width " id="btnPotential" style="width: 180px">Potential : <b id="potential">Low</b></button>
                                                 </div>
 
                                                 <div class="p-2">
                                                     <input type="text" id="daterange" name="daterange" class = "form-control" value="" />
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="pr-2 pl-2 pt-0">
+                                                    <button type="button" class="btn btn-primary round  btn-min-width" style="width: 180px">Total : <b id="totalubc"> Kg</b></button>
+                                                </div>
+                                                <div class="mr-auto pr-2 pl-2 pt-0">
+                                                    <button type="button" class="btn btn-secondary round btn-min-width " style="width: 180px">Average : <b id="average"> Kg</b></button>
                                                 </div>
                                             </div>
                                             <div class="card-content">
@@ -340,6 +349,9 @@
                 $('#potential').html(data.data.potential);
                 $('#btnContinuity').addClass(data.data.continuityColor);
                 $('#btnPotential').addClass(data.data.potentialColor);
+
+                $('#totalubc').html(data.data.totalUbc + " Kg");
+                $('#average').html(data.data.average + " Kg");
 
                 if (myLineChart) {
                     myLineChart.destroy();

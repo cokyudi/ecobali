@@ -27,6 +27,10 @@ function drawActualTargetBarByMonth(type) {
                 pieChart.destroy();
                 pieChartExplode.destroy();
             }
+            $('#annualTon').html(parseFloat((data.annualTarget/1000).toFixed(1)).toLocaleString());
+            $('#annualKg').html(parseFloat(data.annualTarget.toFixed(1)).toLocaleString());
+            $('#monthlyTon').html(parseFloat((data.monthlyTarget/1000).toFixed(1)).toLocaleString());
+            $('#monthlyKg').html(parseFloat(data.monthlyTarget.toFixed(1)).toLocaleString());
 
             var e = google.visualization.arrayToDataTable(data.dataByMonth);
             myBarChartByMonth = new google.visualization.ComboChart(document.getElementById("combo-chart")).draw(e, {
