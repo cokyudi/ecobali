@@ -189,15 +189,19 @@
 <script src="{{asset('js/scripts/forms/select/form-select2.min.js')}}"></script>
 
 <script>
+    
+    var southWest = [114.100934,-9.22376],
+        northEast = [116.045514,-7.769445],
+        bounds = [southWest, northEast];
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiZGV2YWFkczIiLCJhIjoiY2twbXBweGkzMmgycTJvcmkxM3ozeDhmaCJ9.w1rN2S1A6G5SJFoitaoQvQ';
         var map = new mapboxgl.Map({
         container: 'mapid', // container id
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
         center: [115.188919, -8.409518], // starting position [lng, lat]
-        zoom: 9 // starting zoom
+        zoom: 8, // starting zoom
+        maxBounds: bounds
     });
-
 
 </script>
 
