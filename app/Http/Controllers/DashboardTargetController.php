@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use DateTime;
+use DateInterval;
+use DatePeriod;
 
 
 class DashboardTargetController extends Controller
@@ -252,17 +254,19 @@ class DashboardTargetController extends Controller
         $annualTarget = $this->getYearlyTargetForAllCategory($yearStart,$yearEnd);
         $monthlyTarget = round($annualTarget/12,1);
 
-        $ts1 = strtotime($request->startDates);
-        $ts2 = strtotime($request->endDates);
 
-        $year1 = date('Y', $ts1);
-        $year2 = date('Y', $ts2);
+        $start    = (new DateTime($request->startDates))->modify('first day of this month');
+        $end      = (new DateTime($request->endDates))->modify('first day of next month');
+        $interval = DateInterval::createFromDateString('1 month');
+        $period   = new DatePeriod($start, $interval, $end);
 
-        $month1 = date('m', $ts1);
-        $month2 = date('m', $ts2);
+        $interval = date_diff($start, $end);
+        $dateDiff = $interval->m + ($interval->y * 12);
 
-        $diff = (($year2 - $year1) * 12) + ($month2 - $month1);
-
+        $activeMonth = [];
+        foreach ($period as $dt) {
+            array_push($activeMonth,strtoupper($dt->format("M")));
+        }
 
         return response()->json([
             'dataByMonth' => $actualTargetBarByMonth,
@@ -270,8 +274,8 @@ class DashboardTargetController extends Controller
             'dataPieExplode' => $dataPieExplode,
             'annualTarget' => $annualTarget,
             'monthlyTarget' => $monthlyTarget,
-            'dateDiff' => $diff,
-
+            'dateDiff' => $dateDiff,
+            'activeMonth' =>$activeMonth
         ]);
     }
 
@@ -382,9 +386,17 @@ class DashboardTargetController extends Controller
         array_push($dataDonutYearly, ["Belum Terkumpul", round($totalTargetYearly-$totalQtyYearly,0)]);
         array_push($dataDonutYearly, ["Terkumpul", round($totalQtyYearly,0)]);
 
+
+        $start    = (new DateTime($request->startDates))->modify('first day of this month');
+        $end      = (new DateTime($request->endDates))->modify('first day of next month');
+        $interval = date_diff($start, $end);
+        $diffPapermill = $interval->m + ($interval->y * 12);
+
+
         return response()->json([
             'dataDonutMonthly' => $dataDonutMonthly,
             'dataDonutYearly' => $dataDonutYearly,
+            'diffPapermill' =>$diffPapermill
         ]);
     }
 

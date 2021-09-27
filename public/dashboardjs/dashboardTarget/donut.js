@@ -25,7 +25,6 @@ function drawTargetPapermillDonut() {
             }
 
             var dataMonthly = google.visualization.arrayToDataTable(data.dataDonutMonthly);
-            // var dataMonthly = google.visualization.arrayToDataTable(["Belum Terkumpul", "Terkumpul"]);
             donutMonthly = new google.visualization.PieChart(document.getElementById("donut_monthly_papermill")).draw(dataMonthly, {
                 title: "",
                 legend:'bottom',
@@ -37,6 +36,8 @@ function drawTargetPapermillDonut() {
             });
             $('#monthly_papermill_target').html(parseFloat((data.dataDonutMonthly[2][1]+data.dataDonutMonthly[1][1]).toFixed(1)).toLocaleString());
             $('#monthly_papermill_terkumpul').html(data.dataDonutMonthly[2][1].toLocaleString());
+            $('#papermill_monthly_diff').html(data.diffPapermill);
+
 
 
             var dataAnnual = google.visualization.arrayToDataTable(data.dataDonutYearly);

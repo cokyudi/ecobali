@@ -18,6 +18,35 @@
    	#mapid { height: 100%; width:100%;}
    </style>
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/selects/select2.min.css')}}">
+
+<style type="text/css">
+    .card-map{
+        height: 500px;
+    }
+
+    .btn-grad {background-image: linear-gradient(to right, #0000ff 0%, #ffffff  100%)}
+    .btn-grad {
+        margin: 1px;
+        padding: 5px 10px;
+        text-align: center;
+        text-transform: uppercase;
+        transition: 0.5s;
+        background-size: 200% auto;
+        color: white;
+        box-shadow: 0 0 20px #eee;
+        border-radius: 10px;
+        display: block;
+        height: 30px;
+    }
+
+    .alignleft {
+        float: left;
+    }
+    .alignright {
+        float: right;
+    }
+
+</style>
 @endpush
 
 @section('dashboard1','active')
@@ -215,8 +244,32 @@
                             </div>
                         </div>
                         <div class="card-content collapse show">
-                            <div class="card-body height-450">
-                                <div id="mapid" ></div>
+
+                            <div class="card-body card-map">
+
+{{--                                <div class="row mb-1">--}}
+{{--                                    <div class="col-2">--}}
+{{--                                        <span class="font-small-3">High</span>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-8" id="grad1">--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-2">--}}
+{{--                                        <span class="font-small-3">Low</span>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+
+                                <div class="row mb-1 ">
+                                    <div class="col-12">
+                                        <div class="row btn-grad">
+                                            <p class="alignleft font-small-3 mb-1">High</p>
+                                            <p class="alignright font-small-3 mb-1">Low</p>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div id="mapid" class="height-400"></div>
                             </div>
                         </div>
                     </div>
@@ -239,7 +292,7 @@
                             </div>
                         </div>
                         <div class="card-content collapse show">
-                            <div class="card-body height-450">
+                            <div class="card-body card-map">
                                 {{--								<p class="card-text">A bar chart is a horizontal bar chart rendered in the browser using SVG or VML, whichever is appropriate for the user's browser. Like all google charts, bar charts display tooltips when the user hovers over the data.</p>--}}
                                 <div class="chart-container">
                                     <div id="bar-chart"></div>

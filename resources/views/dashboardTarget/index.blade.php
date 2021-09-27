@@ -31,18 +31,18 @@
 
                 <div class="row">
                     <div class="col text-center mb-1">
-                        <button type="button" class="btn btn-success round" id="btn01"><b>JAN</b></button>
-                        <button type="button" class="btn btn-secondary round" id="btn02"><b>FEB</b></button>
-                        <button type="button" class="btn btn-secondary round" id="btn03"><b>MAR</b></button>
-                        <button type="button" class="btn btn-secondary round" id="btn04"><b>APR</b></button>
-                        <button type="button" class="btn btn-secondary round" id="btn05"><b>MAY</b></button>
-                        <button type="button" class="btn btn-secondary round" id="btn06"><b>JUN</b></button>
-                        <button type="button" class="btn btn-secondary round" id="btn07"><b>JUL</b></button>
-                        <button type="button" class="btn btn-secondary round" id="btn08"><b>AUG</b></button>
-                        <button type="button" class="btn btn-secondary round" id="btn09"><b>SEP</b></button>
-                        <button type="button" class="btn btn-secondary round" id="btn10"><b>OCT</b></button>
-                        <button type="button" class="btn btn-secondary round" id="btn11"><b>NOV</b></button>
-                        <button type="button" class="btn btn-secondary round" id="btn12"><b>DEC</b></button>
+                        <button type="button" class="btn btn-secondary round" id="JAN"><b>JAN</b></button>
+                        <button type="button" class="btn btn-secondary round" id="FEB"><b>FEB</b></button>
+                        <button type="button" class="btn btn-secondary round" id="MAR"><b>MAR</b></button>
+                        <button type="button" class="btn btn-secondary round" id="APR"><b>APR</b></button>
+                        <button type="button" class="btn btn-secondary round" id="MAY"><b>MAY</b></button>
+                        <button type="button" class="btn btn-secondary round" id="JUN"><b>JUN</b></button>
+                        <button type="button" class="btn btn-secondary round" id="JUL"><b>JUL</b></button>
+                        <button type="button" class="btn btn-secondary round" id="AUG"><b>AUG</b></button>
+                        <button type="button" class="btn btn-secondary round" id="SEP"><b>SEP</b></button>
+                        <button type="button" class="btn btn-secondary round" id="OCT"><b>OCT</b></button>
+                        <button type="button" class="btn btn-secondary round" id="NOV"><b>NOV</b></button>
+                        <button type="button" class="btn btn-secondary round" id="DEC"><b>DEC</b></button>
                     </div>
 
                 </div>
@@ -121,7 +121,7 @@
                             </div>
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                                    <h4>Terkumpul <strong id="monthly_eco_terkumpul"></strong> Kg dari Target <strong id="monthly_eco_target"></strong> Kg.</h4>
+                                    <h4>Terkumpul <strong id="monthly_eco_terkumpul"></strong> Kg selama <strong id="eco_monthly_diff"></strong> bulan, dari Target <strong id="monthly_eco_target"></strong> Kg.</h4>
                                     <div id="pie-3d"></div>
                                 </div>
                             </div>
@@ -243,7 +243,7 @@
                             </div>
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                                    <h4>Terkumpul <strong id="monthly_papermill_terkumpul"></strong> Kg dari Target <strong id="monthly_papermill_target"></strong> Kg.</h4>
+                                    <h4>Terkumpul <strong id="monthly_papermill_terkumpul"></strong> Kg selama <strong id="papermill_monthly_diff"></strong> bulan, dari Target <strong id="monthly_papermill_target"></strong> Kg.</h4>
                                     <div id="donut_monthly_papermill"></div>
                                 </div>
                             </div>

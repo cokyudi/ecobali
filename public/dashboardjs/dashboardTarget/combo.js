@@ -27,10 +27,27 @@ function drawActualTargetBarByMonth(type) {
                 pieChart.destroy();
                 pieChartExplode.destroy();
             }
+
             $('#annualTon').html(parseFloat((data.annualTarget/1000).toFixed(1)).toLocaleString());
             $('#annualKg').html(parseFloat(data.annualTarget.toFixed(1)).toLocaleString());
             $('#monthlyTon').html(parseFloat((data.monthlyTarget/1000).toFixed(1)).toLocaleString());
             $('#monthlyKg').html(parseFloat(data.monthlyTarget.toFixed(1)).toLocaleString());
+            $('#eco_monthly_diff').html(data.dateDiff);
+
+
+            const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+            for (var i = 0; i < months.length; i++) {
+                $('#'+months[i]).removeClass("btn-secondary").removeClass("btn-success");
+            }
+
+            for (var i = 0; i < months.length; i++) {
+                if(data.activeMonth.includes(months[i])) {
+                    $('#'+months[i]).addClass("btn-success");
+                } else {
+                    $('#'+months[i]).addClass("btn-secondary");
+                }
+            }
 
             var e = google.visualization.arrayToDataTable(data.dataByMonth);
             myBarChartByMonth = new google.visualization.ComboChart(document.getElementById("combo-chart")).draw(e, {

@@ -28,7 +28,7 @@ function drawBar() {
         success: function (data) {
             var e = google.visualization.arrayToDataTable(data.data);
             new google.visualization.BarChart(document.getElementById("bar-chart")).draw(e, {
-                height: 400,
+                height: 450,
                 fontSize: 12,
                 chartArea: { left: "20%", width: "70%", height: "90%" },
                 hAxis: { gridlines: { color: "#e9e9e9" },title: "UBC (Kg)" },

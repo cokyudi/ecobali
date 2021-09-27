@@ -50,10 +50,10 @@
                                             <div class="d-flex">
 
                                                 <div class="p-2">
-                                                    <button type="button" class="btn round btn-min-width " id="btnContinuity" style="width: 180px">Continuity : <b id="continuity">None</b></button>
+                                                    <button type="button" class="btn round btn-min-width " style="width: 180px" id="btnContinuity" style="width: 180px">Continuity : <b id="continuity">None</b></button>
                                                 </div>
                                                 <div class="mr-auto p-2">
-                                                    <button type="button" class="btn round btn-min-width " id="btnPotential" style="width: 180px">Potential : <b id="potential">Low</b></button>
+                                                    <button type="button" class="btn round btn-min-width " style="width: 180px" id="btnPotential" style="width: 180px">Potential : <b id="potential">Low</b></button>
                                                 </div>
 
                                                 <div class="p-2">
