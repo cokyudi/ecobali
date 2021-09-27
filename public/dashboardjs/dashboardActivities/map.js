@@ -22,7 +22,20 @@ function getAllData() {
         mapActivity.remove();
         participantBar.clearChart();
     }
-    mapActivity = L.map('mapActivity').setView([-8.36, 115.19], 8.75);
+
+    var windowWidth = $(window).width();
+    var defaultZoom;
+    if (windowWidth <= 1440) {
+        defaultZoom = 8.5;
+    } else {
+        defaultZoom = 8.75
+    }
+
+    var southWest = L.latLng(-8.996986, 114.148724),
+        northEast = L.latLng(-7.896704, 116.955731),
+        bounds = L.latLngBounds(southWest, northEast);
+
+    mapActivity = L.map('mapActivity',{maxBounds: bounds}).setView([-8.383387, 115.835125], defaultZoom);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGV2YWFkczIiLCJhIjoiY2twbXBweGkzMmgycTJvcmkxM3ozeDhmaCJ9.w1rN2S1A6G5SJFoitaoQvQ', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',

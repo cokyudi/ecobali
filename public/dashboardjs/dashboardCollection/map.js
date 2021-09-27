@@ -19,7 +19,21 @@ function drawMap() {
     if (mymap) {
         mymap.remove();
     }
-    mymap = L.map('mapid').setView([-8.36, 115.19], 8.75);
+    var windowWidth = $(window).width();
+    var defaultZoom;
+    if (windowWidth <= 1440) {
+        defaultZoom = 8.5;
+    } else {
+        defaultZoom = 8.75
+    }
+    
+    var southWest = L.latLng(-9.122376, 114.100934),
+        northEast = L.latLng(-7.769445, 116.045514),
+        bounds = L.latLngBounds(southWest, northEast);
+
+    mymap = L.map('mapid', {
+        maxBounds:bounds
+    }).setView([-8.36, 115.19], defaultZoom);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGV2YWFkczIiLCJhIjoiY2twbXBweGkzMmgycTJvcmkxM3ozeDhmaCJ9.w1rN2S1A6G5SJFoitaoQvQ', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -29,6 +43,9 @@ function drawMap() {
         zoomOffset: -1,
         accessToken: 'pk.eyJ1IjoiZGV2YWFkczIiLCJhIjoiY2twbXBweGkzMmgycTJvcmkxM3ozeDhmaCJ9.w1rN2S1A6G5SJFoitaoQvQ'
     }).addTo(mymap);
+
+    console.log(mymap.getBounds().getSouthWest().toString()); 
+    console.log(mymap.getBounds().getNorthEast().toString());
 
     $.ajaxSetup({
         headers: {
