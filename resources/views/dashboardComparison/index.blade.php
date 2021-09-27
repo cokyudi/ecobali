@@ -1,6 +1,12 @@
 @extends('template', ['user'=>$user])
 @section('dashboard-comparison','active')
 
+@push('menu_title')
+    <li class="nav-item d-none d-lg-block">
+        <a class="nav-link text-bold-700" href="{{url('dashboard-comparison')}}">Dashboard Comparison</a>
+    </li>
+@endpush
+
 @push('css_extend')
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/selects/select2.min.css')}}">
 @endpush
@@ -9,7 +15,7 @@
 <!-- BEGIN: Content-->
 <div class="app-content content">
     <div class="content-wrapper">
-        <div class="content-header row mb-1">
+        <div class="content-header row">
     </div>
     <div class="content-body"><!-- Revenue, Hit Rate & Deals -->
     <!--/ Revenue, Hit Rate & Deals -->
@@ -26,10 +32,7 @@
                 <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                 <div class="heading-elements">
                     <ul class="list-inline mb-0">
-                        <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                        <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                         <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                        <li><a data-action="close"><i class="ft-x"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -43,7 +46,7 @@
                                 <button onclick="getComparisonLineChartData('year');" type="button" class="btn btn-sm btn-secondary">Year</button>
                               </div>
                             <div class="card-body chartjs">
-                                <canvas id="line-chart" height="700"></canvas>
+                                <canvas id="line-chart" height="450"></canvas>
                             </div>
                         </div>
                     </div>
@@ -60,61 +63,58 @@
 </div>
     <!-- END: Content-->
 <!-- BEGIN: Customizer-->
-<div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-info box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
-        <h4 class="text-uppercase mb-0">Data Filter Customizer</h4>
+<div id="customizer-filter" class="customizer border-left-blue-grey border-left-lighten-4 "><a class="customizer-close" href="#"><i class="ft-x font-medium-2"></i></a><a class="customizer-toggle bg-info box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
+        <h5 class="text-uppercase mb-0">Data Filter Customizer</h5>
         <hr>
 
         <form id="filterForm" name="filterForm">
-            <h5 class="mt-1 mb-1 text-bold-500">Participant</h5>
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Participant</h6>
             <div class="form-group ">
-                <select id="id_participant" name="id_participant[]" multiple="multiple" class="select2 form-control">
+                <select id="id_participant" name="id_participant[]" multiple="multiple" class="select2 form-control " data-placeholder="Select Participant">
                     @foreach($participants as $participant)
                         <option value="{{$participant->id}}">{{$participant->participant_name}}</option>
                     @endforeach
-
                 </select>
             </div>
-            <hr>
 
-            <h5 class="mt-1 mb-1 text-bold-500">Category</h5>
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Category</h6>
             <div class="form-group ">
-                <select id="id_category" name="id_category[]" multiple="multiple" class="select2 form-control">
+                <select id="id_category" name="id_category[]" multiple="multiple" class="select2 form-control" data-placeholder="Select Category">
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->category_name}}</option>
                     @endforeach
 
                 </select>
             </div>
-            <hr>
 
-            <h5 class="mt-1 mb-1 text-bold-500">District</h5>
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">District</h6>
             <div class="form-group ">
-                <select id="id_district" name="id_district[]" multiple="multiple" class="select2 form-control">
+                <select id="id_district" name="id_district[]" multiple="multiple" class="select2 form-control" data-placeholder="Select District">
                     @foreach($districts as $district)
                         <option value="{{$district->id}}">{{$district->district_name}}</option>
                     @endforeach
 
                 </select>
             </div>
-            <hr>
 
-            <h5 class="mt-1 mb-1 text-bold-500">Regency</h5>
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Regency</h6>
             <div class="form-group ">
-                <select class="select2 form-control" id="id_regency" name="id_regency[]" multiple="multiple">
-                    @foreach($regencies as $regency)
-                        <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
-                    @endforeach
-                </select>
-
+                <div class="input-group">
+                    <select class="select2 form-control" id="id_regency" name="id_regency[]" multiple="multiple" data-placeholder="Select Regency">
+                        @foreach($regencies as $regency)
+                            <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
-            <hr>
 
-            <h5 class="mt-1 mb-1 text-bold-500">Date Range Options</h5>
+
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Date Range Options</h6>
             <div class="form-group">
-                <div class="form-group">
-                    <div class='input-group'>
+                <div class="form-group " >
+                    <div class="input-group">
                         <input type="text" id="daterange" name="daterange" class = "form-control" value="" />
-                        <div class="input-group-append">
+                        <div class="input-group-append" id="icon-calendar">
                             <span class="input-group-text">
                                 <span class="la la-calendar"></span>
                             </span>
@@ -126,7 +126,7 @@
                 <button id='backBtn' type="button" class="btn btn-warning mr-1">
                     <i class="ft-x"></i> Reset
                 </button>
-                <button id="filterBtn"  value="create" type="button" class="btn btn-success">
+                <button id="filterBtn" value="create" type="button" class="btn btn-success">
                     <i class="la la-check-square-o"></i> Filter
                 </button>
             </div>
@@ -179,7 +179,8 @@
                     daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
                     monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                     firstDay: 1
-                }
+                },
+                drops: 'up',
             },
             function(start, end) {
 
@@ -187,6 +188,10 @@
         );
 
         getBlankLine();
+
+        $('#icon-calendar').click(function() {
+            $("#daterange").focus();
+        });
 
         $('#backBtn').click(function() {
             $('#daterange').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));

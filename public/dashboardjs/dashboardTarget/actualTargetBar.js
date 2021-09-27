@@ -22,13 +22,16 @@ function drawActualTargetBar() {
             xAxes: [{
                 stacked: true,
                 id: "bar-x-axis1",
-                barThickness: 70,
+                barThickness: 50,
                 scaleLabel: { display: !0, labelString: "Category", padding: 5 },
+                ticks: {
+                    fontSize: 10
+                }
             }, {
                 display: false,
                 stacked: true,
                 id: "bar-x-axis2",
-                barThickness: 85,
+                barThickness: 60,
                 type: 'category',
                 categoryPercentage: 0.8,
                 barPercentage: 0.9,

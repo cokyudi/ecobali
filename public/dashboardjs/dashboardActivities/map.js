@@ -103,7 +103,7 @@ function getAllData() {
             var e = google.visualization.arrayToDataTable(data.data.locations);
             new google.visualization.BarChart(document.getElementById("bar-chart")).draw(e, {
                 height: 400,
-                fontSize: 12,
+                fontSize: 10,
                 chartArea: { left: "20%", width: "70%", height: "90%" },
                 hAxis: { gridlines: { color: "#e9e9e9" },title: "Number of Organization"},
                 vAxis: { gridlines: { count: 10 }, minValue: 0 ,title: "Category"},

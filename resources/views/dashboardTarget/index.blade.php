@@ -1,6 +1,12 @@
 @extends('template', ['user'=>$user])
 @section('dashboard-target','active')
 
+@push('menu_title')
+    <li class="nav-item d-none d-lg-block">
+        <a class="nav-link text-bold-700" href="{{url('dashboard-target')}}">Dashboard Target</a>
+    </li>
+@endpush
+
 @push('css_extend')
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -18,41 +24,82 @@
     <!-- BEGIN: Content-->
     <div class="app-content content">
         <div class="content-wrapper">
-            <div class="content-header row mb-1">
+            <div class="content-header row ">
             </div>
             <div class="content-body"><!-- Revenue, Hit Rate & Deals -->
                 <!--/ Revenue, Hit Rate & Deals -->
 
+                <div class="row">
+                    <div class="col text-center mb-1">
+                        <button type="button" class="btn btn-success round" id="btn01"><b>JAN</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn02"><b>FEB</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn03"><b>MAR</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn04"><b>APR</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn05"><b>MAY</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn06"><b>JUN</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn07"><b>JUL</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn08"><b>AUG</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn09"><b>SEP</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn10"><b>OCT</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn11"><b>NOV</b></button>
+                        <button type="button" class="btn btn-secondary round" id="btn12"><b>DEC</b></button>
+                    </div>
 
+                </div>
                 {{--Monthly Target & Annual Target ecoBali--}}
                 <div class="row ">
                     <div class="col-lg-4 col-12">
                         <div class="row">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="font-weight-bold font-medium-5">Annual Target (ecoBali)</h4>
-                                    <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-                                </div>
-                                <div class="card-body">
-                                    <h1> <strong >250</strong> T</h1>
-                                    <h3> <strong >250,000 </strong>Kg</h3>
+                            <div class="col-lg-12">
+                                <div class="card" style="height: 205px;">
+                                    <div class="card-header">
+                                        <h4 class="font-weight-bold font-medium-1">Annual Target (ecoBali)</h4>
+                                        <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                                        <div class="heading-elements">
+                                            <ul class="list-inline mb-0">
+                                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-content collapse show">
+                                        <div class="card-body">
+                                            <h5>Total Annual Target</h5>
+                                            <h1> <strong id="annualTon"></strong> T</h1>
+                                            <h3> <strong id="annualKg"></strong> Kg</h3>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                         <div class="row">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="font-weight-bold font-medium-5">Monthly Target (ecoBali)</h4>
-                                    <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
-                                </div>
-                                <div class="card-body">
-                                    <h1> <strong >20.8</strong> T</h1>
-                                    <h3> <strong >20,833 </strong>Kg</h3>
+                            <div class="col-lg-12 col-12">
+                                <div class="card" style="height: 205px;">
+                                    <div class="card-header">
+                                        <h4 class="font-weight-bold font-medium-1">Monthly Target (ecoBali)</h4>
+                                        <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
+                                        <div class="heading-elements">
+                                            <ul class="list-inline mb-0">
+                                                <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                                                <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-content collapse show">
+                                        <div class="card-body">
+                                            <h5>Total Monthly Target</h5>
+                                            <h1> <strong id="monthlyTon"></strong> T</h1>
+                                            <h3> <strong id="monthlyKg"></strong> Kg</h3>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
 
                     </div>
+
                     <div class="col-lg-4 col-12">
                         <div class="card">
                             <div class="card-header">
@@ -166,7 +213,7 @@
                             </div>
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                                    <canvas id="actual-target" height="500"></canvas>
+                                    <canvas id="actual-target" height="400"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -239,18 +286,18 @@
     <!-- END: Content-->
     <!-- BEGIN: Customizer-->
     <div class="customizer border-left-blue-grey border-left-lighten-4 d-none d-xl-block"><a class="customizer-close" href="#"><i class="ft-x font-medium-3"></i></a><a class="customizer-toggle bg-info box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
-            <h4 class="text-uppercase mb-0">Collection Filter Customizer</h4>
+            <h5 class="text-uppercase mb-0">Collection Filter Customizer</h5>
             <hr>
 
             <form id="filterFormCollection" name="filterFormCollection">
-                <h5 class="mt-1 mb-1 text-bold-500">Collection Date Range Options</h5>
+                <h6 class="mt-1 mb-1 text-bold-500">Collection Date Range Options</h6>
                 <div class="form-group">
                     <div class="form-group">
                         <div class='input-group'>
                             <input type="text" id="dateRangeCollection" name="dateRangeCollection" class = "form-control" value="" />
-                            <div class="input-group-append">
+                            <div class="input-group-append" id="icon-calendar-1">
                             <span class="input-group-text">
-                                <span class="la la-calendar"></span>
+                                <span class="la la-calendar" ></span>
                             </span>
                             </div>
                         </div>
@@ -267,18 +314,18 @@
 
             </form>
 
-            <h4 class="text-uppercase mb-0 pt-5">Sales Filter Customizer</h4>
+            <h5 class="text-uppercase mb-0 pt-5">Sales Filter Customizer</h5>
             <hr>
 
             <form id="filterFormSales" name="filterFormSales">
-                <h5 class="mt-1 mb-1 text-bold-500">Sales Date Range Options</h5>
+                <h6 class="mt-1 mb-1 text-bold-500">Sales Date Range Options</h6>
                 <div class="form-group">
                     <div class="form-group">
                         <div class='input-group'>
                             <input type="text" id="dateRangeSales" name="dateRangeSales" class = "form-control" value="" />
-                            <div class="input-group-append">
+                            <div class="input-group-append" id="icon-calendar-2">
                             <span class="input-group-text">
-                                <span class="la la-calendar"></span>
+                                <span class="la la-calendar" ></span>
                             </span>
                             </div>
                         </div>
@@ -391,7 +438,8 @@
                         daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
                         monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                         firstDay: 1
-                    }
+                    },
+                    drops: 'up',
                 },
                 function(start, end) {
 
@@ -401,6 +449,14 @@
             drawActualTargetBar();
             drawActualTargetBarByMonth('month');
             drawTargetPapermillDonut();
+
+            $('#icon-calendar-1').click(function() {
+                $("#dateRangeCollection").focus();
+            });
+
+            $('#icon-calendar-2').click(function() {
+                $("#dateRangeSales").focus();
+            });
 
 
             $('#resetFilterCollection').click(function() {

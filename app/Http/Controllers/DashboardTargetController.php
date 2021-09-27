@@ -249,10 +249,29 @@ class DashboardTargetController extends Controller
 
         /* End Annual Target Achievement (ecoBali) */
 
+        $annualTarget = $this->getYearlyTargetForAllCategory($yearStart,$yearEnd);
+        $monthlyTarget = round($annualTarget/12,1);
+
+        $ts1 = strtotime($request->startDates);
+        $ts2 = strtotime($request->endDates);
+
+        $year1 = date('Y', $ts1);
+        $year2 = date('Y', $ts2);
+
+        $month1 = date('m', $ts1);
+        $month2 = date('m', $ts2);
+
+        $diff = (($year2 - $year1) * 12) + ($month2 - $month1);
+
+
         return response()->json([
             'dataByMonth' => $actualTargetBarByMonth,
             'dataPie' => $dataPieChart,
             'dataPieExplode' => $dataPieExplode,
+            'annualTarget' => $annualTarget,
+            'monthlyTarget' => $monthlyTarget,
+            'dateDiff' => $diff,
+
         ]);
     }
 

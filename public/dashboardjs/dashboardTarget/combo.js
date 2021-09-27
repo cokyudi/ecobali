@@ -27,6 +27,10 @@ function drawActualTargetBarByMonth(type) {
                 pieChart.destroy();
                 pieChartExplode.destroy();
             }
+            $('#annualTon').html(parseFloat((data.annualTarget/1000).toFixed(1)).toLocaleString());
+            $('#annualKg').html(parseFloat(data.annualTarget.toFixed(1)).toLocaleString());
+            $('#monthlyTon').html(parseFloat((data.monthlyTarget/1000).toFixed(1)).toLocaleString());
+            $('#monthlyKg').html(parseFloat(data.monthlyTarget.toFixed(1)).toLocaleString());
 
             var e = google.visualization.arrayToDataTable(data.dataByMonth);
             myBarChartByMonth = new google.visualization.ComboChart(document.getElementById("combo-chart")).draw(e, {
@@ -34,10 +38,10 @@ function drawActualTargetBarByMonth(type) {
                 seriesType: "bars",
                 series: { 1: { type: "line" } },
                 colors: ["#7dcdf3", "#2e53a1", "#FF847C", "#E84A5F", "#474747"],
-                height: 450,
+                height: 400,
                 fontSize: 12,
                 lineWidth: 5,
-                chartArea: { left: "5%", width: "90%", height: 350 },
+                chartArea: { left: "5%", width: "90%", height: 300 },
                 vAxis: { title: "Target - Collection (UBC (Kg)", gridlines: { color: "#e9e9e9", count: 5 }, minValue: 0 },
                 hAxis: { title: "Interval", gridlines: { color: "#e9e9e9", count: 5 }, minValue: 0 },
                 legend: { position: "top", alignment: "center", textStyle: { fontSize: 12 } },
@@ -47,11 +51,11 @@ function drawActualTargetBarByMonth(type) {
             pieChart = new google.visualization.PieChart(document.getElementById("pie-3d")).draw(dataPieChart, {
                 title: "",
                 legend:'bottom',
-                height: 400,
+                height: 250,
                 fontSize: 12,
                 colors: ["#7dcdf3", "#2e53a1", "#FF847C", "#E84A5F", "#474747"],
                 pieHole: 0.55,
-                chartArea: { left: "5%", width: "90%", height: 350 },
+                chartArea: { left: "5%", width: "90%", height: 200 },
             });
 
             $('#monthly_eco_target').html(parseFloat((data.dataPie[2][1]+data.dataPie[1][1]).toFixed(1)).toLocaleString());
@@ -61,11 +65,11 @@ function drawActualTargetBarByMonth(type) {
             pieChartExplode = new google.visualization.PieChart(document.getElementById("pie-3d-exploded")).draw(dataPieExplode, {
                 title: "",
                 legend:'bottom',
-                height: 400,
+                height: 250,
                 fontSize: 12,
                 colors: ["#7dcdf3", "#2e53a1", "#FF847C", "#E84A5F", "#474747"],
                 pieHole: 0.55,
-                chartArea: { left: "5%", width: "90%", height: 350 },
+                chartArea: { left: "5%", width: "90%", height: 200 },
                 // slices: { 1: { offset: 0.2 }, 2: { offset: 0.15 }, 3: { offset: 0.16 }, 4: { offset: 0.12 } },
             });
 

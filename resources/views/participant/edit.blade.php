@@ -437,10 +437,10 @@
                                             </div>
                                             <div class="d-flex">
                                                 <div class="pr-2 pl-2 pt-0">
-                                                    <button type="button" class="btn btn-primary round btn-min-width " id="btnAverage">Total : <b id="average">129312 Kg</b></button>
+                                                    <button type="button" class="btn btn-primary round  btn-min-width" style="width: 180px">Total : <b id="totalubc"> Kg</b></button>
                                                 </div>
                                                 <div class="mr-auto pr-2 pl-2 pt-0">
-                                                    <button type="button" class="btn btn-secondary round btn-min-width " id="btnAverage">Average : <b id="average">129 Kg</b></button>
+                                                    <button type="button" class="btn btn-secondary round btn-min-width " style="width: 180px">Average : <b id="average"> Kg</b></button>
                                                 </div>
                                             </div>
                                             <div class="card-content">
@@ -744,6 +744,9 @@
                 $('#potential').html(data.data.potential);
                 $('#btnContinuity').addClass(data.data.continuityColor);
                 $('#btnPotential').addClass(data.data.potentialColor);
+
+                $('#totalubc').html(data.data.totalUbc + " Kg");
+                $('#average').html(data.data.average + " Kg");
 
                 if (myLineChart) {
                     myLineChart.destroy();
