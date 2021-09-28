@@ -114,11 +114,25 @@ class DashboardActivitiesController extends Controller
 
         $totalAllParticipant = $activitiesGeneral->participant_number;
 
+        $listColor = array("#99B898", "#FECEA8", "#FF847C", "#E84A5F", "#474747","#2494be","F6B75A","#c6ebc9","#70af85","#f0e2d0","#aa8976","#125d98");
+
+
+        $numberOfParticipantBar = [
+            ["Program", "People", ["role"=>"style"]]
+        ];
+
+        foreach ($numberOfParticipant as $numOfParticipant) {
+            array_push($numberOfParticipantBar, [$numOfParticipant->activity_program_name, round($numOfParticipant->participant_number,0),$listColor[array_rand($listColor)] ]);
+        }
+
+        if (sizeof($numberOfParticipantBar) === 1) {
+            array_push($numberOfParticipantBar, ['', 0, null]);
+        }
+
+
         $locations = [
             ["Category", "Number", ["role"=>"style"]]
         ];
-
-        $listColor = array("#99B898", "#FECEA8", "#FF847C", "#E84A5F", "#474747","#2494be","F6B75A","#c6ebc9","#70af85","#f0e2d0","#aa8976","#125d98");
 
         foreach ($numberOfLocation as $location) {
             array_push($locations, [$location->category_name, $location->location, $listColor[array_rand($listColor)]]);
@@ -152,6 +166,7 @@ class DashboardActivitiesController extends Controller
             }
         }
 
+        /*
         $numberOfParticipantBar = [
             ["Program", "Number of Participant"],
         ];
@@ -163,6 +178,9 @@ class DashboardActivitiesController extends Controller
         if(sizeof($numberOfParticipantBar) === 1) {
             array_push($numberOfParticipantBar, ["", 0]);
         }
+        */
+
+
 
 
 

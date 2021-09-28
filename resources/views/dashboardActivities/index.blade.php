@@ -29,88 +29,88 @@
     <div class="content-body"><!-- Revenue, Hit Rate & Deals -->
     <!--/ Revenue, Hit Rate & Deals -->
         <div class="row">
-            <div class="col-lg-3 col-12 pb-1">
-                <div class="card h-75 ">
+            <div class="col-lg-3 col-12 ">
+                <div class="card ">
                     <div class="card-content">
                         <div class="card-body">
-                            <div class="media d-flex">
+                            <div class="media">
                                 <div class="media-body text-left">
-                                    <h6 class="font-weight-bold font-medium-3">District Coverage
+                                    <h6 class="font-weight-bold font-medium-2">District Coverage
                                         <i class="la la-info-circle" data-toggle="popover"
                                            data-content="Jumlah kecamatan yang menjadi lokasi sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM)" data-trigger="hover" data-html="true"
                                            data-original-title="Number of district received socialization / education about Used Beverage Cartons (UBC) recycling">
                                         </i>
                                     </h6>
-                                    <h3 class="font-large-2" id="district_coverage"></h3>
+                                    <h3 class="font-large-1" id="district_coverage"></h3>
                                 </div>
                                 <div class="align-self-center">
-                                    <img src="{{asset('images/icons/district.png')}}" alt="" width="60px">
+                                    <img src="{{asset('images/icons/district.png')}}" alt="" width="50px">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-12 pb-1">
-                <div class="card h-75 ">
+            <div class="col-lg-3 col-12">
+                <div class="card">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media d-flex">
                                 <div class="media-body text-left">
-                                    <h6 class="font-weight-bold font-medium-3">Regency Coverage
+                                    <h6 class="font-weight-bold font-medium-2">Regency Coverage
                                         <i class="la la-info-circle" data-toggle="popover"
                                            data-content="Jumlah kabupaten yang menjadi lokasi sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM)" data-trigger="hover" data-html="true"
                                            data-original-title="Number of regency received socialization / education about Used Beverage Cartons (UBC) recyling">
                                         </i>
                                     </h6>
-                                    <h3 class="font-large-2" id="regency_coverage"></h3>
+                                    <h3 class="font-large-1" id="regency_coverage"></h3>
                                 </div>
                                 <div class="align-self-center">
-                                    <img src="{{asset('images/icons/regency.png')}}" alt="" width="60px">
+                                    <img src="{{asset('images/icons/regency.png')}}" alt="" width="50px">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-12 pb-1">
-                <div class="card h-75">
+            <div class="col-lg-3 col-12 ">
+                <div class="card ">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media d-flex">
                                 <div class="media-body text-left">
-                                    <h6 class="font-weight-bold font-medium-3">Location Coverage
+                                    <h6 class="font-weight-bold font-medium-2">Location Coverage
                                         <i class="la la-info-circle" data-toggle="popover"
                                            data-content="Jumlah lokasi / organisasi yang mendapat sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM)" data-trigger="hover" data-html="true"
                                            data-original-title="Number of organization / location received socialization / education about Used Beverage Cartons (UBC) recycling">
                                         </i>
                                     </h6>
-                                    <h3 class="font-large-2" id="location_coverage"></h3>
+                                    <h3 class="font-large-1" id="location_coverage"></h3>
                                 </div>
                                 <div class="align-self-center">
-                                    <img src="{{asset('images/icons/location.png')}}" alt="" width="60px">
+                                    <img src="{{asset('images/icons/location.png')}}" alt="" width="50px">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-12 pb-1">
-                <div class="card h-75">
+            <div class="col-lg-3 col-12 ">
+                <div class="card ">
                     <div class="card-content">
                         <div class="card-body">
                             <div class="media d-flex">
                                 <div class="media-body text-left">
-                                    <h6 class="font-weight-bold font-medium-3">Total Participant
+                                    <h6 class="font-weight-bold font-medium-2">Total Participant
                                         <i class="la la-info-circle" data-toggle="popover"
                                            data-content="Jumlah orang yang mengikuti dan mendapat sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM)" data-trigger="hover" data-html="true"
                                            data-original-title="Number of people who participated and received socialization / education about Used Beverage Cartons (UBC) recycling">
                                         </i>
                                     </h6>
-                                    <h3 class="font-large-2" id="total_participant"></h3>
+                                    <h3 class="font-large-1" id="total_participant"></h3>
                                 </div>
                                 <div class="align-self-center">
-                                    <img src="{{asset('images/icons/participant.png')}}" alt="" width="50px">
+                                    <img src="{{asset('images/icons/participant.png')}}" alt="" width="45px">
                                 </div>
                             </div>
                         </div>
@@ -119,10 +119,10 @@
             </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="row ">
             <div class="col-6">
-                <div class="card h-100">
-                    <div class="card-header">
+                <div class="card">
+                    <div class="card-header pb-1">
                         <h4 class="font-weight-bold font-medium-3">Number of Participant
                             <i class="la la-info-circle" data-toggle="popover"
                                data-content="Jumlah orang yang mengikuti dan mendapat sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM) berdasarkan program" data-trigger="hover" data-html="true"
@@ -138,16 +138,19 @@
                         </div>
                     </div>
                     <div class="card-content collapse show">
-                        <div class="card-body">
+                        <div class="card-body pt-0">
 {{--                            <p class="card-text">A column chart is a vertical bar chart rendered in the browser using SVG or VML, whichever is appropriate for the user's browser. Like all google charts, column charts display tooltips when the user hovers over the data.</p>--}}
-                            <div id="numberOfParticipantBar"></div>
+{{--                            <div id="numberOfParticipantBar"></div>--}}
+                            <div class="chart-container">
+                                <div id="numberOfParticipantBar"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-6">
-                <div class="card h-100">
-                    <div class="card-header">
+                <div class="card">
+                    <div class="card-header pb-1">
                         <h4 class="font-weight-bold font-medium-3">Number of Location
                             <i class="la la-info-circle" data-toggle="popover"
                                data-content="Jumlah lokasi / organisasi yang mendapat sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM) berdasarkan kategori lokasi / organisasi" data-trigger="hover" data-html="true"
@@ -163,7 +166,7 @@
                         </div>
                     </div>
                     <div class="card-content collapse show">
-                        <div class="card-body">
+                        <div class="card-body pt-0">
                             <div class="chart-container">
                                 <div id="bar-chart"></div>
                             </div>
@@ -176,7 +179,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card h-100">
-                    <div class="card-header mb-0">
+                    <div class="card-header pb-0">
                         <h4 class="font-weight-bold font-medium-3">Map
                             <i class="la la-info-circle" data-toggle="popover"
                                data-content="Jumlah orang yang mengikuti dan mendapat sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM) berdasarkan wilayah Kabupaten" data-trigger="hover" data-html="true"

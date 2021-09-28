@@ -189,7 +189,7 @@
 <script src="{{asset('js/scripts/forms/select/form-select2.min.js')}}"></script>
 
 <script>
-    
+
     var southWest = [114.100934,-9.22376],
         northEast = [116.045514,-7.769445],
         bounds = [southWest, northEast];
@@ -261,7 +261,7 @@
 			success: function (data) {
                 map.flyTo({
                     center: [115.188919, -8.409518],
-                    zoom: 9
+                    zoom: 8.5
                 });
 
                 var province = [
@@ -338,7 +338,7 @@
                     el.addEventListener("click", e => {
                         map.flyTo({
                             center: marker.geometry.coordinates,
-                            zoom: 20
+                            zoom: 12
                         });
                     });
                 });

@@ -35,7 +35,7 @@ function getAllData() {
         northEast = L.latLng(-7.896704, 116.955731),
         bounds = L.latLngBounds(southWest, northEast);
 
-    mapActivity = L.map('mapActivity',{maxBounds: bounds}).setView([-8.383387, 115.835125], defaultZoom);
+    mapActivity = L.map('mapActivity',{maxBounds: bounds}).setView([-8.403928, 115.571343], defaultZoom);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGV2YWFkczIiLCJhIjoiY2twbXBweGkzMmgycTJvcmkxM3ozeDhmaCJ9.w1rN2S1A6G5SJFoitaoQvQ', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -45,6 +45,10 @@ function getAllData() {
         zoomOffset: -1,
         accessToken: 'pk.eyJ1IjoiZGV2YWFkczIiLCJhIjoiY2twbXBweGkzMmgycTJvcmkxM3ozeDhmaCJ9.w1rN2S1A6G5SJFoitaoQvQ'
     }).addTo(mapActivity);
+
+    if (mapActivity.scrollWheelZoom) {
+        mapActivity.scrollWheelZoom.disable();
+    }
 
     $.ajaxSetup({
         headers: {
@@ -63,56 +67,26 @@ function getAllData() {
             $('#location_coverage').html(data.data.totalLocation);
             $('#total_participant').html(data.data.totalParticipants);
 
-            var dataParticipantBar = google.visualization.arrayToDataTable(data.data.numberOfParticipantBar);
-
-            var options_column = {
-                height: 400,
-                fontSize: 8,
-                colors:['#7dcdf3','#7dcdf3'],
-                chartArea: {
-                    left: '10%',
-                    width: '90%',
-                    height: 350,
-                    bottom: 40
-                },
-                vAxis: {
-                    gridlines:{
-                        color: '#e9e9e9',
-                        count: 10
-                    },
-                    minValue: 0,
-                    title: "People"
-                },
-                hAxis: {
-                    title: "Program"
-                },
-                legend: {
-                    position: 'top',
-                    alignment: 'center',
-                    textStyle: {
-                        fontSize: 12
-                    }
-                }
-            };
-
-            // Instantiate and draw our chart, passing in some options.
-            participantBar = new google.visualization.ColumnChart(document.getElementById('numberOfParticipantBar'));
-            participantBar.draw(dataParticipantBar, options_column);
-
-
-            var e = google.visualization.arrayToDataTable(data.data.locations);
-            new google.visualization.BarChart(document.getElementById("bar-chart")).draw(e, {
-                height: 400,
+            var e = google.visualization.arrayToDataTable(data.data.numberOfParticipantBar);
+            new google.visualization.BarChart(document.getElementById("numberOfParticipantBar")).draw(e, {
+                height: 300,
                 fontSize: 10,
-                chartArea: { left: "20%", width: "70%", height: "90%" },
-                hAxis: { gridlines: { color: "#e9e9e9" },title: "Number of Organization"},
-                vAxis: { gridlines: { count: 10 }, minValue: 0 ,title: "Category"},
+                chartArea: { left: "20%", width: "70%", height: "80%" },
+                hAxis: { gridlines: { color: "#e9e9e9" },title: "Program"},
+                vAxis: { gridlines: { count: 10 }, minValue: 0 ,title: "People"},
                 legend: { position: "none" },
             });
 
 
-
-
+            var e = google.visualization.arrayToDataTable(data.data.locations);
+            new google.visualization.BarChart(document.getElementById("bar-chart")).draw(e, {
+                height: 300,
+                fontSize: 10,
+                chartArea: { left: "20%", width: "70%", height: "80%" },
+                hAxis: { gridlines: { color: "#e9e9e9" },title: "Number of Organization"},
+                vAxis: { gridlines: { count: 10 }, minValue: 0 ,title: "Category"},
+                legend: { position: "none" },
+            });
 
 
             var province = [

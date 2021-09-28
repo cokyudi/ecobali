@@ -226,10 +226,10 @@
 
 
             <div class="row">
-                <div class="col-lg-6 col-12 ">
+                <div class="col-lg-7 col-12 ">
                     <div class="card">
                         <div class="card-header mb-0">
-                            <h4 class="font-weight-bold font-medium-3">Map
+                            <h4 class="font-weight-bold font-medium-2">Map
                                 <i class="la la-info-circle" data-toggle="popover"
                                    data-content="Jumlah Kemasan Bekas Minuman (KBM) yang dikumpulkan berdasarkan wilayah Kabupaten" data-trigger="hover"
                                    data-original-title="Total number of Used Beverage Cartons (UBC) collected based on Region (Regency)">
@@ -274,10 +274,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-12">
+                <div class="col-lg-5 col-12">
                     <div class="card ">
                         <div class="card-header">
-                            <h4 class="font-weight-bold font-medium-3">Total Collection by Categories
+                            <h4 class="font-weight-bold font-medium-2">Total Collection by Categories
                                 <i class="la la-info-circle" data-toggle="popover"
                                    data-content="Jumlah Kemasan Bekas Minuman (KBM) yang dikumpulkan berdasarkan kategori" data-trigger="hover"
                                    data-original-title="Total number of Used Beverage Cartons (UBC) collected based on category of participant">
