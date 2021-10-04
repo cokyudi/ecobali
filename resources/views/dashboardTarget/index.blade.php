@@ -3,7 +3,7 @@
 
 @push('menu_title')
     <li class="nav-item d-none d-lg-block">
-        <a class="nav-link text-bold-700" href="{{url('dashboard-target')}}">Dashboard Target</a>
+        <a class="nav-link text-bold-700 font-medium-3" href="{{url('dashboard-target')}}">Dashboard Target</a>
     </li>
 @endpush
 
@@ -51,7 +51,7 @@
                     <div class="col-lg-4 col-12">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="card" style="height: 205px;">
+                                <div class="card" style="height: 210px;">
                                     <div class="card-header">
                                         <h4 class="font-weight-bold font-medium-1">Annual Target (ecoBali)</h4>
                                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
@@ -63,10 +63,17 @@
                                         </div>
                                     </div>
                                     <div class="card-content collapse show">
-                                        <div class="card-body">
-                                            <h5>Total Annual Target</h5>
-                                            <h1> <strong id="annualTon"></strong> T</h1>
-                                            <h3> <strong id="annualKg"></strong> Kg</h3>
+                                        <div class="card-body card-custom">
+                                            <div class="media d-flex">
+                                                <div class="media-body text-left">
+                                                    <h5>Total Annual Target</h5>
+                                                    <h1> <strong id="annualTon"></strong> T</h1>
+                                                    <h3> <strong id="annualKg"></strong> Kg</h3>
+                                                </div>
+                                                <div class="align-self-center">
+                                                    <img src="{{asset('images/icons/target1.png')}}" alt="" height="70px">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -75,7 +82,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-12 col-12">
-                                <div class="card" style="height: 205px;">
+                                <div class="card" style="height: 210px;">
                                     <div class="card-header">
                                         <h4 class="font-weight-bold font-medium-1">Monthly Target (ecoBali)</h4>
                                         <a class="heading-elements-toggle"><i class="la la-ellipsis-h font-medium-3"></i></a>
@@ -87,10 +94,17 @@
                                         </div>
                                     </div>
                                     <div class="card-content collapse show">
-                                        <div class="card-body">
-                                            <h5>Total Monthly Target</h5>
-                                            <h1> <strong id="monthlyTon"></strong> T</h1>
-                                            <h3> <strong id="monthlyKg"></strong> Kg</h3>
+                                        <div class="card-body card-custom">
+                                            <div class="media d-flex">
+                                                <div class="media-body text-left">
+                                                    <h5>Total Monthly Target</h5>
+                                                    <h1> <strong id="monthlyTon"></strong> T</h1>
+                                                    <h3> <strong id="monthlyKg"></strong> Kg</h3>
+                                                </div>
+                                                <div class="align-self-center">
+                                                    <img src="{{asset('images/icons/target2.png')}}" alt="" height="70px">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -101,7 +115,7 @@
                     </div>
 
                     <div class="col-lg-4 col-12">
-                        <div class="card">
+                        <div class="card" style="height: 450px;">
                             <div class="card-header">
                                 <h4 class="font-weight-bold font-medium-3 mr-2">Monthly Target Achievement (ecoBali)
                                     <i class="la la-info-circle" data-toggle="popover"
@@ -129,7 +143,7 @@
                     </div>
 
                     <div class="col-lg-4 col-12">
-                        <div class="card">
+                        <div class="card" style="height: 450px;">
                             <div class="card-header">
                                 <h4 class="font-weight-bold font-medium-3 mr-2">Annual Target Achievement (ecoBali)
                                     <i class="la la-info-circle" data-toggle="popover"
@@ -151,7 +165,7 @@
                                 <div class="card-body">
                                     <h4>Terkumpul <strong id="annual_eco_terkumpul"></strong> Kg dari Target <strong id="annual_eco_target"></strong> Kg.</h4>
                                     {{--                            <p class="card-text">A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.</p>--}}
-                                    <div id="pie-3d-exploded"></div>
+                                    <div id="pie-3d-exploded" class=""></div>
                                 </div>
                             </div>
                         </div>
@@ -223,10 +237,10 @@
                 {{--Monthly Target & Annual Target papermill--}}
                 <div class="row">
                     <div class="col-xl-6 col-lg-12">
-                        <div class="card">
+                        <div class="card" style="height: 440px">
                             <div class="card-header">
                                 <h4 class="font-weight-bold font-medium-3 mr-2">Monthly Target Achievement (Sent to Papermill)
-                                    <i class="la la-info-circle" data-toggle="popover"
+                                    <i class="la la-info-circle" data-toggle="popover" data-container="nav"
                                        data-content="Pencapaian target bulanan pengiriman Kemasan Bekas Minuman dari ecoBali menuju pabrik <br>
 (Rumus: jumlah KBM Terkirim / target bulanan)" data-trigger="hover" data-html="true"
                                        data-original-title="Achievement of the monthly target of Used Beverage Cartons (UBC) sent to papermill by ecoBali <br>
@@ -250,10 +264,10 @@
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-12">
-                        <div class="card">
+                        <div class="card" style="height: 440px">
                             <div class="card-header">
                                 <h4 class="font-weight-bold font-medium-3 mr-2">Annual Target Achievement (Sent to Papermill)
-                                    <i class="la la-info-circle" data-toggle="popover"
+                                    <i class="la la-info-circle" data-toggle="popover" data-container="nav"
                                        data-content="Pencapaian target tahunan pengiriman Kemasan Bekas Minuman dari ecoBali menuju pabrik <br>
 (Rumus: jumlah KBM Terkirim / target tahunan)" data-trigger="hover" data-html="true"
                                        data-original-title="Achievement of the annual target of sed Beverage Cartons (UBC) sent to papermill by ecoBali <br>

@@ -1,6 +1,12 @@
 @extends('template', ['user'=>$user])
 @section('map','active')
 
+@push('menu_title')
+    <li class="nav-item d-none d-lg-block">
+        <a class="nav-link text-bold-700 font-medium-3" href="{{url('map')}}">Map</a>
+    </li>
+@endpush
+
 @push('css_extend')
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/selects/select2.min.css')}}">
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css" rel="stylesheet">
@@ -49,7 +55,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card-content collapse show">
-                            <div class="card-body height-700">
+                            <div class="card-body" style="height: 500px">
                                 <div id="mapid" ></div>
                             </div>
                         </div>
@@ -200,7 +206,6 @@
         style: 'mapbox://styles/mapbox/streets-v11', // style URL
         center: [115.188919, -8.409518], // starting position [lng, lat]
         zoom: 8, // starting zoom
-        maxBounds: bounds
     });
 
 </script>
@@ -316,8 +321,8 @@
                     var el = document.createElement('div');
                     el.className = 'marker';
                     el.style.backgroundImage = 'url(/images/markers/marker-'+marker.properties.category+'.png)';
-                    el.style.height = '45px';
-                    el.style.width = '45px';
+                    el.style.height = '30px';
+                    el.style.width = '30px';
 
                     // make a marker for each feature and add it to the map
                     var pin = new mapboxgl.Marker(el)
@@ -341,9 +346,30 @@
                             zoom: 12
                         });
                     });
+
+                    el.addEventListener('mouseover', function () {
+                        // Change the cursor style as a UI indicator.
+                        map.getCanvas().style.cursor = 'pointer';
+
+                        var coordinates = marker.geometry.coordinates.slice();
+                        var description = marker.properties.description;
+
+                        popup = new mapboxgl.Popup({
+                            closeButton: false,
+                            closeOnClick: false
+                        }).setLngLat(coordinates).setHTML('<h5>' +
+                            marker.properties.title +
+                            '</h5>' +
+                            marker.properties.descriptionHover +
+                            '').addTo(map);
+                    });
+
+                    el.addEventListener('mouseout', function () {
+                        map.getCanvas().style.cursor = '';
+                        popup.remove();
+                    });
                 });
 
-                console.log(markers);
 			},
 			error: function (data) {
 				console.log('Error:', data);

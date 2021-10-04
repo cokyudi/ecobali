@@ -14,16 +14,16 @@
         <div class="app-content content">
         <div class="content-wrapper">
             <div class="content-header row mb-1">
-                <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                    <h3 class="content-header-title mb-0 d-inline-block">Basic DataTables</h3>
+                <div class="content-header-left col-md-12 col-12 mb-2 breadcrumb-new">
+                    <h3 class="content-header-title mb-0 d-inline-block">Payment Method</h3>
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                <li class="breadcrumb-item"><a href="#">Home</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">DataTables</a>
+                                <li class="breadcrumb-item"><a href="#">Master Data</a>
                                 </li>
-                                <li class="breadcrumb-item active">Basic DataTables
+                                <li class="breadcrumb-item active">Payment Method
                                 </li>
                             </ol>
                         </div>
@@ -51,7 +51,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
                                     <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewPaymentMethod">Add New Payment Method</button>
-										
+
                                         @include('paymentMethod.modal')
                                         <div class="table-responsive">
                                             <table id="paymentMethodTable" class="table table-striped table-bordered zero-configuration">
@@ -64,7 +64,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -96,13 +96,13 @@ $(document).ready(function(e) {
     form.validate();
 });
   $(function () {
-    var validator = $("#paymentMethodForm").validate();   
+    var validator = $("#paymentMethodForm").validate();
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
       });
-  
+
       var table = $('#paymentMethodTable').DataTable({
           processing: true,
           serverSide: true,
@@ -114,14 +114,14 @@ $(document).ready(function(e) {
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
-  
+
       table.on('draw.dt', function () {
             var info = table.page.info();
             table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1 + info.start;
             });
         });
-  
+
       $('#createNewPaymentMethod').click(function () {
           validator.resetForm();
           $('#saveBtn').val("create");
@@ -130,9 +130,9 @@ $(document).ready(function(e) {
           $('#modalHeading').html("Create New Payment Method");
           $('#paymentMethodModal').modal('show');
       });
-  
+
       $('body').on('click', '.editPaymentMethod', function () {
-        validator.resetForm();  
+        validator.resetForm();
         var paymentMethod_id = $(this).data('id');
         $.get("{{ route('paymentMethods.index') }}" +'/' + paymentMethod_id +'/edit', function (data) {
             $('#modalHeading').html("Edit Payment Method");
@@ -147,7 +147,7 @@ $(document).ready(function(e) {
             $('#last_modified_datetime').val(data.last_modified_datetime);
         })
      });
-  
+
       $('#saveBtn').click(function (e) {
         if ($('#paymentMethodForm').valid()) {
             e.preventDefault();
@@ -165,14 +165,14 @@ $(document).ready(function(e) {
                 var alertMessage = 'Payment Method berhasil di edit.';
             }
             $(this).html('Save');
-        
+
             $.ajax({
                 data: $('#paymentMethodForm').serialize(),
                 url: "{{ route('paymentMethods.store') }}",
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
-        
+
                     $('#paymentMethodForm').trigger("reset");
                     $('#paymentMethodModal').modal('hide');
                     table.draw();
@@ -180,7 +180,7 @@ $(document).ready(function(e) {
                         "positionClass": "toast-bottom-right"
                     };
                     toastr.success(alertMessage);
-            
+
                 },
                 error: function (data) {
                     console.log('Error:', data);
@@ -189,11 +189,11 @@ $(document).ready(function(e) {
                 }
             });
         }
-          
+
       });
-      
+
       $('body').on('click', '.deletePaymentMethod', function () {
-       
+
           var paymentMethod_id = $(this).data("id");
           swal({
             title: "Are you sure?",
@@ -220,10 +220,10 @@ $(document).ready(function(e) {
                     });
                 } else {}
             });
-        
+
       });
-       
+
     });
 </script>
 
-@endpush 
+@endpush

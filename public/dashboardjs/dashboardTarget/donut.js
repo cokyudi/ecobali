@@ -28,7 +28,7 @@ function drawTargetPapermillDonut() {
             donutMonthly = new google.visualization.PieChart(document.getElementById("donut_monthly_papermill")).draw(dataMonthly, {
                 title: "",
                 legend:'bottom',
-                height: 300,
+                height: 250,
                 fontSize: 12,
                 colors: ["#7dcdf3", "#2e53a1", "#FF847C", "#E84A5F", "#474747"],
                 pieHole: 0.55,
@@ -44,7 +44,7 @@ function drawTargetPapermillDonut() {
             donutAnnual = new google.visualization.PieChart(document.getElementById("donut_annual_papermill")).draw(dataAnnual, {
                 title: "",
                 legend:'bottom',
-                height: 300,
+                height: 250,
                 fontSize: 12,
                 colors: ["#7dcdf3", "#2e53a1", "#FF847C", "#E84A5F", "#474747"],
                 pieHole: 0.55,

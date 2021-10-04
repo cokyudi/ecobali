@@ -2,27 +2,16 @@
 
 @section('users','active')
 
+@push('menu_title')
+    <li class="nav-item d-none d-lg-block">
+        <a class="nav-link text-bold-700 font-medium-3" href="{{url('user-management')}}">User Management</a>
+    </li>
+@endpush
+
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
         <div class="content-wrapper">
-            <div class="content-header row mb-1">
-                <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                    <h3 class="content-header-title mb-0 d-inline-block">Basic DataTables</h3>
-                    <div class="row breadcrumbs-top d-inline-block">
-                        <div class="breadcrumb-wrapper col-12">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
-                                </li>
-                                <li class="breadcrumb-item"><a href="#">DataTables</a>
-                                </li>
-                                <li class="breadcrumb-item active">Basic DataTables
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="content-body">
                 <!-- Zero configuration table -->
                 <section id="configuration">

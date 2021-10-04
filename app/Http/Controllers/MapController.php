@@ -87,6 +87,14 @@ class MapController extends Controller
             $description = $description.'<tr><td>Regency</td><td>:</td><td>'.$participant->regency_name.'</td></tr></table>';
             $description = $description.'<a href="/participants/'.$participant->id_participant.'/edit">View Detail</a>';
 
+
+            $descriptionHover = '<table><tr><td><b>Phone Number</b></td><td><b>:</b></td><td><b>'.$participant->contact_phone_1.'</b></td></tr>';
+            $descriptionHover = $descriptionHover.'<tr><td>Category</td><td>:</td><td>'.$participant->category_name.'</td></tr>';
+            $descriptionHover = $descriptionHover.'<tr><td>Area</td><td>:</td><td>'.$participant->area_name.'</td></tr>';
+            $descriptionHover = $descriptionHover.'<tr><td>Subdistrict</td><td>:</td><td>'.$participant->district_name.'</td></tr>';
+            $descriptionHover = $descriptionHover.'<tr><td>Regency</td><td>:</td><td>'.$participant->regency_name.'</td></tr></table>';
+
+
             $information = [
                 'type' => 'FeatureCollection',
                 'geometry' => [
@@ -96,6 +104,7 @@ class MapController extends Controller
                 'properties'=> [
                     'title'=> $participant->participant_name,
                     'description'=> $description,
+                    'descriptionHover'=> $descriptionHover,
                     'marker-color' => '#0000FF',
                     'category' => $participant->id_category
                 ]

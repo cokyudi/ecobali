@@ -3,7 +3,7 @@
 
 @push('menu_title')
     <li class="nav-item d-none d-lg-block">
-        <a class="nav-link text-bold-700" href="{{url('dashboard1')}}">Dashboard Collection</a>
+        <a class="nav-link text-bold-700 font-medium-3" href="{{url('dashboard1')}}">Dashboard Collection</a>
     </li>
 @endpush
 
@@ -69,7 +69,7 @@
                                         <h6 class="font-weight-bold font-medium-2 " >
 
                                             District Coverage
-                                            <i class="la la-info-circle " data-toggle="popover"
+                                            <i class="la la-info-circle " data-toggle="popover" data-container="nav"
                                                data-content="Jumlah kecamatan yang menjadi lokasi pengumpulan Kemasan Bekas Minuman (KBM) " data-trigger="hover"
                                                data-original-title="Number of District where Used Beverage Cartons (UBC) are collected">
                                             </i>
@@ -94,7 +94,7 @@
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
                                         <h6 class="font-weight-bold font-medium-2" >Regency Coverage
-                                            <i class="la la-info-circle" data-toggle="popover"
+                                            <i class="la la-info-circle" data-toggle="popover" data-container="nav"
                                                data-content="Jumlah Kabupaten yang menjadi lokasi pengumpulan Kemasan Bekas Minuman (KBM)" data-trigger="hover"
                                                data-original-title="Number of Regency where Used Beverage Cartons (UBC) are collected">
                                             </i>
@@ -117,7 +117,7 @@
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
                                         <h6 class="font-weight-bold font-medium-2">Total <br>Collection
-                                            <i class="la la-info-circle" data-toggle="popover"
+                                            <i class="la la-info-circle" data-toggle="popover" data-container="nav"
                                                data-content="Jumlah Kemasan Bekas Minuman (KBM) yang dikumpulkan di ecoBali" data-trigger="hover"
                                                data-original-title="Total number of Used Beverage Cartons (UBC) collected at ecoBali">
                                             </i>
@@ -149,7 +149,7 @@
                                 <div class="media d-flex">
                                     <div class="media-body text-left">
                                         <h6 class="font-weight-bold font-medium-2">Total Participant
-                                            <i class="la la-info-circle" data-toggle="popover"
+                                            <i class="la la-info-circle" data-toggle="popover" data-container="nav"
                                                data-content="Jumlah Partisipan yang mengumpulkan Kemasan Bekas Minuman (KBM) di ecoBali" data-trigger="hover"
                                                data-original-title="Total of Participants who collect Used Beverage Cartons (UBC)">
                                             </i>

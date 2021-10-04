@@ -3,7 +3,7 @@
 
 @push('menu_title')
     <li class="nav-item d-none d-lg-block">
-        <a class="nav-link text-bold-700" href="{{url('dashboard-shipment')}}">Dashboard Shipment</a>
+        <a class="nav-link text-bold-700 font-medium-3" href="{{url('dashboard-shipment')}}">Dashboard Shipment</a>
     </li>
 @endpush
 
@@ -26,7 +26,7 @@
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
                                 <h6 class="font-weight-bold font-medium-1">Sent to Papermill
-                                    <i class="la la-info-circle" data-toggle="popover"
+                                    <i class="la la-info-circle" data-toggle="popover" data-container="nav"
                                        data-content="Total Kemasan Bekas Minuman (KBM) yang dikumpulkan oleh ecoBali dan dikirim menuju pabrik" data-trigger="hover" data-html="true"
                                        data-original-title="Total number of Used Beverage Cartons (UBC) collected at ecoBali and sent to papermill">
                                     </i>
@@ -74,7 +74,7 @@
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
                                 <h6 class="font-weight-bold font-medium-1">Received at Papermill
-                                    <i class="la la-info-circle" data-toggle="popover"
+                                    <i class="la la-info-circle" data-toggle="popover" data-container="nav"
                                        data-content="Total Kemasan Bekas Minuman (KBM) yang diterima dipabrik sebelum dikurangi bahan cair dan kontaminan " data-trigger="hover" data-html="true"
                                        data-original-title="Total number of Used Beverage Cartons (UBC) received at papermill before moisture content and contaminant reduction">
                                     </i>
@@ -133,7 +133,7 @@
                         <div class="card-body">
                             <div class="media-body col-12 text-center">
                                 <h6 class="font-weight-bold font-medium-1">Final Weight at Papermill
-                                    <i class="la la-info-circle" data-toggle="popover"
+                                    <i class="la la-info-circle" data-toggle="popover" data-container="nav"
                                        data-content="Total Kemasan Bekas Minuman (KBM) yang diterima dipabrik setelah dikurangi bahan cair dan kontaminan <br>
 (Rumus: total KBM di terima di pabrik - total bahan cair dan kontaminan)" data-trigger="hover" data-html="true"
                                        data-original-title="Total of Used Beverage Cartons (UBC) received at papermill after moisture content and contaminant reduction <br>

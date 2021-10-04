@@ -15,16 +15,16 @@
         <div class="app-content content">
         <div class="content-wrapper">
             <div class="content-header row mb-1">
-                <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                    <h3 class="content-header-title mb-0 d-inline-block">Basic DataTables</h3>
+                <div class="content-header-left col-md-12 col-12 mb-2 breadcrumb-new">
+                    <h3 class="content-header-title mb-0 d-inline-block">Bank</h3>
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                <li class="breadcrumb-item"><a href="#">Home</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">DataTables</a>
+                                <li class="breadcrumb-item"><a href="#">Master Data</a>
                                 </li>
-                                <li class="breadcrumb-item active">Basic DataTables
+                                <li class="breadcrumb-item active">Bank
                                 </li>
                             </ol>
                         </div>
@@ -52,7 +52,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body card-dashboard">
                                     <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewBank">Add New Bank</button>
-										
+
                                         @include('bank.modal')
                                         <div class="table-responsive">
                                             <table id="bankTable" class="table table-striped table-bordered zero-configuration">
@@ -65,7 +65,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
@@ -97,13 +97,13 @@ $(document).ready(function(e) {
     form.validate();
 });
   $(function () {
-    var validator = $("#bankForm").validate();   
+    var validator = $("#bankForm").validate();
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
       });
-  
+
       var table = $('#bankTable').DataTable({
           processing: true,
           serverSide: true,
@@ -115,14 +115,14 @@ $(document).ready(function(e) {
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
-  
+
       table.on('draw.dt', function () {
             var info = table.page.info();
             table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1 + info.start;
             });
         });
-  
+
       $('#createNewBank').click(function () {
           validator.resetForm();
           $('#saveBtn').val("create");
@@ -131,9 +131,9 @@ $(document).ready(function(e) {
           $('#modalHeading').html("Create New Bank");
           $('#bankModal').modal('show');
       });
-  
+
       $('body').on('click', '.editBank', function () {
-        validator.resetForm();  
+        validator.resetForm();
         var bank_id = $(this).data('id');
         $.get("{{ route('banks.index') }}" +'/' + bank_id +'/edit', function (data) {
             $('#modalHeading').html("Edit Bank");
@@ -148,7 +148,7 @@ $(document).ready(function(e) {
             $('#last_modified_datetime').val(data.last_modified_datetime);
         })
      });
-  
+
       $('#saveBtn').click(function (e) {
         if ($('#bankForm').valid()) {
             e.preventDefault();
@@ -166,14 +166,14 @@ $(document).ready(function(e) {
                 var alertMessage = 'Bank berhasil di edit.';
             }
             $(this).html('Save');
-        
+
             $.ajax({
                 data: $('#bankForm').serialize(),
                 url: "{{ route('banks.store') }}",
                 type: "POST",
                 dataType: 'json',
                 success: function (data) {
-        
+
                     $('#bankForm').trigger("reset");
                     $('#bankModal').modal('hide');
                     table.draw();
@@ -181,7 +181,7 @@ $(document).ready(function(e) {
                         "positionClass": "toast-bottom-right"
                     };
                     toastr.success(alertMessage);
-            
+
                 },
                 error: function (data) {
                     console.log('Error:', data);
@@ -190,11 +190,11 @@ $(document).ready(function(e) {
                 }
             });
         }
-          
+
       });
-      
+
       $('body').on('click', '.deleteBank', function () {
-       
+
           var bank_id = $(this).data("id");
           swal({
             title: "Are you sure?",
@@ -221,10 +221,10 @@ $(document).ready(function(e) {
                     });
                 } else {}
             });
-        
+
       });
-       
+
     });
 </script>
 
-@endpush 
+@endpush

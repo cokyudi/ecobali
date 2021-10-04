@@ -1,26 +1,16 @@
 @extends('template', ['user'=>$user])
+
+@push('menu_title')
+    <li class="nav-item d-none d-lg-block">
+        <a class="nav-link text-bold-700 font-medium-3" href="{{url('sales')}}">Sales</a>
+    </li>
+@endpush
+
 @section('sales','active')
 @section('content')
         <!-- BEGIN: Content-->
         <div class="app-content content">
         <div class="content-wrapper">
-            <div class="content-header row mb-1">
-                <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                    <h3 class="content-header-title mb-0 d-inline-block">Sales</h3>
-                    <div class="row breadcrumbs-top d-inline-block">
-                        <div class="breadcrumb-wrapper col-12">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
-                                </li>
-                                <li class="breadcrumb-item"><a href="#">Data Master</a>
-                                </li>
-                                <li class="breadcrumb-item active">Sales
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="content-body">
                 <!-- Zero configuration table -->
                 <section id="configuration">
@@ -44,7 +34,7 @@
                                         @if ($user['role'] == 'Admin')
                                     <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewSales">Add New Sales</button>
                                         @endif
-                                            <a class="btn btn-info btn-min-width mr-1 mb-1 white" hidden href="{{ url('downloadSales') }}">Download</a>
+                                            <a class="btn btn-info btn-min-width mr-1 mb-1 white" href="{{ url('downloadSales') }}">Download</a>
                                         @include('sale.modal')
 
                                         <div class="table-responsive">

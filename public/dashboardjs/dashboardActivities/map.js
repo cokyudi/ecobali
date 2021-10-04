@@ -35,7 +35,17 @@ function getAllData() {
         northEast = L.latLng(-7.896704, 116.955731),
         bounds = L.latLngBounds(southWest, northEast);
 
-    mapActivity = L.map('mapActivity',{maxBounds: bounds}).setView([-8.403928, 115.571343], defaultZoom);
+    mapActivity = L.map('mapActivity',{
+        maxBounds:bounds,
+        scrollWheelZoom: false,
+        dragging: false,
+        boxZoom: false,
+        touchZoom: false,
+        doubleClickZoom: false,
+        keyboard: false,
+        tap: false,
+        zoomControl: false
+    }).setView([-8.403928, 115.571343], defaultZoom);
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGV2YWFkczIiLCJhIjoiY2twbXBweGkzMmgycTJvcmkxM3ozeDhmaCJ9.w1rN2S1A6G5SJFoitaoQvQ', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -71,7 +81,7 @@ function getAllData() {
             new google.visualization.BarChart(document.getElementById("numberOfParticipantBar")).draw(e, {
                 height: 300,
                 fontSize: 10,
-                chartArea: { left: "20%", width: "70%", height: "80%" },
+                chartArea: { left: "30%", width: "70%", height: "80%" },
                 hAxis: { gridlines: { color: "#e9e9e9" },title: "Program"},
                 vAxis: { gridlines: { count: 10 }, minValue: 0 ,title: "People"},
                 legend: { position: "none" },
@@ -118,8 +128,12 @@ function getAllData() {
                     }
                 },
                 onEachFeature: function (feature, layer) {
-                    layer.remove();
-                    layer.bindPopup(feature.properties.kabupaten+" </br>  "+feature.properties.sampah);
+                    // layer.remove();
+                    // layer.bindPopup(feature.properties.kabupaten+" </br>  "+feature.properties.sampah);
+
+                    layer.bindPopup(feature.properties.kabupaten+" </br>  "+feature.properties.sampah, {closeButton: false, offset: L.point(0, -20)});
+                    layer.on('mouseover', function() {layer.openPopup();});
+                    layer.on('mouseout', function() { layer.closePopup(); });
                 }
             }).addTo(mapActivity);
         },

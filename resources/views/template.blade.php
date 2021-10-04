@@ -28,6 +28,7 @@
 
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 		<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
         <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
 
 		@stack('css_extend')
@@ -80,7 +81,7 @@
 					<li class=" nav-item">
 						<a><i class="la la-home"></i><span class="menu-title">Dashboard</span></a>
 						<ul class="menu-content">
-							<li class="@yield('dashboard-collection')"><a class="menu-item" href="{{url('dashboard1')}}"><i class="la la-arrow-circle-down mr-1"></i><span>Collection</span></a>
+							<li class="@yield('dashboard-collection')"><a class="menu-item" href="{{url('dashboard1')}}"><i class="fa fa-truck mr-1"></i><span>Collection</span></a>
 							</li>
 							<li class="@yield('dashboard-comparison')"><a class="menu-item" href="{{url('dashboard-comparison')}}"><i class="la la-bar-chart mr-1"></i><span>Comparison</span></a>
 							</li>
@@ -95,9 +96,17 @@
 					<li class="@yield('map') nav-item"><a href="{{url('map')}}"><i class="la la-map-marked-alt"></i><span class="menu-title" >Map</span></a></li>
                     <li class="@yield('participantList') nav-item"><a href="{{url('participantList')}}"><i class="la la-user-friends"></i><span class="menu-title" >Participant List</span></a></li>
 
-                    <li class="@yield('collections') nav-item"><a href="{{url('collections')}}"><i class="la la-arrow-circle-down"></i><span class="menu-title" >Collection</span></a></li>
-                    <li class="@yield('sales') nav-item"><a href="{{url('sales')}}"><i class="la la-dollar-sign"></i><span class="menu-title" >Sales</span></a></li>
-                    <li class="@yield('activities')"><a class="menu-item" href="{{url('activities')}}"><i class="la la-chalkboard mr-1"></i><span>Activities</span></a></li>
+                    <li class=" nav-item">
+                        <a><i class="fa fa-calendar-plus-o"></i><span class="menu-title">Input Data</span></a>
+                        <ul class="menu-content">
+                            <li class="@yield('collections')"><a class="menu-item" href="{{url('collections')}}"><i class="fa fa-truck mr-1"></i><span>Collection</span></a>
+                            </li>
+                            <li class="@yield('sales')"><a class="menu-item" href="{{url('sales')}}"><i class="la la-dollar-sign mr-1"></i><span>Sales</span></a>
+                            </li>
+                            <li class="@yield('activities')"><a class="menu-item" href="{{url('activities')}}"><i class="la la-chalkboard mr-1"></i><span>Activities</span></a>
+                            </li>
+                        </ul>
+                    </li>
 
                     @if ($user['role'] == 'Admin')
 					<li class="nav-item">
@@ -116,13 +125,12 @@
                             <li class="@yield('papermills')"><a class="menu-item" href="{{url('papermills')}}"><i class="la la-industry mr-1"></i><span>Papermill</span></a></li>
                             <li class="@yield('papermillCategories')"><a class="menu-item" href="{{url('papermillCategories')}}"><i class="la la-layer-group mr-1"></i><span>Papermill Categories</span></a></li>
                             <li class="@yield('activityPrograms')"><a class="menu-item" href="{{url('activityPrograms')}}"><i class="la la-universal-access mr-1"></i><span>Program Activity</span></a></li>
-
                             <li class="@yield('potentials')"><a class="menu-item" href="{{url('potentials')}}"><i class="la la-compress mr-1"></i><span>Category Potential</span></a></li>
 						</ul>
 					</li>
 
 					<li class=" navigation-header"><span>Application</span><i class="la la-ellipsis-h" data-toggle="tooltip" data-placement="right" data-original-title="Application"></i></li>
-						<li class="@yield('users') nav-item"><a href="{{url('user-management')}}"><i class="la la-user"></i><span class="menu-title" >User List</span></a></li>
+						<li class="@yield('users') nav-item"><a href="{{url('user-management')}}"><i class="la la-user"></i><span class="menu-title" >User Management</span></a></li>
 					@endif
 				</ul>
 			</div>

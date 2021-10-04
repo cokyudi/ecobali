@@ -1,6 +1,12 @@
 @extends('template', ['user'=>$user])
 
 @section('collections','active')
+
+@push('menu_title')
+    <li class="nav-item d-none d-lg-block">
+        <a class="nav-link text-bold-700 font-medium-4" href="{{url('collections')}}">Collection</a>
+    </li>
+@endpush
 @push('css_extend')
     <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/selects/select2.min.css')}}">
 @endpush
@@ -8,23 +14,7 @@
         <!-- BEGIN: Content-->
         <div class="app-content content">
         <div class="content-wrapper">
-            <div class="content-header row mb-1">
-                <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                    <h3 class="content-header-title mb-0 d-inline-block">Basic DataTables</h3>
-                    <div class="row breadcrumbs-top d-inline-block">
-                        <div class="breadcrumb-wrapper col-12">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
-                                </li>
-                                <li class="breadcrumb-item"><a href="#">DataTables</a>
-                                </li>
-                                <li class="breadcrumb-item active">Basic DataTables
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <div class="content-body">
                 <!-- Zero configuration table -->
                 <section id="configuration">
@@ -48,7 +38,7 @@
                                         @if ($user['role'] == 'Admin')
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewCollection">Add New Collection</button>
                                         @endif
-                                        <a class="btn btn-info btn-min-width mr-1 mb-1 white" hidden href="{{ url('downloadCollections') }}">Download</a>
+                                        <a class="btn btn-info btn-min-width mr-1 mb-1 white" href="{{ url('downloadCollections') }}">Download</a>
                                         @include('collection.modal')
                                         @include('collection.modalImport')
                                         <div class="table-responsive">

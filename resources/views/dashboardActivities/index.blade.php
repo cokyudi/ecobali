@@ -3,7 +3,7 @@
 
 @push('menu_title')
     <li class="nav-item d-none d-lg-block">
-        <a class="nav-link text-bold-700" href="{{url('dashboard-activities')}}">Dashboard Activities</a>
+        <a class="nav-link text-bold-700 font-medium-3" href="{{url('dashboard-activities')}}">Dashboard Activities</a>
     </li>
 @endpush
 
@@ -36,7 +36,7 @@
                             <div class="media">
                                 <div class="media-body text-left">
                                     <h6 class="font-weight-bold font-medium-2">District Coverage
-                                        <i class="la la-info-circle" data-toggle="popover"
+                                        <i class="la la-info-circle" data-toggle="popover" data-container="nav"
                                            data-content="Jumlah kecamatan yang menjadi lokasi sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM)" data-trigger="hover" data-html="true"
                                            data-original-title="Number of district received socialization / education about Used Beverage Cartons (UBC) recycling">
                                         </i>
@@ -58,7 +58,7 @@
                             <div class="media d-flex">
                                 <div class="media-body text-left">
                                     <h6 class="font-weight-bold font-medium-2">Regency Coverage
-                                        <i class="la la-info-circle" data-toggle="popover"
+                                        <i class="la la-info-circle" data-toggle="popover" data-container="nav"
                                            data-content="Jumlah kabupaten yang menjadi lokasi sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM)" data-trigger="hover" data-html="true"
                                            data-original-title="Number of regency received socialization / education about Used Beverage Cartons (UBC) recyling">
                                         </i>
@@ -80,7 +80,7 @@
                             <div class="media d-flex">
                                 <div class="media-body text-left">
                                     <h6 class="font-weight-bold font-medium-2">Location Coverage
-                                        <i class="la la-info-circle" data-toggle="popover"
+                                        <i class="la la-info-circle" data-toggle="popover" data-container="nav"
                                            data-content="Jumlah lokasi / organisasi yang mendapat sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM)" data-trigger="hover" data-html="true"
                                            data-original-title="Number of organization / location received socialization / education about Used Beverage Cartons (UBC) recycling">
                                         </i>
@@ -102,7 +102,7 @@
                             <div class="media d-flex">
                                 <div class="media-body text-left">
                                     <h6 class="font-weight-bold font-medium-2">Total Participant
-                                        <i class="la la-info-circle" data-toggle="popover"
+                                        <i class="la la-info-circle" data-toggle="popover" data-container="nav"
                                            data-content="Jumlah orang yang mengikuti dan mendapat sosialisasi / edukasi tentang daur ulang Kemasan Bekas Minuman (KBM)" data-trigger="hover" data-html="true"
                                            data-original-title="Number of people who participated and received socialization / education about Used Beverage Cartons (UBC) recycling">
                                         </i>

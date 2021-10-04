@@ -1,5 +1,12 @@
 @extends('template', ['user'=>$user])
 @section('activities','active')
+
+@push('menu_title')
+    <li class="nav-item d-none d-lg-block">
+        <a class="nav-link text-bold-700 font-medium-3" href="{{url('activities')}}">Activities</a>
+    </li>
+@endpush
+
 @push('css_extend')
 <style type="text/css">
     label.error {
@@ -13,23 +20,7 @@
         <!-- BEGIN: Content-->
         <div class="app-content content">
         <div class="content-wrapper">
-            <div class="content-header row mb-1">
-                <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                    <h3 class="content-header-title mb-0 d-inline-block">Activities</h3>
-                    <div class="row breadcrumbs-top d-inline-block">
-                        <div class="breadcrumb-wrapper col-12">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
-                                </li>
-                                <li class="breadcrumb-item"><a href="#">Data Master</a>
-                                </li>
-                                <li class="breadcrumb-item active">Activities
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <div class="content-body">
                 <!-- Zero configuration table -->
                 <section id="configuration">
@@ -55,7 +46,7 @@
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewActivity">Add New Activity</button>
                                         @endif
 {{--                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importActivity">Import Activity</button>--}}
-                                        <a class="btn btn-info btn-min-width mr-1 mb-1 white" hidden href="{{ url('downloadActivities') }}">Download</a>
+                                        <a class="btn btn-info btn-min-width mr-1 mb-1 white" href="{{ url('downloadActivities') }}">Download</a>
                                         @include('activity.modal')
                                         @include('activity.modalImport')
                                         <div class="table-responsive">

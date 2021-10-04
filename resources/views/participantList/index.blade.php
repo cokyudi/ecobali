@@ -1,6 +1,12 @@
 @extends('template', ['user'=>$user])
 @section('participantList','active')
 
+@push('menu_title')
+    <li class="nav-item d-none d-lg-block">
+        <a class="nav-link text-bold-700 font-medium-3" href="{{url('participantList')}}">Participant List</a>
+    </li>
+@endpush
+
 @push('css_extend')
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/selects/select2.min.css')}}">
 @endpush

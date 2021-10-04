@@ -13,7 +13,7 @@
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                <li class="breadcrumb-item"><a href="#">Home</a>
                                 </li>
                                 <li class="breadcrumb-item"><a href="#">Master Data</a>
                                 </li>
@@ -46,7 +46,7 @@
                                     <div class="card-body card-dashboard">
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewParticipant">Add New Participant</button>
 {{--                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importParticipant">Import Participant</button>--}}
-                                        <a class="btn btn-info btn-min-width mr-1 mb-1 white" hidden href="{{ url('downloadParticipants') }}">Download</a>
+                                        <a class="btn btn-info btn-min-width mr-1 mb-1 white" href="{{ url('downloadParticipants') }}">Download</a>
                                         @include('participant.modalImport')
                                         <div class="table-responsive">
                                             <table id="participantTable" class="table table-striped table-bordered zero-configuration" width="100%">
