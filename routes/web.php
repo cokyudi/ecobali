@@ -30,6 +30,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\ParticipantListController;
 use App\Http\Controllers\PotentialController;
+
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,7 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 });
-
+Route::get('/home', [HomeController::class, 'index']);
 Route::resource('categories', CategoryController::class);
 Route::resource('categoryDetails', CategoryDetailController::class);
 Route::resource('areas', AreaController::class);

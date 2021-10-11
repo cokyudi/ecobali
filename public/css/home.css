@@ -1,44 +1,25 @@
-#imageModal{
-    max-width: 800px;
+
+.header-navbar {
+    padding: 0;
+    min-height: 6.5rem;
+    font-family: Quicksand, Georgia, "Times New Roman", Times, serif;
+    transition: 0.3s ease all;
 }
 
-.border-bottom-black-ship{
-    border-bottom:3px solid !important;
-}
-
-.card-custom{
-    height: 160px;
-    top: 50%;
+.header-navbar .navbar-container ul.nav li a.dropdown-user-link {
+    padding: 1.9rem 1rem;
+    line-height: 23px;
 }
 
 
-/* If the screen size is 1200px wide or more, set the font-size to 80px */
-@media (min-width: 1200px) {
-    .judul-card {
-        font-size: 80px;
-    }
+.dropdown-user-link span:hover{
+    color: #2e53a1;
 }
 
-/* If the screen size is smaller than 1200px, set the font-size to 80px */
-@media (max-width: 1919px) {
-    .collectionTon {
-        font-size: 2.5rem !important;
-        font-weight: 600 !important;
-    }
-    .collectionKg {
-        font-size: 1.1rem !important;
-        font-weight: 600 !important;
-    }
+/*body.vertical-layout.vertical-menu-modern .main-menu li a span {*/
+/*    -webkit-animation : 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;*/
+/*    -moz-animation : 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;*/
+/*    -o-animation : 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;*/
+/*    animation : 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;*/
+/*}*/
 
-    /*#received_at_papermill_ton {*/
-    /*    font-size: 2rem !important;*/
-    /*}*/
-
-    /*#received_at_papermill_kg {*/
-    /*    font-size: 1.2rem !important;*/
-    /*}*/
-}
-
-.home-header {
-    background: #f4f5fa;
-}

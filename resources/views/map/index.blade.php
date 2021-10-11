@@ -30,14 +30,14 @@
 <!-- BEGIN: Content-->
 <div class="app-content content">
     <div class="content-wrapper">
-        <div class="content-header row mb-1">
+        <div class="content-header row ">
     </div>
     <div class="content-body"><!-- Revenue, Hit Rate & Deals -->
     <!--/ Revenue, Hit Rate & Deals -->
     <div class="row">
         <div class="col-xl-12 col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header pb-0">
                     <h4 class="card-title">Participants Map</h4>
                     <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                     <div class="heading-elements">
@@ -55,7 +55,7 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="card-content collapse show">
-                            <div class="card-body" style="height: 500px">
+                            <div class="card-body" style="height: 480px">
                                 <div id="mapid" ></div>
                             </div>
                         </div>
@@ -265,8 +265,8 @@
 			data:params,
 			success: function (data) {
                 map.flyTo({
-                    center: [115.188919, -8.409518],
-                    zoom: 8.5
+                    center: [115.188919, -8.449518],
+                    zoom: 8.2
                 });
 
                 var province = [
@@ -343,7 +343,7 @@
                     el.addEventListener("click", e => {
                         map.flyTo({
                             center: marker.geometry.coordinates,
-                            zoom: 12
+                            zoom: 14
                         });
                     });
 

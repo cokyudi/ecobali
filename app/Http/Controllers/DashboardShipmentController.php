@@ -142,7 +142,7 @@ class DashboardShipmentController extends Controller
 
 //                array_push($dynamicsOfMCC,[$salesColumn->monthName."\n".$salesColumn->year,$salesColumn->moisture_content_and_contaminant]);
 
-                $mccPercent = ($salesColumn->moisture_content_and_contaminant / $salesColumn->received_at_papermill)*100;
+                $mccPercent = round(($salesColumn->moisture_content_and_contaminant / $salesColumn->received_at_papermill)*100,1);
                 array_push($dynamicsOfMCC,[$salesColumn->monthName."\n".$salesColumn->year,$mccPercent]);
             }
 
@@ -165,7 +165,7 @@ class DashboardShipmentController extends Controller
 
 //                array_push($dynamicsOfMCC,['Q'.$salesColumn->quarter."\n".$salesColumn->year,$salesColumn->moisture_content_and_contaminant]);
 
-                $mccPercent = ($salesColumn->moisture_content_and_contaminant / $salesColumn->received_at_papermill)*100;
+                $mccPercent = round(($salesColumn->moisture_content_and_contaminant / $salesColumn->received_at_papermill)*100,1);
                 array_push($dynamicsOfMCC,['Q'.$salesColumn->quarter."\n".$salesColumn->year,$mccPercent]);
             }
 
@@ -185,9 +185,7 @@ class DashboardShipmentController extends Controller
                 array_push($dynamicsKMKAcceptedLabel, [''.$salesColumn->year]);
                 array_push($dynamicsKMKAcceptedData, [$salesColumn->total_weight_accepted]);
 
-//                array_push($dynamicsOfMCC,[''.$salesColumn->year,$salesColumn->moisture_content_and_contaminant]);
-
-                $mccPercent = ($salesColumn->moisture_content_and_contaminant / $salesColumn->received_at_papermill)*100;
+                $mccPercent = round(($salesColumn->moisture_content_and_contaminant / $salesColumn->received_at_papermill)*100,1);
                 array_push($dynamicsOfMCC,[''.$salesColumn->year,$mccPercent]);
             }
         }
