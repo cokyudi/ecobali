@@ -1,0 +1,44 @@
+#imageModal{
+    max-width: 800px;
+}
+
+.border-bottom-black-ship{
+    border-bottom:3px solid !important;
+}
+
+.card-custom{
+    height: 160px;
+    top: 50%;
+}
+
+
+/* If the screen size is 1200px wide or more, set the font-size to 80px */
+@media (min-width: 1200px) {
+    .judul-card {
+        font-size: 80px;
+    }
+}
+
+/* If the screen size is smaller than 1200px, set the font-size to 80px */
+@media (max-width: 1919px) {
+    .collectionTon {
+        font-size: 2.5rem !important;
+        font-weight: 600 !important;
+    }
+    .collectionKg {
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+    }
+
+    /*#received_at_papermill_ton {*/
+    /*    font-size: 2rem !important;*/
+    /*}*/
+
+    /*#received_at_papermill_kg {*/
+    /*    font-size: 1.2rem !important;*/
+    /*}*/
+}
+
+.home-header {
+    background: #f4f5fa;
+}
