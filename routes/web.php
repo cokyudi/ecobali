@@ -49,7 +49,7 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/dashboard1', [Dashboard1Controller::class, 'index']);
+    Route::get('/home', [HomeController::class, 'index']);
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 });

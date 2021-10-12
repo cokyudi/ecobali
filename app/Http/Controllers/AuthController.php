@@ -15,7 +15,7 @@ class AuthController extends Controller
     public function showFormLogin()
     {
         if (Auth::check()) {
-            return redirect('/dashboard1');
+            return redirect('/home');
         }
         return view('login');
     }
@@ -48,7 +48,7 @@ class AuthController extends Controller
         Auth::attempt($data);
 
         if (Auth::check()) {
-            return redirect('/dashboard1');
+            return redirect('/home');
 
         } else {
             Session::flash('error', 'Email atau password salah');

@@ -1,7 +1,7 @@
 
 .header-navbar {
     padding: 0;
-    min-height: 6.5rem;
+    min-height: 4.0rem;
     font-family: Quicksand, Georgia, "Times New Roman", Times, serif;
     transition: 0.3s ease all;
 }
@@ -14,6 +14,10 @@
 
 .dropdown-user-link span:hover{
     color: #2e53a1;
+}
+
+.color-home{
+    color: #0f5039;
 }
 
 /*body.vertical-layout.vertical-menu-modern .main-menu li a span {*/

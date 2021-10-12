@@ -44,7 +44,7 @@
         <nav class="header-navbar navbar-expand-lg navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-dark navbar-shadow">
             <div class="navbar-wrapper">
                 <div class="navbar-header" style="background: #fff">
-                    <img class="brand-logo" alt="modern admin logo" src="{{asset('images/logo/test.png')}}" width="80" style="display: block; margin: auto;">
+                    <img class="brand-logo" alt="modern admin logo" src="{{asset('images/logo/test.png')}}" width="75" style="display: block; margin: auto;">
                 </div>
                 <div class="navbar-container content">
                     <div class="collapse navbar-collapse" id="navbar-mobile">
@@ -53,45 +53,168 @@
                         <ul class="nav navbar-nav float-right">
                             <li class="dropdown dropdown-user nav-item">
                                 <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                    <span class="mr-1 user-name text-bold-700 font-medium-4 deva">Dashboard</span>
+                                    <span class="mr-1 user-name text-bold-700 font-medium-4 color-home">Dashboard</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{{url('dashboard1')}}"><i class="fa fa-truck"></i> Collection</a>
-                                    <a class="dropdown-item" href="{{url('dashboard-comparison')}}"><i class="la la-bar-chart"></i> Comparison</a>
-                                    <a class="dropdown-item" href="{{url('dashboard-target')}}"><i class="la la-crosshairs"></i> Target</a>
-                                    <a class="dropdown-item" href="{{url('dashboard-shipment')}}"><i class="la la-shipping-fast"></i> Shipment</a>
-                                    <a class="dropdown-item" href="{{url('dashboard-activities')}}"><i class="la la-universal-access"></i> Activities</a>
+                                    <a class="dropdown-item color-home" href="{{url('dashboard1')}}" ><i class="fa fa-truck"></i> Collection</a>
+                                    <a class="dropdown-item color-home" href="{{url('dashboard-comparison')}}"><i class="la la-bar-chart"></i> Comparison</a>
+                                    <a class="dropdown-item color-home" href="{{url('dashboard-target')}}"><i class="la la-crosshairs"></i> Target</a>
+                                    <a class="dropdown-item color-home" href="{{url('dashboard-shipment')}}"><i class="la la-shipping-fast"></i> Shipment</a>
+                                    <a class="dropdown-item color-home" href="{{url('dashboard-activities')}}"><i class="la la-universal-access"></i> Activities</a>
                                 </div>
                             </li>
 
                             <li class="dropdown dropdown-user nav-item">
                                 <a class="dropdown-toggle nav-link dropdown-user-link" href="{{url('participantList')}}">
-                                    <span class="mr-1 user-name text-bold-700 font-medium-4">Participant</span>
+                                    <span class="mr-1 user-name text-bold-700 font-medium-4 color-home">Participant</span>
                                 </a>
                             </li>
 
                             <li class="dropdown dropdown-user nav-item">
                                 <a class="dropdown-toggle nav-link dropdown-user-link" href="{{url('map')}}">
-                                    <span class="mr-1 user-name text-bold-700 font-medium-4">Map</span>
+                                    <span class="mr-1 user-name text-bold-700 font-medium-4 color-home">Map</span>
                                 </a>
                             </li>
-
+                            @if ($user['role'] == 'Admin')
                             <li class="dropdown dropdown-user nav-item">
                                 <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                    <span class="mr-1 user-name text-bold-700 font-medium-4 deva">Input Data</span>
+                                    <span class="mr-1 user-name text-bold-700 font-medium-4 color-home">Input Data</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{{url('collections')}}"><i class="fa fa-truck"></i> Collection</a>
-                                    <a class="dropdown-item" href="{{url('sales')}}"><i class="la la-dollar-sign"></i> Sales</a>
-                                    <a class="dropdown-item" href="{{url('activities')}}"><i class="la la-chalkboard"></i> Activities</a>
+                                    <a class="dropdown-item color-home" href="{{url('collections')}}"><i class="fa fa-truck"></i> Collection</a>
+                                    <a class="dropdown-item color-home" href="{{url('sales')}}"><i class="la la-dollar-sign"></i> Sales</a>
+                                    <a class="dropdown-item color-home" href="{{url('activities')}}"><i class="la la-chalkboard"></i> Activities</a>
                                 </div>
                             </li>
+                            @endif
 
                         </ul>
                     </div>
                 </div>
             </div>
         </nav>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="10000">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+                    </ol>
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active">
+                            <img src="{{asset('images/homepage/1.jpg')}}" class="img-fluid" alt="First slide">
+
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{asset('images/homepage/2.jpg')}}" class="img-fluid" alt="Second slide" >
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{asset('images/homepage/3.jpg')}}" class="img-fluid" alt="Third slide" >
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{asset('images/homepage/4.jpg')}}" class="img-fluid" alt="Fourth slide" >
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{asset('images/homepage/5.jpg')}}" class="img-fluid" alt="Fifth slide" >
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="app-content" style="margin-right: 30px; margin-left: 30px" >
+            <div class="content-wrapper pt-1">
+                <div class="content-header row">
+                </div>
+                <div class="content-body">
+                    <div class="row">
+                        <div class="col-md-4 col-12 ">
+                            <a href="{{url('map')}}">
+                                <div class="card pull-up" style="height: 360px;">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="media-body col-12 text-center">
+                                            <i class="la la-map-marked-alt font-large-5 color-home"></i>
+                                            <h6 class="font-weight-bold font-large-1 color-home">Map</h6>
+
+                                        </div>
+                                        <div class="media d-flex mt-2">
+                                            <div class="media-body text-center ">
+                                                <p style="font-style: italic" class="font-medium-1 black">Menampilkan persebaran mitra dan jumlah Kemasan Bekas Minuman (KBM) berdasarkan kategori dan wilayah (Kabupaten)</p>
+                                                <hr>
+                                                <p style="font-style: italic" class="font-small-3 black">Shows the distribution of partners and the number of Used Beverage Cartons (UBC) based on category and region</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-12 ">
+                            <a href="{{url('dashboard1')}}">
+                                <div class="card pull-up" style="height: 360px;">
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <div class="media-body col-12 text-center">
+                                                <i class="la la-home font-large-5 color-home"></i>
+                                                <h6 class="font-weight-bold font-large-1 color-home">Dashboard</h6>
+
+                                            </div>
+                                            <div class="media d-flex mt-2">
+                                                <div class="media-body text-center ">
+                                                    <p style="font-style: italic" class="font-medium-1 black">Menampilkan beberapa dashboard tentang data pengumpulan, perbandingan, pencapaian target, penjualan, dan aktivitas  terkait daur ulang kemasan bekas minuman</p>
+                                                    <hr>
+                                                    <p style="font-style: italic" class="font-small-3 black">Shows several dashboards including UBC data collection, data comparison, target achievement, sales data, and activities related to Used Beverage Cartons (UBC) recycling</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-4 col-12 ">
+                            <a href="{{url('participantList')}}">
+                                <div class="card pull-up" style="height: 360px;">
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <div class="media-body col-12 text-center">
+                                                <i class="la la-user-friends font-large-5 color-home"></i>
+                                                <h6 class="font-weight-bold font-large-1 color-home">Participant</h6>
+
+                                            </div>
+                                            <div class="media d-flex mt-2">
+                                                <div class="media-body text-center ">
+                                                    <p style="font-style: italic" class="font-medium-1 black">Menampilkan data lengkap dari mitra pengumpul Kemasan Bekas Minuman (KBM) meliputi nama, lokasi, kategori, status, jumlah KBM, rata-rata pengangkutan, intensitas pengangkutan, dan potensi jumlah KBM</p>
+                                                    <hr>
+                                                    <p style="font-style: italic" class="font-small-3 black">Shows partner data including name, location, category, status, number of UBC, average transportation, transportation intensity, and potential number of UBC</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
 
 
         <script src="{{asset('vendors/js/vendors.min.js')}}"></script>
@@ -127,52 +250,15 @@
 
         <script src="{{asset('js/scripts/popover/popover.min.js')}}"></script>
 
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#carousel-example-generic').carousel({
+                    interval: 10000 * 100
+                });
+            });
+
+        </script>
     </body>
 
 
-{{--	<body data-open="click">--}}
-{{--		<!-- BEGIN: Header-->--}}
-{{--        <!-- Navigation -->--}}
-{{--        <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">--}}
-{{--            <div class="container">--}}
-{{--                <a class="navbar-brand" href="#">--}}
-{{--                    <img src="https://placeholder.pics/svg/150x50/888888/EEE/Logo" alt="..." height="36">--}}
-{{--                </a>--}}
-{{--                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">--}}
-{{--                    <span class="navbar-toggler-icon"></span>--}}
-{{--                </button>--}}
-{{--                <div class="collapse navbar-collapse" id="navbarSupportedContent">--}}
-{{--                    <ul class="navbar-nav ms-auto">--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link font-medium-5" aria-current="page" href="#">Dashboard</a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link" href="#">Link</a>--}}
-{{--                        </li>--}}
-{{--                        <li class="nav-item dropdown">--}}
-{{--                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">--}}
-{{--                                Dropdown--}}
-{{--                            </a>--}}
-{{--                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">--}}
-{{--                                <li><a class="dropdown-item" href="#">Action</a></li>--}}
-{{--                                <li><a class="dropdown-item" href="#">Another action</a></li>--}}
-{{--                                <li>--}}
-{{--                                    <hr class="dropdown-divider">--}}
-{{--                                </li>--}}
-{{--                                <li><a class="dropdown-item" href="#">Something else here</a></li>--}}
-{{--                            </ul>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </nav>--}}
-
-{{--        <div class="container">--}}
-{{--            <h1 class="mt-4">Logo Nav by Start Bootstrap</h1>--}}
-{{--            <p>The logo in the navbar is now a default Bootstrap feature in Bootstrap! Make sure to set the height--}}
-{{--                of the logo within the HTML or using CSS. For best results, use an SVG image as your logo.</p>--}}
-{{--        </div>--}}
-
-{{--	</body>--}}
-	<!-- END: Body-->
 </html>
