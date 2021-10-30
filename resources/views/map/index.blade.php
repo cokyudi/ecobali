@@ -133,7 +133,7 @@
         <form id="filterForm" name="filterForm">
             <h5 class="mt-1 mb-1 text-bold-500">Participant</h5>
             <div class="form-group ">
-                <select id="id_participant" name="id_participant[]" multiple="multiple" class="select2 form-control">
+                <select id="id_participant" name="id_participant[]" multiple="multiple" class="select2 form-control" data-placeholder="Select Participant">
                     @foreach($participants as $participant)
                         <option value="{{$participant->id}}">{{$participant->participant_name}}</option>
                     @endforeach
@@ -144,7 +144,7 @@
 
             <h5 class="mt-1 mb-1 text-bold-500">Category</h5>
             <div class="form-group ">
-                <select id="id_category" name="id_category[]" multiple="multiple" class="select2 form-control">
+                <select id="id_category" name="id_category[]" multiple="multiple" class="select2 form-control" data-placeholder="Select Category">
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->category_name}}</option>
                     @endforeach
@@ -155,7 +155,7 @@
 
             <h5 class="mt-1 mb-1 text-bold-500">District</h5>
             <div class="form-group ">
-                <select id="id_district" name="id_district[]" multiple="multiple" class="select2 form-control">
+                <select id="id_district" name="id_district[]" multiple="multiple" class="select2 form-control" data-placeholder="Select District">
                     @foreach($districts as $district)
                         <option value="{{$district->id}}">{{$district->district_name}}</option>
                     @endforeach
@@ -166,7 +166,7 @@
 
             <h5 class="mt-1 mb-1 text-bold-500">Regency</h5>
             <div class="form-group ">
-                <select class="select2 form-control" id="id_regency" name="id_regency[]" multiple="multiple">
+                <select class="select2 form-control" id="id_regency" name="id_regency[]" multiple="multiple" data-placeholder="Select Regency">
                     @foreach($regencies as $regency)
                         <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
                     @endforeach

@@ -44,7 +44,7 @@
                     <ul class="nav navbar-nav flex-row">
                         <li class="nav-item mobile-menu d-lg-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
                         <li class="nav-item mr-auto">
-                            <a class="navbar-brand" href="{{url('dashboard1')}}"><img class="brand-logo" alt="modern admin logo" src="{{asset('images/logo/test.png')}}" width="20">
+                            <a class="navbar-brand" href="{{url('home')}}"><img class="brand-logo" alt="modern admin logo" src="{{asset('images/logo/test.png')}}" width="20">
                                 <h3 class="brand-text font-weight-bold font-medium-2 white">ecoBali UBC/KBM</h3>
                             </a>
                         </li>

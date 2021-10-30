@@ -16,8 +16,8 @@
         <div class="app-content content">
         <div class="content-wrapper">
             <div class="content-header row mb-1">
-                <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                    <h3 class="content-header-title mb-0 d-inline-block">Create Participant</h3>
+                <div class="content-header-left col-md-12 col-12 breadcrumb-new">
+                    <h3 class="content-header-title mb-0 d-inline-block">View Participant</h3>
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
@@ -25,7 +25,9 @@
                                 </li>
                                 <li class="breadcrumb-item"><a href="#">Master Data</a>
                                 </li>
-                                <li class="breadcrumb-item active">Create Participant
+                                <li class="breadcrumb-item">View Participant
+                                </li>
+                                <li class="breadcrumb-item active">{{$participant->participant_name}}
                                 </li>
                             </ol>
                         </div>
@@ -425,10 +427,10 @@
                                             <div class="d-flex">
 
                                                 <div class="p-2">
-                                                    <button type="button" class="btn round btn-min-width " style="width: 180px" id="btnContinuity">Continuity : <b id="continuity">None</b></button>
+                                                    <button type="button" class="btn btn-sm round btn-min-width " style="width: 180px" id="btnContinuity">Continuity : <b id="continuity">None</b></button>
                                                 </div>
                                                 <div class="mr-auto p-2">
-                                                    <button type="button" class="btn round btn-min-width " style="width: 180px" id="btnPotential">Potential : <b id="potential">Low</b></button>
+                                                    <button type="button" class="btn btn-sm round btn-min-width " style="width: 180px" id="btnPotential">Potential : <b id="potential">Low</b></button>
                                                 </div>
 
                                                 <div class="p-2">
@@ -437,10 +439,10 @@
                                             </div>
                                             <div class="d-flex">
                                                 <div class="pr-2 pl-2 pt-0">
-                                                    <button type="button" class="btn btn-primary round  btn-min-width" style="width: 180px">Total : <b id="totalubc"> Kg</b></button>
+                                                    <button type="button" class="btn btn-primary btn-sm round  btn-min-width" style="width: 180px">Total : <b id="totalubc"> Kg</b></button>
                                                 </div>
                                                 <div class="mr-auto pr-2 pl-2 pt-0">
-                                                    <button type="button" class="btn btn-secondary round btn-min-width " style="width: 180px">Average : <b id="average"> Kg</b></button>
+                                                    <button type="button" class="btn btn-secondary btn-sm round btn-min-width " style="width: 180px">Average : <b id="average"> Kg</b></button>
                                                 </div>
                                             </div>
                                             <div class="card-content">
@@ -451,7 +453,7 @@
                                                     <button onclick="getLineChartDataCollection('year');" type="button" class="btn btn-sm btn-secondary">Year</button>
                                                 </div>
                                                 <div class="card-body chartjs">
-                                                    <canvas id="line-chart" height="500"></canvas>
+                                                    <canvas id="line-chart" height="400"></canvas>
                                                 </div>
                                             </div>
 

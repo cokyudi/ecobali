@@ -390,13 +390,15 @@ class ParticipantController extends Controller
         if ( $average <= $getCategory->potential_low ) {
             $potential = "Low";
             $potentialColor = "btn-danger";
-        } else if ($average > $getCategory->potential_medium && $average <= $getCategory->potential_high ) {
+        } else if ($average > $getCategory->potential_low && $average <= $getCategory->potential_high ) {
             $potential = "Medium";
             $potentialColor = "btn-warning";
         } else if ($average > $getCategory->potential_high) {
             $potential = "High";
             $potentialColor = "btn-success";
         }
+
+        Log::info($potentialColor);
 
         $monthlyCollections = DB::table('collections')
             ->where('collect_date', '>=',$request->startDates)

@@ -20,6 +20,45 @@
     color: #0f5039;
 }
 
+body.vertical-layout.vertical-menu-modern .content{
+    margin-left: 20px;
+}
+
+.dropdown i{
+    margin-right: 0px;
+    margin-left: 4px;
+}
+
+.card {
+    margin-top: 50px;
+    background: #ffffff;
+    height: 250px;
+}
+.card-body {
+    position: relative;
+}
+
+.numberCircle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 21.6px;
+    color: white;
+    border: 2px solid #7995ff;
+    background: #ffffff;
+    position: absolute;
+    margin: auto;
+    top: -40px;
+    right: 0;
+    left: 0;
+}
+
+html body {
+    background: #D5DFFF;
+}
+
+
 /*body.vertical-layout.vertical-menu-modern .main-menu li a span {*/
 /*    -webkit-animation : 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;*/
 /*    -moz-animation : 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) 0s normal forwards 1 fadein;*/

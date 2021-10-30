@@ -43,17 +43,22 @@
     <body class="vertical-layout vertical-menu-modern 2-columns fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
         <nav class="header-navbar navbar-expand-lg navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-semi-dark navbar-shadow">
             <div class="navbar-wrapper">
-                <div class="navbar-header" style="background: #fff">
-                    <img class="brand-logo" alt="modern admin logo" src="{{asset('images/logo/test.png')}}" width="75" style="display: block; margin: auto;">
-                </div>
+{{--                <div class="navbar-header" style="background: #fff">--}}
+
+{{--                </div>--}}
                 <div class="navbar-container content">
                     <div class="collapse navbar-collapse" id="navbar-mobile">
                         <ul class="nav navbar-nav mr-auto float-left">
+                            <img class="brand-logo" alt="modern admin logo" src="{{asset('images/logo/test.png')}}" width="75" style="display: block; margin: auto;">
+                            <li style="padding-top: 18px">
+                                <span class="user-name text-bold-700 font-medium-5 color-home">ecoBali</span><br>
+                                <span class="user-name text-bold-700 font-medium-2 color-home">UBC/KBM</span>
+                            </li>
                         </ul>
                         <ul class="nav navbar-nav float-right">
                             <li class="dropdown dropdown-user nav-item">
                                 <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                    <span class="mr-1 user-name text-bold-700 font-medium-4 color-home">Dashboard</span>
+                                    <span class="mr-1 user-name text-bold-700 font-medium-4 color-home">Dashboard<i class="la la-sort-down"></i></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item color-home" href="{{url('dashboard1')}}" ><i class="fa fa-truck"></i> Collection</a>
@@ -78,7 +83,7 @@
                             @if ($user['role'] == 'Admin')
                             <li class="dropdown dropdown-user nav-item">
                                 <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                    <span class="mr-1 user-name text-bold-700 font-medium-4 color-home">Input Data</span>
+                                    <span class="mr-1 user-name text-bold-700 font-medium-4 color-home">Input Data<i class="la la-sort-down"></i></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item color-home" href="{{url('collections')}}"><i class="fa fa-truck"></i> Collection</a>
@@ -95,7 +100,8 @@
         </nav>
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="10000">
+                <div data-ride="carousel" class="carousel slide" data-interval="10000" id="carousel-example-generic">
+{{--                <div id="carousel-example-generic" class="carousel slide" data-interval="10000" data-ride="carousel" >--}}
                     <ol class="carousel-indicators">
                         <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                         <li data-target="#carousel-example-generic" data-slide-to="1"></li>
@@ -141,20 +147,18 @@
                     <div class="row">
                         <div class="col-md-4 col-12 ">
                             <a href="{{url('map')}}">
-                                <div class="card pull-up" style="height: 360px;">
+                                <div class="card pull-up">
                                 <div class="card-content">
                                     <div class="card-body">
-                                        <div class="media-body col-12 text-center">
-                                            <i class="la la-map-marked-alt font-large-5 color-home"></i>
+                                        <div class="numberCircle">
+                                            <i class="la la-map-marked-alt font-large-3 color-home" style="margin-top: 7px;"></i>
+                                        </div>
+                                        <div class="media-body col-12 text-center mt-2">
                                             <h6 class="font-weight-bold font-large-1 color-home">Map</h6>
-
                                         </div>
                                         <div class="media d-flex mt-2">
                                             <div class="media-body text-center ">
-                                                <p style="font-style: italic" class="font-medium-1 black">Menampilkan persebaran mitra dan jumlah Kemasan Bekas Minuman (KBM) berdasarkan kategori dan wilayah (Kabupaten)</p>
-                                                <hr>
-                                                <p style="font-style: italic" class="font-small-3 black">Shows the distribution of partners and the number of Used Beverage Cartons (UBC) based on category and region</p>
-
+                                                <p style="font-style: italic" class="font-medium-1 black">Shows the distribution of partners based on category and region</p>
                                             </div>
                                         </div>
                                     </div>
@@ -164,20 +168,20 @@
                         </div>
                         <div class="col-md-4 col-12 ">
                             <a href="{{url('dashboard1')}}">
-                                <div class="card pull-up" style="height: 360px;">
+                                <div class="card pull-up">
                                     <div class="card-content">
                                         <div class="card-body">
-                                            <div class="media-body col-12 text-center">
-                                                <i class="la la-home font-large-5 color-home"></i>
+                                            <div class="numberCircle">
+                                                <i class="la la-home font-large-3 color-home" style="margin-top: 7px;"></i>
+                                            </div>
+                                            <div class="media-body col-12 text-center mt-2">
+
                                                 <h6 class="font-weight-bold font-large-1 color-home">Dashboard</h6>
 
                                             </div>
                                             <div class="media d-flex mt-2">
                                                 <div class="media-body text-center ">
-                                                    <p style="font-style: italic" class="font-medium-1 black">Menampilkan beberapa dashboard tentang data pengumpulan, perbandingan, pencapaian target, penjualan, dan aktivitas  terkait daur ulang kemasan bekas minuman</p>
-                                                    <hr>
-                                                    <p style="font-style: italic" class="font-small-3 black">Shows several dashboards including UBC data collection, data comparison, target achievement, sales data, and activities related to Used Beverage Cartons (UBC) recycling</p>
-
+                                                    <p style="font-style: italic" class="font-medium-1 black">Shows several dashboards including UBC data collection, data comparison, target achievement, sales data, and activities related to Used Beverage Cartons (UBC) recycling</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -187,19 +191,19 @@
                         </div>
                         <div class="col-md-4 col-12 ">
                             <a href="{{url('participantList')}}">
-                                <div class="card pull-up" style="height: 360px;">
+                                <div class="card pull-up">
                                     <div class="card-content">
                                         <div class="card-body">
-                                            <div class="media-body col-12 text-center">
-                                                <i class="la la-user-friends font-large-5 color-home"></i>
+                                            <div class="numberCircle">
+                                                <i class="la la-user-friends font-large-3 color-home" style="margin-top: 7px;"></i>
+                                            </div>
+                                            <div class="media-body col-12 text-center mt-2">
                                                 <h6 class="font-weight-bold font-large-1 color-home">Participant</h6>
 
                                             </div>
                                             <div class="media d-flex mt-2">
                                                 <div class="media-body text-center ">
-                                                    <p style="font-style: italic" class="font-medium-1 black">Menampilkan data lengkap dari mitra pengumpul Kemasan Bekas Minuman (KBM) meliputi nama, lokasi, kategori, status, jumlah KBM, rata-rata pengangkutan, intensitas pengangkutan, dan potensi jumlah KBM</p>
-                                                    <hr>
-                                                    <p style="font-style: italic" class="font-small-3 black">Shows partner data including name, location, category, status, number of UBC, average transportation, transportation intensity, and potential number of UBC</p>
+                                                    <p style="font-style: italic" class="font-medium-1 black">Shows partner data including name, location, category, status, number of UBC, average per pickup, pickup continuity, and potential number of UBC</p>
 
                                                 </div>
                                             </div>
@@ -249,15 +253,6 @@
         <!-- END: Theme JS-->
 
         <script src="{{asset('js/scripts/popover/popover.min.js')}}"></script>
-
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#carousel-example-generic').carousel({
-                    interval: 10000 * 100
-                });
-            });
-
-        </script>
     </body>
 
 
