@@ -18,16 +18,16 @@ class ParticipantController extends Controller
     public function __construct(){
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $user = Auth::user();
+        $categories = DB::table('categories')->orderBy('category_name', 'asc')->get();
+        $regencies = DB::table('regencies')->orderBy('regency_name', 'asc')->get();
+        $districts = DB::table('districts')->orderBy('district_name', 'asc')->get();
+        $participants = DB::table('participants')->orderBy('participant_name', 'asc')->get();
 
-        $participants = DB::table('participants')
+        $participantsList = DB::table('participants')
             ->leftJoin('categories', function ($join) {
                 $join->on('participants.id_category', '=', 'categories.id');
             })
@@ -68,11 +68,46 @@ class ParticipantController extends Controller
                 'payment_methods.payment_method',
                 'transport_intensities.intensity',
                 'banks.bank_name'
-            )
-            ->get();
+            );
+
+        if(!empty($request->get('param'))) {
+            $data = $participantsList;
+
+            if (isset($request->get('param')["idCategory"]) && count($request->get('param')["idCategory"]) != 0) {
+                $data = $data->whereIn('participants.id_category', $request->get('param')["idCategory"]);
+            }
+
+            if (isset($request->get('param')["idParticipant"]) && count($request->get('param')["idParticipant"]) != 0) {
+                $data = $data->whereIn('participants.id', $request->get('param')["idParticipant"]);
+            }
+
+            if (isset($request->get('param')["idDistrict"]) && count($request->get('param')["idDistrict"]) != 0) {
+                $data = $data->whereIn('participants.id_district', $request->get('param')["idDistrict"]);
+            }
+
+            if (isset($request->get('param')["idRegency"]) && count($request->get('param')["idRegency"]) != 0) {
+                $data = $data->whereIn('participants.id_regency', $request->get('param')["idRegency"]);
+            }
+
+            $datas = $data->get();
+
+            return Datatables::of($datas)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editParticipant">Edit</a>';
+
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteParticipant">Delete</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
 
         if ($request->ajax()) {
-            return Datatables::of($participants)
+            $datas = $participantsList->get();
+            return Datatables::of($datas)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
 
@@ -85,7 +120,14 @@ class ParticipantController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-        return view('participant/index',compact('participants', 'user'));
+
+        return view('participant/index', array(
+            'user' => $user,
+            'districts'=>$districts,
+            'participants'=> $participants,
+            'categories' => $categories,
+            'regencies' => $regencies
+        ));
     }
 
     public function store(Request $request)
@@ -398,8 +440,6 @@ class ParticipantController extends Controller
             $potentialColor = "btn-success";
         }
 
-        Log::info($potentialColor);
-
         $monthlyCollections = DB::table('collections')
             ->where('collect_date', '>=',$request->startDates)
             ->where('collect_date', '<=',$request->endDates)
@@ -443,9 +483,16 @@ class ParticipantController extends Controller
             ->where('id_participant','=',$request->idParticipant)
             ->select(
                 DB::raw('COUNT(id_participant) totalPengangkutan'),
-                DB::raw('ROUND(SUM(quantity),1) qty')
+                DB::raw('NVL(ROUND(SUM(quantity),1),0) qty')
             )
             ->first();
+
+
+        if($totalAndAverage->qty != 0 and $totalAndAverage->totalPengangkutan != 0) {
+            $average = round($totalAndAverage->qty / $totalAndAverage->totalPengangkutan,1);
+        } else {
+            $average = 0;
+        }
 
         $data = [
             'dataLine' => $dataLine,
@@ -454,15 +501,15 @@ class ParticipantController extends Controller
             'potentialColor' =>$potentialColor,
             'continuityColor' =>$continuityColor,
             'totalUbc' =>$totalAndAverage->qty,
-            'average' => round($totalAndAverage->qty / $totalAndAverage->totalPengangkutan,1)
+            'average' => $average
         ];
 
         return response()->json(['data'=>$data]);
 
     }
-    function downloadParticipants()
+    function downloadParticipants(Request $request)
     {
-        return Excel::download(new ParticipantExport, 'participants.xlsx');
+        return Excel::download(new ParticipantExport($request), 'participants.xlsx');
     }
 
 }

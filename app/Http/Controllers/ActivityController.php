@@ -21,6 +21,11 @@ class ActivityController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        $activity_programs = DB::table('activity_programs')->orderBy('activity_program_name','ASC')->get();
+        $categories = DB::table('categories')->orderBy('category_name','ASC')->get();
+        $districts = DB::table('districts')->orderBy('district_name','ASC')->get();
+        $regencies = DB::table('regencies')->orderBy('regency_name','ASC')->get();
+        $programs = DB::table('activity_programs')->orderBy('activity_program_name', 'ASC')->get();
 
         $activities = DB::table('activities')
             ->leftJoin('activity_programs', function ($join) {
@@ -42,16 +47,38 @@ class ActivityController extends Controller
                 'activities.activity',
                 'activities.location',
                 'activities.participant_number',
-            )
-            ->get();
+            );
 
-        $activity_programs = DB::table('activity_programs')->orderBy('activity_program_name','ASC')->get();
-        $categories = DB::table('categories')->orderBy('category_name','ASC')->get();
-        $districts = DB::table('districts')->orderBy('district_name','ASC')->get();
-        $regencies = DB::table('regencies')->orderBy('regency_name','ASC')->get();
 
-        if ($request->ajax()) {
-            return Datatables::of($activities)
+        if(!empty($request->get('param'))) {
+
+            $data = $activities;
+
+            if (isset($request->get('param')["idCategory"]) && count($request->get('param')["idCategory"]) != 0) {
+                $data = $data->whereIn('activities.id_category', $request->get('param')["idCategory"]);
+            }
+
+            if (isset($request->get('param')["idProgram"]) && count($request->get('param')["idProgram"]) != 0) {
+                $data = $data->whereIn('activities.id_program_activity', $request->get('param')["idProgram"]);
+            }
+
+            if (isset($request->get('param')["idDistrict"]) && count($request->get('param')["idDistrict"]) != 0) {
+                $data = $data->whereIn('activities.id_district', $request->get('param')["idDistrict"]);
+            }
+
+            if (isset($request->get('param')["idRegency"]) && count($request->get('param')["idRegency"]) != 0) {
+                $data = $data->whereIn('activities.id_regency', $request->get('param')["idRegency"]);
+            }
+
+            if (isset($request->get('param')["startDates"]) && isset($request->get('param')["endDates"])) {
+                $data = $data->whereBetween('activities.activity_date', [$request->get('param')["startDates"],$request->get('param')["endDates"]]);
+            }
+
+            $datas = $data->get();
+
+
+
+            return Datatables::of($datas)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
 
@@ -64,7 +91,23 @@ class ActivityController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('activity/index',compact('activities', 'user','activity_programs','categories','districts','regencies'));
+
+        if ($request->ajax()) {
+            $data = $activities->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editActivity">Edit</a>';
+
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteActivity">Delete</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('activity/index',compact('activities', 'user','activity_programs','categories','districts','regencies','programs'));
 
     }
     public function store(Request $request)
@@ -114,8 +157,8 @@ class ActivityController extends Controller
         return response()->json(['success'=>'Import successfully.']);
     }
 
-    function downloadActivities()
+    function downloadActivities(Request $request)
     {
-        return Excel::download(new ActivityExport, 'activities.xlsx');
+        return Excel::download(new ActivityExport($request), 'activities.xlsx');
     }
 }

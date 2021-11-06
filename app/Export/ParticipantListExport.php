@@ -16,18 +16,25 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 
-class ParticipantExport implements FromQuery, WithHeadings, WithMapping,WithColumnFormatting,ShouldAutoSize,WithStyles
+class ParticipantListExport implements FromQuery, WithHeadings, WithMapping,WithColumnFormatting,ShouldAutoSize,WithStyles
 {
+
+    public $status;
+    public $idParticipant;
     public $idCategory;
     public $idDistrict;
-    public $idParticipant;
     public $idRegency;
+    public $startDates;
+    public $endDates;
 
     public function __construct($request) {
-        $this->idCategory = $request->idCategory;
-        $this->idDistrict = $request->idDistrict;
+        $this->status = $request->status;
         $this->idParticipant = $request->idParticipant;
+        $this->idDistrict = $request->idDistrict;
         $this->idRegency = $request->idRegency;
+        $this->idCategory = $request->idCategory;
+        $this->startDates = $request->startDates;
+        $this->endDates = $request->endDates;
     }
 
     public function query()
@@ -35,9 +42,6 @@ class ParticipantExport implements FromQuery, WithHeadings, WithMapping,WithColu
         $participants = DB::table('participants')
             ->leftJoin('categories', function ($join) {
                 $join->on('participants.id_category', '=', 'categories.id');
-            })
-            ->leftJoin('transport_intensities', function ($join) {
-                $join->on('participants.id_transport_intensity', '=', 'transport_intensities.id');
             })
             ->leftJoin('areas', function ($join) {
                 $join->on('participants.id_area', '=', 'areas.id');
@@ -48,66 +52,52 @@ class ParticipantExport implements FromQuery, WithHeadings, WithMapping,WithColu
             ->leftJoin('regencies', function ($join) {
                 $join->on('participants.id_regency', '=', 'regencies.id');
             })
-            ->leftJoin('box_resources', function ($join) {
-                $join->on('participants.id_box_resource', '=', 'box_resources.id');
-            })
-            ->leftJoin('purchase_prices', function ($join) {
-                $join->on('participants.id_purchase_price', '=', 'purchase_prices.id');
-            })
-            ->leftJoin('payment_methods', function ($join) {
-                $join->on('participants.id_payment_method', '=', 'payment_methods.id');
-            })
-            ->leftJoin('banks', function ($join) {
-                $join->on('participants.id_bank', '=', 'banks.id');
+            ->leftJoin('collections', function ($join) {
+                $join->on('participants.id', '=', 'collections.id_participant');
             })
             ->select(
                 'participants.id',
                 'participants.participant_name',
+                DB::raw('DATE_FORMAT(participants.joined_date, "%d/%m/%Y") joined_date'),
                 'categories.category_name',
-                'participants.address',
-                'participants.latitude',
-                'participants.langitude',
-                'participants.contact_name_1',
-                'participants.contact_position_1',
-                'participants.contact_phone_1',
-                'participants.contact_email_1',
-                'participants.contact_name_2',
-                'participants.contact_position_2',
-                'participants.contact_phone_2',
-                'participants.contact_email_2',
-                'participants.service_area',
-                'areas.area_name',
-                'districts.district_name',
                 'regencies.regency_name',
-                'participants.joined_date',
-                'participants.id_box_resource',
-                'participants.resource_description',
-                'purchase_prices.price',
-                'transport_intensities.intensity',
-                'payment_methods.payment_method',
-                'banks.bank_name',
-                'participants.bank_branch',
-                'participants.bank_account_number',
-                'participants.bank_account_holder_name',
+                DB::raw('ROUND(SUM(collections.quantity),1) qty'),
+                DB::raw('ROUND(AVG(collections.quantity),1) avg'),
+                DB::raw('DATE_FORMAT(MAX(collect_date), "%d/%m/%Y") lastSubmit'),
+                DB::raw('CASE WHEN MAX(collect_date) >= CURDATE() - INTERVAL 3 MONTH THEN "ACTIVE" ELSE "INACTIVE" END status'),
             )
-            ->orderBy('participants.id','DESC');
+            ->groupBy('id','participant_name','joined_date','category_name','regency_name')
+            ->orderBy('participant_name','ASC');
 
-        if (isset($this->idCategory) && count($this->idCategory) != 0) {
-            $participants = $participants->whereIn('participants.id_category', $this->idCategory);
+        if (isset($request->idCategory) && count($request->idCategory) != 0) {
+            $participants = $participants->whereIn('categories.id', $request->idCategory);
         }
 
-        if (isset($this->idParticipant) && count($this->idParticipant) != 0) {
-            $participants = $participants->whereIn('participants.id', $this->idParticipant);
+        if (isset($request->idArea) && count($request->idArea) != 0) {
+            $participants = $participants->whereIn('areas.id', $request->idArea);
         }
 
-        if (isset($this->idDistrict) && count($this->idDistrict) != 0) {
-            $participants = $participants->whereIn('participants.id_district', $this->idDistrict);
+        if (isset($request->idDistrict) && count($request->idDistrict) != 0) {
+            $participants = $participants->whereIn('districts.id', $request->idDistrict);
         }
 
-        if (isset($this->idRegency) && count($this->idRegency) != 0) {
-            $participants = $participants->whereIn('participants.id_regency', $this->idRegency);
+        if (isset($request->idRegency) && count($request->idRegency) != 0) {
+            $participants = $participants->whereIn('regencies.id', $request->idRegency);
         }
 
+        if (isset($request->idStatus) && $request->idStatus > 0) {
+            if($request->idStatus == 1) {
+                $participants = $participants->having('status', '=',"ACTIVE");
+            } else {
+                $participants = $participants->having('status', '=','INACTIVE');
+            }
+        }
+
+        if($request->startDates == '2021-01-01' && $request->endDates == date("Y-m-d")) {
+
+        } else {
+            $participants = $participants->whereBetween('collections.collect_date', [$request->startDates,$request->endDates]);
+        }
 
         return $participants;
 
@@ -115,7 +105,6 @@ class ParticipantExport implements FromQuery, WithHeadings, WithMapping,WithColu
 
     public function map($participants): array
     {
-        $boxResourceMap = $this->getBoxResourceMap();
         return [
             $participants->id,
             $participants->participant_name,
@@ -174,15 +163,61 @@ class ParticipantExport implements FromQuery, WithHeadings, WithMapping,WithColu
 
     }
 
-    function getBoxResourceMap() {
-        $boxResources =  DB::table('box_resources')->pluck('id','resource_name');
-        $boxResourceMap = [];
+    function getPotentialData($date1, $date2){
+        $potentialMap = [];
 
-        foreach ($boxResources as $id => $resource_name) {
-            $boxResourceMap[trim(strtolower($resource_name))] = $id;
+        $potentialTable = DB::table('participants')
+            ->leftJoin('categories', function ($join) {
+                $join->on('participants.id_category', '=', 'categories.id');
+            })
+            ->leftJoin('potentials', function ($join) {
+                $join->on('participants.id_category', '=', 'categories.id');
+            })
+            ->select(
+                DB::raw("participants.id potential_par_id"),
+                DB::raw("potentials.potential_low potential_low"),
+                DB::raw("potentials.potential_medium potential_medium"),
+                DB::raw("potentials.potential_high potential_high"),
+            );
+
+
+        $dataPengangkutan = DB::table('participants')
+            ->leftJoin('collections', function ($join) {
+                $join->on('participants.id', '=', 'collections.id_participant');
+            })
+            ->leftJoinSub($potentialTable, 'potential', function ($join) {
+                $join->on('participants.id', '=', 'potential.potential_par_id');
+            })
+            ->select(
+                'participants.id as pengangkutan_par_id',
+                DB::raw("COUNT(DISTINCT(MONTH(collections.collect_date))) jumlah_pengangkutan"),
+                DB::raw("sum(collections.quantity) sum"),
+                DB::raw("(TIMESTAMPDIFF(MONTH, '$date1', '$date2') +1) diff"),
+                DB::raw("NVL(sum(collections.quantity) / (TIMESTAMPDIFF(MONTH, '$date1', '$date2') +1),0) as rata_rata"),
+                DB::raw("potential.potential_low potential_low"),
+                DB::raw("potential.potential_medium potential_medium"),
+                DB::raw("potential.potential_high potential_high"),
+            )
+            ->groupBy('pengangkutan_par_id');
+
+        $potential = DB::table('participants')
+            ->joinSub($dataPengangkutan, 'pengangkutan', function ($join) {
+                $join->on('participants.id', '=', 'pengangkutan.pengangkutan_par_id');
+            })
+            ->select(
+                DB::raw("participants.id potential_par_id"),
+                DB::raw("CASE WHEN rata_rata <= potential_low THEN 'LOW' WHEN rata_rata > potential_low AND rata_rata <= potential_high THEN 'MEDIUM' WHEN rata_rata > potential_high THEN 'HIGH' ELSE 'NOT_SET' END as potential_ind"),
+            )
+            ->orderBy('participants.id','ASC')->get();
+
+
+        foreach ($potential as $pt ) {
+            $potentialMap[$pt->potential_par_id] = $pt->potential_ind;
         }
-        return $boxResourceMap;
+
+        return $potentialMap;
     }
+
 
     public function columnFormats(): array
     {

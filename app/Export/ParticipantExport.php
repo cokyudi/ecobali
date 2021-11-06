@@ -18,6 +18,17 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 class ParticipantExport implements FromQuery, WithHeadings, WithMapping,WithColumnFormatting,ShouldAutoSize,WithStyles
 {
+    public $idCategory;
+    public $idDistrict;
+    public $idParticipant;
+    public $idRegency;
+
+    public function __construct($request) {
+        $this->idCategory = $request->idCategory;
+        $this->idDistrict = $request->idDistrict;
+        $this->idParticipant = $request->idParticipant;
+        $this->idRegency = $request->idRegency;
+    }
 
     public function query()
     {
@@ -80,75 +91,27 @@ class ParticipantExport implements FromQuery, WithHeadings, WithMapping,WithColu
                 'participants.bank_account_holder_name',
             )
             ->orderBy('participants.id','DESC');
+
+        if (isset($this->idCategory) && count($this->idCategory) != 0) {
+            $participants = $participants->whereIn('participants.id_category', $this->idCategory);
+        }
+
+        if (isset($this->idParticipant) && count($this->idParticipant) != 0) {
+            $participants = $participants->whereIn('participants.id', $this->idParticipant);
+        }
+
+        if (isset($this->idDistrict) && count($this->idDistrict) != 0) {
+            $participants = $participants->whereIn('participants.id_district', $this->idDistrict);
+        }
+
+        if (isset($this->idRegency) && count($this->idRegency) != 0) {
+            $participants = $participants->whereIn('participants.id_regency', $this->idRegency);
+        }
+
+
         return $participants;
 
     }
-    /*
-    public function collection()
-    {
-        $participants = DB::table('participants')
-            ->leftJoin('categories', function ($join) {
-                $join->on('participants.id_category', '=', 'categories.id');
-            })
-            ->leftJoin('transport_intensities', function ($join) {
-                $join->on('participants.id_transport_intensity', '=', 'transport_intensities.id');
-            })
-            ->leftJoin('areas', function ($join) {
-                $join->on('participants.id_area', '=', 'areas.id');
-            })
-            ->leftJoin('districts', function ($join) {
-                $join->on('participants.id_district', '=', 'districts.id');
-            })
-            ->leftJoin('regencies', function ($join) {
-                $join->on('participants.id_regency', '=', 'regencies.id');
-            })
-            ->leftJoin('box_resources', function ($join) {
-                $join->on('participants.id_box_resource', '=', 'box_resources.id');
-            })
-            ->leftJoin('purchase_prices', function ($join) {
-                $join->on('participants.id_purchase_price', '=', 'purchase_prices.id');
-            })
-            ->leftJoin('payment_methods', function ($join) {
-                $join->on('participants.id_payment_method', '=', 'payment_methods.id');
-            })
-            ->leftJoin('banks', function ($join) {
-                $join->on('participants.id_bank', '=', 'banks.id');
-            })
-            ->select(
-                'participants.id',
-                'participants.participant_name',
-                'categories.category_name',
-                'participants.address',
-                'participants.latitude',
-                'participants.langitude',
-                'participants.contact_name_1',
-                'participants.contact_position_1',
-                'participants.contact_phone_1',
-                'participants.contact_email_1',
-                'participants.contact_name_2',
-                'participants.contact_position_2',
-                'participants.contact_phone_2',
-                'participants.contact_email_2',
-                'participants.service_area',
-                'areas.area_name',
-                'districts.district_name',
-                'regencies.regency_name',
-                'participants.joined_date',
-                'participants.id_box_resource',
-                'participants.resource_description',
-                'purchase_prices.price',
-                'transport_intensities.intensity',
-                'payment_methods.payment_method',
-                'banks.bank_name',
-                'participants.bank_branch',
-                'participants.bank_account_number',
-                'participants.bank_account_holder_name',
-            )
-            ->where('participants.id','=','1')
-            ->get();
-        return $participants;
-    }
-    */
 
     public function map($participants): array
     {
@@ -185,10 +148,6 @@ class ParticipantExport implements FromQuery, WithHeadings, WithMapping,WithColu
         ];
     }
 
-//    public function headings() :array
-//    {
-//        return ["Participant ID", "Name","Join Date"];
-//    }
 
     public function headings() :array
     {

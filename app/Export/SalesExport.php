@@ -19,6 +19,15 @@ use Carbon\Carbon;
 
 class SalesExport implements FromQuery, WithHeadings, WithMapping,WithColumnFormatting,ShouldAutoSize,WithStyles
 {
+    public $startDates;
+    public $endDates;
+    public $id_papermills;
+
+    public function __construct($request){
+        $this->startDates = $request->startDates;
+        $this->endDates = $request->endDates;
+        $this->id_papermills = $request->id_papermills;
+    }
 
     public function query()
     {
@@ -32,6 +41,7 @@ class SalesExport implements FromQuery, WithHeadings, WithMapping,WithColumnForm
                 'sales.delivered_to_papermill',
                 'sales.weighing_scale_gap_eco',
                 'sales.weighing_scale_gap_eco_percent',
+                'papermills.id AS id_papermill',
                 'papermills.papermill_name',
                 'sales.received_at_papermill',
                 'sales.weighing_scale_gap_papermill',
@@ -43,6 +53,15 @@ class SalesExport implements FromQuery, WithHeadings, WithMapping,WithColumnForm
                 'sales.total_weight_accepted',
             )
             ->orderBy('sales.sale_date','DESC');
+
+        if (isset($this->startDates) && isset($this->endDates)) {
+            $sales = $sales->whereBetween('sale_date', [$this->startDates,$this->endDates]);
+        }
+
+        if (isset($this->id_papermills) && count($this->id_papermills) != 0) {
+            $sales = $sales->whereIn('id_papermill', $this->id_papermills);
+        }
+
         return $sales;
 
     }

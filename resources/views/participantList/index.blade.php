@@ -36,6 +36,8 @@
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
+                                <button type="button" class="btn btn-info btn-min-width mr-1 mb-1" href="javascript:void(0)" id="downloadParticipantBtn">Download</button>
+
                                 <div class="table-responsive">
                                     <table id="participantTable" class="table table-striped table-bordered zero-configuration pr-1">
                                         <thead>
@@ -45,6 +47,7 @@
                                             <th>Regency</th>
                                             <th>Category</th>
                                             <th>Status</th>
+                                            <th>Total KBM (Kg)</th>
                                             <th>Average (Kg)</th>
                                             <th>Last Submit</th>
                                             <th>Joined Date</th>
@@ -60,6 +63,7 @@
                                             <th>Regency</th>
                                             <th>Category</th>
                                             <th>Status</th>
+                                            <th>Total KBM (Kg)</th>
                                             <th>Average (Kg)</th>
                                             <th>Last Submit</th>
                                             <th>Joined Date</th>
@@ -86,7 +90,7 @@
 	<hr>
 
         <form id="filterForm" name="filterForm">
-            <h5 class="mt-1 mb-1 text-bold-500">Status</h5>
+            <h6 class="mt-1 mb-1 text-bold-500">Status</h6>
             <div class="form-group ">
                 <select id="id_status" name="id_status" class="form-control">
                     <option value="0" disabled selected>Select Status</option>
@@ -95,64 +99,60 @@
 
                 </select>
             </div>
-            <hr>
-            <h5 class="mt-1 mb-1 text-bold-500">Area</h5>
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Participant</h6>
             <div class="form-group ">
-                <select id="id_area" name="id_area[]" multiple="multiple" class="select2 form-control">
-                    @foreach($areas as $area)
-                        <option value="{{$area->id}}">{{$area->area_name}}</option>
+                <select id="id_participant_filter" name="id_participant_filter[]" multiple="multiple" class="select2 form-control " data-placeholder="Select Participant">
+                    @foreach($participantList as $participant)
+                        <option value="{{$participant->id}}">{{$participant->participant_name}}</option>
                     @endforeach
-
                 </select>
             </div>
-            <hr>
 
-            <h5 class="mt-1 mb-1 text-bold-500">District</h5>
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">District</h6>
             <div class="form-group ">
-                <select id="id_district" name="id_district[]" multiple="multiple" class="select2 form-control">
+                <select id="id_district_filter" name="id_district_filter[]" multiple="multiple" class="select2 form-control" data-placeholder="Select District">
                     @foreach($districts as $district)
                         <option value="{{$district->id}}">{{$district->district_name}}</option>
                     @endforeach
 
                 </select>
             </div>
-            <hr>
 
-            <h5 class="mt-1 mb-1 text-bold-500">Regency</h5>
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Regency</h6>
             <div class="form-group ">
-                <select class="select2 form-control" id="id_regency" name="id_regency[]" multiple="multiple">
-                    @foreach($regencies as $regency)
-                        <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
-                    @endforeach
-                </select>
-
+                <div class="input-group">
+                    <select class="select2 form-control" id="id_regency_filter" name="id_regency_filter[]" multiple="multiple" data-placeholder="Select Regency">
+                        @foreach($regencies as $regency)
+                            <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
-            <hr>
 
-            <h5 class="mt-1 mb-1 text-bold-500">Category</h5>
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Category</h6>
             <div class="form-group ">
-                <select id="id_category" name="id_category[]" multiple="multiple" class="select2 form-control">
+                <select id="id_category_filter" name="id_category_filter[]" multiple="multiple" class="select2 form-control" data-placeholder="Select Category">
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->category_name}}</option>
                     @endforeach
 
                 </select>
             </div>
-{{--            <hr>--}}
 
-{{--            <h5 class="mt-1 mb-1 text-bold-500">Date Range Options</h5>--}}
-{{--            <div class="form-group">--}}
-{{--                <div class="form-group">--}}
-{{--                    <div class='input-group'>--}}
-{{--                        <input type="text" id="daterange" name="daterange" class = "form-control" value="" />--}}
-{{--                        <div class="input-group-append">--}}
-{{--                            <span class="input-group-text">--}}
-{{--                                <span class="la la-calendar"></span>--}}
-{{--                            </span>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Date Range Submit</h6>
+            <div class="form-group">
+                <div class="form-group " >
+                    <div class="input-group">
+                        <input type="text" id="daterange" name="daterange" class = "form-control" value="" />
+                        <div class="input-group-append" id="icon-calendar">
+                            <span class="input-group-text">
+                                <span class="la la-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-actions text-right">
                 <button id='reset' type="button" class="btn btn-warning mr-1">
                     <i class="ft-x"></i> Reset
@@ -214,7 +214,8 @@
                     daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
                     monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                     firstDay: 1
-                }
+                },
+                drops: 'up',
             },
             function(start, end) {
 
@@ -226,8 +227,8 @@
 
       $('#reset').click(function() {
 
-          // $('#daterange').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
-          // $('#daterange').data('daterangepicker').setEndDate(moment());
+          $('#daterange').data('daterangepicker').setStartDate(moment("01/01/2021","DD/MM/YYYY"));
+          $('#daterange').data('daterangepicker').setEndDate(moment());
 
           $('#id_status').val(0).trigger("change");
           $('#id_category').val(0).trigger("change");
@@ -246,8 +247,8 @@
     });
 
     function fetchData(){
-        // var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
-        // var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
+        var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
+        var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
         var idCategory = $('#id_category').val();
         var idDistrict = $('#id_district').val();
         var idArea = $('#id_area').val();
@@ -255,8 +256,8 @@
         var idStatus = $('#id_status').val();
 
         var params = {
-            // startDates: startDates,
-            // endDates: endDates,
+            startDates: startDates,
+            endDates: endDates,
             idCategory: idCategory,
             idDistrict: idDistrict,
             idRegency: idRegency,
@@ -278,6 +279,7 @@
                 {data: 'regency_name', name: 'regency_name'},
                 {data: 'category_name', name: 'category_name'},
                 {data: 'status', name: 'status'},
+                {data: 'qty', name: 'qty'},
                 {data: 'avg', name: 'avg'},
                 {data: 'lastSubmit', name: 'lastSubmit'},
                 {data: 'joined_date', name: 'joined_date'},

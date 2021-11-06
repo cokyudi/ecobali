@@ -7,6 +7,7 @@ use App\Models\Collection;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 use DateTime;
@@ -21,16 +22,12 @@ class CollectionController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
+        $categories = DB::table('categories')->orderBy('category_name', 'asc')->get();
+        $regencies = DB::table('regencies')->orderBy('regency_name', 'asc')->get();
+        $districts = DB::table('districts')->orderBy('district_name', 'asc')->get();
+        $participants = DB::table('participants')->orderBy('participant_name', 'asc')->get();
 
-        $participants = DB::table('participants')
-            ->select(
-                'participants.id',
-                'participants.participant_name',
-            )
-            ->get();
-
-
-        $categories = DB::table('categories')
+        $categoriesList = DB::table('categories')
             ->leftJoin('category_details', function ($join) {
                 $join->on('categories.id', '=', 'category_details.category_id')
                     ->where('category_details.year', '=', (new DateTime)->format("Y"));
@@ -40,18 +37,23 @@ class CollectionController extends Controller
                 );
 
         $subParticipants = DB::table('participants')
-            ->joinSub($categories, 'categories', function ($join) {
+            ->joinSub($categoriesList, 'categories', function ($join) {
                 $join->on('participants.id_category', '=', 'categories.id');
             })
             ->leftJoin('regencies', function ($join) {
                 $join->on('participants.id_regency', '=', 'regencies.id');
             })
+            ->leftJoin('districts', function ($join) {
+                $join->on('participants.id_district', '=', 'districts.id');
+            })
             ->select(
                 'participants.id as participant_id',
                 'participants.participant_name as participant_name',
+                'categories.id as id_category',
                 'categories.category_name as category_name',
                 'regencies.id as regency_id',
                 'regencies.regency_name as regency_name',
+                'districts.id as district_id'
             );
 
 
@@ -64,14 +66,64 @@ class CollectionController extends Controller
                 'collections.id_participant',
                 'collections.quantity',
                 'collections.collect_date',
+                'participants.participant_id as id_participant',
                 'participants.participant_name',
+                'participants.id_category as id_category',
                 'participants.category_name',
+                'participants.regency_id as id_regency',
                 'participants.regency_name',
-            )
-            ->get();
+                'participants.district_id as id_district',
+            );
+
+
+        if(!empty($request->get('param'))) {
+            $data = $collections;
+
+            if (isset($request->get('param')["idCategory"]) && count($request->get('param')["idCategory"]) != 0) {
+                $data = $data->whereIn('id_category', $request->get('param')["idCategory"]);
+            }
+
+            if (isset($request->get('param')["idParticipant"]) && count($request->get('param')["idParticipant"]) != 0) {
+                $data = $data->whereIn('id_participant', $request->get('param')["idParticipant"]);
+            }
+
+            if (isset($request->get('param')["idDistrict"]) && count($request->get('param')["idDistrict"]) != 0) {
+                $data = $data->whereIn('district_id', $request->get('param')["idDistrict"]);
+            }
+
+            if (isset($request->get('param')["idRegency"]) && count($request->get('param')["idRegency"]) != 0) {
+                $data = $data->whereIn('regency_id', $request->get('param')["idRegency"]);
+            }
+
+            if (isset($request->get('param')["startDates"]) && isset($request->get('param')["endDates"])) {
+                $data = $data->whereBetween('collect_date', [$request->get('param')["startDates"],$request->get('param')["endDates"]]);
+            }
+
+            $datas = $data->get();
+
+            return Datatables::of($datas)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editCollection">Edit</a>';
+
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteCollection">Delete</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->editColumn('collect_date', function ($collection)
+                {
+                    return [
+                        'display' => \Carbon\Carbon::parse($collection->collect_date)->format('d/m/Y'),
+                        'timestamp' => $collection->collect_date
+                    ];
+                })
+                ->make(true);
+        }
 
         if ($request->ajax()) {
-            $data = $collections;
+            $data = $collections->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -92,7 +144,14 @@ class CollectionController extends Controller
                 })
                 ->make(true);
         }
-        return view('collection/index',compact('collections','user','participants'));
+
+        return view('collection/index', array(
+            'user' => $user,
+            'districts'=>$districts,
+            'participants'=> $participants,
+            'categories' => $categories,
+            'regencies' => $regencies
+        ));
     }
 
     public function store(Request $request)
@@ -139,8 +198,10 @@ class CollectionController extends Controller
 
     }
 
-    function downloadCollections()
+    public static function downloadCollections(Request $request)
     {
-        return Excel::download(new CollectionExport, 'collections.xlsx');
+        return Excel::download(new CollectionExport($request), 'collections.xlsx');
     }
+
+
 }

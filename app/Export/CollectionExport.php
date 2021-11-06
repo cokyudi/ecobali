@@ -22,10 +22,24 @@ class CollectionExport implements FromQuery, WithHeadings, WithMapping,WithColum
 {
     public $categoryMap;
     public $categoryMapYear;
+    public $startDates;
+    public $endDates;
+    public $idCategory;
+    public $idDistrict;
+    public $idParticipant;
+    public $idRegency;
 
-    public function __construct(){
+    public function __construct($request){
         $this->categoryMap = $this->getTargetMap();
         $this->categoryMapYear = $this->getTargetMapYearly();
+
+        $this->startDates = $request->startDates;
+        $this->endDates = $request->endDates;
+        $this->idCategory = $request->idCategory;
+        $this->idDistrict = $request->idDistrict;
+        $this->idParticipant = $request->idParticipant;
+        $this->idRegency = $request->idRegency;
+
     }
 
     public function query()
@@ -46,21 +60,45 @@ class CollectionExport implements FromQuery, WithHeadings, WithMapping,WithColum
             ->select(
                 'collections.collect_date',
                 DB::raw('FLOOR((DAYOFMONTH(collections.collect_date) - 1) / 7) + 1 week_of_month'),
+                'participants.id as id_participant',
                 'participants.participant_name',
-                'categories.id',
+                'categories.id as id_category',
                 'categories.category_name',
+                'regencies.id as regency_id',
                 'regencies.regency_name',
+                'districts.id as district_id',
                 'districts.district_name',
                 'collections.quantity',
             )
             ->orderBy('collections.id','ASC');
+
+
+        if (isset($this->idCategory) && count($this->idCategory) != 0) {
+            $collections = $collections->whereIn('id_category', $this->idCategory);
+        }
+
+        if (isset($this->idParticipant) && count($this->idParticipant) != 0) {
+            $collections = $collections->whereIn('id_participant', $this->idParticipant);
+        }
+
+        if (isset($this->idDistrict) && count($this->idDistrict) != 0) {
+            $collections = $collections->whereIn('district_id', $this->idDistrict);
+        }
+
+        if (isset($this->idRegency) && count($this->idRegency) != 0) {
+            $collections = $collections->whereIn('regency_id', $this->idRegency);
+        }
+
+        if (isset($this->startDates) && isset($this->endDates)) {
+            $collections = $collections->whereBetween('collect_date', [$this->startDates,$this->endDates]);
+        }
+
         return $collections;
 
     }
 
     public function map($collections): array
     {
-
         return [
             Date::stringToExcel($collections->collect_date),
             $collections->week_of_month,
@@ -74,8 +112,8 @@ class CollectionExport implements FromQuery, WithHeadings, WithMapping,WithColum
             $collections->regency_name,
             $collections->district_name,
             $collections->quantity,
-            $this->getMonthlyTargetForAllCategory(date('m', strtotime($collections->collect_date)),date('Y', strtotime($collections->collect_date)),$collections->id,$this->categoryMap),
-            $this->getYearlyTargetForAllCategory(date('Y', strtotime($collections->collect_date)),$collections->id,$this->categoryMapYear),
+            $this->getMonthlyTargetForAllCategory(date('m', strtotime($collections->collect_date)),date('Y', strtotime($collections->collect_date)),$collections->id_category,$this->categoryMap),
+            $this->getYearlyTargetForAllCategory(date('Y', strtotime($collections->collect_date)),$collections->id_category,$this->categoryMapYear),
 
         ];
     }

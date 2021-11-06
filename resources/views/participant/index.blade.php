@@ -1,6 +1,9 @@
 @extends('template', ['user'=>$user])
 
 @section('participants','active')
+@push('css_extend')
+    <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/selects/select2.min.css')}}">
+@endpush
 
 @section('content')
 <?php use App\Http\Controllers\ParticipantController;?>
@@ -46,7 +49,9 @@
                                     <div class="card-body card-dashboard">
                                         <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewParticipant">Add New Participant</button>
 {{--                                        <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="importParticipant">Import Participant</button>--}}
-                                        <a class="btn btn-info btn-min-width mr-1 mb-1 white" href="{{ url('downloadParticipants') }}">Download</a>
+{{--                                        <a class="btn btn-info btn-min-width mr-1 mb-1 white" href="{{ url('downloadParticipants') }}">Download</a>--}}
+                                        <button type="button" class="btn btn-info btn-min-width mr-1 mb-1" href="javascript:void(0)" id="downloadParticipantBtn">Download</button>
+
                                         @include('participant.modalImport')
                                         <div class="table-responsive">
                                             <table id="participantTable" class="table table-striped table-bordered zero-configuration" width="100%">
@@ -88,10 +93,142 @@
         </div>
     </div>
         <!-- END: Content -->
+<!-- BEGIN: Customizer-->
+<div id="customizer-filter" class="customizer border-left-blue-grey border-left-lighten-4 "><a class="customizer-close" href="#"><i class="ft-x font-medium-2"></i></a><a class="customizer-toggle bg-info box-shadow-3" href="#"><i class="ft-filter font-medium-3 white"></i></a><div class="customizer-content p-2">
+        <h5 class="text-uppercase mb-0">Data Filter Customizer</h5>
+        <hr>
+
+        <form id="filterForm" name="filterForm">
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Participant</h6>
+            <div class="form-group ">
+                <select id="id_participant_filter" name="id_participant_filter[]" multiple="multiple" class="select2 form-control " data-placeholder="Select Participant">
+                    @foreach($participants as $participant)
+                        <option value="{{$participant->id}}">{{$participant->participant_name}}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Category</h6>
+            <div class="form-group ">
+                <select id="id_category_filter" name="id_category_filter[]" multiple="multiple" class="select2 form-control" data-placeholder="Select Category">
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}">{{$category->category_name}}</option>
+                    @endforeach
+
+                </select>
+            </div>
+
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">District</h6>
+            <div class="form-group ">
+                <select id="id_district_filter" name="id_district_filter[]" multiple="multiple" class="select2 form-control" data-placeholder="Select District">
+                    @foreach($districts as $district)
+                        <option value="{{$district->id}}">{{$district->district_name}}</option>
+                    @endforeach
+
+                </select>
+            </div>
+
+            <h6 class="mt-1 mb-1 text-bold-500 font-small-3">Regency</h6>
+            <div class="form-group ">
+                <div class="input-group">
+                    <select class="select2 form-control" id="id_regency_filter" name="id_regency_filter[]" multiple="multiple" data-placeholder="Select Regency">
+                        @foreach($regencies as $regency)
+                            <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-actions text-right">
+                <button id='backBtn' type="button" class="btn btn-warning mr-1">
+                    <i class="ft-x"></i> Reset
+                </button>
+                <button id="filterBtn" value="create" type="button" class="btn btn-success">
+                    <i class="la la-check-square-o"></i> Filter
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<!-- End: Customizer-->
         @endsection
 
 @push('ajax_crud')
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <script src="{{asset('vendors/js/forms/select/select2.full.min.js')}}"></script>
+    <script src="{{asset('js/scripts/forms/select/form-select2.min.js')}}"></script>
 <script type="text/javascript">
+
+    $(document).ready(function() {
+
+        $('#backBtn').click(function() {
+
+            $('#id_category_filter').val(null).trigger('change');
+            $('#id_district_filter').val(null).trigger('change');
+            $('#id_participant_filter').val(null).trigger('change');
+            $('#id_regency_filter').val(null).trigger('change');
+
+            getParticipantByFilter();
+
+        });
+
+
+        $('#filterBtn').click(function() {
+            getParticipantByFilter();
+        });
+    });
+
+    function getParticipantByFilter() {
+        var idCategory = $('#id_category_filter').val();
+        var idDistrict = $('#id_district_filter').val();
+        var idParticipant = $('#id_participant_filter').val();
+        var idRegency = $('#id_regency_filter').val();
+
+        var params = {
+            idCategory: idCategory,
+            idDistrict: idDistrict,
+            idParticipant: idParticipant,
+            idRegency: idRegency,
+        }
+
+        var table = $('#participantTable').DataTable({
+            bDestroy: true,
+            processing: true,
+            serverSide: true,
+            order: [[5, "desc"]],
+            ajax: {
+                url: "{{ route('participants.index') }}",
+                data: function (d) {
+                    d.param = params;
+                }
+            },
+            columns: [
+                {data: null},
+                {data: 'participant_name', name: 'participant_name'},
+                {data: 'category_name', name: 'category_name'},
+                {data: 'district_name', name: 'district_name'},
+                {data: 'intensity', name: 'intensity'},
+                {data: 'joined_date', name: 'joined_date'},
+                {data: 'action', name: 'action', orderable: false, searchable: false},
+            ]
+        });
+
+
+
+
+        table.on('draw.dt', function () {
+            var info = table.page.info();
+            table.column(0, { search: 'applied', order: 'applied', page: 'applied' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1 + info.start;
+            });
+        });
+    }
+
   $(function () {
 
     $.ajaxSetup({
@@ -192,6 +329,24 @@
                 $('#saveBtn').html('Save Changes');
             }
         });
+      });
+
+      $('#downloadParticipantBtn').click(function (e) {
+          var idCategory = $('#id_category_filter').val();
+          var idDistrict = $('#id_district_filter').val();
+          var idParticipant = $('#id_participant_filter').val();
+          var idRegency = $('#id_regency_filter').val();
+
+          var params = {
+              idCategory: idCategory,
+              idDistrict: idDistrict,
+              idParticipant: idParticipant,
+              idRegency: idRegency,
+          }
+
+          var url = "{{URL::to('downloadParticipants')}}?" + $.param(params)
+
+          window.location = url;
       });
 
       $('body').on('click', '.deleteParticipant', function () {

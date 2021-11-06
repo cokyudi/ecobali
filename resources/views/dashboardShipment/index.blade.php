@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('vendors/css/forms/selects/select2.min.css')}}">
 @endpush
 
+
 @section('content')
 <!-- BEGIN: Content-->
 <div class="app-content content">

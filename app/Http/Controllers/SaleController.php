@@ -39,11 +39,44 @@ class SaleController extends Controller
                 'sales.moisture_content_and_contaminant_percent',
                 'sales.received_at_papermill',
                 'sales.total_weight_accepted',
-            )
-            ->get();
+            );
+
+        if(!empty($request->get('param'))) {
+            $data = $sales;
+
+            if (isset($request->get('param')["id_papermill"]) && count($request->get('param')["id_papermill"]) != 0) {
+                $data = $data->whereIn('id_category', $request->get('param')["id_papermill"]);
+            }
+
+            if (isset($request->get('param')["startDates"]) && isset($request->get('param')["endDates"])) {
+                $data = $data->whereBetween('sale_date', [$request->get('param')["startDates"],$request->get('param')["endDates"]]);
+            }
+
+            $datas = $data->get();
+
+            return Datatables::of($datas)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editSale">Edit</a>';
+
+                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteSale">Delete</a>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->editColumn('sale_date', function ($collection)
+                {
+                    return [
+                        'display' => \Carbon\Carbon::parse($collection->sale_date)->format('d/m/Y'),
+                        'timestamp' => $collection->sale_date
+                    ];
+                })
+                ->make(true);
+        }
 
         if ($request->ajax()) {
-            $data = $sales;
+            $data = $sales->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -163,8 +196,8 @@ class SaleController extends Controller
         return response()->json(['success'=>'Sales deleted successfully.']);
     }
 
-    function downloadSales()
+    function downloadSales(Request $request)
     {
-        return Excel::download(new SalesExport, 'sales.xlsx');
+        return Excel::download(new SalesExport($request), 'sales.xlsx');
     }
 }

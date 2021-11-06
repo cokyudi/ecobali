@@ -19,6 +19,22 @@ use Carbon\Carbon;
 
 class ActivityExport implements FromQuery, WithHeadings, WithMapping,WithColumnFormatting,ShouldAutoSize,WithStyles
 {
+    public $startDates;
+    public $endDates;
+    public $idCategory;
+    public $idDistrict;
+    public $idProgram;
+    public $idRegency;
+
+    public function __construct($request){
+        $this->startDates = $request->startDates;
+        $this->endDates = $request->endDates;
+        $this->idCategory = $request->idCategory;
+        $this->idDistrict = $request->idDistrict;
+        $this->idProgram = $request->idProgram;
+        $this->idRegency = $request->idRegency;
+
+    }
 
     public function query()
     {
@@ -46,6 +62,27 @@ class ActivityExport implements FromQuery, WithHeadings, WithMapping,WithColumnF
                 'activities.participant_number',
             )
             ->orderBy('activities.id','ASC');
+
+        if (isset($this->idCategory) && count($this->idCategory) != 0) {
+            $activities = $activities->whereIn('activities.id_category', $this->idCategory);
+        }
+
+        if (isset($this->idProgram) && count($this->idProgram) != 0) {
+            $activities = $activities->whereIn('activities.id_program_activity', $this->idProgram);
+        }
+
+        if (isset($this->idDistrict) && count($this->idDistrict) != 0) {
+            $activities = $activities->whereIn('activities.id_district', $this->idDistrict);
+        }
+
+        if (isset($this->idRegency) && count($this->idRegency) != 0) {
+            $activities = $activities->whereIn('activities.id_regency', $this->idRegency);
+        }
+
+        if (isset($this->startDates) && isset($this->endDates)) {
+            $activities = $activities->whereBetween('activities.activity_date', [$this->startDates,$this->endDates]);
+        }
+        
         return $activities;
 
     }
