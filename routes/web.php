@@ -124,4 +124,5 @@ Route::get('getActivities', [DashboardActivitiesController::class, 'getActivitie
 
 
 Route::resource('participantList', ParticipantListController::class);
+Route::get('downloadParticipantList', [ParticipantListController::class, 'downloadParticipantList']);
 

@@ -180,8 +180,18 @@
 
                                             </div>
                                             <div class="media d-flex mt-2">
-                                                <div class="media-body text-center ">
-                                                    <p style="font-style: italic" class="font-medium-1 black">Shows several dashboards including UBC data collection, data comparison, target achievement, sales data, and activities related to Used Beverage Cartons (UBC) recycling</p>
+                                                <div class="media-body text-left ">
+                                                    <div class="row">
+                                                        <div class="media-body text-center ">
+                                                            <p style="font-style: italic" class="font-medium-1 black">Shows several Dashboards including:</p>
+                                                        </div>
+                                                    </div>
+                                                    <p style="font-style: italic; margin-left: 50px" class="font-medium-1 black">
+                                                        * UBC Data Collection
+                                                        <br>* Data Comparison
+                                                        <br>* Target Achievement
+                                                        <br>* Sales Data
+                                                        <br>* Activities Related to Program</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -202,9 +212,19 @@
 
                                             </div>
                                             <div class="media d-flex mt-2">
-                                                <div class="media-body text-center ">
-                                                    <p style="font-style: italic" class="font-medium-1 black">Shows partner data including name, location, category, status, number of UBC, average per pickup, pickup continuity, and potential number of UBC</p>
-
+                                                <div class="media-body text-left ">
+                                                    <div class="row">
+                                                        <div class="media-body text-center ">
+                                                            <p style="font-style: italic" class="font-medium-1 black">Shows partner data including:</p>
+                                                        </div>
+                                                    </div>
+                                                    <p style="font-style: italic; margin-left: 75px" class="font-medium-1 black">
+                                                        * Name, Location, Category
+                                                        <br>* Status
+                                                        <br>* Number of UBC
+                                                        <br>* Average per Pickup
+                                                        <br>* Pickup Continuity
+                                                        <br>* Potential Number of UBC</p>
                                                 </div>
                                             </div>
                                         </div>

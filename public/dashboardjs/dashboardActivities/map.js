@@ -134,7 +134,8 @@ function getAllData() {
                     layer.bindPopup(feature.properties.kabupaten+" </br>  "+feature.properties.sampah, {closeButton: false, offset: L.point(0, -20)});
                     layer.on('mouseover', function() {layer.openPopup();});
                     layer.on('mouseout', function() { layer.closePopup(); });
-                }
+                },
+                weight: 1.5
             }).addTo(mapActivity);
         },
         error: function (data) {

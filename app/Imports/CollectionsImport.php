@@ -63,7 +63,6 @@ class CollectionsImport implements ToCollection, WithHeadingRow
         if ($this->isExistInArray($array, trim(strtolower($var)))) {
             return $array[trim(strtolower($var))];
         } else {
-//            Log::info($var);
             return null;
         }
     }

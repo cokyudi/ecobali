@@ -97,25 +97,25 @@
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_name_1">Contact Name 1</label>
-                                                            <input required type="text" id="contact_name_1" class="form-control" placeholder="Contact Name 1" name="contact_name_1"  maxlength="250" value="{{$participant->contact_name_1}}">
+                                                            <input type="text" id="contact_name_1" class="form-control" placeholder="Contact Name 1" name="contact_name_1"  maxlength="250" value="{{$participant->contact_name_1}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_position_1">Contact Position 1</label>
-                                                            <input required type="text" id="contact_position_1" class="form-control" placeholder="Contact Position 1" name="contact_position_1"  maxlength="200" value="{{$participant->contact_position_1}}">
+                                                            <input type="text" id="contact_position_1" class="form-control" placeholder="Contact Position 1" name="contact_position_1"  maxlength="200" value="{{$participant->contact_position_1}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_phone_1">Contact Phone 1</label>
-                                                            <input required type="number" id="contact_phone_1" class="form-control" placeholder="Contact Phone 1" name="contact_phone_1"  maxlength="50" value="{{$participant->contact_phone_1}}">
+                                                            <input type="number" id="contact_phone_1" class="form-control" placeholder="Contact Phone 1" name="contact_phone_1"  maxlength="50" value="{{$participant->contact_phone_1}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="contact_email_1">Contact Email 1</label>
-                                                            <input required type="email" id="contact_email_1" class="form-control" placeholder="Contact Email 1" name="contact_email_1"  maxlength="200" value="{{$participant->contact_email_1}}">
+                                                            <input type="email" id="contact_email_1" class="form-control" placeholder="Contact Email 1" name="contact_email_1"  maxlength="200" value="{{$participant->contact_email_1}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -151,7 +151,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
                                                             <label for="id_transport_intensity">Transport Intensity</label>
-                                                            <select required id="id_transport_intensity" name="id_transport_intensity" class="form-control">
+                                                            <select id="id_transport_intensity" name="id_transport_intensity" class="form-control">
                                                                 <option value="0" selected="" disabled="">Transport Intensity</option>
                                                                 @foreach($transport_intensities as $transport_intensity)
                                                                     <option value="{{$transport_intensity->id}}">{{$transport_intensity->intensity}}</option>
@@ -163,7 +163,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
                                                             <label for="joined_date">Joined Date</label>
-                                                            <input required type="date" id="joined_date" class="form-control" name="joined_date">
+                                                            <input type="date" id="joined_date" class="form-control" name="joined_date">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -178,7 +178,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group form-group-style">
                                                             <label for="address">Address</label>
-                                                            <input required type="text" id="address" class="form-control" placeholder="Address" name="address"  maxlength="400" value="{{$participant->address}}">
+                                                            <input type="text" id="address" class="form-control" placeholder="Address" name="address"  maxlength="400" value="{{$participant->address}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -187,13 +187,13 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="latitude">Latitude</label>
-                                                            <input required type="number" id="latitude" class="form-control" placeholder="Latitude" name="latitude"  maxlength="100" value="{{$participant->latitude}}">
+                                                            <input type="number" id="latitude" class="form-control" placeholder="Latitude" name="latitude"  maxlength="100" value="{{$participant->latitude}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="langitude">Langitude</label>
-                                                            <input required type="number" id="langitude" class="form-control" placeholder="Langitude" name="langitude"  maxlength="100" value="{{$participant->langitude}}">
+                                                            <input type="number" id="langitude" class="form-control" placeholder="Langitude" name="langitude"  maxlength="100" value="{{$participant->langitude}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -202,7 +202,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label for="service_area">Service Area</label>
-                                                            <input required type="text" id="service_area" class="form-control" placeholder="Service Area" name="service_area"  maxlength="400" value="{{$participant->service_area}}">
+                                                            <input type="text" id="service_area" class="form-control" placeholder="Service Area" name="service_area"  maxlength="400" value="{{$participant->service_area}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -212,7 +212,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="id_area">Area</label>
-                                                            <select required id="id_area" name="id_area" class="select2 form-control">
+                                                            <select id="id_area" name="id_area" class="select2 form-control">
                                                                 <option value="0" selected="" disabled="">Area</option>
                                                                 @foreach($areas as $area)
                                                                     <option value="{{$area->id}}">{{$area->area_name}}</option>
@@ -224,7 +224,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="id_district">District</label>
-                                                            <select required id="id_district" name="id_district" class="form-control">
+                                                            <select id="id_district" name="id_district" class="form-control">
                                                                 <option value="0" selected="" disabled="">District</option>
                                                                 @foreach($districts as $district)
                                                                     <option value="{{$district->id}}">{{$district->district_name}}</option>
@@ -236,7 +236,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="id_regency">Regency</label>
-                                                            <select required id="id_regency" name="id_regency" class="form-control">
+                                                            <select id="id_regency" name="id_regency" class="form-control">
                                                                 <option value="0" selected="" disabled="">Regency</option>
                                                                 @foreach($regencies as $regency)
                                                                     <option value="{{$regency->id}}">{{$regency->regency_name}}</option>
@@ -258,7 +258,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
                                                             <label for="id_box_resource">Box Resources</label>
-                                                            <select required class="select2 form-control" id="id_box_resource" name="id_box_resource[]" multiple="multiple">
+                                                            <select class="select2 form-control" id="id_box_resource" name="id_box_resource[]" multiple="multiple">
                                                                 @foreach($boxresources as $boxresource)
                                                                     <option value="{{$boxresource->id}}">{{$boxresource->resource_name}}</option>
                                                                 @endforeach
@@ -283,7 +283,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="id_purchase_price">Purchase Price</label>
-                                                            <select required id="id_purchase_price" name="id_purchase_price" class="form-control">
+                                                            <select id="id_purchase_price" name="id_purchase_price" class="form-control">
                                                                 <option value="0" selected="" disabled="">Purchase Price</option>
                                                                 @foreach($purchase_prices as $purchase_price)
                                                                     <option value="{{$purchase_price->id}}">{{$purchase_price->price}}</option>
@@ -302,7 +302,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
                                                             <label for="id_payment_method">Payment Method</label>
-                                                            <select required id="id_payment_method" name="id_payment_method" class="form-control">
+                                                            <select id="id_payment_method" name="id_payment_method" class="form-control">
                                                                 <option value="0" selected="" disabled="">Payment Method</option>
                                                                 @foreach($payment_methods as $payment_method)
                                                                     <option value="{{$payment_method->id}}">{{$payment_method->payment_method}}</option>
@@ -314,7 +314,7 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-style">
                                                             <label for="id_bank">Bank</label>
-                                                            <select required id="id_bank" name="id_bank" class="form-control">
+                                                            <select id="id_bank" name="id_bank" class="form-control">
                                                                 <option value="0" selected="" disabled="">Bank</option>
                                                                 @foreach($banks as $bank)
                                                                     <option value="{{$bank->id}}">{{$bank->bank_name}}</option>
@@ -328,19 +328,19 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="bank_branch">Bank Branch</label>
-                                                            <input required type="text" id="bank_branch" class="form-control" placeholder="Bank Branch" name="bank_branch"  maxlength="200" value="{{$participant->bank_branch}}">
+                                                            <input type="text" id="bank_branch" class="form-control" placeholder="Bank Branch" name="bank_branch"  maxlength="200" value="{{$participant->bank_branch}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="bank_account_number">Bank Account Number</label>
-                                                            <input required type="number" id="bank_account_number" class="form-control" name="bank_account_number"  maxlength="200" value="{{$participant->bank_account_number}}">
+                                                            <input type="number" id="bank_account_number" class="form-control" name="bank_account_number"  maxlength="200" value="{{$participant->bank_account_number}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group ">
                                                             <label for="bank_account_holder_name">Bank Account Holder Name</label>
-                                                            <input required type="text" id="bank_account_holder_name" class="form-control" placeholder="Bank Account Holder Name" name="bank_account_holder_name"  maxlength="200" value="{{$participant->bank_account_holder_name}}">
+                                                            <input type="text" id="bank_account_holder_name" class="form-control" placeholder="Bank Account Holder Name" name="bank_account_holder_name"  maxlength="200" value="{{$participant->bank_account_holder_name}}">
                                                         </div>
                                                     </div>
                                                 </div>

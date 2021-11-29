@@ -36,19 +36,21 @@
                         </div>
                         <div class="card-content collapse show">
                             <div class="card-body card-dashboard">
-                                <button type="button" class="btn btn-info btn-min-width mr-1 mb-1" href="javascript:void(0)" id="downloadParticipantBtn">Download</button>
+                                <button type="button" class="btn btn-info btn-min-width mr-1 mb-1" href="javascript:void(0)" id="downloadParticipantListBtn">Download</button>
 
                                 <div class="table-responsive">
                                     <table id="participantTable" class="table table-striped table-bordered zero-configuration pr-1">
                                         <thead>
                                         <tr>
                                             <th width="30px">No</th>
-                                            <th>Participant Name</th>
+                                            <th>Participant <br>Name</th>
                                             <th>Regency</th>
                                             <th>Category</th>
                                             <th>Status</th>
-                                            <th>Total KBM (Kg)</th>
-                                            <th>Average (Kg)</th>
+                                            <th>Total <br>KBM <br>(Kg)</th>
+                                            <th>Continuity</th>
+                                            <th>Potential</th>
+                                            <th>Average <br>(Kg)</th>
                                             <th>Last Submit</th>
                                             <th>Joined Date</th>
                                         </tr>
@@ -59,12 +61,14 @@
                                         <tfoot>
                                         <tr>
                                             <th width="30px">No</th>
-                                            <th>Participant Name</th>
+                                            <th>Participant <br>Name</th>
                                             <th>Regency</th>
                                             <th>Category</th>
                                             <th>Status</th>
-                                            <th>Total KBM (Kg)</th>
-                                            <th>Average (Kg)</th>
+                                            <th>Total <br>KBM <br>(Kg)</th>
+                                            <th>Continuity</th>
+                                            <th>Potential</th>
+                                            <th>Average <br>(Kg)</th>
                                             <th>Last Submit</th>
                                             <th>Joined Date</th>
                                         </tr>
@@ -96,6 +100,27 @@
                     <option value="0" disabled selected>Select Status</option>
                     <option value="1" >Active</option>
                     <option value="2" >Inactive</option>
+
+                </select>
+            </div>
+            <h6 class="mt-1 mb-1 text-bold-500">Continuity</h6>
+            <div class="form-group ">
+                <select id="id_continuity" name="id_continuity" class="form-control">
+                    <option value="0" disabled selected>Select Continuity</option>
+                    <option value="1" >None</option>
+                    <option value="2" >Less Stable</option>
+                    <option value="3" >Medium</option>
+                    <option value="4" >Stable</option>
+
+                </select>
+            </div>
+            <h6 class="mt-1 mb-1 text-bold-500">Potential</h6>
+            <div class="form-group ">
+                <select id="id_potential" name="id_potential" class="form-control">
+                    <option value="0" disabled selected>Select Potential</option>
+                    <option value="1" >Low</option>
+                    <option value="2" >Medium</option>
+                    <option value="3" >High</option>
 
                 </select>
             </div>
@@ -231,11 +256,12 @@
           $('#daterange').data('daterangepicker').setEndDate(moment());
 
           $('#id_status').val(0).trigger("change");
-          $('#id_category').val(0).trigger("change");
-          $("#id_area").val(0).trigger("change");
-          $('#id_district').val(0).trigger("change");
-          $('#id_regency').val(0).trigger("change");
-
+          $('#id_category_filter').val(0).trigger("change");
+          $('#id_district_filter').val(0).trigger("change");
+          $('#id_regency_filter').val(0).trigger("change");
+          $('#id_continuity').val(0).trigger("change");
+          $('#id_potential').val(0).trigger("change");
+          $('#id_participant_filter').val(0).trigger("change");
 
       });
 
@@ -244,16 +270,47 @@
             fetchData();
         });
 
+        $('#downloadParticipantListBtn').click(function (e) {
+            var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
+            var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
+            var idCategory = $('#id_category_filter').val();
+            var idDistrict = $('#id_district_filter').val();
+            var idRegency = $('#id_regency_filter').val();
+            var idStatus = $('#id_status').val();
+            var idContinuity = $('#id_continuity').val();
+            var idPotential = $('#id_potential').val();
+            var idParticipant = $('#id_participant_filter').val();
+
+            var params = {
+                startDates: startDates,
+                endDates: endDates,
+                idCategory: idCategory,
+                idDistrict: idDistrict,
+                idRegency: idRegency,
+                idStatus:idStatus,
+                idContinuity:idContinuity,
+                idPotential:idPotential,
+                idParticipant:idParticipant,
+            }
+
+            var url = "{{URL::to('downloadParticipantList')}}?" + $.param(params)
+
+            window.location = url;
+        });
+
     });
 
     function fetchData(){
         var startDates=  $("#daterange").data('daterangepicker').startDate.format('YYYY-MM-DD');
         var endDates=  $("#daterange").data('daterangepicker').endDate.format('YYYY-MM-DD');
-        var idCategory = $('#id_category').val();
-        var idDistrict = $('#id_district').val();
-        var idArea = $('#id_area').val();
-        var idRegency = $('#id_regency').val();
+        var idCategory = $('#id_category_filter').val();
+        var idDistrict = $('#id_district_filter').val();
+        var idRegency = $('#id_regency_filter').val();
         var idStatus = $('#id_status').val();
+        var idContinuity = $('#id_continuity').val();
+        var idPotential = $('#id_potential').val();
+        var idParticipant = $('#id_participant_filter').val();
+
 
         var params = {
             startDates: startDates,
@@ -261,8 +318,10 @@
             idCategory: idCategory,
             idDistrict: idDistrict,
             idRegency: idRegency,
-            idArea:idArea,
             idStatus:idStatus,
+            idContinuity:idContinuity,
+            idPotential:idPotential,
+            idParticipant:idParticipant,
         }
 
         var table = $('#participantTable').DataTable({
@@ -280,12 +339,15 @@
                 {data: 'category_name', name: 'category_name'},
                 {data: 'status', name: 'status'},
                 {data: 'qty', name: 'qty'},
+                {data: 'continuity_ind', name: 'continuity_ind'},
+                {data: 'potential_ind', name: 'potential_ind'},
                 {data: 'avg', name: 'avg'},
                 {data: 'lastSubmit', name: 'lastSubmit'},
                 {data: 'joined_date', name: 'joined_date'},
             ],
             columnDefs: [
                 { className: 'text-center', targets: [4] },
+                { orderable: false, targets: [1,4,6,7,9,10] },
             ]
         });
 

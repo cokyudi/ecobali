@@ -133,14 +133,12 @@ class DashboardTargetController extends Controller
             )
             ->get();
 
-
         $categoryMap = [];
         foreach ($categories as $category) {
             $categoryMap[$category->year.'-'.$category->id] = array(
                 "semester_1_target"=>round($category->semester_1_target/6,1),
                 "semester_2_target"=>round($category->semester_2_target/6,1),
             );
-
         }
 
         if($request->type == 'month') {
@@ -356,8 +354,6 @@ class DashboardTargetController extends Controller
             $monltyTarget = $this->getMonthlyTargetForAllCategory($collection->month,$collection->year,$categories, $categoryMap);
             $totalTarget += $monltyTarget;
         }
-
-
 
         $sales = DB::table('sales')
             ->select(

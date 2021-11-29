@@ -36,8 +36,8 @@
                                         @if ($user['role'] == 'Admin')
                                     <button type="button" class="btn btn-success btn-min-width mr-1 mb-1" href="javascript:void(0)" id="createNewSales">Add New Sales</button>
                                         @endif
-                                            <a class="btn btn-info btn-min-width mr-1 mb-1 white" href="{{ url('downloadSales') }}">Download</a>
-                                            <button type="button" class="btn btn-info btn-min-width mr-1 mb-1" href="javascript:void(0)" id="downloadSalesBtn">Download Sales</button>
+{{--                                            <a class="btn btn-info btn-min-width mr-1 mb-1 white" href="{{ url('downloadSales') }}">Download</a>--}}
+                                            <button type="button" class="btn btn-info btn-min-width mr-1 mb-1" href="javascript:void(0)" id="downloadSalesBtn">Download</button>
 
                                             @include('sale.modal')
 
