@@ -266,6 +266,18 @@ class DashboardTargetController extends Controller
             array_push($activeMonth,strtoupper($dt->format("M")));
         }
 
+         /* LANJUTKAN */
+        $start = $month = strtotime('2021-07-01');
+        $end = strtotime('2022-03-31');
+        while($month < $end)
+        { 
+            Log::info(date('Y-m-d',$month));
+            $month = strtotime("+1 month", $month);
+        }
+       
+
+
+
         return response()->json([
             'dataByMonth' => $actualTargetBarByMonth,
             'dataPie' => $dataPieChart,
@@ -396,6 +408,7 @@ class DashboardTargetController extends Controller
         ]);
     }
 
+
     public static function getYearlySumForAllCollection($yearStart, $yearEnd) {
         $collections = DB::table('collections')
             ->select(
@@ -426,6 +439,32 @@ class DashboardTargetController extends Controller
         $totalYearlyTarget = $categories->sumSmt1 + $categories->sumSmt2;
 
         return floor($totalYearlyTarget);
+    }
+
+    public static function getTargetForAllCategoryByRange($yearStart, $yearEnd, $monthStart, $monthEnd) {
+        $categories = DB::table('categories')
+            ->leftJoin('category_details', function ($join) {
+                $join->on('categories.id', '=', 'category_details.category_id');
+            })
+            ->select(
+                DB::raw('ROUND(SUM(category_details.semester_1_target)/6,1) monthlySmt1'),
+                DB::raw('ROUND(SUM(category_details.semester_2_target)/6,1) monthlySmt2'),
+            )
+            ->where('category_details.year', '>=',$yearStart)
+            ->where('category_details.year', '<=',$yearEnd)
+            ->get();
+
+        $totalTarget = 0;
+
+        for ($i = $monthStart; $i <= $monthEnd; $i++) {
+            if($i <= 6) {
+                $totalTarget += $categories->monthlySmt1;
+            } else {
+                $totalTarget += $categories->monthlySmt1;
+            }
+        }
+        
+        return floor($totalTarget);
     }
 
     public static function getYearlySumForAllSales($yearStart, $yearEnd) {
