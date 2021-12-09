@@ -21,9 +21,9 @@
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                <li class="breadcrumb-item"><a href="{{url('papermills')}}">Home</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">Master Data</a>
+                                <li class="breadcrumb-item">Master Data</a>
                                 </li>
                                 <li class="breadcrumb-item active">Create Papermill
                                 </li>
@@ -296,7 +296,8 @@
         });
 
         $('#backBtn').click(function() {
-            console.log(new FormData($("#papermillForm")[0]));
+            window.location.href = "{{ route('papermills.index') }}";
+
         });
 
         $('#saveBtn').click(function(e) {

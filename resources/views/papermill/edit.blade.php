@@ -17,15 +17,15 @@
         <div class="content-wrapper">
             <div class="content-header row mb-1">
                 <div class="content-header-left col-md-6 col-12 mb-2 breadcrumb-new">
-                    <h3 class="content-header-title mb-0 d-inline-block">Create Papermill</h3>
+                    <h3 class="content-header-title mb-0 d-inline-block">Edit Papermill</h3>
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                <li class="breadcrumb-item"><a href="{{url('papermills')}}">Home</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">Master Data</a>
+                                <li class="breadcrumb-item">Master Data</a>
                                 </li>
-                                <li class="breadcrumb-item active">Create Papermill
+                                <li class="breadcrumb-item active">Edit Papermill
                                 </li>
                             </ol>
                         </div>
@@ -310,7 +310,7 @@
         });
 
         $('#backBtn').click(function() {
-            console.log(new FormData($("#papermillForm")[0]));
+            window.location.href = "{{ route('papermills.index') }}";
 
         });
 

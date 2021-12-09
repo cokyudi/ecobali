@@ -30,8 +30,10 @@ function drawActualTargetBarByMonth(type) {
 
             $('#annualTon').html(parseFloat((data.annualTarget/1000).toFixed(1)).toLocaleString());
             $('#annualKg').html(parseFloat(data.annualTarget.toFixed(1)).toLocaleString());
+
             $('#monthlyTon').html(parseFloat((data.monthlyTarget/1000).toFixed(1)).toLocaleString());
             $('#monthlyKg').html(parseFloat(data.monthlyTarget.toFixed(1)).toLocaleString());
+
             $('#eco_monthly_diff').html(data.dateDiff); //month different
 
 
@@ -75,7 +77,8 @@ function drawActualTargetBarByMonth(type) {
                 chartArea: { left: "5%", width: "90%", height: 200 },
             });
 
-            $('#monthly_eco_target').html(parseFloat((data.dataPie[2][1]+data.dataPie[1][1]).toFixed(1)).toLocaleString()); //Monthly Target Achievement (ecoBali) TARGET 
+            // $('#monthly_eco_target').html(data.targetByRange.toFixed(1).toLocaleString()); //Monthly Target Achievement (ecoBali) TARGET
+            $('#monthly_eco_target').html(parseFloat((data.targetByRange).toFixed(1)).toLocaleString()); //Monthly Target Achievement (ecoBali) TARGET
             $('#monthly_eco_terkumpul').html(data.dataPie[2][1].toLocaleString());
 
             var dataPieExplode = google.visualization.arrayToDataTable(data.dataPieExplode);

@@ -34,7 +34,8 @@ function drawTargetPapermillDonut() {
                 pieHole: 0.55,
                 chartArea: { left: "5%", width: "90%", height: 250 },
             });
-            $('#monthly_papermill_target').html(parseFloat((data.dataDonutMonthly[2][1]+data.dataDonutMonthly[1][1]).toFixed(1)).toLocaleString());
+            // $('#monthly_papermill_target').html(parseFloat((data.dataDonutMonthly[2][1]+data.dataDonutMonthly[1][1]).toFixed(1)).toLocaleString());
+            $('#monthly_papermill_target').html(parseFloat((data.targetByRange).toFixed(1)).toLocaleString());
             $('#monthly_papermill_terkumpul').html(data.dataDonutMonthly[2][1].toLocaleString());
             $('#papermill_monthly_diff').html(data.diffPapermill);
 

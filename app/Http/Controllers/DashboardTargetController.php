@@ -159,8 +159,6 @@ class DashboardTargetController extends Controller
                 ->orderBy('collect_date', 'asc')
                 ->get();
 
-
-
             foreach ($collections as $collection) {
                 $monltyTarget = $this->getMonthlyTargetForAllCategory($collection->month,$collection->year,$categories, $categoryMap);
                 array_push($actualTargetBarByMonth, [$collection->monthName."\n".$collection->year, $monltyTarget,$collection->qty]);
@@ -219,6 +217,7 @@ class DashboardTargetController extends Controller
 
         /* End Dinamics of Actual vs Target by Month */
 
+        $targetByRange = $this->getTargetForAllCategoryByRange($request->startDates, $request->endDates);
 
         /* Start Monthly Target Achievement */
 
@@ -227,7 +226,8 @@ class DashboardTargetController extends Controller
         ];
 
 
-        array_push($dataPieChart, ["Belum Terkumpul", round($totalTarget-$totalQty,0)]);
+//        array_push($dataPieChart, ["Belum Terkumpul", round($totalTarget-$totalQty,0)]);
+        array_push($dataPieChart, ["Belum Terkumpul", round($targetByRange-$totalQty,0)]);
         array_push($dataPieChart, ["Terkumpul", round($totalQty,0)]);
 
         /* End Monthly Target Achievement */
@@ -249,8 +249,7 @@ class DashboardTargetController extends Controller
 
         /* End Annual Target Achievement (ecoBali) */
 
-        $annualTarget = $this->getYearlyTargetForAllCategory($yearStart,$yearEnd);
-        $monthlyTarget = round($annualTarget/12,1);
+
 
 
         $start    = (new DateTime($request->startDates))->modify('first day of this month');
@@ -261,28 +260,20 @@ class DashboardTargetController extends Controller
         $interval = date_diff($start, $end);
         $dateDiff = $interval->m + ($interval->y * 12);
 
+        $annualTarget = $this->getYearlyTargetForAllCategory($yearStart,$yearEnd);
+        $monthlyTarget = round($targetByRange/$dateDiff,1);
+
         $activeMonth = [];
         foreach ($period as $dt) {
             array_push($activeMonth,strtoupper($dt->format("M")));
         }
-
-         /* LANJUTKAN */
-        $start = $month = strtotime('2021-07-01');
-        $end = strtotime('2022-03-31');
-        while($month < $end)
-        { 
-            Log::info(date('Y-m-d',$month));
-            $month = strtotime("+1 month", $month);
-        }
-       
-
-
 
         return response()->json([
             'dataByMonth' => $actualTargetBarByMonth,
             'dataPie' => $dataPieChart,
             'dataPieExplode' => $dataPieExplode,
             'annualTarget' => $annualTarget,
+            'targetByRange' => $targetByRange,
             'monthlyTarget' => $monthlyTarget,
             'dateDiff' => $dateDiff,
             'activeMonth' =>$activeMonth
@@ -400,8 +391,10 @@ class DashboardTargetController extends Controller
         $interval = date_diff($start, $end);
         $diffPapermill = $interval->m + ($interval->y * 12);
 
+        $targetByRange = $this->getTargetForAllCategoryByRange($request->startDates, $request->endDates);
 
         return response()->json([
+            'targetByRange' => $targetByRange,
             'dataDonutMonthly' => $dataDonutMonthly,
             'dataDonutYearly' => $dataDonutYearly,
             'diffPapermill' =>$diffPapermill
@@ -441,30 +434,48 @@ class DashboardTargetController extends Controller
         return floor($totalYearlyTarget);
     }
 
-    public static function getTargetForAllCategoryByRange($yearStart, $yearEnd, $monthStart, $monthEnd) {
+    public static function getTargetForAllCategoryByRange($startDates, $endDates) {
+        $yearStart = date('Y', strtotime($startDates));
+        $yearEnd = date('Y', strtotime($endDates));
+
         $categories = DB::table('categories')
             ->leftJoin('category_details', function ($join) {
                 $join->on('categories.id', '=', 'category_details.category_id');
             })
             ->select(
+                DB::raw('category_details.year year'),
                 DB::raw('ROUND(SUM(category_details.semester_1_target)/6,1) monthlySmt1'),
                 DB::raw('ROUND(SUM(category_details.semester_2_target)/6,1) monthlySmt2'),
             )
             ->where('category_details.year', '>=',$yearStart)
             ->where('category_details.year', '<=',$yearEnd)
+            ->groupBy('year')
             ->get();
+
+        $mapCategoriesTarget = [];
+
+        foreach ($categories as $category) {
+            $mapCategoriesTarget[$category->year] = [$category->monthlySmt1,$category->monthlySmt2];
+        }
 
         $totalTarget = 0;
 
-        for ($i = $monthStart; $i <= $monthEnd; $i++) {
-            if($i <= 6) {
-                $totalTarget += $categories->monthlySmt1;
+        /* LANJUTKAN */
+        $start = $month = strtotime($startDates);
+        $end = strtotime($endDates);
+        while($month <= $end)
+        {
+            $currentMonth = date('m',$month);
+            $currentYear = date('Y',$month);
+            if($currentMonth <= 6) {
+                $totalTarget += $mapCategoriesTarget[$currentYear][0];
             } else {
-                $totalTarget += $categories->monthlySmt1;
+                $totalTarget += $mapCategoriesTarget[$currentYear][1];
             }
+            $month = strtotime("+1 month", $month);
         }
-        
-        return floor($totalTarget);
+
+        return round($totalTarget);
     }
 
     public static function getYearlySumForAllSales($yearStart, $yearEnd) {

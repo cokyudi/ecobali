@@ -14,9 +14,9 @@
                     <div class="row breadcrumbs-top d-inline-block">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a>
+                                <li class="breadcrumb-item"><a href="{{url('participants')}}">Home</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">Master Data</a>
+                                <li class="breadcrumb-item">Master Data</a>
                                 </li>
                                 <li class="breadcrumb-item">View Participant
                                 </li>
@@ -235,8 +235,7 @@
         });
 
         $('#backBtn').click(function() {
-            console.log(new FormData($("#participantForm")[0]));
-            {{--window.location.href = "{{ route('participants.index') }}";--}}
+            window.location.href = "{{ route('participants.index') }}";
         });
 
         $('#saveBtn').click(function(e) {
